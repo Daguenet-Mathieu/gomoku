@@ -1,0 +1,3 @@
+Main-Class: main
+JavaFX-Version: 21
+JavaFX-Application-Class: main
