@@ -476,7 +476,7 @@ public class MinMax
             values[i] = m.minmax(depth - 1, change(turn), player);
         }
 
-        if (depth == 4)
+        if (depth == 3)
         {
             eval(player);
             ev.display();

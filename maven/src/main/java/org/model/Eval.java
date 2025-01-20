@@ -46,8 +46,8 @@ public class Eval
             if (st.strength == 2)
             {
                 if (st.type)
-                    return 1000;
-                return -8000;
+                    return 5000;
+                return -5000;
             }
             if (st.strength == 1)
             {
@@ -55,15 +55,15 @@ public class Eval
                 {
                     this.free4 +=1;
                     if (this.free4 >= 2)
-                        return 7000;
+                        return 5000;
                     return 100;
                 }
                 else
                 {
                     this.unfree4+=1;
                     if (this.unfree4 >= 2)
-                        return -8000;
-                    return -24;
+                        return -5000;
+                    return -100;
                 }
             }
         }
@@ -76,15 +76,15 @@ public class Eval
                 {
                     this.free +=1;
                     if (this.free >= 2)
-                        return 1000;
+                        return 2000;
                     return 18;
                 }
                 else
                 {
                     this.unfree+=1;
                     if (this.unfree >=2)
-                        return -8000;
-                    return -500;
+                        return -2000;
+                    return -18;
                 }
             }
             if (st.strength == 1)
@@ -120,10 +120,8 @@ public class Eval
         {
             st = this.stones.get(i);
             cur = determine(st);
-            if (Math.abs(cur) >= 1000)
-                return cur;
-            else
-                res += determine(st);
+
+            res += determine(st);
         }
         return res;
     }
