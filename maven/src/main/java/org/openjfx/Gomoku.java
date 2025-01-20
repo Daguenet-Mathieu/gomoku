@@ -6,18 +6,27 @@ import javafx.scene.shape.*;
 import javafx.scene.paint.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+import javafx.scene.text.Text;
+import javafx.geometry.VPos;
+import javafx.scene.text.TextAlignment;
+
+
 
 import java.util.*;
 
 import org.utils.*;
 import org.model.*;
+import javafx.application.Platform;
 
+import javafx.animation.Timeline;
+import javafx.animation.KeyFrame;
+import javafx.util.Duration;
 /**
  * JavaFX App
  */
 
 public class Gomoku extends Application {
-
+    Pane root = new Pane();                     // Conteneur principal
     int size_square;
     int start_y;
     int start_x;
@@ -29,6 +38,10 @@ public class Gomoku extends Application {
     //int ia_color = 0;
     int     ia_color = random.nextInt(2);
     boolean    toogle;//savoir si c'est a l'humain de jouer
+    float[] dbl = new float[5];
+    ArrayList<Candidat.coord> lst;
+    Random rand = new Random();
+    Text candidatText;
     // if (ia_color == 0)
     //     Color color = Color.BLACK;
     // else
@@ -218,11 +231,18 @@ public class Gomoku extends Application {
         }
     }
 
+
     void do_ia_move(Pane root, int turn)
     {
         Point p;
-
+        if (candidatText!= null)
+            root.getChildren().remove(candidatText);
         //System.out.printf("\n\nTurn of IA%d\n\n", turn);
+        // try {
+        //     Thread.sleep(1000);
+        // } catch (InterruptedException e) {
+        //     System.out.println("in catch sleep");
+        // }
         if (game.first_move())
             p = new Point(10, 10);
         else
@@ -233,14 +253,162 @@ public class Gomoku extends Application {
         
         Circle circle = new Circle((size_square + p.x * size_square), size_square + (p.y * size_square), size_square / 2, ia_color == 0?Color.BLACK:Color.SNOW);
         root.getChildren().add(circle);
+        for (int i = 0; i < dbl.length; i++) {
+            dbl[i] = rand.nextFloat() * (float) 100.0;
+        }
+        if (game.val != null)
+        {
+            String value = String.format("%.2f", game.val);
+            candidatText = new Text(size_square * (p.x)  + (size_square/2),
+                            size_square * (p.y + 1),
+                            value);
+            candidatText.setFill(Color.RED); 
+            candidatText.setTextOrigin(VPos.CENTER);
+            candidatText.setTextAlignment(TextAlignment.CENTER);
+        
+        // lst = generateRandomCoords(5);
+        // printCoords(lst);
+            root.getChildren().add(candidatText);
+        }
+        candidate_statistics(game.m.values, game.m.candidat.lst);
         return ;
     }
+
+
+public void candidate_statistics(float[] val, ArrayList<Candidat.coord> lst) {
+    game.candidate.clear();
+    
+    for (int i = 0; i < lst.size(); i++) {
+        Candidat.coord coord = lst.get(i);
+        System.out.println("x == " + coord.x + " y == " + coord.y);
+        
+        Circle circle = new Circle(
+            size_square * (coord.x + 1),
+            size_square * (coord.y + 1),
+            size_square / 2,
+            Color.GREEN
+        );
+        
+        String value = String.format("%.2f", val[i]);
+        Text text = new Text(
+            size_square * (coord.x) + (size_square/2),
+            size_square * (coord.y + 1),
+            value
+        );
+        text.setTextOrigin(VPos.CENTER);
+        text.setTextAlignment(TextAlignment.CENTER);
+        
+        // Créer un groupe pour chaque cercle et son texte
+        Group group = new Group();
+        group.getChildren().addAll(circle, text);
+        
+        // Ajouter le groupe à la liste des candidats
+        game.candidate.add(group);
+    }
+    
+    // Ajouter tous les groupes au root en une seule fois
+    root.getChildren().addAll(game.candidate);
+}
+
+
+// public void candidate_statistics(float[] val, ArrayList<Candidat.coord> lst) {
+//     game.candidate.clear();
+//     for (int i = 0; i < lst.size(); i++) {
+//         Candidat.coord coord = lst.get(i);
+//         System.out.println("x == " + coord.x + " y == " + coord.y);
+//         Circle circle = new Circle(
+//             size_square * (coord.x + 1),
+//             size_square * (coord.y + 1),
+//             size_square / 2,
+//             Color.GREEN
+//         );
+
+//         String value = String.format("%.2f", val[i]);
+        
+//       Text text = new Text(size_square * (coord.x)  + (size_square/2), 
+//                             size_square * (coord.y + 1), 
+//                             value);
+        
+//         text.setTextOrigin(VPos.CENTER);
+//         text.setTextAlignment(TextAlignment.CENTER);
+        
+//         // Créer un groupe pour chaque cercle et son texte
+//         Group group = new Group();
+//         group.getChildren().addAll(circle, text);
+        
+//         // Ajouter le groupe au root
+//         root.getChildren().add(group);
+        
+//         // Ajouter le cercle à la liste des candidats
+//         game.candidate.add(group);
+//     }
+// }
+
+
+    // public static ArrayList<Candidat.coord> generateRandomCoords(int n) {
+    //     Random rand = new Random();
+    //     ArrayList<Candidat.coord> lst = new ArrayList<>();
+        
+    //     for (int i = 0; i < n; i++) {
+    //         int x = rand.nextInt(19);
+    //         int y = rand.nextInt(19);
+    //         lst.add(new Candidat.coord(x, y));
+    //     }
+        
+    //     return lst; 
+    // }
+
+    // public static void printCoords(ArrayList<Candidat.coord> lst) {
+    //     for (Candidat.coord c : lst) {
+    //         System.out.println("Coordonnée: (" + c.x + ", " + c.y + ")");
+    //     }
+    // }
+
+    // public void removeCandidate() {
+    //     // Utilisation d'un iterator pour éviter la ConcurrentModificationException
+    //     Iterator<Node> iterator = root.getChildren().iterator();
+    //     while (iterator.hasNext()) {
+    //         Node child = iterator.next();
+    //         if (child instanceof Group) {
+    //             Group group = (Group) child;
+    //             // Vérifie si le groupe contient un cercle
+    //             for (Object groupChild : group.getChildren()) {
+    //                 if (groupChild instanceof Circle) {
+    //                     iterator.remove();  // Supprime le groupe contenant le cercle
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+
+//     public void removeCandidate() {
+//     // On parcourt tous les enfants du root et on supprime uniquement ceux qui sont des groupes
+//     for (Object child : root.getChildren()) {
+//         if (child instanceof Group) {
+//             root.getChildren().remove(child);
+//         }
+//     }
+// }
+    public void removeCandidate() {
+    // Enlever chaque Group de root
+    for (Group group : game.candidate) {
+        root.getChildren().remove(group);
+    }
+    // Vider la liste candidate
+    game.candidate.clear();
+    }
+    // public void removeCandidate()
+    // {
+    //     // root.getChildren().removeAll(root.getChildren(game.candidate.toArray(new Circle[0])));
+    //     root.getChildren().removeAll(game.candidate);
+    // }
 
     @Override
     public void start(Stage primaryStage) {
         int size_x = 800;
         int size_y = 800;
-        Pane root = new Pane();                     // Conteneur principal
         Scene scene = new Scene(root, size_x, size_y);   // Création de la scène
         toogle = ia_color == 0?false:true;//savoir si c'est a l'humain de jouer
         // Timeline timeline = new Timeline(
@@ -275,6 +443,7 @@ public class Gomoku extends Application {
             }
             else
             {
+                removeCandidate();
                 if (!validMove(new Point(x_index, y_index), game))
                 {
                     System.out.println("coup illegal!");
@@ -300,12 +469,29 @@ public class Gomoku extends Application {
                 victory = true;
                 return ;
             }
-            do_ia_move(root, ia_color==0?1:2);
-            if (checkEndGame())
-            {
-                victory =true;
-                return ;
-            }
+            Platform.runLater(() -> {
+            // On attend un court instant avant d'exécuter le coup de l'IA
+                Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), e -> {
+                    do_ia_move(root, ia_color == 0 ? 1 : 2);
+                    if (checkEndGame()) {
+                        victory = true;
+                    }
+                }));
+                timeline.setCycleCount(1);
+                timeline.play();
+            });
+            // Platform.runLater(() -> {
+            //     do_ia_move(root, ia_color==0?1:2);
+            //     if (checkEndGame()) {
+            //         victory = true;
+            //     }
+            // });
+            // do_ia_move(root, ia_color==0?1:2);
+            // if (checkEndGame())
+            // {
+            //     victory =true;
+            //     return ;
+            // }
             //printGame(game.map);
         });
 
@@ -317,7 +503,7 @@ public class Gomoku extends Application {
 
         if (toogle == false)
         {
-            //game.move(new Point(10, 10), Game.SquareState.BLACK);
+            //game.move(new Point(10, 10), Game.SquareState.BLACK); 
             do_ia_move(root, ia_color==0?1:2);
             //printGame(game.map);
         }

@@ -1,6 +1,7 @@
 package org.model;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MinMax
 {
@@ -9,6 +10,7 @@ public class MinMax
     public Eval ev;
     public Candidat candidat;
     public Candidat.coord best;
+    public float [] values;
     //private int depth;
 
     public class coord
@@ -467,7 +469,7 @@ public class MinMax
 
         candidat.load(map, depth);
 
-        float [] values = new float[candidat.lst.size()];
+        values = new float[candidat.lst.size()];
 
         for (int i = 0 ; i < candidat.lst.size() ; i++)
         {

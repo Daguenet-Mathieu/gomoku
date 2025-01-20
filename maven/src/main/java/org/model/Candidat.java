@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Candidat
 {
-    ArrayList<Candidat.coord> lst=  new ArrayList<Candidat.coord>(); 
+    public ArrayList<Candidat.coord> lst=  new ArrayList<Candidat.coord>(); 
     public static class coord
     {
         public int x;

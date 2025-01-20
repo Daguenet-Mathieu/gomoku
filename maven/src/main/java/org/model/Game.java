@@ -1,5 +1,9 @@
 package org.model;
 import org.utils.*;
+import java.util.ArrayList;
+import org.model.*;
+import javafx.scene.Group;
+
 
 
 public class Game {
@@ -10,6 +14,8 @@ public class Game {
     }
     public MinMax m;
     public int nb_move;
+    public ArrayList<Group> candidate;
+    public Float val;
 
     public SquareState[][] map;
     public boolean start = true;
@@ -22,8 +28,8 @@ public class Game {
             }
         }
         nb_move = 0;
-
         m = new MinMax();
+        candidate = new ArrayList<Group>();
     }
 
     public byte[][] getMapAsByteArray() {
@@ -70,7 +76,7 @@ public class Game {
     public Point best_move(int turn, int player)
     {
         m.display_map();
-        m.minmax(3, turn, player);
+        val = m.minmax(3, turn, player);
         m.play(m.best, turn);
         return new Point(m.best.y, m.best.x);
     }

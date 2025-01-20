@@ -17,7 +17,7 @@ run: $(CLASSES)
 	$(JAVA) $(FLAGS) $(NAME)
 
 clean:
-	rm -f $(CLASSES)
+	rm -f *.class
 
 fclean: clean
 
