@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 import javafx.geometry.VPos;
 import javafx.scene.text.TextAlignment;
 
-
+import javafx.scene.text.Font;
 
 import java.util.*;
 
@@ -265,6 +265,8 @@ public class Gomoku extends Application {
             candidatText.setFill(Color.RED); 
             candidatText.setTextOrigin(VPos.CENTER);
             candidatText.setTextAlignment(TextAlignment.CENTER);
+            candidatText.setFont(new Font(9));
+
         
         // lst = generateRandomCoords(5);
         // printCoords(lst);
@@ -297,6 +299,7 @@ public void candidate_statistics(float[] val, ArrayList<Candidat.coord> lst) {
         );
         text.setTextOrigin(VPos.CENTER);
         text.setTextAlignment(TextAlignment.CENTER);
+        text.setFont(new Font(9));
         
         // Créer un groupe pour chaque cercle et son texte
         Group group = new Group();
