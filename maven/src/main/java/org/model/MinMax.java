@@ -137,13 +137,15 @@ public class MinMax
         int symb;
         savemapc();
         int pow;
+
+        final String dir = "hor";
     
         for (int i = 0 ; i < 19 ; i++)
         {
             for (int j = 0 ; j < 19 ; j++)
             {
                 symb = mapc[i][j];
-                if (symb == 0)
+                if (!isplay(symb))
                     continue;
                 pow=0;
                 for (int k = j ; k != 19 && mapc[i][k] == symb ; k++)
@@ -152,14 +154,14 @@ public class MinMax
                     mapc[i][k] = -1;
                 }
                 if (count == 5)
-                    ev.add_stones(5, 2, player==symb);
+                    ev.add_stones(5, 2, player==symb, dir);
                 else if (count == 4)
                 {
                     if (j - 1 != -1 && mapc[i][j -1] == 0)
                         pow+=1;
                     if (j + 4 != 19 && mapc[i][j+4] == 0)
                         pow+=1;
-                    ev.add_stones(4, pow, player==symb);
+                    ev.add_stones(4, pow, player==symb, dir);
                 }
                 else if (count == 3)
                 {
@@ -167,7 +169,15 @@ public class MinMax
                         pow+=1;
                     if (j + 3 != 19 && mapc[i][j+3] == 0)
                         pow+=1;
-                    ev.add_stones(3, pow, player==symb);;
+                    ev.add_stones(3, pow, player==symb, dir);
+                }
+                else if (count == 2)
+                {
+                    if (j - 1 != -1 && mapc[i][j -1] == 0)
+                        pow+=1;
+                    if (j + 2 != 19 && mapc[i][j+2] == 0)
+                        pow+=1;
+                    ev.add_stones(2, pow, player==symb, dir);
                 }
                 inc_count(count, symb);
                 count = 0;
@@ -181,12 +191,13 @@ public class MinMax
         int symb;
         int pow;
         savemapc();
+        final String dir = "ver";
         for (int i = 0 ; i < 19 ; i++)
         {
             for (int j = 0 ; j < 19 ; j++)
             {
                 symb = mapc[i][j];
-                if (symb == 0)
+                if (!isplay(symb))
                     continue;
                 pow = 0;
 
@@ -195,15 +206,15 @@ public class MinMax
                     count +=1;
                     mapc[k][j] = -1;
                 }
-                if (count >= 5)
-                    ev.add_stones(5, 2, symb == player);
+                if (count == 5)
+                    ev.add_stones(5, 2, symb == player, dir);
                 else if (count == 4)
                 {
                     if (i - 1 != -1 && mapc[i - 1][j] == 0)
                         pow+=1;
                     if ( i + 4 != 19 && mapc[i + 4][j] == 0)
                         pow +=1;
-                    ev.add_stones(4, pow, symb==player);
+                    ev.add_stones(4, pow, symb==player, dir);
                 }
                 else if (count == 3)
                 {
@@ -211,7 +222,15 @@ public class MinMax
                         pow+=1;
                     if (i + 3 != 19 && mapc[i + 3][j] == 0)
                         pow +=1;
-                    ev.add_stones(3, pow, symb==player);
+                    ev.add_stones(3, pow, symb==player, dir);
+                }
+                else if (count == 2)
+                {
+                    if (i - 1 != -1  && mapc[i-1][j] == 0)
+                        pow+=1;
+                    if (i + 2 != 19 && mapc[i+2][j] == 0)
+                        pow+=1;
+                    ev.add_stones(2, pow, player==symb, dir);
                 }
                 inc_count(count, symb);
                 count = 0;
@@ -226,12 +245,14 @@ public class MinMax
         savemapc();
         int pow;
 
+        final String dir = "diagp";
+
         for (int i = 0 ; i < 19 ; i++)
         {
             for (int j = 0 ; j < 19 ; j++)
             {
                 symb = mapc[i][j];
-                if (symb == 0)
+                if (!isplay(symb))
                     continue;
                 pow = 0;
                 for (int k = 0 ; i + k != 19 && j + k != 19 && mapc[i + k][j + k] == symb ; k++)
@@ -239,15 +260,15 @@ public class MinMax
                     count += 1;
                     mapc[i + k][j + k] = -1;
                 }
-                if (count >= 5)
-                    ev.add_stones(5, 2, player==symb);
+                if (count == 5)
+                    ev.add_stones(5, 2, player==symb, dir);
                 else if (count == 4)
                 {
                     if (i-1 != -1 && j-1 != -1 && mapc[i-1][j-1] == 0)
                         pow +=1; 
                     if (i + 4 != 19 && j + 4 != 19 && mapc[i+4][j+4] == 0)
                         pow+=1;
-                    ev.add_stones(4, pow, player==symb);
+                    ev.add_stones(4, pow, player==symb, dir);
                 }
                 else if (count == 3)
                 {
@@ -255,8 +276,17 @@ public class MinMax
                         pow+=1;
                     if(i + 3 != 19 && j + 3 != 19 && mapc[i+3][j+3] == 0)
                         pow+=1;
-                    ev.add_stones(3, pow, player==symb);
+                    ev.add_stones(3, pow, player==symb, dir);
                 }
+                else if (count == 2)
+                {
+                    if (i-1 != -1 && j-1 != -1 && mapc[i-1][j-1] == 0)
+                        pow+=1;
+                    if(i + 2 != 19 && j + 2 != 19 && mapc[i+2][j+2] == 0)
+                        pow+=1;
+                    ev.add_stones(2, pow, player==symb, dir);
+                }
+                
                 inc_count(count, symb);
                 count = 0;
             }
@@ -269,12 +299,13 @@ public class MinMax
         int symb;
         int pow;
         savemapc();
+        final String dir = "diagn";
         for (int i = 0 ; i < 19 ; i++)
         {
             for (int j = 0 ; j < 19 ; j++)
             {
                 symb = mapc[i][j];
-                if (symb == 0)
+                if (!isplay(symb))
                     continue;
                 pow = 0; 
                 for (int k = 0 ; i + k != 19 && j - k != -1 && mapc[i + k][j - k] == symb ; k++)
@@ -282,8 +313,8 @@ public class MinMax
                     count += 1;
                     mapc[i + k][j - k] = -1;
                 }
-                if (count >= 5)
-                    ev.add_stones(5, 2, player==symb);
+                if (count == 5)
+                    ev.add_stones(5, 2, player==symb, dir);
 
                 if (count == 4)
                 {
@@ -291,7 +322,7 @@ public class MinMax
                         pow+=1; 
                     if (i + 4 != 19 && j - 4 != -1 && mapc[i+4][j-4] == 0)
                         pow+=1;
-                    ev.add_stones(4, pow, player==symb);     
+                    ev.add_stones(4, pow, player==symb, dir);     
                 }
                 else if (count == 3)
                 {
@@ -299,7 +330,15 @@ public class MinMax
                         pow+=1;
                     if(i + 3 != 19 && j - 3 != -1 && mapc[i+3][j-3] == 0)
                         pow+=1;
-                    ev.add_stones(3, pow, player==symb);
+                    ev.add_stones(3, pow, player==symb, dir);
+                }
+                else if (count == 2)
+                {
+                    if (i-1 != -1 && j+1 != 19 && mapc[i-1][j+1] == 0)
+                        pow+=1;
+                    if(i + 2 != 19 && j - 2 != -1 && mapc[i+2][j-2] == 0)
+                        pow+=1;
+                    ev.add_stones(2, pow, player==symb, dir);
                 }
                 inc_count(count, symb);
                 count = 0;
@@ -307,90 +346,19 @@ public class MinMax
         }
     }
 
-    // public float all_eval(int player)
-    // { 
-    //     int count = 0;
-    //     int symb = 0;
-
-    //     for (int i = 0 ; i < 19 ; i++)
-    //     {
-    //         for (int j = 0 ; j < 19 ; j++)
-    //         {
-    //             count = 0;
-    //             symb = map[i][j];
-    //             if (symb == 0)
-    //                 continue;
-    //             for (int k = 0 ; i + k != 19 && j - k != -1 && mapc[i + k][j - k] == symb ; k++)
-    //             {
-    //                 count +=1;
-    //             }
-    //             if (count >= 5)
-    //                 return player == symb ?10000:-9000;
-    //         }
-    //     }
-
-    //     for (int i = 0 ; i < 19 ; i++)
-    //     {
-    //         for (int j = 0 ; j < 19 ; j++)
-    //         {
-    //             count = 0;
-    //             symb = map[i][j];
-    //             if (symb == 0)
-    //                 continue;
-    //             for (int k = 0 ; i + k != 19 && j + k != 19 && mapc[i + k][j + k] == symb ; k++)
-    //             {
-    //                 count +=1;
-    //             }
-    //             if (count >= 5)
-    //                 return player == symb ?10000:-9000;
-    //         }
-    //     }
-
-    //     for (int i = 0 ; i < 19 ; i++)
-    //     {
-    //         for (int j = 0 ; j < 19 ; j++)
-    //         {
-    //             count = 0;
-    //             symb = map[i][j];
-    //             if (symb == 0)
-    //                 continue;
-    //             for (int k = j ; k != 19 && map[i][k] == symb ; k++)
-    //             {
-    //                 count +=1;
-    //             }
-    //             if (count >= 5)
-    //                 return player == symb ?10000:-9000;
-    //         }
-    //     }
-    //     for (int i = 0 ; i < 19 ; i++)
-    //     {
-    //         for (int j = 0 ; j < 19 ; j++)
-    //         {
-    //             count = 0;
-    //             symb = map[i][j];
-    //             if (symb == 0)
-    //                 continue;
-    //             for (int k = i ; k != 19 && mapc[k][j] == symb ; k++)
-    //             {
-    //                 count +=1;
-    //             }
-    //             if (count >= 5)
-    //                 return player == symb ?10000:-9000;
-    //         }
-    //     }
-
-    //     return 0;
-    // }
 
     public float eval(int player)
     {
+        float ret;
         hort(player);
         vert(player);
         diag1(player);
         diag2(player);
 
 
-        return ev.evaluate();
+        ret= ev.evaluate();
+        //ev.clear_stones();
+        return ret;
     }
 
     public void candidat()
@@ -405,9 +373,53 @@ public class MinMax
         }
     }
 
-    public void play(Candidat.coord c, int player)
+    private boolean in_goban(int x, int y)
     {
+        if (x >=0 && x < 19 && y >=0 && y < 19)
+            return true;
+        return false;
+    }
+
+    private boolean check_dir(int x, int y, int dx, int dy)
+    {
+        int player;
+        int count;
+
+        player = map[x][y];
+        count = 0;
+
+        for (int i=0 , j = 0; in_goban(x+i, y+j) && map[x + i][y + j] == player ; i+=dx, j+=dy)
+            count +=1;
+
+        for (int i = -dx, j = -dy ; in_goban(x + i, y + j) && map[x + i][y + j] == player ; i-=dx, j-=dy)
+            count+=1;
+
+        if (count == 5)
+            return true;
+        return false;
+    }
+
+    private boolean check_win_4_dir(int x, int y)
+    {
+        if (check_dir(x,y, 0, 1))
+            return true;
+        if (check_dir(x, y, 1, 0))
+            return true;
+        if (check_dir(x, y, 1, 1))
+            return true;
+        if (check_dir(x, y, 1, -1))
+            return true;
+        return false;
+    }
+
+
+    public boolean play(Candidat.coord c, int player)
+    {
+
         map[c.x][c.y] = player;
+
+        return check_win_4_dir(c.x, c.y);
+        
     }
 
     private int change(int player)
@@ -474,15 +486,18 @@ public class MinMax
         for (int i = 0 ; i < candidat.lst.size() ; i++)
         {
             MinMax m = new MinMax(map);
-            m.play(candidat.lst.get(i), turn);
-            values[i] = m.minmax(depth - 1, change(turn), player);
+            if (m.play(candidat.lst.get(i), turn))
+                values[i] = turn==player?10200:-9200;
+            else
+                values[i] = m.minmax(depth - 1, change(turn), player);
         }
 
         if (depth == 3)
         {
             eval(player);
             ev.display();
-            display_values(values, candidat.lst);
+            ev.clear_stones();
+            //display_values(values, candidat.lst);
         }
         if (turn == player)
             return max(values);

@@ -9,7 +9,9 @@ public class Eval
         int number;
         int strength;
         boolean type;
+        String dir;
         public stone(int nm, int str, boolean tp){this.number= nm;this.strength=str;this.type=tp;}
+        public stone(int nm, int str, boolean tp, String d){this.number= nm;this.strength=str;this.type=tp; this.dir=d;} 
     }
 
     public int [] co;
@@ -30,6 +32,17 @@ public class Eval
     {
         stones.add(new Eval.stone(number, strength, type));
     }
+    public void add_stones(int number, int strength, boolean type, String direction)
+    {
+        stones.add(new Eval.stone(number, strength, type, direction));
+    }
+
+    public void clear_stones()
+    {
+        this.free=0;
+        this.unfree4=0;
+        this.stones.clear();
+    }
 
     private float determine(Eval.stone st)
     {
@@ -46,7 +59,7 @@ public class Eval
             if (st.strength == 2)
             {
                 if (st.type)
-                    return 5000;
+                    return 4500;
                 return -5000;
             }
             if (st.strength == 1)
@@ -55,15 +68,15 @@ public class Eval
                 {
                     this.free4 +=1;
                     if (this.free4 >= 2)
-                        return 5000;
-                    return 100;
+                        return 4500;
+                    return 2000;
                 }
                 else
                 {
                     this.unfree4+=1;
                     if (this.unfree4 >= 2)
                         return -5000;
-                    return -100;
+                    return -2000;
                 }
             }
         }
@@ -76,14 +89,14 @@ public class Eval
                 {
                     this.free +=1;
                     if (this.free >= 2)
-                        return 2000;
+                        return 500;
                     return 18;
                 }
                 else
                 {
                     this.unfree+=1;
                     if (this.unfree >=2)
-                        return -2000;
+                        return -600;
                     return -18;
                 }
             }
@@ -132,7 +145,7 @@ public class Eval
         for (int i = 0 ; i < this.stones.size() ; i++)
         {
             st = this.stones.get(i);
-            System.out.printf("nm %d st %d type %d\n", st.number, st.strength, st.type?1:0);            
+            System.out.printf("nm %d st %d type %d %s\n", st.number, st.strength, st.type?1:0, st.dir);            
         }
     }
 

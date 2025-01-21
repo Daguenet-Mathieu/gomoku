@@ -21,6 +21,8 @@ import javafx.application.Platform;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
+
+
 /**
  * JavaFX App
  */
@@ -35,8 +37,8 @@ public class Gomoku extends Application {
     Game    game = new Game();
     Random random = new Random();
     boolean victory = false;
-    //int ia_color = 0;
-    int     ia_color = random.nextInt(2);
+    int ia_color = 0;
+    //int     ia_color = random.nextInt(2);
     boolean    toogle;//savoir si c'est a l'humain de jouer
     float[] dbl = new float[5];
     ArrayList<Candidat.coord> lst;
@@ -282,19 +284,19 @@ public void candidate_statistics(float[] val, ArrayList<Candidat.coord> lst) {
     
     for (int i = 0; i < lst.size(); i++) {
         Candidat.coord coord = lst.get(i);
-        System.out.println("x == " + coord.x + " y == " + coord.y);
+        //System.out.println("x == " + coord.x + " y == " + coord.y);
         
         Circle circle = new Circle(
-            size_square * (coord.x + 1),
             size_square * (coord.y + 1),
+            size_square * (coord.x + 1),
             size_square / 2,
             Color.GREEN
         );
         
-        String value = String.format("%.2f", val[i]);
+        String value = String.format("%.0f", val[i]);
         Text text = new Text(
-            size_square * (coord.x) + (size_square/2),
-            size_square * (coord.y + 1),
+            size_square * (coord.y) + (size_square/2),
+            size_square * (coord.x + 1),
             value
         );
         text.setTextOrigin(VPos.CENTER);
@@ -519,6 +521,23 @@ public void candidate_statistics(float[] val, ArrayList<Candidat.coord> lst) {
     }
 
     public static void main(String[] args) {
+        // MinMax test = new MinMax();
+        // test.map[10][10]=1;
+        // test.map[10][9]=1;
+        // test.map[10][8]=1;
+        // test.map[9][10]=1;
+        // test.map[8][11] = 1;
+        // test.map[7][12] = 2;
+        // test.map[8][10]= 2;
+        // test.map[7][9] = 2;
+        // test.map[9][9] = 2;
+        // test.map[10][7]= 2;
+
+        // test.display_map();
+
+        // test.eval(1);
+        // test.ev.display();
+        // System.exit(0);
         launch(args);  // Démarrer JavaFX
     }
 }
