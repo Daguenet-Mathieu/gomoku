@@ -20,7 +20,7 @@ public class Game {
     public SquareState[][] map;
     public boolean start = true;
 
-    public Game() {
+    public Game(){
         map = new SquareState[19][19];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {

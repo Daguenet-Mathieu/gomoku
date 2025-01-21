@@ -37,7 +37,7 @@ public class Gomoku extends Application {
     Game    game = new Game();
     Random random = new Random();
     boolean victory = false;
-    int ia_color = 0;
+    int ia_color = 1;
     //int     ia_color = random.nextInt(2);
     boolean    toogle;//savoir si c'est a l'humain de jouer
     float[] dbl = new float[5];
@@ -258,6 +258,7 @@ public class Gomoku extends Application {
         for (int i = 0; i < dbl.length; i++) {
             dbl[i] = rand.nextFloat() * (float) 100.0;
         }
+        System.out.println("last move ia : x = " + p.x + " y = " + p.y);
         if (game.val != null)
         {
             String value = String.format("%.2f", game.val);
@@ -278,40 +279,44 @@ public class Gomoku extends Application {
         return ;
     }
 
-
-public void candidate_statistics(float[] val, ArrayList<Candidat.coord> lst) {
+public void candidate_statistics(float[] val, ArrayList<Candidat.coord> lst){
     game.candidate.clear();
-    
+    printGame(game.map);
     for (int i = 0; i < lst.size(); i++) {
-        Candidat.coord coord = lst.get(i);
-        //System.out.println("x == " + coord.x + " y == " + coord.y);
-        
-        Circle circle = new Circle(
-            size_square * (coord.y + 1),
-            size_square * (coord.x + 1),
-            size_square / 2,
-            Color.GREEN
-        );
-        
-        String value = String.format("%.0f", val[i]);
-        Text text = new Text(
-            size_square * (coord.y) + (size_square/2),
-            size_square * (coord.x + 1),
-            value
-        );
-        text.setTextOrigin(VPos.CENTER);
-        text.setTextAlignment(TextAlignment.CENTER);
-        text.setFont(new Font(9));
-        
-        // Créer un groupe pour chaque cercle et son texte
-        Group group = new Group();
-        group.getChildren().addAll(circle, text);
-        
-        // Ajouter le groupe à la liste des candidats
-        game.candidate.add(group);
+        if (validMove(new Point(lst.get(i).y, lst.get(i).x), game))
+        {
+            Color couleur = Color.GREEN;
+            // Color couleur = Color.GREEN;
+            if (val[i] < 0)
+                couleur = Color.web("0xa4c8eb",1.0);
+            Candidat.coord coord = lst.get(i);
+            System.out.println("x == " + coord.x + " y == " + coord.y);
+            
+            Circle circle = new Circle(
+                size_square * (coord.y + 1),
+                size_square * (coord.x + 1),
+                size_square / 2,
+                couleur
+            );
+            
+            String value = String.format("%.0f", val[i]);
+            Text text = new Text(
+                size_square * (coord.y) + (size_square/2),
+                size_square * (coord.x + 1),
+                value
+            );
+            text.setTextOrigin(VPos.CENTER);
+            text.setTextAlignment(TextAlignment.CENTER);
+            text.setFont(new Font(9));
+            
+            // Créer un groupe pour chaque cercle et son texte
+            Group group = new Group();
+            group.getChildren().addAll(circle, text);
+            
+            // Ajouter le groupe à la liste des candidats
+            game.candidate.add(group);
+        }
     }
-    
-    // Ajouter tous les groupes au root en une seule fois
     root.getChildren().addAll(game.candidate);
 }
 
