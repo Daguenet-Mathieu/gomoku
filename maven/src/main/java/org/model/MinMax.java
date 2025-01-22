@@ -11,6 +11,7 @@ public class MinMax
     public Candidat candidat;
     public Candidat.coord best;
     public float [] values;
+    public int len;
     //private int depth;
 
     public class coord
@@ -35,13 +36,13 @@ public class MinMax
         }
     }
 
-    public MinMax(int [][]inimap)
+    public MinMax(int [][]inimap, int len)
     {
         this.map = new int[19][19];
         this.mapc = new int[19][19];
         this.ev = new Eval();
         this.candidat = new Candidat();
-        //this.depth = -1;
+        this.len = len;
 
         for (int i = 0 ; i < 19 ; i++)
         {
@@ -347,7 +348,7 @@ public class MinMax
     }
 
 
-    public float eval(int player)
+    public float eval(int player, int len)
     {
         float ret;
         hort(player);
@@ -356,7 +357,7 @@ public class MinMax
         diag2(player);
 
 
-        ret= ev.evaluate();
+        ret= ev.evaluate(len);
         //ev.clear_stones();
         return ret;
     }
@@ -470,13 +471,24 @@ public class MinMax
         }
     }
 
+    private float value_victory(int player, int turn, int len)
+    {
+        if (player == turn)
+        {
+            if (len == 0)
+                return 12000;
+            return 10000;
+        }
+        return -9200;
+    }
+
     public float minmax(int depth, int turn, int player)
     {   
         //this.depth = depth;
 
         if (depth == 0)
         {
-            return eval(player);
+            return eval(player, len);
         }
 
         candidat.load(map, depth);
@@ -485,16 +497,16 @@ public class MinMax
 
         for (int i = 0 ; i < candidat.lst.size() ; i++)
         {
-            MinMax m = new MinMax(map);
+            MinMax m = new MinMax(map, len + 1);
             if (m.play(candidat.lst.get(i), turn))
-                values[i] = turn==player?10200:-9200;
+                values[i] = value_victory(player, turn, len);
             else
                 values[i] = m.minmax(depth - 1, change(turn), player);
         }
 
         if (depth == 3)
         {
-            eval(player);
+            eval(player, 0);
             ev.display();
             ev.clear_stones();
             //display_values(values, candidat.lst);

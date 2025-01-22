@@ -37,7 +37,7 @@ public class Gomoku extends Application {
     Game    game = new Game();
     Random random = new Random();
     boolean victory = false;
-    int ia_color = 1;
+    int ia_color = 0;
     //int     ia_color = random.nextInt(2);
     boolean    toogle;//savoir si c'est a l'humain de jouer
     float[] dbl = new float[5];
@@ -245,7 +245,7 @@ public class Gomoku extends Application {
         // } catch (InterruptedException e) {
         //     System.out.println("in catch sleep");
         // }
-        if (game.first_move())
+        if (game.first_move() && ia_color== 0)
             p = new Point(10, 10);
         else
             p = game.best_move(turn, ia_color ==0?1:2);
@@ -258,7 +258,7 @@ public class Gomoku extends Application {
         for (int i = 0; i < dbl.length; i++) {
             dbl[i] = rand.nextFloat() * (float) 100.0;
         }
-        System.out.println("last move ia : x = " + p.x + " y = " + p.y);
+        //System.out.println("last move ia : x = " + p.x + " y = " + p.y);
         if (game.val != null)
         {
             String value = String.format("%.2f", game.val);
@@ -290,7 +290,7 @@ public void candidate_statistics(float[] val, ArrayList<Candidat.coord> lst){
             if (val[i] < 0)
                 couleur = Color.web("0xa4c8eb",1.0);
             Candidat.coord coord = lst.get(i);
-            System.out.println("x == " + coord.x + " y == " + coord.y);
+            //System.out.println("x == " + coord.x + " y == " + coord.y);
             
             Circle circle = new Circle(
                 size_square * (coord.y + 1),

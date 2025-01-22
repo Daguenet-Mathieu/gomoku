@@ -16,6 +16,8 @@ public class Game {
     public int nb_move;
     public ArrayList<Group> candidate;
     public Float val;
+    public long time;
+    public ArrayList<Double> timelst;
 
     public SquareState[][] map;
     public boolean start = true;
@@ -29,7 +31,9 @@ public class Game {
         }
         nb_move = 0;
         m = new MinMax();
+        m.len = 0;
         candidate = new ArrayList<Group>();
+        timelst = new ArrayList<Double>();
     }
 
     public byte[][] getMapAsByteArray() {
@@ -73,11 +77,27 @@ public class Game {
         return false;
     }
 
+    private double return_mean_time()
+    {
+        double res = 0;
+
+        for (int i = 0; i < timelst.size() ; i++)
+        {
+            res += timelst.get(i);
+        }
+        return res / timelst.size();
+    }
+
     public Point best_move(int turn, int player)
     {
         m.display_map();
+        time = System.currentTimeMillis();
         val = m.minmax(3, turn, player);
+        time = System.currentTimeMillis() - time;
+        timelst.add((double)time / 1000);
+
         m.play(m.best, turn);
+        System.out.printf("IA move at %d %d played in %f seconds mean : %f\n", m.best.y, m.best.x, (double)time / 1000, return_mean_time());
         return new Point(m.best.y, m.best.x);
     }
 
