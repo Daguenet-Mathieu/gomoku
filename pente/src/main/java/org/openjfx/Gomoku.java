@@ -132,7 +132,7 @@ public class Gomoku extends Application {
             return false;
         for (int i = 1; i < 5; i++)
         {
-            if (game[line + i][square] != game[line][square])
+            if (getColor(game[line + i], square) != color)
             {
                 return false;
             }

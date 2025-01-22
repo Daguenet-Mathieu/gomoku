@@ -55,16 +55,16 @@ public class Game {
 
     public void move(Point point, int color)
     {
-        System.out.println("coucou le move : " + color);
+        // System.out.println("coucou le move : " + color);
         if (color == 1)
             m.map[point.y][point.x] = 1;
         else
             m.map[point.y][point.x] = 2;
 
-        m.display_map();
-        System.out.println();
-        System.out.println();
-        System.out.println();
+        // m.display_map();
+        // System.out.println();
+        // System.out.println();
+        // System.out.println();
 
     }
 
