@@ -44,7 +44,7 @@ public class Eval
         this.stones.clear();
     }
 
-    private float determine(Eval.stone st)
+    private float determine(Eval.stone st, int depth)
     {
         if (st.number >= 5)
         {
@@ -117,14 +117,20 @@ public class Eval
                 return -5;
             }
             if (st.strength == 1)
+            {
                 if (st.type)
-                    return 1;
-                return -1;
+                    return -1000;
+                return 500;
+            }
+            if (st.strength == 0)
+                if (!st.type)
+                    return 5000;
+
         }
         return 0;
     }
 
-    public float evaluate()
+    public float evaluate(int depth)
     {
         Eval.stone st;
         float res = 0;
@@ -132,9 +138,9 @@ public class Eval
         for (int i = 0 ; i < this.stones.size() ; i++)
         {
             st = this.stones.get(i);
-            cur = determine(st);
+            cur = determine(st, depth);
 
-            res += determine(st);
+            res += determine(st, depth);
         }
         return res;
     }

@@ -30,6 +30,7 @@ public class Game {
         }
         nb_move = 0;
         m = new MinMax();
+        m.len = 0;
         candidate = new ArrayList<Group>();
     }
 

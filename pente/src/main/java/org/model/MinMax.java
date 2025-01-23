@@ -11,6 +11,9 @@ public class MinMax
     public Candidat candidat;
     public Candidat.coord best;
     public float [] values;
+    public int prisoners;
+    public int unprisoner;
+    public int len;
     //private int depth;
 
     public class coord
@@ -25,6 +28,8 @@ public class MinMax
         this.mapc = new int[19][19];
         this.ev = new Eval();
         this.candidat = new Candidat();
+        this.prisoners = 0;
+        this.unprisoner = 0;
         for (int i = 0 ; i < 19 ; i++)
         {
             for (int j = 0 ; j < 19 ; j++)
@@ -35,12 +40,15 @@ public class MinMax
         }
     }
 
-    public MinMax(int [][]inimap)
+    public MinMax(int [][]inimap, int len, int prisoners, int unprisoner)
     {
         this.map = new int[19][19];
         this.mapc = new int[19][19];
         this.ev = new Eval();
         this.candidat = new Candidat();
+        this.prisoners = prisoners;
+        this.unprisoner = unprisoner;
+        this.len = len;
         //this.depth = -1;
 
         for (int i = 0 ; i < 19 ; i++)
@@ -347,7 +355,7 @@ public class MinMax
     }
 
 
-    public float eval(int player)
+    public float eval(int player, int len)
     {
         float ret;
         hort(player);
@@ -356,7 +364,7 @@ public class MinMax
         diag2(player);
 
 
-        ret= ev.evaluate();
+        ret = ev.evaluate(len) + 1000 * prisoners - 1000 * unprisoner;
         //ev.clear_stones();
         return ret;
     }
@@ -410,6 +418,55 @@ public class MinMax
         if (check_dir(x, y, 1, -1))
             return true;
         return false;
+    }
+
+    private boolean remove_capture(int x, int y, int dx, int dy, int p, int o)
+    {
+        if (in_goban(x+3*dx, y+3*dy) && map[x + dx][y + dy] == o && map[x + 2 * dx][y + 2 * dy] == o && map[x + 3 * dx][y + 3 * dy] == p)
+        {
+            map[x + dx][y + dy] = 0;
+            map[x + 2 * dx][y + 2 * dy] = 0;
+            return true;
+        }
+
+        if (in_goban(x-3*dx, y - 3*dy) && map[x - dx][y - dy] == o && map[x - 2 * dx][y - 2 * dy] == o && map[x - 3 * dx][y - 3 * dy] == p)
+        {
+            map[x - dx][y - dy] = 0;
+            map[x - 2 * dx][y - 2 * dy] = 0;
+            return true;
+        }
+        return false;
+    }
+
+    private void increase_prisoners(int turn, int player)
+    {
+        if (turn == player)
+            prisoners+=2;
+        else
+            unprisoner+=2;
+    }
+
+    private void remove_captured(int x, int y, int turn, int player)
+    {  
+        final int op = turn == 1 ? 0 : 1;
+
+        if (remove_capture(x, y, 1, 0, turn, op))
+            increase_prisoners(turn, player);
+        if (remove_capture(x, y, 0, 1, turn, op))
+            increase_prisoners(turn, player);
+        if (remove_capture(x, y, 1, 1, turn, op))
+            increase_prisoners(turn, player);
+        if (remove_capture(x, y, 1, -1, turn, op))
+            increase_prisoners(turn, player);
+    }
+
+    public boolean play_pente(Candidat.coord c, int turn, int player)
+    {
+
+        map[c.x][c.y] = turn;
+        remove_captured(c.x, c.y, turn, player);
+
+        return check_win_4_dir(c.x, c.y);
     }
 
 
@@ -470,13 +527,26 @@ public class MinMax
         }
     }
 
+    private float value_victory(int player, int turn, int len)
+    {
+        if (player == turn)
+        {
+            if (len == 0)
+                return 12000;
+            return 10000;
+        }
+        return -9200;
+    }
+
+
     public float minmax(int depth, int turn, int player)
     {   
         //this.depth = depth;
 
         if (depth == 0)
         {
-            return eval(player);
+            //display_map();
+            return eval(player, len);
         }
 
         candidat.load(map, depth);
@@ -485,18 +555,21 @@ public class MinMax
 
         for (int i = 0 ; i < candidat.lst.size() ; i++)
         {
-            MinMax m = new MinMax(map);
-            if (m.play(candidat.lst.get(i), turn))
-                values[i] = turn==player?10200:-9200;
+            MinMax m = new MinMax(map, len + 1, prisoners, unprisoner);
+            if (m.play_pente(candidat.lst.get(i), turn, player))
+                values[i] = value_victory(player, turn, len);
             else
                 values[i] = m.minmax(depth - 1, change(turn), player);
         }
+        if (depth == 2)
+            display_map();
 
         if (depth == 3)
         {
-            eval(player);
+            eval(player, 0);
             ev.display();
             ev.clear_stones();
+            System.out.printf("Prisoners : %d %d\n", prisoners, unprisoner);
             //display_values(values, candidat.lst);
         }
         if (turn == player)
