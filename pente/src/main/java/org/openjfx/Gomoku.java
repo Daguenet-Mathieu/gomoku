@@ -198,7 +198,6 @@ public class Gomoku extends Application {
                     return true;
                 if (checkDiagonalRight(game.map, i, j))
                     return true;
-                // System.out.println("coucou");
             }
         }
         return false;
@@ -229,6 +228,7 @@ public class Gomoku extends Application {
         // System.out.println(" premiere case == " + game.map[y][x].color);
         // System.out.println(" deuxieme case == " + game.map[y][x + 1].color);
         // System.out.println(" trooisieme case == " + game.map[y][x + 2].color);
+        // System.out.println(" quatrieme case == " + game.map[y][x + 3].color);
 
 
         if ((game.map[y][x].color != 0 && game.map[y][x].color == color)
@@ -236,7 +236,6 @@ public class Gomoku extends Application {
          && (game.map[y][x + 2].color != 0 && game.map[y][x + 2].color != color)
          && game.map[y][x + 3].color == color)
         {
-            // System.out.println("je return true");
              return (true);
         }
         return (false);
@@ -244,43 +243,55 @@ public class Gomoku extends Application {
 
     boolean captureVertical(int color, int x, int y)
     {
+        // System.out.println(" ja passe par ici " + " y " + y + " x " + x);
+        // System.out.println(" premiere case == " + game.map[y][x].color);
+        // System.out.println(" deuxieme case == " + game.map[y][x + 1].color);
+        // System.out.println(" trooisieme case == " + game.map[y][x + 2].color);
+        // System.out.println(" quatrieme case == " + game.map[y][x + 3].color);
+
         if ((game.map[y][x].color != 0 && game.map[y][x].color == color)
          && (game.map[y + 1][x].color != 0 && game.map[y + 1][x].color != color)
          && (game.map[y + 2][x].color != 0 && game.map[y + 2][x].color != color)
          && game.map[y + 3][x].color == color)
         {
-            // System.out.println("je return true");
              return (true);
         }
-
         return (false);
     }
 
     boolean captureDiagonalRight(int color, int x, int y)
     {
+        // System.out.println(" ja passe par ici " + " y " + y + " x " + x);
+        // System.out.println(" premiere case == " + game.map[y][x].color);
+        // System.out.println(" deuxieme case == " + game.map[y][x + 1].color);
+        // System.out.println(" trooisieme case == " + game.map[y][x + 2].color);
+        // System.out.println(" quatrieme case == " + game.map[y][x + 3].color);
+
         if ((game.map[y][x].color != 0 && game.map[y][x].color == color)
          && (game.map[y + 1][x + 1].color != 0 && game.map[y + 1][x + 1].color != color)
          && (game.map[y + 2][x + 2].color != 0 && game.map[y + 2][x + 2].color != color)
          && game.map[y + 3][x + 3].color == color)
         {
-            // System.out.println("je return true");
              return (true);
         }
-
         return (false);
     }
 
     boolean captureDiagonalLeft(int color, int x, int y)
     {
+        // System.out.println(" ja passe par ici " + " y " + y + " x " + x);
+        // System.out.println(" premiere case == " + game.map[y][x].color);
+        // System.out.println(" deuxieme case == " + game.map[y][x + 1].color);
+        // System.out.println(" trooisieme case == " + game.map[y][x + 2].color);
+        // System.out.println(" quatrieme case == " + game.map[y][x + 3].color);
+
         if ((game.map[y][x].color != 0 && game.map[y][x].color == color)
          && (game.map[y + 1][x - 1].color != 0 && game.map[y + 1][x - 1].color != color)
          && (game.map[y + 2][x - 2].color != 0 && game.map[y + 2][x - 2].color != color)
          && game.map[y + 3][x - 3].color == color)
         {
-            System.out.println("je return true");
              return (true);
         }
-
         return (false);
     }
 
@@ -416,21 +427,32 @@ public class Gomoku extends Application {
         return (prisoners);
     }
 
+    void display_map()
+    {
+        for (int i = 0; i < 19; i++)
+        {
+            for (int j = 0; j < 19; j++)
+            {
+                System.out.print(game.map[i][j].color);
+            }
+            System.out.println();
+        }
+    }
 
     void check_captures(int last_move_x, int last_move_y)
     {
-        byte color;
+        System.out.println("on passe par la check capture");
+        int color = game.map[last_move_y][last_move_x].color;
         int prisoners = 0;
-        if (game.map[last_move_y][last_move_x].color == 0)
-            color = 0;
-        else
-            color = 1;
+
         prisoners += check_captures_start(color, last_move_x, last_move_y);
         prisoners += check_captures_end(color, last_move_x, last_move_y);
-        if (color == 0)
+        if (color == 1)
             game.black_prisoners += prisoners;
         else
             game.white_prisoners += prisoners;
+        System.out.println("prisonnier == " + prisoners + " prisonniers blanc == " + game.white_prisoners + " prisonniers noir " + game.black_prisoners);
+        display_map();
     }
 
     void do_ia_move(Pane root, int turn)
