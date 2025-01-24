@@ -37,7 +37,7 @@ public class Gomoku extends Application {
     Game    game = new Game();
     Random random = new Random();
     boolean victory = false;
-    int ia_color = 0;
+    int ia_color = 1;
     //int     ia_color = random.nextInt(2);
     boolean    toogle;//savoir si c'est a l'humain de jouer
     float[] dbl = new float[5];
@@ -543,6 +543,11 @@ public void candidate_statistics(float[] val, ArrayList<Candidat.coord> lst){
         // test.eval(1);
         // test.ev.display();
         // System.exit(0);
+
+        // Test t = new Test();
+        // t.run();
+        // System.exit(0);
+    
         launch(args);  // Démarrer JavaFX
     }
 }
