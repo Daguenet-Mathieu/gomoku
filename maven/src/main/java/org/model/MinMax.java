@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class MinMax
 {
-    public int [] [] map;
-    public int [] [] mapc;
+    static public int [] [] map;
+    static public int [] [] mapc;
     public Eval ev;
     public Candidat candidat;
     public Candidat.coord best;
@@ -22,8 +22,8 @@ public class MinMax
 
     public MinMax()
     {
-        this.map = new int[19][19];
-        this.mapc = new int[19][19];
+        map = new int[19][19];
+        mapc = new int[19][19];
         this.ev = new Eval();
         this.candidat = new Candidat();
         for (int i = 0 ; i < 19 ; i++)
@@ -38,8 +38,8 @@ public class MinMax
 
     public MinMax(int [][]inimap, int len)
     {
-        this.map = new int[19][19];
-        this.mapc = new int[19][19];
+        map = new int[19][19];
+        mapc = new int[19][19];
         this.ev = new Eval();
         this.candidat = new Candidat();
         this.len = len;
@@ -54,13 +54,25 @@ public class MinMax
         }
     }
 
+    public MinMax (int len)
+    {
+        // map = new int[19][19];
+        // mapc = new int[19][19];
+        this.ev = new Eval();
+        this.candidat = new Candidat();
+        this.len = len;
+
+    }
+
+
+
     public void display_map()
     {
         for (int i = 0 ; i < 19 ; i ++)
         {
             for (int j = 0 ; j < 19 ; j++)
             {
-                System.out.printf("%d", map[i][j]);
+                System.out.printf("%2d", map[i][j]);
             }
             System.out.println("");
         }
@@ -368,8 +380,8 @@ public class MinMax
         {
             for (int j = 0 ; j < 19 ; j++)
             {
-                if (this.map[i][j] == 0 && near(i, j))
-                    this.map[i][j] = 3;
+                if (map[i][j] == 0 && near(i, j))
+                    map[i][j] = 3;
             }
         }
     }
@@ -421,6 +433,11 @@ public class MinMax
 
         return check_win_4_dir(c.x, c.y);
         
+    }
+
+    public void unplay(Candidat.coord c)
+    {
+        map[c.x][c.y] = 0;
     }
 
     private int change(int player)
@@ -488,6 +505,7 @@ public class MinMax
 
         if (depth == 0)
         {
+            //display_map();
             return eval(player, len);
         }
 
@@ -497,11 +515,12 @@ public class MinMax
 
         for (int i = 0 ; i < candidat.lst.size() ; i++)
         {
-            MinMax m = new MinMax(map, len + 1);
+            MinMax m = new MinMax(len + 1);
             if (m.play(candidat.lst.get(i), turn))
                 values[i] = value_victory(player, turn, len);
             else
                 values[i] = m.minmax(depth - 1, change(turn), player);
+            m.unplay(candidat.lst.get(i));
         }
 
         if (depth == 3)
@@ -509,6 +528,7 @@ public class MinMax
             eval(player, 0);
             ev.display();
             ev.clear_stones();
+            //candidat.display_candidat(map);
             //display_values(values, candidat.lst);
         }
         if (turn == player)

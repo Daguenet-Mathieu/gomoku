@@ -281,7 +281,7 @@ public class Gomoku extends Application {
 
 public void candidate_statistics(float[] val, ArrayList<Candidat.coord> lst){
     game.candidate.clear();
-    printGame(game.map);
+    //printGame(game.map);
     for (int i = 0; i < lst.size(); i++) {
         if (validMove(new Point(lst.get(i).y, lst.get(i).x), game))
         {

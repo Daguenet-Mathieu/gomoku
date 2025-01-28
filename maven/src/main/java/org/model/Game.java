@@ -1,7 +1,7 @@
 package org.model;
+
 import org.utils.*;
 import java.util.ArrayList;
-import org.model.*;
 import javafx.scene.Group;
 
 
@@ -20,6 +20,7 @@ public class Game {
     public ArrayList<Double> timelst;
 
     public SquareState[][] map;
+    //public int [][] mmap;
     public boolean start = true;
 
     public Game(){
@@ -34,6 +35,7 @@ public class Game {
         m.len = 0;
         candidate = new ArrayList<Group>();
         timelst = new ArrayList<Double>();
+        //mmap = new int [19][19];
     }
 
     public byte[][] getMapAsByteArray() {
@@ -90,7 +92,7 @@ public class Game {
 
     public Point best_move(int turn, int player)
     {
-        m.display_map();
+        //m.display_map();
         time = System.currentTimeMillis();
         val = m.minmax(3, turn, player);
         time = System.currentTimeMillis() - time;
