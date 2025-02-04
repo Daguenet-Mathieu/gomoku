@@ -6,6 +6,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.application.Platform;
+
 
 public class App extends Application {
     private Gomoku gomoku;
@@ -13,16 +15,17 @@ public class App extends Application {
     private Pane root;
     private Scene scene;
     private Point screen = new Point();
-    private Pane accueil, settings;//les mettre dans les classes correspondantes
+    private Scene goban, accueil, settings;//les mettre dans les classes correspondantes
 
-    private int get_size(int width, int height)
+    private int get_size(int width, int heigh)
     {
-        int size = Math.min(width, height);
+        int size = Math.min(width, heigh);
         screen.x = width;
-        screen.y = height;
-        System.out.println("width : " + width + " height : " + height + " size : " + size);
+        screen.y = heigh;
+        System.out.println("width : " + width + " height : " + heigh + " size : " + size);
         return ((int)size);
     }
+
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;
@@ -30,29 +33,39 @@ public class App extends Application {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         int size = get_size((int)screenBounds.getWidth(), (int)screenBounds.getHeight());
         size /= 4;
-        gomoku = new Gomoku(size);
+        // stage.setWidth(size);
+        // stage.setHeight(size);
+        gomoku = new Gomoku(size, size);
         root = new Pane();
+        Pane goban_root = new Pane();
+
         scene = new Scene(root, size, size);
-        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+        goban = new Scene(goban_root, size, size);
+        goban_root.getChildren().add(gomoku.goban.get_goban());
+        //set les ecouteurss sur le stage? ou stur chaques scene?
+        goban.widthProperty().addListener((observable, oldValue, newValue) -> {
+            double sceneWidth = goban.getWidth();
+            double sceneHeight = goban.getHeight();
             screen.x = (int)newValue.doubleValue();
-            int new_size = get_size(screen.x, screen.y);
-            this.gomoku.goban.updateGoban(new_size);
-            System.out.println("New width: " + newValue);
+            //int new_size = get_size(screen.x, screen.y);
+            gomoku.goban.updateGoban((int)sceneHeight, (int)sceneWidth);
+            // System.out.println("New width: " + newValue);
         });
 
-        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+        goban.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double sceneWidth = goban.getWidth();
+            double sceneHeight = goban.getHeight();
             //double newHeight = newValue.doubleValue(); // newValue est un Number, donc on le convertit en double
             screen.y = (int)newValue.doubleValue();
-            int new_size = get_size(screen.x, screen.y);
-            this.gomoku.goban.updateGoban(new_size);
-            System.out.println("New height: " + newValue);
+            // int new_size = get_size(screen.x, screen.y);
+            gomoku.goban.updateGoban((int)sceneHeight, (int)sceneWidth);
+            // System.out.println("New height: " + newValue);
         });
-        stage.setWidth(size);
-        stage.setHeight(size);
         scene.setFill(Color.web("#FF6347"));
         stage.centerOnScreen();
-        stage.setScene(scene);
+        stage.setScene(goban);
         stage.show();
+        // System.out.println("heihgt " + goban.getHeight() + " size " + size);
     }
     
     public void switchScene(Scene newScene) {

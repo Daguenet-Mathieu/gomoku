@@ -3,6 +3,8 @@ import javafx.scene.shape.*;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+
 
 public class GameInfos{
         private Pane _game_infos;
@@ -13,15 +15,15 @@ public class GameInfos{
         private Pane _player_1_score;
         private Pane _player_2_score;
         private Pane _prev_next_button;//addd 2 bouttons
-        GameInfo(int board_size){
-            game_infos;
-            timers = new Pane();
-            player1_timer = new Pane();
-            player2_timer = new Pane();
-            scores = new Pane();
-            player_1_score = new Pane();
-            player_2_score = new Pane();
-            prev_next_button = new Pane();
+        public GameInfos(int board_size){
+            _game_infos = new Pane();
+            _timers = new Pane();
+            _player1_timer = new Pane();
+            _player2_timer = new Pane();
+            _scores = new Pane();
+            _player_1_score = new Pane();
+            _player_2_score = new Pane();
+            _prev_next_button = new Pane();
         };
 
 }
