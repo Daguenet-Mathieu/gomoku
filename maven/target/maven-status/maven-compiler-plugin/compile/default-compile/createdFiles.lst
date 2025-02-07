@@ -1,6 +1,8 @@
 org/model/Game$SquareState.class
 org/model/Game$1.class
+org/utils/Score.class
 org/utils/Point.class
+org/utils/Test.class
 org/openjfx/App.class
 org/model/Eval$stone.class
 org/model/Candidat$coord.class

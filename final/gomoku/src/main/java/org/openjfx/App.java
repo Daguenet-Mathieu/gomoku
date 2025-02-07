@@ -41,14 +41,14 @@ public class App extends Application {
 
         scene = new Scene(root, size, size);
         goban = new Scene(goban_root, size, size);
-        goban_root.getChildren().add(gomoku.goban.get_goban());
+        goban_root.getChildren().add(gomoku.getGameDisplay());
         //set les ecouteurss sur le stage? ou stur chaques scene?
         goban.widthProperty().addListener((observable, oldValue, newValue) -> {
             double sceneWidth = goban.getWidth();
             double sceneHeight = goban.getHeight();
             screen.x = (int)newValue.doubleValue();
             //int new_size = get_size(screen.x, screen.y);
-            gomoku.goban.updateGoban((int)sceneHeight, (int)sceneWidth);
+            gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
             // System.out.println("New width: " + newValue);
         });
 
@@ -58,7 +58,7 @@ public class App extends Application {
             //double newHeight = newValue.doubleValue(); // newValue est un Number, donc on le convertit en double
             screen.y = (int)newValue.doubleValue();
             // int new_size = get_size(screen.x, screen.y);
-            gomoku.goban.updateGoban((int)sceneHeight, (int)sceneWidth);
+            gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
             // System.out.println("New height: " + newValue);
         });
         scene.setFill(Color.web("#FF6347"));
