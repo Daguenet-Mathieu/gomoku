@@ -61,6 +61,7 @@ public class App extends Application {
             gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
             // System.out.println("New height: " + newValue);
         });
+        root.setOnMouseClicked(e -> System.out.println("Pane cliqué !"));
         scene.setFill(Color.web("#FF6347"));
         stage.centerOnScreen();
         stage.setScene(goban);

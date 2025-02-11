@@ -14,6 +14,12 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
+import javafx.scene.control.Button;
+import javafx.geometry.Insets;
+import javafx.scene.text.TextAlignment;
+import javafx.geometry.Pos;
+import javafx.geometry.Insets;
+
 // private double tempsRestant = 60.0;  // Temps en secondes
 // private double dernierAffichage = 0.0; // Temps du dernier affichage (en secondes)
 
@@ -54,6 +60,8 @@ public class GameInfos{
         private int black_time = 600000;
         private Label white_time_label;
         private Label black_time_label = new Label();
+        private Button _prev;
+        private Button _next;
 
 
         private String formatTime(int milliseconds) {//faire une fct hh mm ss et un autre mm ss micro
@@ -155,6 +163,27 @@ private void update_text() {
             _game_infos.setPrefSize(x, y);
             _game_infos.setBackground(new Background(new BackgroundFill(Color.web("#ADBAC0"), null, null)));
             addText();
+            _prev = new Button("<");
+            _next = new Button(">");
+            _prev.setPadding(Insets.EMPTY);
+            _next.setPadding(Insets.EMPTY);
+
+            // Définir la position du bouton dans le Pane
+            _prev.setLayoutX(_size_x/10);
+            _prev.setLayoutY(_size_y - _prev.getHeight() - 10);
+            _prev.setPrefWidth(_size_x / 2 - (_size_x/10));
+            _prev.setFont(javafx.scene.text.Font.font("Arial", 20));
+            
+            _next.setLayoutX(_size_x/10 + (_size_x / 2 - (_size_x/10)));
+            _next.setLayoutY(_size_y - _next.getHeight() - 10);
+            _next.setPrefWidth(_size_x / 2 - (_size_x/10));
+            _next.setFont(javafx.scene.text.Font.font("Arial", 20));
+
+            // Ajouter le bouton au Pane
+            // _prev.setPadding(new Insets(0,0,0,0));
+            _game_infos.getChildren().add(_prev);
+            _game_infos.getChildren().add(_next);
+
         }
 
         public void updateGameInfo(int new_y, int new_x){
@@ -162,12 +191,37 @@ private void update_text() {
             _size_y = new_y;
             _game_infos.setPrefSize(new_x, new_y);
             update_text();
+            _prev.setLayoutX(_size_x/10);
+            _prev.setLayoutY(_size_y - _prev.getHeight() - 10);
+            _prev.setPrefWidth(_size_x / 2 - (_size_x/10));
+
+            _next.setLayoutX(_size_x/10 + (_size_x / 2 - (_size_x/10)));
+            _next.setLayoutY(_size_y - _next.getHeight() - 10);
+            _next.setPrefWidth(_size_x / 2 - (_size_x/10));
+            _next.setFont(javafx.scene.text.Font.font("Arial", 20));
+
+            // _prev.setTextAlignment(javafx.geometry.Pos.CENTER);
+            // _prev.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
+            // Centrer le texte horizontalement
+            // _prev.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+            // _prev.setAlignment(Pos.CENTER);
+
+// Centrer le contenu du bouton (texte et image) verticalement et horizontalement
+            // _prev.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
             //modifier taille de tout les elements
         }
 
         public Pane getGameInfos()
         {
             return _game_infos;
+        }
+        public Button getPrevButton()
+        {
+            return _prev;
+        }
+        public Button getNextButton()
+        {
+            return _next;
         }
 
 }

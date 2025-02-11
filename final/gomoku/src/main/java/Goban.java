@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.input.MouseEvent;
 
 public class Goban{
     private Pane _goban;
@@ -131,7 +132,9 @@ public class Goban{
 
     }
 
-    public void init_stones(){}
+    public void init_stones(){
+
+    }
 
     public void remove_stones(ArrayList<Point> stones){};
     
@@ -153,5 +156,20 @@ public class Goban{
         for (Circle[] row : _stones) {
             allStones.addAll(allStones);
         }
+    }
+    // private void handleMouseClick(MouseEvent event) {
+    //     double x = event.getX();
+    //     double y = event.getY();
+    //     System.out.println("Pane cliqué aux coordonnées : (" + x + ", " + y + ")");
+    // }
+    // _goban.setOnMouseClicked(this::handleMouseClick);
+    public int get_margin_width(){
+        return (_width_margin_size);
+    }
+    public int get_margin_height(){
+        return (_heigh_margin_size);
+    }
+    public int getSquareSize(){
+        return (_square_size);
     }
 }

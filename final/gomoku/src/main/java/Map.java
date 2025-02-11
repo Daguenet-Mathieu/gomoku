@@ -3,6 +3,7 @@ import javafx.scene.shape.*;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
+import java.util.Arrays;
 
 public class Map{
     private int _map[][];
@@ -11,6 +12,12 @@ public class Map{
 
     public Map(int size) {
         _map = new int[size][size];
+        for (int i = 0; i < _map.length; i++) {
+            for (int j = 0; j < _map.length; j++){
+                _map[i][j] = 0;
+            }
+        }
+
         _white_prisonners = 0;
         _black_prisonners = 0;
     }
@@ -32,20 +39,28 @@ public class Map{
         _map[coordinates.y][coordinates.x] = color;
     }
 
-    public int[][] get_map()
-    {
+    public int[][] get_map(){
         return _map;
     }
-    public void setWhitePrisonners(int nb){
-        _white_prisonners += nb;
-    }
-    public void setBlackPrisonners(int nb){
-        _black_prisonners += nb;
-    }
+    // public void setWhitePrisonners(int nb){
+    //     _white_prisonners += nb;
+    // }
+    // public void setBlackPrisonners(int nb){
+    //     _black_prisonners += nb;
+    // }
     public int getWhitePrisonners(){
         return _white_prisonners;
     }
     public int getBlackPrisonners(){
         return _black_prisonners;
+    }
+
+    public void addMove(Point coord, int color){
+        _map[coord.y][coord.x] = color;
+    }
+    public void printMap(){
+        for(int i = 0; i < _map.length; i++){
+            System.out.println(Arrays.toString(_map[i]));
+    }
     }
 }
