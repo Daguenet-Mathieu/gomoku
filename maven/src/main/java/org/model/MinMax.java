@@ -1,17 +1,29 @@
 package org.model;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class MinMax
 {
     static public int [] [] map;
     static public int [] [] mapc;
+    static public ArrayList<Candidat.coord> simu =  new ArrayList<Candidat.coord>();
+    //static public int [] [] cmap;
     public Eval ev;
     public Candidat candidat;
+    //public ArrayList<Candidat.coord> can =  new ArrayList<Candidat.coord>();
     public Candidat.coord best;
+    public Candidat.coord move;
     public float [] values;
     public int len;
+    static public Miniscore scsimul;
+    static int pos_counter;
+
+    //public int [] [] imap = new int[19][19];
+
+    // public float vmin;
+    // public float vmax;
+    // public float alpha;
+    // public float beta;
     //private int depth;
 
     public class coord
@@ -20,12 +32,37 @@ public class MinMax
         int y;
     }
 
+    public void load_cur_score(Miniscore score)
+    {
+        for (int d = 0 ; d < 4 ; d++)
+        {
+            for(int i = 0 ; i < 19 ; i++)
+            {
+                for (int j = 0 ; j < 19 ; j++)
+                {
+                    scsimul.str1[d][i][j] = score.str1[d][i][j];
+                    scsimul.str2[d][i][j] = score.str2[d][i][j];  
+                }
+            }
+        }
+        scsimul.sc.one = score.sc.one;
+        scsimul.sc.two = score.sc.two;
+        pos_counter=0;
+    }
+
     public MinMax()
     {
         map = new int[19][19];
         mapc = new int[19][19];
+        //cmap = new int[19][19];
         this.ev = new Eval();
-        this.candidat = new Candidat();
+        //this.candidat = new Candidat();
+        this.move = new Candidat.coord(-1, -1);
+        MinMax.simu.add(new Candidat.coord(-1, -1));
+        scsimul = new Miniscore();
+        candidat = new Candidat();
+        pos_counter = 0;
+
         for (int i = 0 ; i < 19 ; i++)
         {
             for (int j = 0 ; j < 19 ; j++)
@@ -41,7 +78,8 @@ public class MinMax
         map = new int[19][19];
         mapc = new int[19][19];
         this.ev = new Eval();
-        this.candidat = new Candidat();
+        //this.candidat = new Candidat();
+        this.move = new Candidat.coord(-1, -1);
         this.len = len;
 
         for (int i = 0 ; i < 19 ; i++)
@@ -59,14 +97,47 @@ public class MinMax
         // map = new int[19][19];
         // mapc = new int[19][19];
         this.ev = new Eval();
-        this.candidat = new Candidat();
+        //this.candidat = new Candidat();
         this.len = len;
+        this.move = new Candidat.coord(-1, -1);
+
+    }
+
+    public MinMax (MinMax m, int depth)
+    {
+        //this.imap = new int[19][19];
+        // for (int i = 0 ; i < 19 ; i++)
+        // {
+        //     for (int j = 0 ; j < 19 ; j++)
+        //         this.imap[i][j] = m.imap[i][j];
+        // }
+        // mapc = new int[19][19];
+        this.ev = new Eval();
+        //this.candidat = new Candidat();
+        this.len = m.len + 1;
+        this.move = new Candidat.coord(-1, -1);
+        this.candidat = new Candidat();
+        // if (depth != 0)
+        //     this.candidat = new Candidat(m.candidat);
 
     }
 
 
 
     public void display_map()
+    {
+        for (int i = 0 ; i < 19 ; i ++)
+        {
+            for (int j = 0 ; j < 19 ; j++)
+            {
+                System.out.printf("%2d", map[i][j]);
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+    }
+
+    static public void display_Map()
     {
         for (int i = 0 ; i < 19 ; i ++)
         {
@@ -363,15 +434,16 @@ public class MinMax
     public float eval(int player, int len)
     {
         float ret;
-        hort(player);
-        vert(player);
-        diag1(player);
-        diag2(player);
+        // hort(player);
+        // vert(player);
+        // diag1(player);
+        // diag2(player);
 
 
-        ret= ev.evaluate(len);
+        //ret= ev.evaluate(len);
         //ev.clear_stones();
-        return ret;
+       // return ret;
+       return scsimul.sc.evaluate(player);
     }
 
     public void candidat()
@@ -428,15 +500,23 @@ public class MinMax
 
     public boolean play(Candidat.coord c, int player)
     {
-
+        this.move = c;
         map[c.x][c.y] = player;
-
+        //imap[c.x][c.y] = player;
+        //candidat.add(map, c);
+        //MinMax.simu.add(c);
+        this.candidat.save(c);
+        scsimul.analyse_move(c.x, c.y, player);
+        //this.scsimul.analyse_move(c.x, player, player);
         return check_win_4_dir(c.x, c.y);
         
     }
 
-    public void unplay(Candidat.coord c)
+    public void unplay(Candidat.coord c, int depth)
     {
+            //MinMax.simu.remove(simu.size() - 1);
+        //    candidat.remove(map, c);
+        scsimul.analyse_unmove(c.x, c.y, map[c.x][c.y]);
         map[c.x][c.y] = 0;
     }
 
@@ -499,35 +579,105 @@ public class MinMax
         return -9200;
     }
 
+    // void update_val(float val, int turn, int player)
+    // {
+    //     if (turn !=player)
+    //         vmin = Math.min(vmin, val);
+    //     else
+    //         vmax = Math.max(vmax, val);
+    // }
+
+    // void update_alpha_beta(float val, int turn, int player)
+    // {
+    //     if (turn != player)
+    //     {
+    //         beta = Math.min(beta, val);
+    //     }
+    //     else
+    //         alpha = Math.max(alpha, val);
+    // }
+    private void info()
+    {
+        display_map();
+        scsimul.display();
+        System.out.printf("position %d\n", pos_counter);
+    }
+
     public float minmax(int depth, int turn, int player)
     {   
         //this.depth = depth;
+        int nb_candidates;
+
+        nb_candidates = candidat.old_load(map, depth);
+        // if (depth != 0)
+        //     System.out.printf("nb candidates %d", nb_candidates);
+        //can = new ArrayList<Candidat.coord>(candidat.lst);
+        // if (depth == 2)
+        // {
+        //     System.out.printf("move is %d %d size %d\n", move.x, move.y, nb_candidates);
+        //     candidat.display_candidat(map);
+        // }
+
+        // if (pos_counter > 200)
+        //     System.exit(0);
+        // if (pos_counter %10 == 0)
+        //     info();
 
         if (depth == 0)
         {
-            //display_map();
+            // display_map();
+            // candidat.display_candidat(map);
+            pos_counter++;
+            // if (pos_counter == 10)
+            //     System.exit(0);
             return eval(player, len);
         }
 
-        candidat.load(map, depth);
 
-        values = new float[candidat.lst.size()];
+        values = new float[nb_candidates];
+        //System.out.printf("Value size %d\n", values.length);
 
-        for (int i = 0 ; i < candidat.lst.size() ; i++)
+        //for (int i = nb_candidates - 1 ; i != -1 ; i--)
+        for (int i = 0 ; i < nb_candidates ; i++)
         {
-            MinMax m = new MinMax(len + 1);
+            MinMax m = new MinMax(this, depth);
             if (m.play(candidat.lst.get(i), turn))
                 values[i] = value_victory(player, turn, len);
             else
                 values[i] = m.minmax(depth - 1, change(turn), player);
-            m.unplay(candidat.lst.get(i));
+
+            // update_val(values[i], turn, player);
+            // if (turn != player && alpha >= vmin)
+            // {
+            //     best = candidat.lst.get(i);
+            //     return vmin;
+            // }
+            // else if (turn == player && vmax >= beta)
+            // {
+            //     best = candidat.lst.get(i);
+            //     return vmax;
+            // }
+            // update_alpha_beta(values[i], turn, player);
+            m.unplay(m.move, depth);
         }
 
-        if (depth == 3)
+        // if (depth == 2)
+        // {
+        //     for (int i = 0 ; i < values.length ; i++)
+        //         System.out.printf("%f ", values[i]);
+        //     System.out.println();
+        // }
+
+        if (depth == Game.max_depth)//max_dep
         {
             eval(player, 0);
             ev.display();
             ev.clear_stones();
+
+            //scsimul.display();
+        
+            //display_map();
+            //candidat.clear();
             //candidat.display_candidat(map);
             //display_values(values, candidat.lst);
         }

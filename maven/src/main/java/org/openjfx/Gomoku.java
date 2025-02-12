@@ -276,6 +276,10 @@ public class Gomoku extends Application {
             root.getChildren().add(candidatText);
         }
         candidate_statistics(game.m.values, game.m.candidat.lst);
+        // System.out.println("\nBIG BORD");
+        // game.m.display_map();
+        // game.scbord.display();
+        // System.out.println("    ");
         return ;
     }
 
@@ -544,7 +548,7 @@ public void candidate_statistics(float[] val, ArrayList<Candidat.coord> lst){
         // test.ev.display();
         // System.exit(0);
 
-        // Test t = new Test();
+        // NewTest t = new NewTest();
         // t.run();
         // System.exit(0);
     

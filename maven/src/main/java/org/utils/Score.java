@@ -14,9 +14,18 @@ public class Score {
     public int victory(int num)
     {
         if (num == 1)
-            this.one = 1000;
+            this.one += 1000;
         else
-            this.two = 1000;
+            this.two += 1000;
+        return num;
+    }
+
+    public int unvictory(int num)
+    {
+        if (num == 1)
+            this.one -= 1000;
+        else
+            this.two -= 1000;
         return num;
     }
 
@@ -42,6 +51,14 @@ public class Score {
         {
             this.two = this.two - old + nw;
         }
+    }
+
+    public int evaluate(int player)
+    {
+        if (player == 1 )
+            return one - two;
+        else
+            return two - one;
     }
 
 

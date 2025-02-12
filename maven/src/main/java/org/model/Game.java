@@ -13,11 +13,13 @@ public class Game {
         WHITE
     }
     public MinMax m;
+    public Miniscore scbord =  new Miniscore();
     public int nb_move;
     public ArrayList<Group> candidate;
     public Float val;
     public long time;
     public ArrayList<Double> timelst;
+    static public int max_depth;
 
     public SquareState[][] map;
     //public int [][] mmap;
@@ -35,6 +37,8 @@ public class Game {
         m.len = 0;
         candidate = new ArrayList<Group>();
         timelst = new ArrayList<Double>();
+        //max_depth = 5;
+        max_depth = 5;
         //mmap = new int [19][19];
     }
 
@@ -61,9 +65,17 @@ public class Game {
     public void move(Point point, SquareState color)
     {
         if (color == SquareState.BLACK)
-            m.map[point.y][point.x] = 1;
+        {
+            MinMax.map[point.y][point.x] = 1;
+            scbord.analyse_move(point.y, point.x, 1);
+            //this.m.imap[point.y][point.x] = 1;
+        }
         else
-            m.map[point.y][point.x] = 2;
+        {
+            MinMax.map[point.y][point.x] = 2;
+            scbord.analyse_move(point.y, point.x, 2);
+            //this.m.imap[point.y][point.x] = 2;
+        }
         map[point.y][point.x] = color;
 
         //m.display_map();
@@ -90,16 +102,25 @@ public class Game {
         return res / timelst.size();
     }
 
+
     public Point best_move(int turn, int player)
     {
         //m.display_map();
         time = System.currentTimeMillis();
-        val = m.minmax(3, turn, player);
+        m.load_cur_score(scbord);
+        val = m.minmax(max_depth, turn, player);
+        //MinMax.candidat.clear();
         time = System.currentTimeMillis() - time;
         timelst.add((double)time / 1000);
+        if ((double)time/1000 > 0.6)
+        {
+            max_depth = max_depth == 1 ? 1 : max_depth - 1;
+            System.out.printf("max depth decreesed to %d\n", max_depth);
+        }
 
         m.play(m.best, turn);
-        System.out.printf("IA move at %d %d played in %f seconds mean : %f\n", m.best.y, m.best.x, (double)time / 1000, return_mean_time());
+        System.out.printf("IA move at %d %d played in %f seconds (%d pos) mean : %f\n", m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter,return_mean_time());
+
         return new Point(m.best.y, m.best.x);
     }
 
