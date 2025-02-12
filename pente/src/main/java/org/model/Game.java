@@ -82,6 +82,7 @@ public class Game {
     public Point best_move(int turn, int player)
     {
         m.display_map();
+        Candidat.cmap = new int[19][19];
         val = m.minmax(3, turn, player);
         m.play(m.best, turn);
         return new Point(m.best.y, m.best.x);

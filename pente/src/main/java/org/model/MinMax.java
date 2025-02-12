@@ -546,6 +546,7 @@ public class MinMax
         if (depth == 0)
         {
             //display_map();
+            //candidat.display_candidat(map);
             return eval(player, len);
         }
 
