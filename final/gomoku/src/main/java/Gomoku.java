@@ -25,24 +25,35 @@ public class Gomoku
     private  Pane _goban_pane;
     private Pane _game_infos_pane;
     private int _nb_line = 19;
-    public Gomoku(int heigh, int width){
+    private int map_index;
+    private Rules rule = new GomokuRules();
+    public Gomoku(int heigh, int width)/*prendra les regles en paramettre vu que connu au clic*/{
+        map_index = 1;
         _map = new ArrayList<Map>();
         _map.add(new Map(_nb_line));
         game_display = new Pane();
         _game_infos_size_x = width / 4;
         gameInfos = new GameInfos(heigh, _game_infos_size_x);
         //faire le new gamedisplay donner 1/3 largeur
-        goban = new Goban(heigh, width = _game_infos_size_x, 19);//nb ligne a definir plus tRD //donner 2/3 largeur
+        goban = new Goban(heigh, _game_infos_size_x, 19);//nb ligne a definir plus tRD //donner 2/3 largeur
         _goban_pane = goban.get_goban();
         _game_infos_pane = gameInfos.getGameInfos();
         _goban_pane.setLayoutX(_game_infos_size_x);
         game_display.getChildren().addAll(_game_infos_pane, _goban_pane);
         gameInfos.getPrevButton().setOnAction(event -> {
+            if (map_index > 0){
+                map_index--;
+                goban.updateFromMap(_map.get(map_index));
+            }
             // Action à réaliser lors du clic
             // stones[i][j].setVisible(true/false) et setFill(Color.BLACK/WHITE) parcourrir map et pierres
             System.out.println("Le bouton prev a été cliqué !");
         });
         gameInfos.getNextButton().setOnAction(event -> {
+            if (map_index < _map.size() - 1){
+                map_index++;
+                goban.updateFromMap(_map.get(map_index));
+            }
             // Action à réaliser lors du clic
             System.out.println("Le bouton next a été cliqué !");
         });
@@ -98,6 +109,8 @@ public class Gomoku
             y = Math.round(y);
 
             System.out.println("x- margin == " + (x) + " y - margin == " +  (y));
+            if (!rule.isValidMove(new Point((int)x, (int)y) , _map))
+                return ;
             // System.out.println("goban cliqué aux coordonnées : (" + (x - margin_w) / square + ", " + (y - margin_h) / square + ")");
             //check legalite du coup avec les regles si ok ajouter le coup et enlever les prisonniers
             // int i = ((int)x - margin_w) / square;
@@ -111,7 +124,8 @@ public class Gomoku
             //add 0 si y a des prisonniers
             _map.get(_map.size() -1).printMap();
             System.out.println("size map == " + _map.size());
-
+            goban.updateFromMap(_map.get(_map.size() -1));
+            map_index = _map.size() - 1;
         });
 
     }

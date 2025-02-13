@@ -1,7 +1,6 @@
 package org.openjfx;
 import javafx.scene.shape.*;
 import java.util.ArrayList;
-import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Background;
@@ -84,15 +83,15 @@ public class Goban{
         _current_move = 0;
         _game_states = new ArrayList<Map>();
         _game_states.add(new Map(_size));
-        _stones = new Circle[_size][_size];
+        _stones = new Circle[_nb_line][_nb_line];
 
         _hoshis = new ArrayList<Circle>();
         _lines = new ArrayList<Line>();
         init_square_size();
         init_margin_size(heigh, width);
-        init_stones();
         init_lines();
         init_hoshi();
+        init_stones();
         build_goban();
     }
     
@@ -129,14 +128,43 @@ public class Goban{
         init_square_size();
         init_margin_size(new_y, new_x);
         update_lines();
+        stones_responsivity();
+    }
+
+    private void stones_responsivity(){
+        for (int i = 0; i < _stones.length; i++){
+            for (int j = 0; j < _stones[i].length; j++){
+                _stones[i][j].setRadius(_square_size/2);
+                _stones[i][j].setCenterX((_square_size * j) + _width_margin_size);
+                _stones[i][j].setCenterY((_square_size * i) + _heigh_margin_size);
+            }
+        }
 
     }
 
     public void init_stones(){
 
+        System.out.println("_stones.length == " + _stones.length + " _stones[0].length == " + _stones[0].length);
+        for (int i = 0; i < _stones.length; i++){
+            for (int j = 0; j < _stones[i].length; j++){
+                // System.out.println("set stone i == " + i + " j == " + j + " width == " + ((_square_size * j) + _width_margin_size + (_square_size/2)) + " heght == " + ((_square_size * j) + _heigh_margin_size + (_square_size/2)));
+                _stones[i][j] = new Circle();
+                _stones[i][j].setRadius(_square_size/2);
+                _stones[i][j].setCenterX((_square_size * j) + _width_margin_size);
+                _stones[i][j].setCenterY((_square_size * i) + _heigh_margin_size);
+                _stones[i][j].setStroke(Color.TRANSPARENT);
+                _stones[i][j].setFill(Color.BLUE); 
+                _stones[i][j].setStrokeWidth(1);
+                _stones[i][j].setVisible(false);
+            }
+        }
     }
 
-    public void remove_stones(ArrayList<Point> stones){};
+    public void remove_stones(ArrayList<Point> stones){
+        for (Point coordinates : stones) {
+            _stones[coordinates.y][coordinates.x].setVisible(false);
+        }
+    };
     
     public void remove_stone(Point coordinates) {
         _stones[coordinates.y][coordinates.x].setVisible(false);
@@ -152,10 +180,13 @@ public class Goban{
     private void build_goban() {
         _goban.getChildren().addAll(_lines);
         _goban.getChildren().addAll(_hoshis);
-        ArrayList<Circle> allStones = new ArrayList<Circle>();
-        for (Circle[] row : _stones) {
-            allStones.addAll(allStones);
+        for (int i = 0; i < _stones.length; i++){
+            for (int j = 0; j < _stones[i].length; j++){
+                _goban.getChildren().add(_stones[i][j]);
+            }
         }
+
+        
     }
     // private void handleMouseClick(MouseEvent event) {
     //     double x = event.getX();
@@ -172,4 +203,27 @@ public class Goban{
     public int getSquareSize(){
         return (_square_size);
     }
+
+    public void updateFromMap(Map gameMap) {
+    int[][] board = gameMap.get_map();
+    
+    for (int i = 0; i < board.length; i++) {
+        for (int j = 0; j < board[i].length; j++) {
+            Circle stone = _stones[i][j];
+            
+            if (board[i][j] == 0) {
+                stone.setVisible(false);
+            } else {
+                stone.setVisible(true);
+                if (board[i][j] == 1) {
+                    stone.setFill(Color.BLACK);
+                    // _stones[i][j].setStroke(Color.BLACK);
+                } else if (board[i][j] == 2) {
+                    stone.setFill(Color.SNOW);
+                    // _stones[i][j].setStroke(Color.SNOW);
+                }
+            }
+        }
+    }
+}
 }

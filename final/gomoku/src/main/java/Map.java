@@ -48,6 +48,15 @@ public class Map{
     // public void setBlackPrisonners(int nb){
     //     _black_prisonners += nb;
     // }
+
+    public void addWhitePrisonners(){
+
+    }
+
+    public void addBlackPrisonners(){
+
+    }
+
     public int getWhitePrisonners(){
         return _white_prisonners;
     }
