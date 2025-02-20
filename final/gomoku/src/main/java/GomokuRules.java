@@ -16,7 +16,9 @@ public class GomokuRules implements Rules {
     }
 
     @Override
-    public boolean endGame(Map map) {
+    public boolean endGame(Map map, Point point) {
+        if (check_five(map, point))
+            return true;
         // Implémentation d'une logique de fin de partie pour le Gomoku.
         // On pourrait par exemple vérifier si un joueur a aligné 5 pierres consécutives.
         
@@ -25,7 +27,7 @@ public class GomokuRules implements Rules {
     }
     @Override
     public String getGameType() {
-        return "Gomoku";  // Le type de jeu est Go
+        return "Gomoku";
     }
     @Override
     public ArrayList<Point> get_forbiden_moves(){
@@ -37,3 +39,4 @@ public class GomokuRules implements Rules {
         return new ArrayList<Point>();
     }
 }
+

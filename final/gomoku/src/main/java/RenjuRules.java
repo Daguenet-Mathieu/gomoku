@@ -20,7 +20,7 @@ public class RenjuRules implements Rules {
     }
 
     @Override
-    public boolean endGame(Map map) {
+    public boolean endGame(Map map, Point point) {
         // Implémentation d'une logique de fin de partie pour le Gomoku.
         // On pourrait par exemple vérifier si un joueur a aligné 5 pierres consécutives.
         

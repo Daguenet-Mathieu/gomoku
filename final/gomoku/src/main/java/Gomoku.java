@@ -126,6 +126,10 @@ public class Gomoku
             System.out.println("size map == " + _map.size());
             goban.updateFromMap(_map.get(_map.size() -1));
             map_index = _map.size() - 1;
+            if (rule.endGame(_map.get(_map.size() - 1), new Point((int)x, (int)y)))
+                System.out.println("partie finie!");
+            else
+                System.out.println("non!");
         });
 
     }

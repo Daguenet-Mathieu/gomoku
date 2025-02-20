@@ -20,14 +20,14 @@ public class PenteRules implements Rules {
     }
 
     @Override
-    public boolean endGame(Map map) {
+    public boolean endGame(Map map, Point point) {
         //5 ou plus allignes 5 paires captures 
     return false;
     }
 
     @Override
     public String getGameType() {
-        return "Pente";  // Le type de jeu est Go
+        return "Pente";
     }
     @Override
     public ArrayList<Point> get_forbiden_moves(){
