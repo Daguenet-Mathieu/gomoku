@@ -9,6 +9,9 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.control.Button;
 
+//coder les free 3et reccup list coup interdits + prisonnier et liste prisonniers et fin de parties sur 10 prisioniers //pente et renju faire des emthodes defaut dans rules
+//mettre qulques boutons test dans home choix des regles + temps (faire ecoulement du temps)  + choix du type de joueur noir et blanc( humain ou machine?) +  
+
 public class Gomoku
 {
     private Pane game_display;
@@ -22,24 +25,54 @@ public class Gomoku
     private Goban goban;
     private GameInfos gameInfos;
     private int _game_infos_size_x;
+    private int _game_infos_size_y;
     private  Pane _goban_pane;
     private Pane _game_infos_pane;
     private int _nb_line = 19;
     private int map_index;
     private Rules rule = new GomokuRules();
+    private Pane _end_popin = new Pane();
+    private Button _replay;
+    private Button _back_home;
+    private Home home_object = new Home(){};
+
+    public void reset_gomoku(){
+        _map.clear();
+        _map.add(new Map(_nb_line));
+        map_index = 0;
+        rule = new GomokuRules();
+        goban.updateFromMap(_map.get(_map.size() - 1));
+        gameInfos.clear();
+        _end_popin.setVisible(false);
+    }
+
+
     public Gomoku(int heigh, int width)/*prendra les regles en paramettre vu que connu au clic*/{
         map_index = 1;
         _map = new ArrayList<Map>();
         _map.add(new Map(_nb_line));
         game_display = new Pane();
+        _end_popin.setVisible(false);
+        _end_popin.setStyle("-fx-background-color: orange;");
+        _replay = new Button("Replay");
+        _back_home = new Button("Back Home");
+        _end_popin.getChildren().addAll(_replay, _back_home);
+        _end_popin.setPrefSize(100, 40);
+        _replay.setPrefWidth(_end_popin.getPrefWidth() / 2);
+        _back_home.setPrefWidth(_end_popin.getPrefWidth() / 2);
+        _back_home.setLayoutX(_end_popin.getPrefWidth() / 2);
         _game_infos_size_x = width / 4;
         gameInfos = new GameInfos(heigh, _game_infos_size_x);
         //faire le new gamedisplay donner 1/3 largeur
+        _game_infos_size_y = heigh;
         goban = new Goban(heigh, _game_infos_size_x, 19);//nb ligne a definir plus tRD //donner 2/3 largeur
         _goban_pane = goban.get_goban();
-        _game_infos_pane = gameInfos.getGameInfos();
+        _game_infos_pane = gameInfos.getGameInfos();//donner les temps en parametres//donnerl e temps en parametre et des getteur pour cehck la fin del a game //ajouter les temps dans la map aussi
         _goban_pane.setLayoutX(_game_infos_size_x);
-        game_display.getChildren().addAll(_game_infos_pane, _goban_pane);
+        game_display.getChildren().addAll(_game_infos_pane, _goban_pane, _end_popin);
+        _end_popin.setLayoutX(_game_infos_size_x / 2);
+        _end_popin.setLayoutY(_game_infos_size_y / 2);
+
         gameInfos.getPrevButton().setOnAction(event -> {
             if (map_index > 0){
                 map_index--;
@@ -126,8 +159,10 @@ public class Gomoku
             System.out.println("size map == " + _map.size());
             goban.updateFromMap(_map.get(_map.size() -1));
             map_index = _map.size() - 1;
-            if (rule.endGame(_map.get(_map.size() - 1), new Point((int)x, (int)y)))
+            if (rule.endGame(_map.get(_map.size() - 1), new Point((int)x, (int)y))){
                 System.out.println("partie finie!");
+                _end_popin.setVisible(true);
+            }
             else
                 System.out.println("non!");
         });
@@ -136,20 +171,34 @@ public class Gomoku
 
     public void updateGameDisplay(int new_y, int new_x){
         _game_infos_size_x = new_x / 4;
+        _game_infos_size_y = new_y;
         System.out.println("\t\t\tgame info size " + _game_infos_size_x);
         gameInfos.updateGameInfo(new_y, _game_infos_size_x);
         goban.updateGoban(new_y, new_x - _game_infos_size_x);
         _goban_pane.setLayoutX(_game_infos_size_x);
+        _end_popin.setLayoutX(new_x / 2);
+        _end_popin.setLayoutY(_game_infos_size_y / 2);
+
     }
 
     public Pane getGameDisplay(){
         System.out.println("\t\t\tgame info size " + _game_infos_size_x);
         _goban_pane.setLayoutX(_game_infos_size_x);
+         _end_popin.setLayoutX(_game_infos_size_x / 2);
+        _end_popin.setLayoutY(_game_infos_size_y / 2);
         return game_display;
     }
 
     public boolean play_move(Point coord){
         return true;//check les regles add dans la liste de map + mettr a jour l'affichage et gerer les timmers mettre a jour le last time play changer celui du compteur 
+    }
+
+    public Button get_home_button(){
+        return _back_home;
+    }
+
+    public Button get_replay_button(){
+        return _replay;
     }
 
     //get setting display

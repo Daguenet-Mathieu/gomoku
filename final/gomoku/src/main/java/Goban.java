@@ -21,7 +21,6 @@ public class Goban{
     private int _heigh_margin_size;
     private int _width_margin_size;
     private int _current_move; 
-    private ArrayList<Map> _game_states;
 
     private void init_margin_size(int heigh, int width){
         int goban_size = _square_size * (_nb_line - 1);
@@ -81,8 +80,7 @@ public class Goban{
         _nb_line = nb_line;
         _nb_move = 0;
         _current_move = 0;
-        _game_states = new ArrayList<Map>();
-        _game_states.add(new Map(_size));
+        // _game_states.add(new Map(_size));
         _stones = new Circle[_nb_line][_nb_line];
 
         _hoshis = new ArrayList<Circle>();
@@ -205,25 +203,26 @@ public class Goban{
     }
 
     public void updateFromMap(Map gameMap) {
-    int[][] board = gameMap.get_map();
-    
-    for (int i = 0; i < board.length; i++) {
-        for (int j = 0; j < board[i].length; j++) {
-            Circle stone = _stones[i][j];
-            
-            if (board[i][j] == 0) {
-                stone.setVisible(false);
-            } else {
-                stone.setVisible(true);
-                if (board[i][j] == 1) {
-                    stone.setFill(Color.BLACK);
-                    // _stones[i][j].setStroke(Color.BLACK);
-                } else if (board[i][j] == 2) {
-                    stone.setFill(Color.SNOW);
-                    // _stones[i][j].setStroke(Color.SNOW);
+        int[][] board = gameMap.get_map();
+        
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                Circle stone = _stones[i][j];
+                
+                if (board[i][j] == 0) {
+                    stone.setVisible(false);
+                }
+                else {
+                    stone.setVisible(true);
+                    if (board[i][j] == 1) {
+                        stone.setFill(Color.BLACK);
+                        // _stones[i][j].setStroke(Color.BLACK);
+                    } else if (board[i][j] == 2) {
+                        stone.setFill(Color.SNOW);
+                        // _stones[i][j].setStroke(Color.SNOW);
+                    }
                 }
             }
         }
     }
-}
 }

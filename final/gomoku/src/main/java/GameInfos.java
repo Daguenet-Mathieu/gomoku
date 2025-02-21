@@ -223,5 +223,8 @@ private void update_text() {
         {
             return _next;
         }
-
+        public void clear(){
+            // reinitialiser le texte du temps et les variables
+            //reinitioaliser l'affichage des prisonnier // peut etre a faire au niveau superieur?
+        }
 }
