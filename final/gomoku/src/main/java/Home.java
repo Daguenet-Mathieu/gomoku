@@ -1,4 +1,8 @@
 package org.openjfx;
+import javafx.scene.layout.Pane;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+
 
 public class Home{
     private int white_time;
@@ -8,7 +12,9 @@ public class Home{
     private int rule;
     private int komi;
     private int handicap;
+    
     //private Pane pane
+    private HomePage home_page = new HomePage();
 
     Home(){}
 
@@ -37,7 +43,18 @@ public class Home{
     public int get_komi(){
         return komi;
     }
+
+    // public Pane getPage(){
+    //     return home_page.page;
+    // }
+
+    public Pane getHomePage(){
+        return home_page.getHomePage();
+    }
     // public Pane get_home_pane(){
     //     return pane;
     // }
+    public Button getValidationButton(){
+        return home_page.getValidationButton();
+    }
 }
