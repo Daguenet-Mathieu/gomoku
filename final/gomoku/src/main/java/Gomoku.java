@@ -12,6 +12,9 @@ import javafx.scene.control.Button;
 //coder les free 3et reccup list coup interdits + prisonnier et liste prisonniers et fin de parties sur 10 prisioniers //pente et renju faire des emthodes defaut dans rules
 //mettre qulques boutons test dans home choix des regles + temps (faire ecoulement du temps)  + choix du type de joueur noir et blanc( humain ou machine?) +  
 
+//mettrre en place fct d'event pour les assigner a chaque creation
+//regler le probeleme responsvite et mettre un interval pour que l'ia joue et pour check l'ecoulement du temps //stocker dans map le temps qu'a pris le coup
+
 public class Gomoku
 {
     private Pane game_display;
@@ -46,9 +49,28 @@ public class Gomoku
         _end_popin.setVisible(false);
     }
 
+    public Timeline createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
+            if (ia_turn()) {
+                do_ia_move();
+            }
+            count_time();
+        });
+
+        Timeline gameLoop = new Timeline(keyFrame);
+        gameLoop.setCycleCount(Timeline.INDEFINITE);
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(5));
+        delay.setOnFinished(e -> gameLoop.play());
+        delay.play();
+
+        return gameLoop;
+    }   
+
 
     public Gomoku(int heigh, int width)/*prendra les regles en paramettre vu que connu au clic*/{
         map_index = 1;
+        System.out.println("height == " + heigh + " width == " + width);
         _map = new ArrayList<Map>();
         _map.add(new Map(_nb_line));
         game_display = new Pane();
@@ -65,7 +87,7 @@ public class Gomoku
         gameInfos = new GameInfos(heigh, _game_infos_size_x);
         //faire le new gamedisplay donner 1/3 largeur
         _game_infos_size_y = heigh;
-        goban = new Goban(heigh, _game_infos_size_x, 19);//nb ligne a definir plus tRD //donner 2/3 largeur
+        goban = new Goban(heigh, width - _game_infos_size_x, 19);//nb ligne a definir plus tRD //donner 2/3 largeur
         _goban_pane = goban.get_goban();
         _game_infos_pane = gameInfos.getGameInfos();//donner les temps en parametres//donnerl e temps en parametre et des getteur pour cehck la fin del a game //ajouter les temps dans la map aussi
         _goban_pane.setLayoutX(_game_infos_size_x);

@@ -9,9 +9,13 @@ public class Map{
     private int _map[][];
     private int _white_prisonners;
     private int _black_prisonners;
+    private boolean _pass;
+    int _move_time;
 
     public Map(int size) {
+        _move_time = 0;
         _map = new int[size][size];
+        _pass = false;
         for (int i = 0; i < _map.length; i++) {
             for (int j = 0; j < _map.length; j++){
                 _map[i][j] = 0;
@@ -23,6 +27,8 @@ public class Map{
     }
 
     public Map(Map other) {
+        _move_time = 0;
+        _pass = false;
         _map = new int[other.getSize()][other.getSize()];
         for (int i = 0; i < _map.length; i++) {
             System.arraycopy(other._map[i], 0, _map[i], 0, _map[i].length);
@@ -65,8 +71,21 @@ public class Map{
     }
 
     public void addMove(Point coord, int color){
-        _map[coord.y][coord.x] = color;
+        if (coord == null)
+            _pass = true;
+        else
+            _map[coord.y][coord.x] = color;
     }
+
+    public void set_move_time(int time){
+        _move_time = time;
+    }
+
+    public int get_move_time(int time){
+        return _move_time;
+    }
+
+
     public void printMap(){
         for(int i = 0; i < _map.length; i++){
             System.out.println(Arrays.toString(_map[i]));

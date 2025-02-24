@@ -24,6 +24,86 @@ public class App extends Application {
     private Home home_page = new Home();
     //class settings pour connaitre les preference du joueur couleur des pierres goban etc et donner au gomoku
     //choix temps dans le home en meme temps que le choix des regles et des joueurs
+
+    set_home_event(){
+        home.widthProperty().addListener((observable, oldValue, newValue) -> {
+            // home.setPrefWidth(newValue.doubleValue());
+            System.out.println("redimentionnement de home!!!!!!!!!!!!!!!!!1");
+            // home_body.setPrefHeight((int)newValue);
+        });
+        home.heightProperty().addListener((observable, oldValue, newValue) -> {
+            // home.setPrefHeight(newValue.doubleValue());
+            // home_body.setPrefHeight((int)newValue);
+            System.out.println("redimentionnement de home!!!!!!!!!!!!!!!!!1");
+
+        });
+        home_page.getValidationButton().setOnMouseClicked(event -> {
+            double scenex = stage.getWidth();
+            double sceney = stage.getHeight();
+            System.out.println(" goban width == " + scenex + " heigh " + sceney);
+            //recuperer les datas si invalide les mettres en valeurs et laisserl a page telle qu'elle
+            gomoku= new Gomoku((int)sceney, (int)scenex); //appeler fct qui set toutes les infos
+            goban_root = new Pane();
+            goban = new Scene(goban_root, scenex, sceney);
+            set_goban_event();
+            goban_root.getChildren().add(gomoku.getGameDisplay()); // Ajout du texte à home_root
+            switchScene(goban);
+        });
+    }
+
+    private void set_goban_event(){
+        gomoku.get_home_button().setOnMouseClicked(event -> {
+            System.out.println("promis un jour ce bouton sera fonctionnel");
+            double scenex = stage.getWidth();
+            double sceney = stage.getHeight();
+            System.out.println("hone width == " + scenex + " heigh " + sceney);
+            home_root = new Pane();
+            home = new Scene(home_root, scenex, sceney);
+            set_home_event();
+            home_root.getChildren().add(home_page.getHomePage()); // Ajout du texte à home_root
+
+
+            switchScene(home);
+            // Text homeText2 = new Text(100, 100, "Bienvenue sur la scène Home!");
+            // homeText2.setFill(Color.BLACK);
+            // home_root.getChildren().add(homeText2); // Ajout du texte à home_root
+            // home_root.getChildren().add(home_body);
+            // home.setFill(Color.web("#FF6347"));
+
+            home_root.setStyle("-fx-background-color: #FF6347;");
+            home_root.getChildren().add(home_body);
+
+        });
+
+        gomoku.get_replay_button().setOnMouseClicked(event -> {
+            gomoku.reset_gomoku();
+        });
+
+        goban.widthProperty().addListener((observable, oldValue, newValue) -> {
+            double sceneWidth = goban.getWidth();
+            double sceneHeight = goban.getHeight();
+            // goban_root.getChildren().add(gomoku.getGameDisplay());
+
+            System.out.println("size x == " + size_x + " size y == " + size_y);
+            screen.x = (int)newValue.doubleValue();
+            //int new_size = get_size(screen.x, screen.y);
+            gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
+            // System.out.println("New width: " + newValue);
+        });
+        goban.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double sceneWidth = goban.getWidth();
+            double sceneHeight = goban.getHeight();
+            size_y = (int)goban.getHeight();
+            System.out.println("size x == " + size_x + " size y == " + size_y);
+            //double newHeight = newValue.doubleValue(); // newValue est un Number, donc on le convertit en double
+            screen.y = (int)newValue.doubleValue();
+            // int new_size = get_size(screen.x, screen.y);
+            gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
+            // System.out.println("New height: " + newValue);
+        });
+
+
+    }
     private int get_size(int width, int heigh)
     {
         int size = Math.min(width, heigh);
@@ -50,6 +130,7 @@ public class App extends Application {
         goban_root = new Pane();
         scene = new Scene(root, size, size);
         goban = new Scene(goban_root, size, size);
+        set_goban_event();
         home = new Scene(home_root, size, size);
         // Text homeText = new Text(100, 100, "Bienvenue sur la scène Home!");
         // homeText.setFill(Color.BLACK);
@@ -59,75 +140,7 @@ public class App extends Application {
         home_root.setStyle("-fx-background-color: #FF6347;");
         goban_root.getChildren().add(gomoku.getGameDisplay());
         //set les ecouteurss sur le stage? ou stur chaques scene?
-        home.widthProperty().addListener((observable, oldValue, newValue) -> {
-            // home.setPrefWidth(newValue.doubleValue());
-            System.out.println("redimentionnement de home!!!!!!!!!!!!!!!!!1");
-            // home_body.setPrefHeight((int)newValue);
-        });
-        home.heightProperty().addListener((observable, oldValue, newValue) -> {
-            // home.setPrefHeight(newValue.doubleValue());
-            // home_body.setPrefHeight((int)newValue);
-            System.out.println("redimentionnement de home!!!!!!!!!!!!!!!!!1");
 
-        });
-
-        goban.widthProperty().addListener((observable, oldValue, newValue) -> {
-            double sceneWidth = goban.getWidth();
-            double sceneHeight = goban.getHeight();
-            // goban_root.getChildren().add(gomoku.getGameDisplay());
-
-            System.out.println("size x == " + size_x + " size y == " + size_y);
-            screen.x = (int)newValue.doubleValue();
-            //int new_size = get_size(screen.x, screen.y);
-            gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
-            // System.out.println("New width: " + newValue);
-        });
-        gomoku.get_home_button().setOnMouseClicked(event -> {
-            System.out.println("promis un jour ce bouton sera fonctionnel");
-            double scenex = stage.getWidth();
-            double sceney = stage.getHeight();
-            home_root = new Pane();
-            home = new Scene(home_root, scenex, sceney);
-            home_root.getChildren().add(home_page.getHomePage()); // Ajout du texte à home_root
-
-
-            switchScene(home);
-            // Text homeText2 = new Text(100, 100, "Bienvenue sur la scène Home!");
-            // homeText2.setFill(Color.BLACK);
-            // home_root.getChildren().add(homeText2); // Ajout du texte à home_root
-            // home_root.getChildren().add(home_body);
-            // home.setFill(Color.web("#FF6347"));
-
-            home_root.setStyle("-fx-background-color: #FF6347;");
-            home_root.getChildren().add(home_body);
-
-        });
-
-        gomoku.get_replay_button().setOnMouseClicked(event -> {
-            gomoku.reset_gomoku();
-        });
-        home_page.getValidationButton().setOnMouseClicked(event -> {
-            double scenex = stage.getWidth();
-            double sceney = stage.getHeight();
-
-            gomoku= new Gomoku((int)sceney, (int)scenex); //appeler fct qui set toutes les infos
-            goban_root = new Pane();
-            goban = new Scene(goban_root, scenex, sceney);
-            goban_root.getChildren().add(gomoku.getGameDisplay()); // Ajout du texte à home_root
-            switchScene(goban);
-            //appeer fct qui set tout les event?
-        });
-        goban.heightProperty().addListener((observable, oldValue, newValue) -> {
-            double sceneWidth = goban.getWidth();
-            double sceneHeight = goban.getHeight();
-            size_y = (int)goban.getHeight();
-            System.out.println("size x == " + size_x + " size y == " + size_y);
-            //double newHeight = newValue.doubleValue(); // newValue est un Number, donc on le convertit en double
-            screen.y = (int)newValue.doubleValue();
-            // int new_size = get_size(screen.x, screen.y);
-            gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
-            // System.out.println("New height: " + newValue);
-        });
         root.setOnMouseClicked(e -> System.out.println("Pane cliqué !"));
         // scene.setFill(Color.web("#FF6347"));
         

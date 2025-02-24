@@ -18,10 +18,12 @@ public class HomePage{
     private Button black_ia;
     private Pane black_player;
     private Pane white_player;
-    private TextField komi_field = new TextField();
+    private TextField komi_field;
     // komiFeield.setText("7.5"); // Valeur par défaut
-    private TextField handicap_field = new TextField();
+    private TextField handicap_field;
     // handiapfield.setText("0"); // Valeur par défaut
+    private TextField white_time;
+    private TextField black_time;
 
     HomePage(){
         gomoku = new Button("Gomoku");
@@ -34,8 +36,12 @@ public class HomePage{
         black_human = new Button("black human");
         black_ia = new Button("back ia");
         black_player.getChildren().addAll(black_human, black_ia);
-        white_human = new Button("black human");
-        white_ia = new Button("black ia");
+        white_human = new Button("white human");
+        white_ia = new Button("white ia");
+        white_time = new TextField("10:00");
+        black_time = new TextField("10:00");
+        komi_field = new TextField();
+        handicap_field = new TextField();
         white_player.getChildren().addAll(white_human, white_ia);
         black_ia.translateXProperty().bind(black_human.widthProperty());
 
@@ -46,10 +52,12 @@ public class HomePage{
         handicap_field.setText("0");  // Valeur par défaut
 
         komi_field.setVisible(false);
+        komi_field.setVisible(false);
+
         // Crée un conteneur (ici un VBox) pour organiser les éléments
         page = new VBox(10);  // Espacement entre les éléments
         ((VBox) page).getChildren().addAll(
-            gomoku, renju, pente, go, black_player, white_player,komi_field, handicap_field, validation
+            gomoku, renju, pente, go, black_player, white_player, validation, white_time, black_time
         );
     }
 
