@@ -33,42 +33,55 @@ public class Gomoku
     private Pane _game_infos_pane;
     private int _nb_line = 19;
     private int map_index;
-    private Rules rule = new GomokuRules();
+    private Rules rule;
     private Pane _end_popin = new Pane();
     private Button _replay;
     private Button _back_home;
-    private Home home_object = new Home(){};
+    private Home _game_infos = new Home(){};
 
     public void reset_gomoku(){
         _map.clear();
         _map.add(new Map(_nb_line));
         map_index = 0;
-        rule = new GomokuRules();
+        rule = init_rules(_game_infos.get_rules());
         goban.updateFromMap(_map.get(_map.size() - 1));
         gameInfos.clear();
         _end_popin.setVisible(false);
     }
 
-    public Timeline createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
-            if (ia_turn()) {
-                do_ia_move();
-            }
-            count_time();
-        });
+    // public Timeline createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
+    //     KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
+    //         if (ia_turn()) {
+    //             do_ia_move();
+    //         }
+    //         count_time();
+    //     });
 
-        Timeline gameLoop = new Timeline(keyFrame);
-        gameLoop.setCycleCount(Timeline.INDEFINITE);
+    //     Timeline gameLoop = new Timeline(keyFrame);
+    //     gameLoop.setCycleCount(Timeline.INDEFINITE);
 
-        PauseTransition delay = new PauseTransition(Duration.seconds(5));
-        delay.setOnFinished(e -> gameLoop.play());
-        delay.play();
+    //     PauseTransition delay = new PauseTransition(Duration.seconds(5));
+    //     delay.setOnFinished(e -> gameLoop.play());
+    //     delay.play();
 
-        return gameLoop;
-    }   
+    //     return gameLoop;
+    // }   
 
+    private void init_rules(String rules_type){
+        if (rules_type == "Gomoku")
+            rule = new GomokuRules();
+        if (rules_type == "Pente")
+            rule = new PenteRules();
+        if (rules_type == "Renju")
+            rule = new RenjuRules();
+        if (rules_type == "Go")
+            rule = new GoRules();
+    }
 
-    public Gomoku(int heigh, int width)/*prendra les regles en paramettre vu que connu au clic*/{
+    public Gomoku(int heigh, int width, Home game_infos)/*prendra les regles en paramettre vu que connu au clic*/{
+        init_rules(game_infos.get_rules());
+        _game_infos = game_infos;
+        System.out.println("constructeur gomoku rule type == " + rule.getGameType());
         map_index = 1;
         System.out.println("height == " + heigh + " width == " + width);
         _map = new ArrayList<Map>();
@@ -179,14 +192,29 @@ public class Gomoku
             //add 0 si y a des prisonniers
             _map.get(_map.size() -1).printMap();
             System.out.println("size map == " + _map.size());
-            goban.updateFromMap(_map.get(_map.size() -1));
             map_index = _map.size() - 1;
+            rule.check_capture(new Point((int)x, (int)y), _map.get(_map.size() - 1));
             if (rule.endGame(_map.get(_map.size() - 1), new Point((int)x, (int)y))){
                 System.out.println("partie finie!");
+                if (_map.size() % 2 == 0)
+                    System.out.println("noir gagne!");
+                else
+                    System.out.println("blamc gagne!");
                 _end_popin.setVisible(true);
             }
             else
                 System.out.println("non!");
+            ArrayList<Point> points = rule.GetCapturedStones(new Point((int)x, (int)y), _map.get(_map.size() - 1));
+            for (Point p : points) {
+                System.out.println("capture 1 er affichage : " + p);  // Appel automatique à toString()
+            }
+            points = rule.get_prisonners();
+            System.out.println("nbr prisonners : " + points.size());
+            for (Point p : points) {
+                System.out.println("capture 2 em affichage : " + p);  // Appel automatique à toString()
+            }
+            _map.get((_map.size()-1)).remove_prisonners(points);
+            goban.updateFromMap(_map.get(_map.size() -1));
         });
 
     }

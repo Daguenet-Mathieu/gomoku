@@ -37,6 +37,12 @@ public class RenjuRules implements Rules {
     }
 
     @Override
+    public void check_capture(Point point, Map map){
+        prisonners = GetCapturedStones(point, map);
+    }
+
+
+    @Override
     public ArrayList<Point> get_prisonners(){
         return prisonners;
     }

@@ -25,7 +25,7 @@ public class App extends Application {
     //class settings pour connaitre les preference du joueur couleur des pierres goban etc et donner au gomoku
     //choix temps dans le home en meme temps que le choix des regles et des joueurs
 
-    set_home_event(){
+    public void set_home_event(){
         home.widthProperty().addListener((observable, oldValue, newValue) -> {
             // home.setPrefWidth(newValue.doubleValue());
             System.out.println("redimentionnement de home!!!!!!!!!!!!!!!!!1");
@@ -42,7 +42,7 @@ public class App extends Application {
             double sceney = stage.getHeight();
             System.out.println(" goban width == " + scenex + " heigh " + sceney);
             //recuperer les datas si invalide les mettres en valeurs et laisserl a page telle qu'elle
-            gomoku= new Gomoku((int)sceney, (int)scenex); //appeler fct qui set toutes les infos
+            gomoku= new Gomoku((int)sceney, (int)scenex, home_page); //appeler fct qui set toutes les infos
             goban_root = new Pane();
             goban = new Scene(goban_root, scenex, sceney);
             set_goban_event();
@@ -59,10 +59,10 @@ public class App extends Application {
             System.out.println("hone width == " + scenex + " heigh " + sceney);
             home_root = new Pane();
             home = new Scene(home_root, scenex, sceney);
+            home_page = new Home();
+            home_root.setStyle("-fx-background-color:rgb(71, 157, 255);");
+            home_root.getChildren().add(home_page.getHomePage());
             set_home_event();
-            home_root.getChildren().add(home_page.getHomePage()); // Ajout du texte à home_root
-
-
             switchScene(home);
             // Text homeText2 = new Text(100, 100, "Bienvenue sur la scène Home!");
             // homeText2.setFill(Color.BLACK);
@@ -70,7 +70,6 @@ public class App extends Application {
             // home_root.getChildren().add(home_body);
             // home.setFill(Color.web("#FF6347"));
 
-            home_root.setStyle("-fx-background-color: #FF6347;");
             home_root.getChildren().add(home_body);
 
         });
@@ -125,27 +124,28 @@ public class App extends Application {
         System.out.println("size x == " + size_x + " size y == " + size_y);
         // stage.setWidth(size);
         // stage.setHeight(size);
-        gomoku = new Gomoku(size, size);
+        // gomoku = new Gomoku(size, size);
         root = new Pane();
-        goban_root = new Pane();
+        // goban_root = new Pane();
         scene = new Scene(root, size, size);
-        goban = new Scene(goban_root, size, size);
-        set_goban_event();
+        // goban = new Scene(goban_root, size, size);
+        // set_goban_event();
         home = new Scene(home_root, size, size);
+        set_home_event();
         // Text homeText = new Text(100, 100, "Bienvenue sur la scène Home!");
         // homeText.setFill(Color.BLACK);
         home_root.getChildren().add(home_page.getHomePage()); // Ajout du texte à home_root
         // home_root.getChildren().add(home_body);
         // home.setFill(Color.web("#FF6347"));
         home_root.setStyle("-fx-background-color: #FF6347;");
-        goban_root.getChildren().add(gomoku.getGameDisplay());
+        // goban_root.getChildren().add(gomoku.getGameDisplay());
         //set les ecouteurss sur le stage? ou stur chaques scene?
 
         root.setOnMouseClicked(e -> System.out.println("Pane cliqué !"));
         // scene.setFill(Color.web("#FF6347"));
         
         stage.centerOnScreen();
-        stage.setScene(goban);
+        stage.setScene(home);
         // stage.setScene(home);
         stage.show();
         // System.out.println("heihgt " + goban.getHeight() + " size " + size);

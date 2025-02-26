@@ -63,10 +63,10 @@ public class Map{
 
     }
 
-    public int getWhitePrisonners(){
+    public int getWhitePrisonners(){//pour  afficher les bonnes infos en cas de replay
         return _white_prisonners;
     }
-    public int getBlackPrisonners(){
+    public int getBlackPrisonners(){//pour  afficher les bonnes infos en cas de replay
         return _black_prisonners;
     }
 
@@ -76,6 +76,12 @@ public class Map{
         else
             _map[coord.y][coord.x] = color;
     }
+
+    public void remove_prisonners(ArrayList<Point> points){
+        for (Point p : points) 
+            _map[p.y][p.x] = 0;
+    }
+
 
     public void set_move_time(int time){
         _move_time = time;

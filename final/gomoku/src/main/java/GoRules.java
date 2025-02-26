@@ -42,6 +42,12 @@ public class GoRules implements Rules {
     }
 
     @Override
+    public void check_capture(Point point, Map map){
+        // prisonners = custom captures check floodfill? si rencontre un 0 pas de caprure sinon toutes pierres de couleur != coord du point capturees
+    }
+
+
+    @Override
     public ArrayList<Point> get_prisonners(){
         return prisonners;
     }
