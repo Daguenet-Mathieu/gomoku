@@ -45,7 +45,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.openjfx.App</mainClass>
+                            <mainClass>org.openjfx.Launcher</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

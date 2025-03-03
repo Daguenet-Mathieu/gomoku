@@ -1,4 +1,5 @@
 package org.openjfx;
+import org.interfacegui.*;
 import javafx.stage.Screen;
 import javafx.geometry.Rectangle2D;
 import javafx.application.Application;

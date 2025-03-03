@@ -16,6 +16,6 @@ move:
 re: fclean all
 
 exec:
-	mvn javafx:run
+	java -jar gomoku.jar
 
 .PHONY: all clean fclean build move re exec
