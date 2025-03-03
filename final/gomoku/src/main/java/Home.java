@@ -3,14 +3,18 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 
 public class Home {
-    private int white_time;
-    private int black_time;
+    private int white_time = -1;
+    private int black_time = -1;
     private int white_player_type = 0;
     private int black_player_type = 0;
-    private String rule;
+    private String rule = "Gomoku";
     private float komi = -1;
     private int handicap = -1;
     
@@ -19,6 +23,69 @@ public class Home {
     private void changeVisibility(TextField komi, TextField handicap, boolean value){
         komi.setVisible(value);
         handicap.setVisible(value);
+    }
+
+
+    int getTimeIndex(int size){
+        if (size == 3)
+            return 0;
+        else if (size == 1)
+            return 2;
+        else if (size == 2)
+            return 1;
+        else
+            return -1;
+    }
+
+    private void getTimes(){
+        int[] time_size = {3600000, 60000, 1};
+        String str = home_page.get_black_time().getText();
+        List<String> time_parts = Arrays.asList(str.split(":"));
+        System.out.println(time_parts.size());
+        int size = time_parts.size();
+        size = getTimeIndex(size);
+        if (size == -1)
+            return ;
+        System.out.println("split == " + time_parts); // [12, 34, 56, 789]
+        System.out.println("black time : " + str);
+        for (String part : time_parts) {
+            try {
+                int nombre = Integer.parseInt(part);
+                if (white_time == -1)
+                    white_time = 0;
+                white_time += nombre * time_size[size];
+                System.out.println("Conversion réussie : " + nombre);
+            }
+            catch (NumberFormatException error) {
+                white_time = -1;
+                System.out.println("Erreur : la chaîne n'est pas un nombre valide.");
+            }
+            size +=1 ;
+        }
+
+        str = home_page.get_white_time().getText();
+        time_parts = Arrays.asList(str.split(":"));
+        size = time_parts.size();
+        size = getTimeIndex(size);
+        if (size == -1)
+            return ;
+        System.out.println("split == " + time_parts); // [12, 34, 56, 789]
+
+        System.out.println("white time : " + str);
+        for (String part : time_parts) {
+            try {
+                int nombre = Integer.parseInt(part);
+                System.out.println("Conversion réussie : " + nombre);
+                if (black_time == -1)
+                    black_time = 0;
+                black_time += nombre * time_size[size];
+            }
+            catch (NumberFormatException error) {
+                System.out.println("Erreur : la chaîne n'est pas un nombre valide.");
+                black_time = -1;
+            }
+            size += 1;
+        }
     }
 
     Home() {
@@ -140,7 +207,10 @@ public class Home {
                     handicap = -1;
                 }
             }
+            getTimes();
+            System.out.println("black time == " + black_time + " white time ==  " + white_time);
         });
+
     }
 
     public int get_white_time() {

@@ -59,7 +59,7 @@ public class HomePage{
         black_human.setStyle(deselectedColor);
         black_ia.setStyle(deselectedColor);
         
-        black_time = new TextField("10:00");
+        black_time = new TextField("HH:MM:SS");
         VBox black_info = new VBox(5, new Text("Set Black Info:"), new HBox(5, black_human, black_ia));
         VBox black_time_info = new VBox(5, new HBox(5, new Text("time : "), black_time));
         black_player.getChildren().addAll(black_info, black_time_info);
@@ -112,6 +112,16 @@ public class HomePage{
     TextField getKomiButton(){
         return komi_field;
     }
+
+    TextField get_black_time(){
+        return black_time;
+    }
+
+    TextField get_white_time(){
+        return white_time;
+    }
+
+
     TextField getHandicap(){
         return handicap_field;
     }

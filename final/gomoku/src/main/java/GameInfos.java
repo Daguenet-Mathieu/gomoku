@@ -63,14 +63,63 @@ public class GameInfos{
         private Button _prev;
         private Button _next;
 
+        public void set_black_time(int time){
+            black_time = time;
+            black_time_label.setText(formatTime(black_time));
+        }
+        
+        public void set_white_time(int time){
+            white_time = time;
+            white_time_label.setText(formatTime(white_time));
+        }
+
+        public void sub_white_time(int time){
+            white_time -= time;
+            white_time_label.setText(formatTime(white_time));
+        }
+
+        public void sub_black_time(int time){
+            black_time -= time;
+            black_time_label.setText(formatTime(black_time));
+        }
+
+        public int get_black_time(){
+            return black_time;
+        }
+
+        public int get_white_time(){
+            return white_time;
+        }
+        public void reset_infos(Home infos){
+            black_time = infos.get_black_time();
+            white_time = infos.get_white_time();
+            set_white_time(white_time);
+            set_black_time(black_time);
+
+            //nb move
+            //player turn
+            //prisonners 
+            //autres infos? 
+        }
 
         private String formatTime(int milliseconds) {//faire une fct hh mm ss et un autre mm ss micro
-            int seconds = milliseconds / 1000;
-            int hours = seconds / 3600;
-            int minutes = (seconds % 3600) / 60;
-            int remainingSeconds = seconds % 60;
             
-            return String.format("%02d:%02d:%02d", hours, minutes, remainingSeconds);
+            if (milliseconds < 0) {
+                return "00:00";
+            }
+            int remaining_milliseconds = (milliseconds % 1000) / 100;
+            int total_seconds = milliseconds / 1000;
+            int hours = total_seconds / 3600;
+            int minutes = (total_seconds % 3600) / 60;
+            int seconds = total_seconds % 60;
+            System.out.println("milisecnd total == " + milliseconds + " remaining miliseconds == " + remaining_milliseconds + " second == " + seconds + " minute == " + minutes + " hours == " + hours);
+            if (hours > 0) {
+                return String.format("%02d:%02d", hours, minutes); // HH:MM
+            } else if (minutes > 0) {
+                return String.format("%02d:%02d", minutes, seconds); // MM:SS
+            } else {
+                return String.format("%02d:%02d", seconds, remaining_milliseconds); // SS:MS (centièmes)
+            }
         }
         
         private void addText() {
@@ -135,21 +184,24 @@ public class GameInfos{
     //     black_time_label.setLayoutX(_size_x/10);
     //     black_time_label.setLayoutY(_size_y/2 + 20);
    // }
-private void update_text() {
-   _white.setLayoutX(_size_x/10);
-   _white.setLayoutY(_size_y/2);
-   _black.setLayoutX(_size_x/10);
-   _black.setLayoutY(_size_y/10);
+        private void update_text() {
+        _white.setLayoutX(_size_x/10);
+        _white.setLayoutY(_size_y/2);
+        _black.setLayoutX(_size_x/10);
+        _black.setLayoutY(_size_y/10);
 
-   white_time_label.setLayoutX(_size_x/10);
-   white_time_label.layoutYProperty().bind(_white.layoutYProperty().add(
-       _white.fontProperty().get().getSize() * 1.5)); // 1.5 = 1 + 0.5 marge
-   
-   black_time_label.setLayoutX(_size_x/10);
-   black_time_label.layoutYProperty().bind(_black.layoutYProperty().add(
-       _black.fontProperty().get().getSize() * 1.5)); // 1.5 = 1 + 0.5 marge
-}
-        public GameInfos(int y, int x){
+        white_time_label.setLayoutX(_size_x/10);
+        white_time_label.layoutYProperty().bind(_white.layoutYProperty().add(
+            _white.fontProperty().get().getSize() * 1.5)); // 1.5 = 1 + 0.5 marge
+        
+        black_time_label.setLayoutX(_size_x/10);
+        black_time_label.layoutYProperty().bind(_black.layoutYProperty().add(
+            _black.fontProperty().get().getSize() * 1.5)); // 1.5 = 1 + 0.5 marge
+        }
+        public GameInfos(int y, int x, Home infos){
+            black_time = infos.get_black_time();
+            white_time = infos.get_white_time();
+
             _size_x = x;
             _size_y = y;
             _game_infos = new Pane();
