@@ -3,23 +3,23 @@ import org.interfacegui.*;
 import javafx.stage.Screen;
 import javafx.geometry.Rectangle2D;
 import javafx.application.Application;
-import javafx.scene.paint.Color;
+// import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.application.Platform;
-import javafx.scene.text.Text;
+// import javafx.application.Platform;
+// import javafx.scene.text.Text;
 
 public class App extends Application {
     private Gomoku gomoku;
     private Stage stage;
     private Pane root;
-    private Scene scene;
+    public Scene scene;
     private Point screen = new Point();
     private int size_y;
     private int size_x;
     Pane goban_root;
-    private Scene goban, home, settings;//les mettre dans les classes correspondantes
+    private Scene goban, home;//les mettre dans les classes correspondantes
     private Pane home_body = new Pane();
     private Pane home_root = new Pane();
     private Home home_page = new Home();

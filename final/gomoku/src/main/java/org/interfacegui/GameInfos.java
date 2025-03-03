@@ -1,24 +1,24 @@
 package org.interfacegui;
-import javafx.scene.shape.*;
-import java.util.ArrayList;
+// import javafx.scene.shape.*;
+// import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+// import javafx.scene.paint.Color;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.animation.Timeline;
-import javafx.animation.KeyFrame;
-import javafx.util.Duration;
+// import javafx.scene.layout.CornerRadii;
+// import javafx.animation.Timeline;
+// import javafx.animation.KeyFrame;
+// import javafx.util.Duration;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.scene.control.Button;
 import javafx.geometry.Insets;
-import javafx.scene.text.TextAlignment;
-import javafx.geometry.Pos;
-import javafx.geometry.Insets;
+// import javafx.scene.text.TextAlignment;
+// import javafx.geometry.Pos;
+// import javafx.geometry.Insets;
 
 // private double tempsRestant = 60.0;  // Temps en secondes
 // private double dernierAffichage = 0.0; // Temps du dernier affichage (en secondes)
@@ -45,13 +45,15 @@ import javafx.geometry.Insets;
 
 public class GameInfos{
         private Pane _game_infos;
-        private Pane _timers;
-        private Pane _player1_timer;
-        private Pane _player2_timer;
-        private Pane _scores;
-        private Pane _player_1_score;
-        private Pane _player_2_score;
-        private Pane _prev_next_button;//addd 2 bouttons
+
+        // private Pane _timers;
+        // private Pane _player1_timer;
+        // private Pane _player2_timer;
+        // private Pane _scores;
+        // private Pane _player_1_score;
+        // private Pane _player_2_score;
+        // private Pane _prev_next_button;//addd 2 bouttons
+
         private int _size_x;
         private int _size_y; 
         private Label _white;
@@ -198,20 +200,23 @@ public class GameInfos{
         black_time_label.layoutYProperty().bind(_black.layoutYProperty().add(
             _black.fontProperty().get().getSize() * 1.5)); // 1.5 = 1 + 0.5 marge
         }
+
         public GameInfos(int y, int x, Home infos){
             black_time = infos.get_black_time();
             white_time = infos.get_white_time();
 
             _size_x = x;
             _size_y = y;
+
             _game_infos = new Pane();
-            _timers = new Pane();
-            _player1_timer = new Pane();
-            _player2_timer = new Pane();
-            _scores = new Pane();
-            _player_1_score = new Pane();
-            _player_2_score = new Pane();
-            _prev_next_button = new Pane();
+            // _timers = new Pane();
+            // _player1_timer = new Pane();
+            // _player2_timer = new Pane();
+            // _scores = new Pane();
+            // _player_1_score = new Pane();
+            // _player_2_score = new Pane();
+            // _prev_next_button = new Pane();
+
             _game_infos.setPrefSize(x, y);
             _game_infos.setBackground(new Background(new BackgroundFill(Color.web("#ADBAC0"), null, null)));
             addText();

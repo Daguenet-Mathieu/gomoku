@@ -64,7 +64,7 @@ public interface Rules {
     //     return free_3_nbr;
     // }
 
-    default void checkCaptures(Point coord, Map game_map, int inc_x, int inc_y, ArrayList captured){
+    default void checkCaptures(Point coord, Map game_map, int inc_x, int inc_y, ArrayList<Point> captured){
         if ((coord.x + (inc_x * 3) > 18 || coord.x + (inc_x * 3) < 0) || (coord.y + (inc_y * 3) > 18 || coord.y + (inc_y * 3) < 0))
             return ;
         final int[][] map = game_map.get_map();
@@ -82,28 +82,28 @@ public interface Rules {
         }        
     }
 
-    default void horizontalCaptures(Point coord, Map map, ArrayList captured){
+    default void horizontalCaptures(Point coord, Map map, ArrayList<Point> captured){
         //check avant
         checkCaptures(coord, map, 1, 0, captured);
         checkCaptures(coord, map, -1, 0, captured);
         //chack apres
     }
 
-    default void verticalCaptures(Point coord, Map map, ArrayList captured){
+    default void verticalCaptures(Point coord, Map map, ArrayList<Point> captured){
         //check avant
         checkCaptures(coord, map, 0, -1, captured);
         checkCaptures(coord, map, 0, 1, captured);
 
         //chack apres
     }
-    default void diagonalLeftCaptures(Point coord, Map map, ArrayList captured){
+    default void diagonalLeftCaptures(Point coord, Map map, ArrayList<Point> captured){
         //check avant
         checkCaptures(coord, map, 1, 1, captured);
         checkCaptures(coord, map, -1, -1, captured);
 
         //chack apres
     }
-    default void diagonalRightCaptures(Point coord, Map map, ArrayList captured){
+    default void diagonalRightCaptures(Point coord, Map map, ArrayList<Point> captured){
         //check avant
         checkCaptures(coord, map, -1, 1, captured);
         checkCaptures(coord, map, 1, -1, captured);

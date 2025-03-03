@@ -2,8 +2,8 @@ package org.interfacegui;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-import java.util.ArrayList;
+//import javafx.scene.control.Button;
+//import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

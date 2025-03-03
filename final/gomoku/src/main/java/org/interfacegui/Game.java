@@ -26,6 +26,11 @@ public class Game {
         return stats;
     }
 
+    public  Game() {
+        minmax = new MinMax();
+        minmax.display();
+    }
+
     private ArrayList<Point> generateRandomCandidats(int n) {
         Random rand = new Random();
         ArrayList<Point> lst = new ArrayList<>();

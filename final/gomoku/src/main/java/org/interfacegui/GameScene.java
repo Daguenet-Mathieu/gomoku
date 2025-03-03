@@ -1,10 +1,8 @@
 package org.interfacegui;
-import javafx.scene.shape.*;
+//import javafx.scene.shape.*;
 import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
-
-
 
 public class GameScene{
     private Pane scene;

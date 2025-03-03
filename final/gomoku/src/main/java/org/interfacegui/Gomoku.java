@@ -1,16 +1,16 @@
 package org.interfacegui;
-import javafx.scene.shape.*;
+//import javafx.scene.shape.*;
 import java.util.ArrayList;
-import javafx.scene.paint.Color;
+//import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+//import javafx.scene.paint.Color;
+//import javafx.scene.layout.Background;
+//import javafx.scene.layout.BackgroundFill;
+//import javafx.scene.layout.CornerRadii;
 import javafx.scene.control.Button;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.animation.PauseTransition;
+//import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
 

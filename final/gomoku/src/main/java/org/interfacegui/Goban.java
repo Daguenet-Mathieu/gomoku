@@ -5,8 +5,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.input.MouseEvent;
+//import javafx.scene.layout.CornerRadii;
+//import javafx.scene.input.MouseEvent;
 
 public class Goban{
     private Pane _goban;
@@ -15,12 +15,12 @@ public class Goban{
     private ArrayList<Line> _lines;
     private int _size;
     private int _nb_line; 
-    private int _nb_move;
-    private int _line_size;
+    //private int _nb_move;
+    //private int _line_size;
     private int _square_size;
     private int _heigh_margin_size;
     private int _width_margin_size;
-    private int _current_move; 
+    //private int _current_move; 
 
     private void init_margin_size(int heigh, int width){
         int goban_size = _square_size * (_nb_line - 1);
@@ -68,7 +68,7 @@ public class Goban{
             _lines.add(line);
         }
     }
-    private void update_stones(){}
+    //private void update_stones(){}
 
     public Goban(int heigh, int width, int nb_line) {
         _goban = new Pane();
@@ -78,8 +78,8 @@ public class Goban{
 
         _size = Math.min(width, heigh);
         _nb_line = nb_line;
-        _nb_move = 0;
-        _current_move = 0;
+        //_nb_move = 0;
+        //_current_move = 0;
         // _game_states.add(new Map(_size));
         _stones = new Circle[_nb_line][_nb_line];
 

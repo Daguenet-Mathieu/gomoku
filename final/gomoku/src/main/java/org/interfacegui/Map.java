@@ -1,15 +1,15 @@
 package org.interfacegui;
-import javafx.scene.shape.*;
+//import javafx.scene.shape.*;
 import java.util.ArrayList;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.Pane;
+//import javafx.scene.paint.Color;
+//import javafx.scene.layout.Pane;
 import java.util.Arrays;
 
 public class Map{
     private int _map[][];
     private int _white_prisonners;
     private int _black_prisonners;
-    private boolean _pass;
+    public  boolean _pass;
     int _move_time;
 
     public Map(int size) {
