@@ -1,6 +1,6 @@
 package org.interfacegui;
 import java.util.ArrayList;
-
+import org.utils.Point;
 
 public class PenteRules implements Rules {
 

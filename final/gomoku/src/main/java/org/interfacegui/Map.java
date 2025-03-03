@@ -4,6 +4,7 @@ import java.util.ArrayList;
 //import javafx.scene.paint.Color;
 //import javafx.scene.layout.Pane;
 import java.util.Arrays;
+import org.utils.Point;
 
 public class Map{
     private int _map[][];

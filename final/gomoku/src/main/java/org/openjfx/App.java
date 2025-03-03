@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.layout.Pane;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.utils.Point;
 // import javafx.application.Platform;
 // import javafx.scene.text.Text;
 

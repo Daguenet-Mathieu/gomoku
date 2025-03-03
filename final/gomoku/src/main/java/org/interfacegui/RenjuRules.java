@@ -1,6 +1,6 @@
 package org.interfacegui;
 import java.util.ArrayList;
-
+import org.utils.Point;
 public class RenjuRules implements Rules {
 
     ArrayList<Point> prisonners;//prisonnier crees par le dernier coup

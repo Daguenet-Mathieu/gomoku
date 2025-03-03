@@ -1,6 +1,9 @@
 package org.interfacegui;
 //import javafx.scene.shape.*;
 import java.util.ArrayList;
+
+import org.modelai.Game;
+
 //import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 //import javafx.scene.paint.Color;
@@ -12,6 +15,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 //import javafx.animation.PauseTransition;
 import javafx.util.Duration;
+import org.utils.Point;
 
 
 //coder les free 3et reccup list coup interdits + prisonnier et liste prisonniers et fin de parties sur 10 prisioniers //pente et renju faire des emthodes defaut dans rules
@@ -47,7 +51,7 @@ public class Gomoku
     private int current_decrement = 0;
     private boolean game_end = false;
     private Timeline gameLoop;
-    private Game minmax;
+    private Game game;
 
     public void reset_gomoku(){
         _map.clear();
@@ -62,7 +66,7 @@ public class Gomoku
         player_turn = 0;
         current_decrement = 0;
         game_end = false;
-        minmax = new Game();
+        game = new Game();
     }
 
     public void createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
@@ -70,9 +74,9 @@ public class Gomoku
         KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
             System.out.println("coucou curent turn == " + player_turn + " current decrement == " + current_decrement );
             if (player_turn == 0 && _game_infos.get_black_player_type() == 1)
-                playMove(minmax.do_ia_move());
+                playMove(game.do_ia_move());
             else if (player_turn == 1 && _game_infos.get_white_player_type() == 1)
-                playMove(minmax.do_ia_move());
+                playMove(game.do_ia_move());
             if (player_turn != current_decrement){
                 current_decrement = current_decrement == 0?1:0;
                 return ;
@@ -162,7 +166,7 @@ public class Gomoku
 
     public Gomoku(int heigh, int width, Home game_infos)/*prendra les regles en paramettre vu que connu au clic*/{
         init_rules(game_infos.get_rules());
-        minmax = new Game();
+        game = new Game();
         _game_infos = game_infos;
         System.out.println("constructeur gomoku rule type == " + rule.getGameType());
         map_index = 1;

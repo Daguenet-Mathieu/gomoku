@@ -1,5 +1,6 @@
 package org.interfacegui;
 import java.util.ArrayList;
+import org.utils.Point;
 
 public class GomokuRules implements Rules {
     @Override
