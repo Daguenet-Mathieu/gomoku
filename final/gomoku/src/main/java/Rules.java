@@ -12,57 +12,57 @@ public interface Rules {
     // ArrayList check_captures(Map map, Point point);
     // Méthode par défaut qui vérifie si le coup est valide (si la case est vide)
 
-    default int get_block_size(Point point Map map, int x_dir, int y_dir, int color){
-        int size = 0;
-        int current_color;
-        final int[][] map = map.get_map();
-        int i = 0;
-        while (1) {
-            if (point.y + (i * y_dir) < 0 || point.x + (i * x_dir) < 0 || point.x + (i * x_dir) > 19 || point.x + (i * x_dir) > 19)//remplacer par sizzemap
-                break;
-            current_color = map[(point.y + (i * y_dir))][(point.x + (i * x_dir))]
-            if current_color == color
-                size += 1;
-            else
-                break ;
-        }
-        return size;
-    }
+    // default int get_block_size(Point point Map map, int x_dir, int y_dir, int color){
+    //     int size = 0;
+    //     int current_color;
+    //     final int[][] map = map.get_map();
+    //     int i = 0;
+    //     while (1) {
+    //         if (point.y + (i * y_dir) < 0 || point.x + (i * x_dir) < 0 || point.x + (i * x_dir) > 19 || point.x + (i * x_dir) > 19)//remplacer par sizzemap
+    //             break;
+    //         current_color = map[(point.y + (i * y_dir))][(point.x + (i * x_dir))]
+    //         if current_color == color
+    //             size += 1;
+    //         else
+    //             break ;
+    //     }
+    //     return size;
+    // }
 
-    default int checkFreeThree(Point point, Map map, int x_dir, int y_dir, int color){
-        int leftBlock = get_block_size(point, map, x_dir, y_dir, color);
-        int rightBlock = get_block_size(point, map, -x_dir, -y_dir, color);
-        int blockSize = 1 + leftBlock + rightBlock;
-        final int[][] map = map.get_map();
-        System.out.println("right block == " + rightBlock + " left block == " + leftBlock);
-        if (map[point.y + (rightBlock * -y_dir)][point.x + (rightBlock * -x_dir)] != 0 || map[point.y + (rightBlock * -y_dir)][point.x + (rightBlock * -x_dir)] != 0)
-            return 0;
+    // default int checkFreeThree(Point point, Map map, int x_dir, int y_dir, int color){
+    //     int leftBlock = get_block_size(point, map, x_dir, y_dir, color);
+    //     int rightBlock = get_block_size(point, map, -x_dir, -y_dir, color);
+    //     int blockSize = 1 + leftBlock + rightBlock;
+    //     final int[][] map = map.get_map();
+    //     System.out.println("right block == " + rightBlock + " left block == " + leftBlock);
+    //     if (map[point.y + (rightBlock * -y_dir)][point.x + (rightBlock * -x_dir)] != 0 || map[point.y + (rightBlock * -y_dir)][point.x + (rightBlock * -x_dir)] != 0)
+    //         return 0;
 
-        if (blockSize > 3)
-            return 0;
-        if (blockSize == 3)
-            return 1;
-        int nextRightBlock = get_block_size(new Point(point.x + ((rightBlock + 1) * -x_dir), ((rightBlock + 1) * -y_dir)), map, x_dir, y_dir, color);
-        int nextLeftBlock = get_block_size(new Point(point.x + ((leftBlock + 1) * x_dir), ((leftBlock + 1) * y_dir)), map, x_dir, y_dir, color);
-        System.out.println("next right block == " + nextRightBlock + " nezt left block == " + nextLeftBlock);
-        int free_nbr = 0;
-        if (rightBlock + nextRightBlock > 3 )
+    //     if (blockSize > 3)
+    //         return 0;
+    //     if (blockSize == 3)
+    //         return 1;
+    //     int nextRightBlock = get_block_size(new Point(point.x + ((rightBlock + 1) * -x_dir), ((rightBlock + 1) * -y_dir)), map, x_dir, y_dir, color);
+    //     int nextLeftBlock = get_block_size(new Point(point.x + ((leftBlock + 1) * x_dir), ((leftBlock + 1) * y_dir)), map, x_dir, y_dir, color);
+    //     System.out.println("next right block == " + nextRightBlock + " nezt left block == " + nextLeftBlock);
+    //     int free_nbr = 0;
+    //     if (rightBlock + nextRightBlock > 3 )
 
-    }
+    // }
 
-    default int verticalThreeCheck(Point point, Map map, int color){
-        int free_nbr = 0;
+    // default int verticalThreeCheck(Point point, Map map, int color){
+    //     int free_nbr = 0;
 
-        free_3_nbr += checkFreeThree();
-        return free_nbr;
-    }
+    //     free_3_nbr += checkFreeThree();
+    //     return free_nbr;
+    // }
 
-    default int freeThreeCreation(Point coord, Map map, int color){
-        int free_3_nbr = 0;
-        //check current size block all driection si ce block <= 3 check au dela 1 espace si block qui cree cumules cres un 3 et aucune pierre au contact ni du point ni des 2 blocks fct generaliste et call avec les dirs? //4 fct distonctes?  //taille 1er block commence a 1 puisque point futur coup
+    // default int freeThreeCreation(Point coord, Map map, int color){
+    //     int free_3_nbr = 0;
+    //     //check current size block all driection si ce block <= 3 check au dela 1 espace si block qui cree cumules cres un 3 et aucune pierre au contact ni du point ni des 2 blocks fct generaliste et call avec les dirs? //4 fct distonctes?  //taille 1er block commence a 1 puisque point futur coup
         
-        return free_3_nbr;
-    }
+    //     return free_3_nbr;
+    // }
 
     default void checkCaptures(Point coord, Map game_map, int inc_x, int inc_y, ArrayList captured){
         if ((coord.x + (inc_x * 3) > 18 || coord.x + (inc_x * 3) < 0) || (coord.y + (inc_y * 3) > 18 || coord.y + (inc_y * 3) < 0))
