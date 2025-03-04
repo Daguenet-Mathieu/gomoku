@@ -74,9 +74,9 @@ public class Gomoku
         KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
             System.out.println("coucou curent turn == " + player_turn + " current decrement == " + current_decrement );
             if (player_turn == 0 && _game_infos.get_black_player_type() == 1)
-                playMove(game.do_ia_move());
+                playMove(game.best_move(player_turn+1, player_turn+1));
             else if (player_turn == 1 && _game_infos.get_white_player_type() == 1)
-                playMove(game.do_ia_move());
+                playMove(game.best_move(player_turn, player_turn));
             if (player_turn != current_decrement){
                 current_decrement = current_decrement == 0?1:0;
                 return ;
@@ -105,7 +105,7 @@ public class Gomoku
         // delay.setOnFinished(e -> gameLoop.play());
         // delay.play();
         gameLoop.play();
-        // return gameLoop;
+        //return gameLoop;
     }   
 
     private void init_rules(String rules_type){
@@ -131,6 +131,8 @@ public class Gomoku
         System.out.println();
         _map.add(new Map(_map.get(_map.size() - 1)));
         _map.get(_map.size() - 1).addMove(point, _map.size() % 2 + 1);
+
+        game.move(point, player_turn+1); // To update MinMax.map
         
         //add 0 si y a des prisonniers
         _map.get(_map.size() -1).printMap();

@@ -644,8 +644,6 @@ public class MinMax
     }
 
 
-
-
     public float minmax(int depth, int turn, int player)
     {   
         //this.depth = depth;
@@ -727,15 +725,11 @@ public class MinMax
             //     display_map();
             //     scsimul.display();
             // }
-            // display_map();
-            // scsimul.display();
             return reteval;
         }
 
 
         values = new float[nb_candidates];
-        //System.out.printf("Value size %d\n", values.length);
-
         //for (int i = nb_candidates - 1 ; i != -1 ; i--)
         for (int i = 0 ; i < nb_candidates ; i++)
         {

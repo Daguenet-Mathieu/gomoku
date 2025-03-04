@@ -83,24 +83,13 @@ public class Game {
         }
     }
 
-    public void move(Point point, SquareState color)
+    public void move(Point point, int turn)
     {
-        if (color == SquareState.BLACK)
-        {
-            MinMax.map[point.y][point.x] = 1;
-            scbord.analyse_move(point.y, point.x, 1);
-            //this.m.imap[point.y][point.x] = 1;
-        }
-        else
-        {
-            MinMax.map[point.y][point.x] = 2;
-            scbord.analyse_move(point.y, point.x, 2);
-            //this.m.imap[point.y][point.x] = 2;
-        }
-        map[point.y][point.x] = color;
-
-        //m.display_map();
+        MinMax.map[point.y][point.x] = turn;
+        scbord.analyse_move(point.y, point.x, turn);
+        nb_move++;
     }
+
 
     public boolean first_move()
     {
@@ -123,37 +112,41 @@ public class Game {
         return res / timelst.size();
     }
 
-    public Point do_ia_move(){
+    // public Point do_ia_move(int turn, int player)
+    // {
 
-            int turn = 1;
-            int player = 1;
-            //m.display_map();
-            time = System.currentTimeMillis();
-            m.load_cur_score(scbord);
-            val = m.minmax(max_depth, turn, player);
-            //MinMax.candidat.clear();
-            time = System.currentTimeMillis() - time;
-            timelst.add((double)time / 1000);
+    //         //m.display_map();
+    //         time = System.currentTimeMillis();
+    //         m.load_cur_score(scbord);
+    //         val = m.minmax(max_depth, turn, player);
+    //         //MinMax.candidat.clear();
+    //         time = System.currentTimeMillis() - time;
+    //         timelst.add((double)time / 1000);
 
-            if ((double)time/1000 > 0.6)
-            {
-                max_depth = max_depth == 1 ? 1 : max_depth - 1;
-                System.out.printf("max depth decreesed to %d\n", max_depth);
-            }
+    //         if ((double)time/1000 > 0.6)
+    //         {
+    //             max_depth = max_depth == 1 ? 1 : max_depth - 1;
+    //             System.out.printf("max depth decreesed to %d\n", max_depth);
+    //         }
 
-            m.play(m.best, turn);
-            System.out.printf("IA move at %d %d played in %f seconds (%d pos, %d depth) mean : %f\n", m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter, max_depth + 1,return_mean_time());
-
-            return new Point(m.best.y, m.best.x);
-    }
-
+    //         m.play(m.best, turn);
+    //         System.out.printf("IA move at %d %d played in %f seconds (%d pos, %d depth) mean : %f\n", m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter, max_depth + 1,return_mean_time());
+    //         return new Point(m.best.y, m.best.x);
+    // }
 
     public Point best_move(int turn, int player)
     {
         //m.display_map();
         time = System.currentTimeMillis();
-        m.load_cur_score(scbord);
-        val = m.minmax(max_depth, turn, player);
+        if (nb_move == 0)
+        {
+            m.best = new Candidat.coord(9, 9);
+        }
+        else
+        {
+            m.load_cur_score(scbord);
+            val = m.minmax(max_depth, turn, player);
+        }
         //MinMax.candidat.clear();
         time = System.currentTimeMillis() - time;
         timelst.add((double)time / 1000);
