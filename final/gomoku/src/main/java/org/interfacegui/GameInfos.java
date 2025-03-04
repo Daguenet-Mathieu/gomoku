@@ -114,7 +114,7 @@ public class GameInfos{
             int hours = total_seconds / 3600;
             int minutes = (total_seconds % 3600) / 60;
             int seconds = total_seconds % 60;
-            System.out.println("milisecnd total == " + milliseconds + " remaining miliseconds == " + remaining_milliseconds + " second == " + seconds + " minute == " + minutes + " hours == " + hours);
+            //System.out.println("milisecnd total == " + milliseconds + " remaining miliseconds == " + remaining_milliseconds + " second == " + seconds + " minute == " + minutes + " hours == " + hours);
             if (hours > 0) {
                 return String.format("%02d:%02d", hours, minutes); // HH:MM
             } else if (minutes > 0) {

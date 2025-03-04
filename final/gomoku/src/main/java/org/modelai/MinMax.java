@@ -616,6 +616,11 @@ public class MinMax
                 return 12000;
             return 10000;
         }
+        else
+        {
+            if (len == 0)
+                return -11000;
+        }
         return -9200;
     }
 

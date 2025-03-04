@@ -25,7 +25,7 @@ public class Game {
     //public int [][] mmap;
     public boolean start = true;
 
-    public Game(){
+    public Game(String rules){
         map = new SquareState[19][19];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
@@ -33,12 +33,12 @@ public class Game {
             }
         }
         nb_move = 0;
-        m = minmax_tree("moku"); // gomoku.rules
+        m = minmax_tree(rules); // gomoku.rules
         m.len = 0;
         candidate = new ArrayList<Group>();
         timelst = new ArrayList<Double>();
-        max_depth = 5;
-        //max_depth = 4;
+        //max_depth = 5;
+        max_depth = 4;
 
         //mmap = new int [19][19];
     }
@@ -65,12 +65,12 @@ public class Game {
 
     private MinMax minmax_tree(String str)
     {
-        if (str == "moku")
+        if (str == "Gomoku")
         {
             System.out.println("ruleset 1");
             return new Moku();
         }
-        else if (str == "pente")
+        else if (str == "Pente")
         {
             System.out.println("ruleset 2");
             return new Pente();

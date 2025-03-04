@@ -18,8 +18,8 @@ public class Miniscore {
 
     boolean victory;
 
-    //static int [] factor = {0, 0, 2, 5, 10};
-    static int [] factor = {0, 0, 2, 10, 25};
+    //static int [] factor = {0, 0, 2, 5, 10, 10};
+    static int [] factor = {0, 0, 2, 10, 25, 25};
     //static int [] factor = {0, 0, 2, 3, 4};
     static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
 
@@ -581,13 +581,13 @@ public class Miniscore {
 
         //newupdate_free_unconnect(decp, decn, x, y); compute frees
         
-        remp_case(x + (decp +1 ) * dx, y + (decp + 1) * dy, decp + 1);
+        remp_case(x + (decp +1 ) * dx, y + (decp + 1) * dy, decp + 1); // could be 6
         rem_case(x - (decn + 1) * dx, y - (decn + 1) * dy);
 
         if (decp >=2)
-            add_case(x + (decp+1) * dx, y + (decp+1) * dy, decp);
+            add_case(x + (decp+1) * dx, y + (decp+1) * dy, decp); // vould be 6
         if (decn >= 2)
-            add_case(x - (decn+1) * dx, y - (decn+1) * dy, decn);
+            add_case(x - (decn+1) * dx, y - (decn+1) * dy, decn); // could be 6
 
 
         

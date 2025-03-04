@@ -12,8 +12,8 @@ import java.util.List;
 public class Home {
     private int white_time = -1;
     private int black_time = -1;
-    private int white_player_type = 0;
-    private int black_player_type = 0;
+    private int white_player_type = 20;
+    private int black_player_type = 20;
     private String rule = "Gomoku";
     private float komi = -1;
     private int handicap = -1;
@@ -39,9 +39,10 @@ public class Home {
 
     private void getTimes(){
         int[] time_size = {3600000, 60000, 1};
+        
         String str = home_page.get_black_time().getText();
         List<String> time_parts = Arrays.asList(str.split(":"));
-        System.out.println(time_parts.size());
+        //System.out.println(time_parts.size());
         int size = time_parts.size();
         size = getTimeIndex(size);
         if (size == -1)

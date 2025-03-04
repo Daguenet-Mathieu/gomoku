@@ -59,7 +59,7 @@ public class HomePage{
         black_human.setStyle(deselectedColor);
         black_ia.setStyle(deselectedColor);
         
-        black_time = new TextField("HH:MM:SS");
+        black_time = new TextField("10:00");
         VBox black_info = new VBox(5, new Text("Set Black Info:"), new HBox(5, black_human, black_ia));
         VBox black_time_info = new VBox(5, new HBox(5, new Text("time : "), black_time));
         black_player.getChildren().addAll(black_info, black_time_info);

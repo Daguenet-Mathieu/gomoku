@@ -66,13 +66,13 @@ public class Gomoku
         player_turn = 0;
         current_decrement = 0;
         game_end = false;
-        game = new Game();
+        game = new Game(_game_infos.get_rules());
     }
 
     public void createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
         gameLoop = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
-            System.out.println("coucou curent turn == " + player_turn + " current decrement == " + current_decrement );
+            //System.out.println("coucou curent turn == " + player_turn + " current decrement == " + current_decrement );
             if (player_turn == 0 && _game_infos.get_black_player_type() == 1)
                 playMove(game.best_move(player_turn+1, player_turn+1));
             else if (player_turn == 1 && _game_infos.get_white_player_type() == 1)
@@ -168,7 +168,7 @@ public class Gomoku
 
     public Gomoku(int heigh, int width, Home game_infos)/*prendra les regles en paramettre vu que connu au clic*/{
         init_rules(game_infos.get_rules());
-        game = new Game();
+        game = new Game(game_infos.get_rules());
         _game_infos = game_infos;
         System.out.println("constructeur gomoku rule type == " + rule.getGameType());
         map_index = 1;
