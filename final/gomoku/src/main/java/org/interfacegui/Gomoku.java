@@ -76,7 +76,7 @@ public class Gomoku
             if (player_turn == 0 && _game_infos.get_black_player_type() == 1)
                 playMove(game.best_move(player_turn+1, player_turn+1));
             else if (player_turn == 1 && _game_infos.get_white_player_type() == 1)
-                playMove(game.best_move(player_turn, player_turn));
+                playMove(game.best_move(player_turn+1, player_turn+1));
             if (player_turn != current_decrement){
                 current_decrement = current_decrement == 0?1:0;
                 return ;
@@ -154,6 +154,7 @@ public class Gomoku
         ArrayList<Point> points = rule.GetCapturedStones(point, _map.get(_map.size() - 1));
         for (Point p : points) {
             System.out.println("capture 1 er affichage : " + p);  // Appel automatique à toString()
+            game.remove(p); // To uppdate Minmax.map
         }
         points = rule.get_prisonners();
         System.out.println("nbr prisonners : " + points.size());
@@ -177,14 +178,19 @@ public class Gomoku
         _map.add(new Map(_nb_line));
         game_display = new Pane();
         _end_popin.setVisible(false);
-        _end_popin.setStyle("-fx-background-color: orange;");
+        //_end_popin.setStyle("-fx-background-color: orange;");
         _replay = new Button("Replay");
         _back_home = new Button("Back Home");
-        _end_popin.getChildren().addAll(_replay, _back_home);
-        _end_popin.setPrefSize(100, 40);
+
+        _end_popin.setPrefSize(200, 40);
+        _end_popin.setLayoutX(_game_infos_size_x / 3);
+        _end_popin.setLayoutY(heigh * 0.8);
         _replay.setPrefWidth(_end_popin.getPrefWidth() / 2);
+        _replay.setLayoutY(heigh * 0.8);
         _back_home.setPrefWidth(_end_popin.getPrefWidth() / 2);
         _back_home.setLayoutX(_end_popin.getPrefWidth() / 2);
+        _back_home.setLayoutY(heigh * 0.8);
+        _end_popin.getChildren().addAll(_replay, _back_home);
         _game_infos_size_x = width / 4;
         gameInfos = new GameInfos(heigh, _game_infos_size_x, game_infos);
         //faire le new gamedisplay donner 1/3 largeur
@@ -193,9 +199,9 @@ public class Gomoku
         _goban_pane = goban.get_goban();
         _game_infos_pane = gameInfos.getGameInfos();//donner les temps en parametres//donnerl e temps en parametre et des getteur pour cehck la fin del a game //ajouter les temps dans la map aussi
         _goban_pane.setLayoutX(_game_infos_size_x);
+
         game_display.getChildren().addAll(_game_infos_pane, _goban_pane, _end_popin);
-        _end_popin.setLayoutX(_game_infos_size_x / 2);
-        _end_popin.setLayoutY(_game_infos_size_y / 2);
+
         createDelayedGameLoop();
         gameInfos.getPrevButton().setOnAction(event -> {
             if (map_index > 0){

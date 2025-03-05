@@ -1,13 +1,13 @@
 package org.modelai;
 import java.util.ArrayList;
 
-public class Pente extends MinMax {
+public class Proto extends MinMax {
 
     // public Candidat.coord [] removed;
     static public int [] prisoners;
     static ArrayList <Candidat.coord> prisonlst;
 
-    public Pente()
+    public Proto()
     {
         map = new int[19][19];
         //removed = new Candidat.coord[2];
@@ -24,7 +24,6 @@ public class Pente extends MinMax {
     {
         int val = map[x][y];
         increase_prisoners(val);
-        //System.out.printf("%d %d removed\n", x, y);
         map[x][y] = 0;
         scsimul.analyse_unmove(x, y, val);
         prisonlst.add(new Candidat.coord(x, y));
@@ -56,14 +55,14 @@ public class Pente extends MinMax {
             prisoners[1]++;
     }
 
-    private void remove_captured(int x, int y, int turn)
+    public void remove_captured(int x, int y, int turn)
     {  
         final int op = turn == 1 ? 2 : 1;
 
         for (int i = 0 ; i < 4 ; i++)
             remove_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
     }
-
+    /*
     public boolean play(Candidat.coord c, int player)
     {
         this.move = c;
@@ -75,7 +74,21 @@ public class Pente extends MinMax {
 
 
         return check_win_4_dir(c.x, c.y);
+    }*/
+
+    public boolean play(Candidat.coord c, int player)
+    {
+        this.move = c;
+        map[c.x][c.y] = player;
+        // remove_captured(c.x, c.y, player);
+
+        // this.candidat.save(c);
+        // scsimul.analyse_move(c.x, c.y, player);
+
+
+        return check_win_4_dir(c.x, c.y);
     }
+
 
     public void play_prisoners(int val)
     {
@@ -88,22 +101,28 @@ public class Pente extends MinMax {
             {
                 c = prisonlst.get(prisonlst.size()-1);
                 map[c.x][c.y] = o;
-                //System.out.printf("%d %d replayed\n", c.x, c.y);
                 scsimul.analyse_move(c.x, c.y, o);
                 prisonlst.remove(prisonlst.size()-1);
             }
         }
+
     }
 
+    /*
     public void unplay(Candidat.coord c, int depth)
     {
         int val = map[c.x][c.y];
         map[c.x][c.y] = 0;
         scsimul.analyse_unmove(c.x, c.y, val);
         play_prisoners(val);
+    } */
+
+    public void unplay(Candidat.coord c, int depth)
+    {
+        map[c.x][c.y] = 0;
     }
 
-    public Pente (int len)
+    public Proto (int len)
     {
         this.len = len + 1;
         this.move = new Candidat.coord(-1, -1);
@@ -119,7 +138,6 @@ public class Pente extends MinMax {
         if (depth == 0)
         {
             pos_counter++;
-            //display_map();
             return eval(player, len, turn);
         }
 
@@ -127,7 +145,7 @@ public class Pente extends MinMax {
 
         for (int i = 0 ; i < nb_candidates ; i++)
         {
-            Pente m = new Pente(this.len);
+            Proto m = new Proto(this.len);
             if (m.play(candidat.lst.get(i), turn))
                 values[i] = value_victory(player, turn, len);
             else

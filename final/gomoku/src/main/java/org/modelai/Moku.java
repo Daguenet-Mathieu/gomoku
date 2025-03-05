@@ -49,7 +49,7 @@ public class Moku extends MinMax {
 
         if (depth == 0)
         {
-            // display_map();
+            //display_map();
             // scsimul.display();
             pos_counter++;
             return eval(player, len, turn);

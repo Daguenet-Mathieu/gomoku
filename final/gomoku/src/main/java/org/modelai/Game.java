@@ -37,8 +37,8 @@ public class Game {
         m.len = 0;
         candidate = new ArrayList<Group>();
         timelst = new ArrayList<Double>();
-        //max_depth = 5;
-        max_depth = 4;
+        max_depth = 5;
+        //max_depth = 3;
 
         //mmap = new int [19][19];
     }
@@ -90,6 +90,13 @@ public class Game {
         nb_move++;
     }
 
+    public void remove(Point point)
+    {
+        int val = MinMax.map[point.y][point.x];
+        MinMax.map[point.y][point.x] = 0;
+        scbord.analyse_unmove(point.y, point.x, val);
+    }
+
 
     public boolean first_move()
     {
@@ -137,6 +144,8 @@ public class Game {
     public Point best_move(int turn, int player)
     {
         //m.display_map();
+        System.out.printf("best move %d %d\n", turn, player);
+        //System.exit(0);
         time = System.currentTimeMillis();
         if (nb_move == 0)
         {
@@ -145,7 +154,9 @@ public class Game {
         else
         {
             m.load_cur_score(scbord);
+            System.out.printf("\n\tminmax launch turn %d player %d\n", turn, player);
             val = m.minmax(max_depth, turn, player);
+
         }
         //MinMax.candidat.clear();
         time = System.currentTimeMillis() - time;

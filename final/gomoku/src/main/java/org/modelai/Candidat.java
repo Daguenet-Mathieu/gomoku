@@ -91,8 +91,24 @@ public class Candidat
         return false;
     }
 
+    public int interesting_candidate(int [][] map)
+    {
+        for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+        //for (int i = 0 ; i < 19 ; i++)
+        {
+           for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+            //for (int j = 0 ; j < 19 ; j++)
+            {
+                if (map[i][j] == 0 && is_case(i, j))
+                    this.lst.add(new Candidat.coord(i, j));
+            }
+        }
+        return this.lst.size();
+    }
+
     public int old_load(int [][] map, int depth)
     {
+        int ret;
         // System.out.println("==================");
         // display_map(map);
         // System.out.println("===================")
@@ -100,10 +116,28 @@ public class Candidat
         if (depth == 0)
             return 0;
 
+        this.lst.clear();
         if (depth == Game.max_depth)
+        {
             load_lim(map);
 
-        this.lst.clear();
+        }
+
+        // if (depth != 1)
+        // {
+        //     ret = interesting_candidate(map); // only for the 1st maybe
+        //     if (ret != 0)
+        //         return ret;
+        // }
+
+        if (depth == Game.max_depth)
+        {
+            ret = interesting_candidate(map); // only for the 1st maybe
+            if (ret != 0)
+                return ret;
+        }
+
+
 
         // if (depth <= 2)
         // {
