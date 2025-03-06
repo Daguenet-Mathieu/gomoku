@@ -11,7 +11,7 @@ public class NewTest
 
     public NewTest()
     {
-        this.m = new MinMax();
+        this.m = new Pente();
         this.mscore = new Miniscore();
     }
 
@@ -119,7 +119,7 @@ public class NewTest
 
     }
 
-    private void check_valid(int x, int y, int val)
+    public void check_valid(int x, int y, int val)
     {
         if (MinMax.map[x][y] != 0)
         {
@@ -136,9 +136,33 @@ public class NewTest
         }
     }
 
+    public void splay(int x, int y, int player)
+    {
+        Candidat.coord c = new Candidat.coord(x, y);
+        this.m.play(c, player);
+        m.display_map();
+        MinMax.scsimul.display();
+    }
+
+    public void sunplay(int x, int y, int player)
+    {
+        Candidat.coord c = new Candidat.coord(x, y);
+        this.m.unplay(c, player);
+        m.display_map();
+        MinMax.scsimul.display();
+    }
+
 
     public void run()
     {
+
+        splay(5, 9, 2);
+        splay(6, 8, 1);
+        splay(7, 8, 2);
+        splay(8, 9, 1);
+        splay(9, 10, 1);
+        splay(10, 11, 2);
+        sunplay(10, 11, 2);
         //move (10, 10, 1);
         // move (9, 9, 1);
         // move(11, 11, 1);
@@ -188,15 +212,16 @@ public class NewTest
         // m_play(8, 10, 1);
         // m_play(10, 10, 1);
 
-        m_play(9, 9, 1);
-        m_play(9, 10, 1);
 
-        m_play(7, 6, 1);
-        m_play(6, 5, 1);
-        //m_play(9, 7, 2);
+        // m_play(9, 9, 1);
+        // m_play(9, 10, 1);
 
-        m.display_map();
-        check_valid(9, 8, 1);
+        // m_play(7, 6, 1);
+        // m_play(6, 5, 1);
+        // //m_play(9, 7, 2);
+
+        // m.display_map();
+        // check_valid(9, 8, 1);
 
 
 

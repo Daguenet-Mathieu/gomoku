@@ -127,15 +127,15 @@ public class Gomoku
         // int i = ((int)x - margin_w) / square;
         // int j = ((int)y - margin_h) / square;
         System.out.println("size map == " + _map.size());
-        _map.get(_map.size() -1).printMap();
-        System.out.println();
+        _map.get(_map.size() -1);
+        System.out.println(); //no printmap
         _map.add(new Map(_map.get(_map.size() - 1)));
         _map.get(_map.size() - 1).addMove(point, _map.size() % 2 + 1);
 
         game.move(point, player_turn+1); // To update MinMax.map
         
         //add 0 si y a des prisonniers
-        _map.get(_map.size() -1).printMap();
+        _map.get(_map.size() -1); //no printmap
         System.out.println("size map == " + _map.size());
         map_index = _map.size() - 1;
         rule.check_capture(point, _map.get(_map.size() - 1));
