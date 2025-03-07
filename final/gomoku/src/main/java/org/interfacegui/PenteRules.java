@@ -6,7 +6,7 @@ public class PenteRules implements Rules {
 
     ArrayList<Point> prisonners;//prisonnier crees par le dernier coup
     ArrayList<Point> forbidden_moves;//coups interdit pour la position actuelle
-    int prisonners_nbr;
+    int [] prisonners_nbr = new int[2];
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
@@ -25,7 +25,7 @@ public class PenteRules implements Rules {
     @Override
     public boolean endGame(Map map, Point point) {
         System.out.println("check end curretn nbr prisonner == " + prisonners_nbr);
-        if (check_five(map, point) || prisonners_nbr >= 10)
+        if (check_five(map, point) || prisonners_nbr[0] >= 10 || prisonners_nbr[1] >= 10)
             return true;
         return false;
     }
@@ -41,10 +41,16 @@ public class PenteRules implements Rules {
 
     @Override
     public void check_capture(Point point, Map map){
+        int capture_color;
         prisonners = GetCapturedStones(point, map);
-        prisonners_nbr += prisonners.size();
-        System.out.println("adding prisonner nbr == " + prisonners.size());
-        System.out.println("prisonner nbr == " + prisonners_nbr);
+        if (prisonners.size() != 0)
+        {
+            capture_color = map.get_map()[point.x][point.y];
+            prisonners_nbr[capture_color] += prisonners.size();
+            System.out.println("adding prisonner nbr == " + prisonners.size());
+            System.out.println("prisonner nbr == " + prisonners_nbr);
+        }
+
     }
 
     @Override

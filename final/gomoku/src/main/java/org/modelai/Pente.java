@@ -34,7 +34,7 @@ public class Pente extends MinMax {
     private void remove(int x, int y, int warx, int wary)
     {
         int val = map[x][y];
-        increase_prisoners(val);
+        prisoners[val - 1]++;
         //System.out.printf("%d %d removed\n", x, y);
         map[x][y] = 0;
         scsimul.analyse_unmove(x, y, val);
@@ -59,13 +59,6 @@ public class Pente extends MinMax {
         return false;
     }
 
-    private void increase_prisoners(int turn)
-    {
-        if (turn == 1)
-            prisoners[0]++;
-        else
-            prisoners[1]++;
-    }
 
     private void remove_captured(int x, int y, int turn)
     {  
@@ -74,6 +67,7 @@ public class Pente extends MinMax {
         for (int i = 0 ; i < 4 ; i++)
             remove_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
     }
+
 
     public boolean play(Candidat.coord c, int player)
     {
@@ -85,6 +79,10 @@ public class Pente extends MinMax {
         this.candidat.save(c);
         scsimul.analyse_move(c.x, c.y, player);
 
+
+
+        if (prisoners[(player + 2) % 2] >=10)
+            return true;
 
         return check_win_4_dir(c.x, c.y);
     }
@@ -103,6 +101,7 @@ public class Pente extends MinMax {
             while (p.warder.x == warx && p.warder.y == wary)
             {
                 map[p.pos.x][p.pos.y] = o;
+                prisoners[o - 1]--;
                 //System.out.printf("%d %d replayed\n", p.pos.x, p.pos.y);
                 scsimul.analyse_move(p.pos.x, p.pos.y, o);
                 prisonlst.remove(prisonlst.size()-1);
@@ -110,9 +109,6 @@ public class Pente extends MinMax {
                     return ;
                 p = prisonlst.get(prisonlst.size() - 1);
             }
-
-
-
 
         }
     }
@@ -174,6 +170,7 @@ public class Pente extends MinMax {
         if (depth == Game.max_depth)
         {
             print_values(values);
+            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", prisoners[0], prisoners[1]);
         }
 
         if (turn == player)

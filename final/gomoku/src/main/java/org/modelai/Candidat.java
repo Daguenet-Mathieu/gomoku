@@ -120,7 +120,6 @@ public class Candidat
         if (depth == Game.max_depth)
         {
             load_lim(map);
-
         }
 
         // if (depth != 1)
@@ -135,6 +134,10 @@ public class Candidat
             ret = interesting_candidate(map); // only for the 1st maybe
             if (ret != 0)
                 return ret;
+            else
+                {
+                    System.out.println("zeroooo for interesting");
+                }
         }
 
 
