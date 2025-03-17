@@ -3,6 +3,9 @@ package org.interfacegui;
 // import java.util.ArrayList;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+
 // import javafx.scene.paint.Color;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -44,7 +47,7 @@ import javafx.geometry.Insets;
 
 
 public class GameInfos{
-        private Pane _game_infos;
+        private VBox _game_infos;
 
         // private Pane _timers;
         // private Pane _player1_timer;
@@ -53,17 +56,23 @@ public class GameInfos{
         // private Pane _player_1_score;
         // private Pane _player_2_score;
         // private Pane _prev_next_button;//addd 2 bouttons
-
+        private DoubleBinding fontSizeBinding;
         private int _size_x;
         private int _size_y; 
         private Label _white;
         private Label _black;
+        private String _black_prisonners;
+        private String _white_prisonners;
+        private Label _black_label_prisonners = new Label();
+        private Label _white_label_prisonners = new Label();
+
         private int white_time = 600000;
         private int black_time = 600000;
         private Label white_time_label;
         private Label black_time_label = new Label();
         private Button _prev;
         private Button _next;
+        private HBox _button_prev_next = new HBox();
 
         public void set_black_time(int time){
             black_time = time;
@@ -144,7 +153,10 @@ public class GameInfos{
             
             _game_infos.getChildren().add(_white);
 
-
+            _black_prisonners = "prisonners = 0";
+            _white_prisonners = "prisonners = 0";
+            _black_label_prisonners.setText(_black_prisonners);
+            _white_label_prisonners.setText(_white_prisonners);
             _black = new Label("black");
             _black.setLayoutX(_size_x/2);
             _black.setLayoutY(_size_y/10);
@@ -154,10 +166,12 @@ public class GameInfos{
                 () -> new Font("Arial", fontSizeBinding.get()),
                 fontSizeBinding
             ));
-            _game_infos.getChildren().add(_black);
             white_time_label = new Label(formatTime(white_time));
             black_time_label = new Label(formatTime(black_time));
+            _game_infos.getChildren().add(_white_label_prisonners);
             _game_infos.getChildren().add(white_time_label);
+            _game_infos.getChildren().add(_black);
+            _game_infos.getChildren().add(_black_label_prisonners);
             _game_infos.getChildren().add(black_time_label);
             white_time_label.setLayoutX(_size_x/2);
                         _black.fontProperty().bind(Bindings.createObjectBinding(
@@ -166,6 +180,14 @@ public class GameInfos{
             ));
             white_time_label.setFont(new Font("Arial", 6));
             black_time_label.setFont(new Font("Arial", 6));
+            _white_label_prisonners.fontProperty().bind(Bindings.createObjectBinding(
+                () -> new Font("Arial", fontSizeBinding.get()),
+                fontSizeBinding
+            ));
+            _black_label_prisonners.fontProperty().bind(Bindings.createObjectBinding(
+                () -> new Font("Arial", fontSizeBinding.get()),
+                fontSizeBinding
+            ));
             white_time_label.fontProperty().bind(Bindings.createObjectBinding(
                 () -> new Font("Arial", fontSizeBinding.get()),
                 fontSizeBinding
@@ -208,7 +230,7 @@ public class GameInfos{
             _size_x = x;
             _size_y = y;
 
-            _game_infos = new Pane();
+            _game_infos = new VBox();
             // _timers = new Pane();
             // _player1_timer = new Pane();
             // _player2_timer = new Pane();
@@ -226,8 +248,8 @@ public class GameInfos{
             _next.setPadding(Insets.EMPTY);
 
             // Définir la position du bouton dans le Pane
-            _prev.setLayoutX(_size_x/10);
-            _prev.setLayoutY(_size_y - _prev.getHeight() - 10);
+            // _prev.setLayoutX(_size_x/10);
+            // _prev.setLayoutY(_size_y - _prev.getHeight() - 10);
             _prev.setPrefWidth(_size_x / 2 - (_size_x/10));
             _prev.setFont(javafx.scene.text.Font.font("Arial", 20));
             
@@ -238,8 +260,8 @@ public class GameInfos{
 
             // Ajouter le bouton au Pane
             // _prev.setPadding(new Insets(0,0,0,0));
-            _game_infos.getChildren().add(_prev);
-            _game_infos.getChildren().add(_next);
+            _button_prev_next.getChildren().addAll(_prev, _next);
+            _game_infos.getChildren().add(_button_prev_next);
 
         }
 
@@ -247,15 +269,15 @@ public class GameInfos{
             _size_x = new_x;
             _size_y = new_y;
             _game_infos.setPrefSize(new_x, new_y);
-            update_text();
-            _prev.setLayoutX(_size_x/10);
-            _prev.setLayoutY(_size_y - _prev.getHeight() - 10);
-            _prev.setPrefWidth(_size_x / 2 - (_size_x/10));
+            // update_text();
+            // _prev.setLayoutX(_size_x/10);
+            // _prev.setLayoutY(_size_y - _prev.getHeight() - 10);
+            // _prev.setPrefWidth(_size_x / 2 - (_size_x/10));
 
-            _next.setLayoutX(_size_x/10 + (_size_x / 2 - (_size_x/10)));
-            _next.setLayoutY(_size_y - _next.getHeight() - 10);
-            _next.setPrefWidth(_size_x / 2 - (_size_x/10));
-            _next.setFont(javafx.scene.text.Font.font("Arial", 20));
+            // _next.setLayoutX(_size_x/10 + (_size_x / 2 - (_size_x/10)));
+            // _next.setLayoutY(_size_y - _next.getHeight() - 10);
+            // _next.setPrefWidth(_size_x / 2 - (_size_x/10));
+            // _next.setFont(javafx.scene.text.Font.font("Arial", 20));
 
             // _prev.setTextAlignment(javafx.geometry.Pos.CENTER);
             // _prev.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
@@ -268,7 +290,7 @@ public class GameInfos{
             //modifier taille de tout les elements
         }
 
-        public Pane getGameInfos()
+        public VBox getGameInfos()
         {
             return _game_infos;
         }
