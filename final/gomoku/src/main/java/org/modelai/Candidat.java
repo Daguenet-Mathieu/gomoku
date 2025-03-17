@@ -1,12 +1,16 @@
 package org.modelai;
 
 import java.util.ArrayList;
+import org.utils.DoubleFree;
+
 
 public class Candidat
 {
     public ArrayList<Candidat.coord> lst =  new ArrayList<Candidat.coord>();
     public ArrayList<Integer> vanish_lst = new ArrayList<Integer>();
     public ArrayList<Candidat.coord> histo = new ArrayList<Candidat.coord>();
+    public DoubleFree doubleFreethree;
+
     static coord limax = new coord(1, 1);
     static coord limin = new coord(18, 18);
     //static public int [][] cmap;
@@ -18,8 +22,10 @@ public class Candidat
         public coord(int x, int y){this.x=x;this.y=y;}
         public boolean eq(int x, int y){return this.x==x&&this.y==y;}
     }
+
     public Candidat()
     {
+        this.doubleFreethree = new DoubleFree();
         //this.lst =  new ArrayList<Candidat.coord>();
         //cmap = new int[19][19];
     }
@@ -43,23 +49,23 @@ public class Candidat
         return false;
     }
 
-    private boolean near(int [] [] map, int i, int j)
+    private boolean near(int i, int j)
     {
-        if (j+1 != 19 && isplay(map[i][j + 1]))
+        if (j+1 != 19 && isplay(MinMax.map[i][j + 1]))
             return true;
-        if (j-1 != -1 && isplay(map[i][j - 1]))
+        if (j-1 != -1 && isplay(MinMax.map[i][j - 1]))
             return true;
-        if (i+1 != 19 && isplay(map[i + 1][j]))
+        if (i+1 != 19 && isplay(MinMax.map[i + 1][j]))
             return true;
-        if (i-1 != -1 && isplay(map[i - 1][j]))
+        if (i-1 != -1 && isplay(MinMax.map[i - 1][j]))
             return true;
-        if (i+1 != 19 && j-1 != -1 && isplay(map[i+1][j-1]))
+        if (i+1 != 19 && j-1 != -1 && isplay(MinMax.map[i+1][j-1]))
             return true;
-        if (i-1 != -1 && j-1 != -1 && isplay(map[i-1][j-1]))
+        if (i-1 != -1 && j-1 != -1 && isplay(MinMax.map[i-1][j-1]))
             return true;
-        if (i+1 != 19 && j+1 != 19 && isplay(map[i+1][j+1]))
+        if (i+1 != 19 && j+1 != 19 && isplay(MinMax.map[i+1][j+1]))
             return true;
-        if (i-1 != -1 && j+1 != 19 && isplay(map[i-1][j+1]))
+        if (i-1 != -1 && j+1 != 19 && isplay(MinMax.map[i-1][j+1]))
             return true;
         return false;
     }
@@ -99,14 +105,29 @@ public class Candidat
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
             //for (int j = 0 ; j < 19 ; j++)
             {
-                if (map[i][j] == 0 && is_case(i, j))
+                if (MinMax.map[i][j] == 0 && is_case(i, j))
                     this.lst.add(new Candidat.coord(i, j));
             }
         }
         return this.lst.size();
     }
 
-    public int old_load(int [][] map, int depth)
+    public int interesting_candidate(int [][] map, int turn)
+    {
+        for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+        //for (int i = 0 ; i < 19 ; i++)
+        {
+           for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+            //for (int j = 0 ; j < 19 ; j++)
+            {
+                if (MinMax.map[i][j] == 0 && is_case(i, j) && doubleFreethree.check_double_free(i, j, turn))
+                    this.lst.add(new Candidat.coord(i, j));
+            }
+        }
+        return this.lst.size();
+    }
+
+    public int old_load(int depth)
     {
         int ret;
         // System.out.println("==================");
@@ -119,7 +140,7 @@ public class Candidat
         this.lst.clear();
         if (depth == Game.max_depth)
         {
-            load_lim(map);
+            load_lim(MinMax.map);
         }
 
         // if (depth != 1)
@@ -131,12 +152,12 @@ public class Candidat
 
         if (depth == Game.max_depth)
         {
-            ret = interesting_candidate(map); // only for the 1st maybe
+            ret = interesting_candidate(MinMax.map); // only for the 1st maybe
             if (ret != 0)
                 return ret;
             else
                 {
-                    System.out.println("zeroooo for interesting");
+                    // System.out.println("zeroooo for interesting");
                 }
         }
 
@@ -164,7 +185,7 @@ public class Candidat
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
             //for (int j = 0 ; j < 19 ; j++)
             {
-                if (map[i][j] == 0 && near(map, i, j))
+                if (MinMax.map[i][j] == 0 && near(i, j))
                     this.lst.add(new Candidat.coord(i, j));
             }
         }
@@ -175,6 +196,48 @@ public class Candidat
             //     System.exit(0);
             // }
         //System.out.printf("Size of candidates %d\n", this.lst.size());
+        return this.lst.size();
+
+    }
+
+    public int old_load(int depth, int turn)
+    {
+        int ret;
+
+        
+        if (depth == 0)
+            return 0;
+
+        this.lst.clear();
+        if (depth == Game.max_depth)
+        {
+            load_lim(MinMax.map);
+        }
+
+        if (depth == Game.max_depth)
+        {
+            ret = interesting_candidate(MinMax.map, turn); // only for the 1st maybe
+            if (ret != 0)
+                return ret;
+        }
+
+        for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+
+        {
+           for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+
+            {
+                if (MinMax.map[i][j] == 0 && near(i, j) && doubleFreethree.check_double_free(i, j, turn))
+                    this.lst.add(new Candidat.coord(i, j));
+            }
+        }
+
+        if (this.lst.size() == 0)
+        {
+            System.out.println("pas de candidats");
+            System.exit(0);
+        }
+    
         return this.lst.size();
 
     }
@@ -201,7 +264,7 @@ public class Candidat
             {
                 for (int j = 0 ; j < 19 ; j++)
                 {
-                    if (map[i][j] == 0 && near(map, i, j))
+                    if (map[i][j] == 0 && near(i, j))
                     {
                         this.lst.add(new Candidat.coord(i, j));
                         //cmap[i][j]=3;
@@ -255,7 +318,7 @@ public class Candidat
         {
             for (int dy = -1 ; dy != 2 ; dy++)
             {
-                if (in_goban(c.x+dx, c.y+dy) && map[c.x+dx][c.y+dy] == 0 && !near(map, c.x+dx, c.y+dy))
+                if (in_goban(c.x+dx, c.y+dy) && map[c.x+dx][c.y+dy] == 0 && !near(c.x+dx, c.y+dy))
                 {
                     this.lst.add(new Candidat.coord(c.x+dx, c.y+dy));
                     System.out.printf("%d %d added\n", c.x+dx, c.y+dy);
@@ -315,7 +378,7 @@ public class Candidat
         for (int i = 0 ; i < len ; i++)
         {
             c = this.lst.get(i);
-            if (!near(map, c.x, c.y))
+            if (!near(c.x, c.y))
             {
                 //System.out.printf("index %d removed\n", i);
                 //cmap[c.x][c.y]=0;

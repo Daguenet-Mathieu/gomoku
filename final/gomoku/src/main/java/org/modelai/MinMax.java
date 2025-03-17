@@ -655,7 +655,7 @@ public class MinMax
         int nb_candidates;
         float reteval;
 
-        nb_candidates = candidat.old_load(map, depth);
+        nb_candidates = candidat.old_load(depth);
         // if (depth != 0)
         //     System.out.printf("nb candidates %d", nb_candidates);
         //can = new ArrayList<Candidat.coord>(candidat.lst);

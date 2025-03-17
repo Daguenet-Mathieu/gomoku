@@ -45,7 +45,7 @@ public class Moku extends MinMax {
     {   
         int nb_candidates;
 
-        nb_candidates = candidat.old_load(map, depth);
+        nb_candidates = candidat.old_load(depth);
 
         if (depth == 0)
         {

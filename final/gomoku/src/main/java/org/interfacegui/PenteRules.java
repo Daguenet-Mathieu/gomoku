@@ -39,6 +39,8 @@ public class PenteRules implements Rules {
         return forbidden_moves;
     }
 
+
+
     @Override
     public void check_capture(Point point, Map map){
         int capture_color;
@@ -46,7 +48,8 @@ public class PenteRules implements Rules {
         if (prisonners.size() != 0)
         {
             capture_color = map.get_map()[point.x][point.y];
-            prisonners_nbr[capture_color] += prisonners.size();
+            System.out.printf("color captured %d\n", capture_color);
+            prisonners_nbr[capture_color] += prisonners.size(); //to_debug
             System.out.println("adding prisonner nbr == " + prisonners.size());
             System.out.println("prisonner nbr == " + prisonners_nbr);
         }
