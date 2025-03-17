@@ -3,7 +3,6 @@ package org.interfacegui;
 import java.util.ArrayList;
 
 import org.modelai.Game;
-
 //import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
@@ -64,10 +63,12 @@ public class Gomoku
     // private DoubleBinding fontSizeBinding;
 
     private Game game;
+    private ArrayList<Point> saved;
 
     public void reset_gomoku(){
         _map.clear();
         _map.add(new Map(_nb_line));
+        saved.clear();
         map_index = 0;
         init_rules(_game_infos.get_rules());
         goban.updateFromMap(_map.get(_map.size() - 1));
@@ -86,11 +87,19 @@ public class Gomoku
     public void createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
         gameLoop = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
+            try {
             //System.out.println("coucou curent turn == " + player_turn + " current decrement == " + current_decrement );
             if (player_turn == 0 && _game_infos.get_black_player_type() == 1)
                 playMove(game.best_move(player_turn+1, player_turn+1));
             else if (player_turn == 1 && _game_infos.get_white_player_type() == 1)
                 playMove(game.best_move(player_turn+1, player_turn+1));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                System.exit(0);
+            }
+
             if (player_turn != current_decrement){
                 current_decrement = current_decrement == 0?1:0;
                 return ;
@@ -212,6 +221,7 @@ public class Gomoku
         map_index = 1;
         System.out.println("height == " + heigh + " width == " + width);
         _map = new ArrayList<Map>();
+        saved = new ArrayList<Point>();
         _map.add(new Map(_nb_line));
         game_display = new Pane();
         _end_popin.setVisible(false);
@@ -324,9 +334,17 @@ public class Gomoku
             y = Math.round(y);
             Point new_move = new Point((int)x, (int)y);
             System.out.println("x- margin == " + (x) + " y - margin == " +  (y));
+            saved.add(new_move);
             playMove(new_move);
         });
 
+    }
+
+    public void print_history_of_move ()
+    {
+        System.out.println("History of moves");
+        saved.forEach((point) -> System.out.printf("%s ", point.colormove()));
+        System.out.println("\nWindow closed\nSystem exited normally");
     }
 
     public void updateGameDisplay(int new_y, int new_x){

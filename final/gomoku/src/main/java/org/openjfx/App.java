@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.layout.Pane;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import org.utils.Point;
 // import javafx.application.Platform;
 // import javafx.scene.text.Text;
@@ -150,6 +151,7 @@ public class App extends Application {
         stage.setScene(home);
         // stage.setScene(home);
         stage.show();
+        stage.setOnCloseRequest(we -> gomoku.print_history_of_move());  
         // System.out.println("heihgt " + goban.getHeight() + " size " + size);
     }
 
