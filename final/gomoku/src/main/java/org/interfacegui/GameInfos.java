@@ -70,8 +70,12 @@ public class GameInfos{
         private int black_time = 600000;
         private Label white_time_label;
         private Label black_time_label = new Label();
+        private Label _last_move_label = new Label("last move time : ");
         private Button _prev;
         private Button _next;
+        private Button _candidats;
+        private Button _hint;
+
         private HBox _button_prev_next = new HBox();
 
         public void set_black_time(int time){
@@ -114,7 +118,6 @@ public class GameInfos{
         }
 
         private String formatTime(int milliseconds) {//faire une fct hh mm ss et un autre mm ss micro
-            
             if (milliseconds < 0) {
                 return "00:00";
             }
@@ -133,6 +136,19 @@ public class GameInfos{
             }
         }
         
+        public void set_last_move_time(int val){
+            _last_move_label.setText("play time : " + formatTime(val));
+        }
+
+        public void set_white_prisonners(String str){
+            _white_label_prisonners.setText("prisonners : " + str);
+        }
+
+
+        public void set_black_prisonners(String str){
+            _black_label_prisonners.setText("prisonners : " + str);
+        }
+
         private void addText() {
             _white = new Label("white");
             _white.setLayoutX(_size_x/10);
@@ -150,11 +166,15 @@ public class GameInfos{
                 () -> new Font("Arial", fontSizeBinding.get()),
                 fontSizeBinding
             ));
-            
+            _last_move_label.fontProperty().bind(Bindings.createObjectBinding(
+                () -> new Font("Arial", fontSizeBinding.get()),
+                fontSizeBinding
+            ));
+
             _game_infos.getChildren().add(_white);
 
-            _black_prisonners = "prisonners = 0";
-            _white_prisonners = "prisonners = 0";
+            _black_prisonners = "prisonners: 0";
+            _white_prisonners = "prisonners: 0";
             _black_label_prisonners.setText(_black_prisonners);
             _white_label_prisonners.setText(_white_prisonners);
             _black = new Label("black");
@@ -244,6 +264,8 @@ public class GameInfos{
             addText();
             _prev = new Button("<");
             _next = new Button(">");
+            _candidats = new Button("show candidats");
+            _hint = new Button("hint");
             _prev.setPadding(Insets.EMPTY);
             _next.setPadding(Insets.EMPTY);
 
@@ -261,6 +283,7 @@ public class GameInfos{
             // Ajouter le bouton au Pane
             // _prev.setPadding(new Insets(0,0,0,0));
             _button_prev_next.getChildren().addAll(_prev, _next);
+            _game_infos.getChildren().addAll(_last_move_label, _candidats, _hint);
             _game_infos.getChildren().add(_button_prev_next);
 
         }
@@ -302,6 +325,18 @@ public class GameInfos{
         {
             return _next;
         }
+        public Button getCandidatsButton()
+        {
+            return _candidats;
+        }
+
+        public Button getHintButton()
+        {
+            return _hint;
+        }
+
+
+
         public void clear(){
             // reinitialiser le texte du temps et les variables
             //reinitioaliser l'affichage des prisonnier // peut etre a faire au niveau superieur?

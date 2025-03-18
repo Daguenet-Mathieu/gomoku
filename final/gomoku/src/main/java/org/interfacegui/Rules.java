@@ -9,6 +9,10 @@ public interface Rules {
     ArrayList<Point> get_forbiden_moves();
     void check_capture(Point point, Map map);
     ArrayList<Point> get_prisonners();
+    int get_white_prisonners();
+    int get_black_prisonners();
+    int get_board_size();
+ 
     // ArrayList check_captures(Map map, Point point);
     // Méthode par défaut qui vérifie si le coup est valide (si la case est vide)
 

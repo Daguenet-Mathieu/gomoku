@@ -46,7 +46,7 @@ public class Gomoku
     private int _game_infos_size_y;
     private  Pane _goban_pane;
     private VBox _game_infos_pane;
-    private int _nb_line = 19;
+    private int _nb_line;
     private int map_index;
     private Rules rule;
     private VBox _end_popin = new VBox();
@@ -60,6 +60,8 @@ public class Gomoku
     private Label _end_text = new Label();
     private int _winner = 0;
     private Label game_name;
+    private int start_move_time;
+    private int end_move_time;
     // private DoubleBinding fontSizeBinding;
 
     private Game game;
@@ -80,8 +82,11 @@ public class Gomoku
         player_turn = 0;
         current_decrement = 0;
         game_end = false;
-        game = new Game(_game_infos.get_rules());
+        game = new Game(_game_infos.get_rules(), rule.get_board_size());
         _winner = 0;
+        gameInfos.set_black_prisonners("0");
+        gameInfos.set_white_prisonners("0");
+
     }
 
     public void createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
@@ -102,16 +107,20 @@ public class Gomoku
 
             if (player_turn != current_decrement){
                 current_decrement = current_decrement == 0?1:0;
+                gameInfos.set_last_move_time(end_move_time - start_move_time);
+                start_move_time = 0;
+                end_move_time = 0;
                 return ;
             }
             if (player_turn == 0)
                 gameInfos.sub_black_time(10);
             else
                 gameInfos.sub_white_time(10);
+            end_move_time += 10;
             if (gameInfos.get_black_time() <= 0 || gameInfos.get_white_time() <= 0){
                 gameLoop.stop();
                 game_end = true;
-                _winner = (gameInfos.get_black_time() <= 0) ? 1 : 2;
+                _winner = (gameInfos.get_black_time() <= 0) ? 2 : 1;
                 String res = _winner == 1? "black" : "white";
                 _end_text.setText(res + " win");
                 _end_popin.setVisible(true);
@@ -175,8 +184,8 @@ public class Gomoku
             _end_popin.setManaged(true);
             game_end = true;
             gameLoop.stop();
-            _winner = (gameInfos.get_black_time() <= 0) ? 1 : 2;
-            String res = _winner == 1? "black" : "white";
+            _winner = player_turn;
+            String res = _winner == 0? "black" : "white";
             _end_text.setText(res + " win");
         }
         else
@@ -192,14 +201,20 @@ public class Gomoku
             System.out.println("capture 2 em affichage : " + p);  // Appel automatique à toString()
         }
         _map.get((_map.size()-1)).remove_prisonners(points);
+        if (points != null && points.size() > 0){
+            if (player_turn == 0)
+                gameInfos.set_black_prisonners(Integer.toString(rule.get_black_prisonners()));
+            else
+                gameInfos.set_white_prisonners(Integer.toString(rule.get_white_prisonners()));
+        }
         goban.updateFromMap(_map.get(_map.size() -1));
-        player_turn = player_turn == 0?1:0;
-
+        player_turn ^= 1;
     }
 
     public Gomoku(int heigh, int width, Home game_infos)/*prendra les regles en paramettre vu que connu au clic*/{
         // fontSizeBinding = (DoubleBinding) Bindings.min(
-        //         _game_infos.widthProperty().multiply(0.1),
+        //         _game_infos	at org.interfacegui.PenteRules.endGame(PenteRules.java:27)
+// .widthProperty().multiply(0.1),
         //         _game_infos.heightProperty().multiply(0.1)
         //     );
 //         fontSizeBinding = Bindings.createDoubleBinding(
@@ -214,8 +229,8 @@ public class Gomoku
         //     _game_infos.heightProperty()
         // );
         init_rules(game_infos.get_rules());
-
-        game = new Game(game_infos.get_rules());
+        _nb_line = rule.get_board_size();
+        game = new Game(game_infos.get_rules(), rule.get_board_size());
         _game_infos = game_infos;
         System.out.println("constructeur gomoku rule type == " + rule.getGameType());
         map_index = 1;
@@ -245,7 +260,7 @@ public class Gomoku
         game_name = new Label(game_infos.get_rules());
         //faire le new gamedisplay donner 1/3 largeur
         _game_infos_size_y = heigh;
-        goban = new Goban(heigh, width - _game_infos_size_x, 19);//nb ligne a definir plus tRD //donner 2/3 largeur
+        goban = new Goban(heigh, width - _game_infos_size_x, rule.get_board_size());//nb ligne a definir plus tRD //donner 2/3 largeur
         _goban_pane = goban.get_goban();
         _game_infos_pane = gameInfos.getGameInfos();//donner les temps en parametres//donnerl e temps en parametre et des getteur pour cehck la fin del a game //ajouter les temps dans la map aussi
         _game_infos_pane.getChildren().add(0, game_name);

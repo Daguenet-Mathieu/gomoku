@@ -5,6 +5,7 @@ import org.utils.Point;
 public class GoRules implements Rules {
     ArrayList<Point> prisonners;//prisonnier crees par le dernier coup
     ArrayList<Point> forbidden_moves;//coups interdit pour la position actuelle
+    int [] prisonners_nbr = new int[2];
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
@@ -51,4 +52,21 @@ public class GoRules implements Rules {
     public ArrayList<Point> get_prisonners(){
         return prisonners;
     }
+
+
+    @Override
+    public int get_white_prisonners(){
+        return (prisonners_nbr[1]);
+    }
+    
+    @Override
+    public int get_black_prisonners(){
+        return (prisonners_nbr[0]);
+    }
+
+    @Override
+    public int  get_board_size(){
+        return 19;
+    }
+
 }

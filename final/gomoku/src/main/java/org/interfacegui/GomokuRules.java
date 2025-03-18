@@ -43,5 +43,21 @@ public class GomokuRules implements Rules {
     public ArrayList<Point> get_prisonners(){
         return new ArrayList<Point>();
     }
+
+    @Override
+    public int get_white_prisonners(){
+        return (0);
+    }
+    
+    @Override
+    public int get_black_prisonners(){
+        return (0);
+    }
+
+    @Override
+    public int  get_board_size(){
+        return 19;
+    }
+
 }
 

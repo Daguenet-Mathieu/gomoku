@@ -25,7 +25,7 @@ public class Game {
     //public int [][] mmap;
     public boolean start = true;
 
-    public Game(String rules){
+    public Game(String rules, int board_size){
         map = new SquareState[19][19];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {

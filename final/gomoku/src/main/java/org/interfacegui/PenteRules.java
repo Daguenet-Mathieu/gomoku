@@ -24,7 +24,7 @@ public class PenteRules implements Rules {
 
     @Override
     public boolean endGame(Map map, Point point) {
-        System.out.println("check end curretn nbr prisonner == " + prisonners_nbr);
+        System.out.println("check end curretn nbr prisonner == " + prisonners_nbr[map.get_map()[point.y][point.x] - 1]);
         if (check_five(map, point) || prisonners_nbr[0] >= 10 || prisonners_nbr[1] >= 10)
             return true;
         return false;
@@ -34,12 +34,11 @@ public class PenteRules implements Rules {
     public String getGameType() {
         return "Pente";
     }
+
     @Override
     public ArrayList<Point> get_forbiden_moves(){
         return forbidden_moves;
     }
-
-
 
     @Override
     public void check_capture(Point point, Map map){
@@ -47,11 +46,11 @@ public class PenteRules implements Rules {
         prisonners = GetCapturedStones(point, map);
         if (prisonners.size() != 0)
         {
-            capture_color = map.get_map()[point.x][point.y];
+            capture_color = map.get_map()[point.y][point.x];
             System.out.printf("color captured %d\n", capture_color);
-            prisonners_nbr[capture_color] += prisonners.size(); //to_debug
+            prisonners_nbr[capture_color - 1] += prisonners.size(); //to_debug
             System.out.println("adding prisonner nbr == " + prisonners.size());
-            System.out.println("prisonner nbr == " + prisonners_nbr);
+            System.out.println("prisonner nbr == " + prisonners_nbr[capture_color - 1]);
         }
 
     }
@@ -61,5 +60,18 @@ public class PenteRules implements Rules {
         return prisonners;
     }
 
+    @Override
+    public int get_white_prisonners(){
+        return (prisonners_nbr[1]);
+    }
+    
+    @Override
+    public int get_black_prisonners(){
+        return (prisonners_nbr[0]);
+    }
 
+    @Override
+    public int  get_board_size(){
+        return 19;
+    }
 }
