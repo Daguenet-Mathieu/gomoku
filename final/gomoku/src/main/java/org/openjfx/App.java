@@ -151,7 +151,7 @@ public class App extends Application {
         stage.setScene(home);
         // stage.setScene(home);
         stage.show();
-        stage.setOnCloseRequest(we -> gomoku.print_history_of_move());  
+        stage.setOnCloseRequest(we -> {if (gomoku != null) gomoku.print_history_of_move();});  
         // System.out.println("heihgt " + goban.getHeight() + " size " + size);
     }
 

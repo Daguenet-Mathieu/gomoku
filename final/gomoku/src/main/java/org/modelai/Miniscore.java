@@ -19,7 +19,7 @@ public class Miniscore {
     boolean victory;
 
     //static int [] factor = {0, 0, 2, 5, 10, 10};
-    static int [] factor = {0, 0, 2, 10, 25, 25};
+    static int [] factor = {0, 0, 2, 10, 25, 0, 0};
     //static int [] factor = {0, 0, 2, 3, 4};
     static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
 

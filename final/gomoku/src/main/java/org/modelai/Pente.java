@@ -6,11 +6,13 @@ public class Pente extends MinMax {
     // public Candidat.coord [] removed;
     static public int [] prisoners;
     static ArrayList <Pente.Prison> prisonlst;
+    public static boolean cut = true;
 
     private class Prison
     {
         public Candidat.coord pos;
         public Candidat.coord warder;
+
 
         public Prison(int x, int y, int warx, int wary)
         {
@@ -166,6 +168,93 @@ public class Pente extends MinMax {
             
 
             m.unplay(m.move, depth);
+        }
+
+        if (depth == Game.max_depth)
+        {
+            print_values(values);
+            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", prisoners[0], prisoners[1]);
+        }
+
+        if (turn == player)
+            return max(values);
+        else
+            return min(values);
+    }
+
+
+    public float minmaxab(int depth, int turn, int player, float alpha, float beta)
+    {   
+        int nb_candidates;
+        float cur_alpha;
+        float cur_beta;
+        float res;
+
+        //nb_candidates = candidat.old_load(depth, turn);
+        nb_candidates = candidat.old_load(depth);
+
+        if (depth == 0)
+        {
+            pos_counter++;
+            //display_map();
+            //scsimul.display();
+            res = eval(player, len, turn);
+            return res;
+        }
+
+        values = new float[nb_candidates];
+
+    
+        cur_alpha = Float.NEGATIVE_INFINITY;
+        cur_beta = Float.POSITIVE_INFINITY;
+
+        for (int i = 0 ; i < nb_candidates ; i++)
+        {
+            Pente m = new Pente(this.len);
+
+            if (turn == player)
+            {
+                if (m.play(candidat.lst.get(i), turn))
+                    res = value_victory(player, turn, len);
+                else
+                    res = m.minmaxab(depth - 1, change(turn), player, Math.max(alpha, cur_alpha), beta);
+
+                values[i] = res;
+                cur_alpha = Math.max(cur_alpha, res);
+
+                m.unplay(m.move, depth);
+
+                if (cut && cur_alpha > beta) // beta cut
+                {
+                    //System.out.println("betacut");
+                    //m.unplay(m.move, depth);
+                    // m.best = candidat.lst.get(i);
+                    // System.out.printf("best %d %d\n", m.best.x, m.best.y);
+                    return cur_alpha;
+                }
+
+            }
+            else
+            {
+                if (m.play(candidat.lst.get(i),turn))
+                    res = value_victory(player, turn, len);
+                else
+                    res = m.minmaxab(depth - 1, change(turn), player, alpha, Math.min(beta, cur_beta));
+                values[i] = res;
+                cur_beta = Math.min(cur_beta, res);
+
+                m.unplay(m.move, depth);
+
+                if (cut && alpha > cur_beta) // alpha cut
+                {
+                    //System.out.println("alphacut");
+                    //m.unplay(m.move, depth);
+                    // m.best = candidat.lst.get(i);
+                    // System.out.printf("best %d %d", m.best.x, m.best.y);
+                    return cur_beta;
+                }
+            }
+
         }
 
         if (depth == Game.max_depth)

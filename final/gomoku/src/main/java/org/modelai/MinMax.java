@@ -787,6 +787,10 @@ public class MinMax
             return min(values);
     }
 
+    public float minmaxab(int depth, int turn, int player, float alpha, float beta)
+    {
+        return 0;
+    }
     // public static void main(String[] args)
     // {
 
