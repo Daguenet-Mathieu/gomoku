@@ -22,6 +22,8 @@ import org.utils.Point;
 import javafx.scene.text.Font;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
+import java.util.HashMap;
+import org.modelai.Candidat;
 
 
 //coder les free 3et reccup list coup interdits + prisonnier et liste prisonniers et fin de parties sur 10 prisioniers //pente et renju faire des emthodes defaut dans rules
@@ -62,10 +64,104 @@ public class Gomoku
     private Label game_name;
     private int start_move_time;
     private int end_move_time;
+    private ArrayList<Point> candidatsList;
+    private float bestMoveScore;
+    private ArrayList<Point> hintList;
     // private DoubleBinding fontSizeBinding;
 
     private Game game;
     private ArrayList<Point> saved;
+    private boolean toggleCandidat = false;
+    private boolean toggleHint = false;
+
+    // void changeCandidatVisibility(boolean visible){
+    //     int count = 0;
+    //     for (Float score : candidatsMap.keySet()) {
+    //         if (count == 0) { 
+    //             count++; 
+    //             continue; // Ignore le premier coup
+    //         }
+    //         goban.set_stone_status(visible, "#00FF00", candidatsMap.get(score), String.format("%.2f", score));
+    //         count++;
+    //     }
+    // }
+
+    // void setCandidats(ArrayList<Candidat.coord> candidats, float[] values){
+    //     System.out.println("candidats = " + candidats.size());
+    //     System.out.println("values = " + values.length);
+    //     System.out.println("le coup choisi == " + game.val);
+    //     if (candidats == null || values == null)
+    //         return ;
+    //     candidatsMap = new HashMap();
+    //     System.out.println("llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll");
+    //     for (int i = 0; i < candidats.size(); i++) {
+    //         float score = values[i];
+    //         while (candidatsMap.containsKey(score)) {
+    //             System.out.println("cououc");
+    //            score += 0.00001f;  // Suffisamment petit pour ne pas affecter l'ordre réel
+    //         }
+    //         candidatsMap.put(score, new Point(candidats.get(i).y, candidats.get(i).x));
+    //     }
+    // }
+
+
+    void changeHintVisibility(boolean visible) {
+        if (hintList == null || hintList.isEmpty()) return;
+
+        for (int i = 0; i < hintList.size(); i++) {
+            Point p = hintList.get(i);
+            goban.set_stone_status(visible, "#0000FF", p, String.format("%.2f", p.val));
+        }
+    }
+
+    void setHint(ArrayList<Candidat.coord> hint, float[] values) {
+        if (hint == null || values == null) return;
+
+        hintList = new ArrayList<>();
+        // bestMoveScore = game.val;
+        
+        // System.out.println("hint = " + hint.size());
+        // System.out.println("values = " + values.length);
+        // System.out.println("le coup choisi == " + game.val);
+        for (int i = 0; i < hint.size(); i++) {
+            hintList.add(new Point(hint.get(i).y, hint.get(i).x));
+            hintList.get(hintList.size() - 1).set_val(values[i]);
+        }
+    }
+
+
+    void changeCandidatVisibility(boolean visible) {
+        if (candidatsList == null || candidatsList.isEmpty()) return;
+
+        for (int i = 0; i < candidatsList.size(); i++) {
+            Point p = candidatsList.get(i);
+            if (p.val != bestMoveScore){
+                goban.set_stone_status(visible, "#00FF00", p, String.format("%.2f", p.val));
+            }
+        }
+    }
+
+    void setCandidats(ArrayList<Candidat.coord> candidats, float[] values) {
+        if (candidats == null || values == null) return;
+
+        candidatsList = new ArrayList<>();
+        bestMoveScore = game.val;
+        
+        System.out.println("candidats = " + candidats.size());
+        System.out.println("values = " + values.length);
+        System.out.println("le coup choisi == " + game.val);
+        for (int i = 0; i < candidats.size(); i++) {
+            candidatsList.add(new Point(candidats.get(i).y, candidats.get(i).x));
+            candidatsList.get(candidatsList.size() - 1).set_val(values[i]);
+        }
+    }
+
+
+    void showCandidats() {
+        for (Point p : candidatsList) {
+            System.out.println("Score: " + p.val + " -> Point: " + p);
+        }
+    }
 
     public void reset_gomoku(){
         _map.clear();
@@ -94,10 +190,19 @@ public class Gomoku
         KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
             try {
             //System.out.println("coucou curent turn == " + player_turn + " current decrement == " + current_decrement );
-            if (player_turn == 0 && _game_infos.get_black_player_type() == 1)
-                playMove(game.best_move(player_turn+1, player_turn+1));
-            else if (player_turn == 1 && _game_infos.get_white_player_type() == 1)
-                playMove(game.best_move(player_turn+1, player_turn+1));
+                if (player_turn == 0 && _game_infos.get_black_player_type() == 1){
+                    playMove(game.best_move(player_turn+1, player_turn+1));
+                    setCandidats(game.m.candidat.lst, game.m.values);
+                    showCandidats();
+                }
+                else if (player_turn == 1 && _game_infos.get_white_player_type() == 1){
+                    playMove(game.best_move(player_turn+1, player_turn+1));
+                    setCandidats(game.m.candidat.lst, game.m.values);
+                    showCandidats();
+                    _map.get(_map.size()-1).printMap();
+                    System.out.println();
+
+                }
             }
             catch (Exception e)
             {
@@ -112,6 +217,7 @@ public class Gomoku
                 end_move_time = 0;
                 return ;
             }
+            gameInfos.set_current_move_time(end_move_time - start_move_time);
             if (player_turn == 0)
                 gameInfos.sub_black_time(10);
             else
@@ -157,6 +263,11 @@ public class Gomoku
     private void playMove(Point point){
         if (!rule.isValidMove(point , _map))
             return ;
+        toggleCandidat = false;
+        changeCandidatVisibility(false);
+        changeHintVisibility(false);
+        hintList = null;
+        toggleHint = false;
         // System.out.println("goban cliqué aux coordonnées : (" + (x - margin_w) / square + ", " + (y - margin_h) / square + ")");
         //check legalite du coup avec les regles si ok ajouter le coup et enlever les prisonniers
         // int i = ((int)x - margin_w) / square;
@@ -295,6 +406,21 @@ public class Gomoku
             // Action à réaliser lors du clic
             System.out.println("Le bouton next a été cliqué !");
         });
+        gameInfos.getCandidatsButton().setOnAction(event -> {
+            toggleCandidat = toggleCandidat == true? false : true;
+            changeCandidatVisibility(toggleCandidat);
+        });
+
+        gameInfos.getHintButton().setOnAction(event -> {
+            toggleHint = toggleHint == true? false : true;
+            if (hintList == null){
+                game.best_move(player_turn+1, player_turn+1);
+                setHint(game.m.candidat.lst, game.m.values);
+            }
+            changeHintVisibility(toggleHint);
+        });
+
+
             goban.get_goban().setOnMouseClicked(event -> {
             if (game_end == true)
                 return ;

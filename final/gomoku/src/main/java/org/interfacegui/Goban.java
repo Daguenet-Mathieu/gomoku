@@ -6,6 +6,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import org.utils.Point;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 //import javafx.scene.layout.CornerRadii;
 //import javafx.scene.input.MouseEvent;
 
@@ -193,6 +198,134 @@ public class Goban{
     //     System.out.println("Pane cliqué aux coordonnées : (" + x + ", " + y + ")");
     // }
     // _goban.setOnMouseClicked(this::handleMouseClick);
+
+    // public void set_stone_status(boolean visible, String color, Point coord, String text) {
+    //     Circle stone = _stones[coord.y][coord.x];
+    //     stone.setVisible(visible);
+        
+    //     if (visible) {
+    //         stone.setFill(javafx.scene.paint.Color.web(color));
+            
+    //         // Créer le texte
+    //         Text label = new Text(text);
+    //         label.setFill(javafx.scene.paint.Color.RED);
+            
+    //         // Lier la taille de la police au rayon du cercle
+    //         DoubleBinding fontSizeBinding = stone.radiusProperty().multiply(0.7);
+    //         label.fontProperty().bind(Bindings.createObjectBinding(() -> 
+    //             new Font(fontSizeBinding.get()), fontSizeBinding));
+            
+    //         // Lier la position du texte au centre du cercle
+    //         label.xProperty().bind(stone.centerXProperty().subtract(
+    //             Bindings.createDoubleBinding(() -> 
+    //                 label.getBoundsInLocal().getWidth() / 2, 
+    //                 label.boundsInLocalProperty())));
+                    
+    //         label.yProperty().bind(stone.centerYProperty().add(
+    //             Bindings.createDoubleBinding(() -> 
+    //                 label.getBoundsInLocal().getHeight() / 4, 
+    //                 label.boundsInLocalProperty())));
+            
+    //         // Ajouter le texte à la scène
+    //         Pane parent = (Pane) stone.getParent();
+    //         parent.getChildren().add(label);
+    //     }
+    // }
+
+
+    // public void set_stone_status(boolean visible, String color, Point coord, String text) {
+    //     Circle stone = _stones[coord.y][coord.x];
+    //     stone.setVisible(visible);
+        
+    //     if (visible) {
+    //         stone.setFill(javafx.scene.paint.Color.web(color));
+            
+    //         // Créer le texte
+    //         Text label = new Text(text);
+    //         label.setFill(javafx.scene.paint.Color.RED);
+            
+    //         // Définir la taille de la police initiale
+    //         double fontSize = stone.getRadius() * 0.7;
+    //         label.setFont(new Font(fontSize));
+            
+    //         // Ajouter le texte à la scène d'abord
+    //         Pane parent = (Pane) stone.getParent();
+    //         parent.getChildren().add(label);
+            
+    //         // Fonction pour mettre à jour la position du texte
+    //         Runnable updateTextPosition = () -> {
+    //             double width = label.getBoundsInLocal().getWidth();
+    //             double height = label.getBoundsInLocal().getHeight();
+    //             label.setX(stone.getCenterX() - width / 2);
+    //             label.setY(stone.getCenterY() + height / 4);
+    //         };
+            
+    //         // Positionner initialement
+    //         updateTextPosition.run();
+            
+    //         // Configurer les listeners
+    //         stone.radiusProperty().addListener((obs, oldVal, newVal) -> {
+    //             label.setFont(new Font(newVal.doubleValue() * 0.7));
+    //             updateTextPosition.run();
+    //         });
+            
+    //         stone.centerXProperty().addListener((obs, oldVal, newVal) -> updateTextPosition.run());
+    //         stone.centerYProperty().addListener((obs, oldVal, newVal) -> updateTextPosition.run());
+    //     }
+    // }
+
+
+    public void set_stone_status(boolean visible, String color, Point coord, String text) {
+        Circle stone = _stones[coord.y][coord.x];
+        stone.setVisible(visible);
+        
+        // Get the parent pane to handle text labels
+        Pane parent = (Pane) stone.getParent();
+        
+        // Remove any existing text label associated with this stone
+        parent.getChildren().removeIf(node -> 
+            node instanceof Text && 
+            node.getUserData() != null && 
+            node.getUserData().equals("label_" + coord.x + "_" + coord.y));
+        
+        if (visible) {
+            stone.setFill(javafx.scene.paint.Color.web(color));
+            
+            // Create the text
+            Text label = new Text(text);
+            label.setFill(javafx.scene.paint.Color.RED);
+            
+            // Set user data to identify this label later
+            label.setUserData("label_" + coord.x + "_" + coord.y);
+            
+            // Set initial font size
+            double fontSize = stone.getRadius() * 0.7;
+            label.setFont(new Font(fontSize));
+            
+            // Add the text to the scene
+            parent.getChildren().add(label);
+            
+            // Function to update text position
+            Runnable updateTextPosition = () -> {
+                double width = label.getBoundsInLocal().getWidth();
+                double height = label.getBoundsInLocal().getHeight();
+                label.setX(stone.getCenterX() - width / 2);
+                label.setY(stone.getCenterY() + height / 4);
+            };
+            
+            // Position initially
+            updateTextPosition.run();
+            
+            // Configure listeners
+            stone.radiusProperty().addListener((obs, oldVal, newVal) -> {
+                label.setFont(new Font(newVal.doubleValue() * 0.7));
+                updateTextPosition.run();
+            });
+            stone.centerXProperty().addListener((obs, oldVal, newVal) -> updateTextPosition.run());
+            stone.centerYProperty().addListener((obs, oldVal, newVal) -> updateTextPosition.run());
+        }
+    }
+
     public int get_margin_width(){
         return (_width_margin_size);
     }

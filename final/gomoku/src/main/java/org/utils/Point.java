@@ -4,6 +4,7 @@ public class Point {
     public int x;
     public int y;
     public int color;
+    public float val;
 
     public Point(int x, int y) {
         this.x = x;
@@ -20,7 +21,7 @@ public class Point {
 
     @Override
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        return "( x: " + x + ", y: " + y + ")";
     }
 
     public String colormove() {
@@ -28,6 +29,10 @@ public class Point {
         if (color == 0)
             return "(" + x + "," + y + ")";
         return C + "(" + x + "," + y + ")";
+    }
+
+    public void set_val(float v){
+        val = v;
     }
 
     public Point()

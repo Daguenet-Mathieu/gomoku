@@ -71,6 +71,8 @@ public class GameInfos{
         private Label white_time_label;
         private Label black_time_label = new Label();
         private Label _last_move_label = new Label("last move time : ");
+        private Label _current_move_label = new Label("move time : ");
+
         private Button _prev;
         private Button _next;
         private Button _candidats;
@@ -135,9 +137,13 @@ public class GameInfos{
                 return String.format("%02d:%02d", seconds, remaining_milliseconds); // SS:MS (centièmes)
             }
         }
-        
+
         public void set_last_move_time(int val){
-            _last_move_label.setText("play time : " + formatTime(val));
+            _last_move_label.setText("last time : " + formatTime(val));
+        }
+
+        public void set_current_move_time(int val){
+            _current_move_label.setText("curr time : " + formatTime(val));
         }
 
         public void set_white_prisonners(String str){
@@ -167,6 +173,11 @@ public class GameInfos{
                 fontSizeBinding
             ));
             _last_move_label.fontProperty().bind(Bindings.createObjectBinding(
+                () -> new Font("Arial", fontSizeBinding.get()),
+                fontSizeBinding
+            ));
+
+            _current_move_label.fontProperty().bind(Bindings.createObjectBinding(
                 () -> new Font("Arial", fontSizeBinding.get()),
                 fontSizeBinding
             ));
@@ -283,7 +294,7 @@ public class GameInfos{
             // Ajouter le bouton au Pane
             // _prev.setPadding(new Insets(0,0,0,0));
             _button_prev_next.getChildren().addAll(_prev, _next);
-            _game_infos.getChildren().addAll(_last_move_label, _candidats, _hint);
+            _game_infos.getChildren().addAll(_last_move_label, _current_move_label, _candidats, _hint);
             _game_infos.getChildren().add(_button_prev_next);
 
         }
