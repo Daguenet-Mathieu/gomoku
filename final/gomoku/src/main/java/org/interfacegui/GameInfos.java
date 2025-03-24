@@ -2,7 +2,7 @@ package org.interfacegui;
 // import javafx.scene.shape.*;
 // import java.util.ArrayList;
 import javafx.scene.paint.Color;
-import javafx.scene.layout.Pane;
+// import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 
@@ -56,7 +56,7 @@ public class GameInfos{
         // private Pane _player_1_score;
         // private Pane _player_2_score;
         // private Pane _prev_next_button;//addd 2 bouttons
-        private DoubleBinding fontSizeBinding;
+        //private DoubleBinding fontSizeBinding;
         private int _size_x;
         private int _size_y; 
         private Label _white;
@@ -239,20 +239,20 @@ public class GameInfos{
     //     black_time_label.setLayoutX(_size_x/10);
     //     black_time_label.setLayoutY(_size_y/2 + 20);
    // }
-        private void update_text() {
-        _white.setLayoutX(_size_x/10);
-        _white.setLayoutY(_size_y/2);
-        _black.setLayoutX(_size_x/10);
-        _black.setLayoutY(_size_y/10);
+        // private void update_text() {
+        // _white.setLayoutX(_size_x/10);
+        // _white.setLayoutY(_size_y/2);
+        // _black.setLayoutX(_size_x/10);
+        // _black.setLayoutY(_size_y/10);
 
-        white_time_label.setLayoutX(_size_x/10);
-        white_time_label.layoutYProperty().bind(_white.layoutYProperty().add(
-            _white.fontProperty().get().getSize() * 1.5)); // 1.5 = 1 + 0.5 marge
+        // white_time_label.setLayoutX(_size_x/10);
+        // white_time_label.layoutYProperty().bind(_white.layoutYProperty().add(
+        //     _white.fontProperty().get().getSize() * 1.5)); // 1.5 = 1 + 0.5 marge
         
-        black_time_label.setLayoutX(_size_x/10);
-        black_time_label.layoutYProperty().bind(_black.layoutYProperty().add(
-            _black.fontProperty().get().getSize() * 1.5)); // 1.5 = 1 + 0.5 marge
-        }
+        // black_time_label.setLayoutX(_size_x/10);
+        // black_time_label.layoutYProperty().bind(_black.layoutYProperty().add(
+        //     _black.fontProperty().get().getSize() * 1.5)); // 1.5 = 1 + 0.5 marge
+        // }
 
         public GameInfos(int y, int x, Home infos){
             black_time = infos.get_black_time();

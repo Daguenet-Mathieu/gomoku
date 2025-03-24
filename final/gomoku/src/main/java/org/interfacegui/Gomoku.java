@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.modelai.Game;
 //import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.HBox;
+//import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 //import javafx.scene.paint.Color;
@@ -22,7 +22,6 @@ import org.utils.Point;
 import javafx.scene.text.Font;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
-import java.util.HashMap;
 import org.modelai.Candidat;
 
 import java.util.concurrent.ExecutorService;
@@ -49,7 +48,7 @@ public class Gomoku
     private Goban goban;
     private GameInfos gameInfos;
     private int _game_infos_size_x;
-    private int _game_infos_size_y;
+    public int _game_infos_size_y;
     private  Pane _goban_pane;
     private VBox _game_infos_pane;
     private int _nb_line;

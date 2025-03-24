@@ -10,7 +10,7 @@ public class Map{
     private int _map[][];
     private int _white_prisonners;
     private int _black_prisonners;
-    private Point _last_move ;
+    public Point _last_move ;
     private int _move_time;
 
 

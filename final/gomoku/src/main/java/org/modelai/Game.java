@@ -18,6 +18,7 @@ public class Game {
     public ArrayList<Group> candidate;
     public Float val;
     public long time;
+    public String rules;
     public ArrayList<Double> timelst;
     static public int max_depth;
 
@@ -33,12 +34,13 @@ public class Game {
             }
         }
         nb_move = 0;
+        max_depth = 4;
+        //max_depth = 3;
         m = minmax_tree(rules); // gomoku.rules
         m.len = 0;
         candidate = new ArrayList<Group>();
         timelst = new ArrayList<Double>();
-        max_depth = 5;
-        //max_depth = 3;
+
 
         //mmap = new int [19][19];
     }
@@ -67,18 +69,21 @@ public class Game {
     {
         if (str == "Gomoku")
         {
-            System.out.println("ruleset 1");
+            this.rules = "Gomoku";
+            System.out.println("ruleset " + rules);
             return new Moku();
         }
         else if (str == "Pente")
         {
-            System.out.println("ruleset 2");
+            this.rules = "Pente";
+            //max_depth+=2;
+            System.out.println("ruleset " + rules);
             return new Pente();
         }
         else
         {
-
-            System.out.println("ruleset 3");
+            this.rules = "None";
+            System.out.println("ruleset " + rules);
             return new MinMax();
         }
     }
@@ -143,6 +148,7 @@ public class Game {
 
     public Point best_move(int turn, int player)
     {
+        //Candidat.coord c;
         //m.display_map();
         System.out.printf("best move %d %d\n", turn, player);
         //System.exit(0);
@@ -155,8 +161,28 @@ public class Game {
         {
             m.load_cur_score(scbord);
             System.out.printf("\n\tminmax launch turn %d player %d\n", turn, player);
-            val = m.minmax(max_depth, turn, player);
+    
+            if (this.rules.equals("Pente"))
+            {
+                // m.display_map();
+                // val = m.minmax(max_depth, turn, player);
+                // System.out.printf("minmax best move %d %d\n", m.best.y, m.best.x);
+                // c = m.best;
+                // m.display_map();
+                // m.load_cur_score(scbord);
+                val = m.minmaxab(max_depth, turn, player, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
 
+                System.out.printf("minmaxab best move %d %d\n", m.best.y, m.best.x);
+                // if (c.x == m.best.x && c.y == m.best.y)
+                // {
+                //     System.out.println("minmax and minmax ab : SAME MOVE");
+                // }
+                // else
+                //     System.out.println("minmax and minmax ab : DIFFERENT MOVE");
+                // m.display_map();
+            }
+            else
+                val = m.minmax(max_depth, turn, player);
         }
         //MinMax.candidat.clear();
         time = System.currentTimeMillis() - time;
@@ -168,7 +194,7 @@ public class Game {
 
         if ((double)time/1000 > 0.6 && return_mean_time() > 0.46)
         {
-            max_depth = max_depth == 1 ? 1 : max_depth - 1;
+            //max_depth = max_depth == 1 ? 1 : max_depth - 1;
             System.out.printf("max depth decreesed to %d\n", max_depth + 1);
         }
 
