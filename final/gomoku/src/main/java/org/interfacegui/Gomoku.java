@@ -25,6 +25,10 @@ import javafx.beans.binding.DoubleBinding;
 import java.util.HashMap;
 import org.modelai.Candidat;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ExecutionException;
 
 //coder les free 3et reccup list coup interdits + prisonnier et liste prisonniers et fin de parties sur 10 prisioniers //pente et renju faire des emthodes defaut dans rules
 //mettre qulques boutons test dans home choix des regles + temps (faire ecoulement du temps)  + choix du type de joueur noir et blanc( humain ou machine?) +  
@@ -73,6 +77,9 @@ public class Gomoku
     private ArrayList<Point> saved;
     private boolean toggleCandidat = false;
     private boolean toggleHint = false;
+    private boolean ia_playing = false;
+    private ExecutorService executor = null;
+    private Future<Point> future = null;
 
     // void changeCandidatVisibility(boolean visible){
     //     int count = 0;
@@ -142,7 +149,7 @@ public class Gomoku
     }
 
     void setCandidats(ArrayList<Candidat.coord> candidats, float[] values) {
-        if (candidats == null || values == null) return;
+        if (candidats == null || values == null || game.val == null) return;
 
         candidatsList = new ArrayList<>();
         bestMoveScore = game.val;
@@ -158,6 +165,8 @@ public class Gomoku
 
 
     void showCandidats() {
+        if (candidatsList == null)
+            return ;
         for (Point p : candidatsList) {
             System.out.println("Score: " + p.val + " -> Point: " + p);
         }
@@ -187,11 +196,25 @@ public class Gomoku
 
     public void createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
         gameLoop = new Timeline();
+        System.out.println("-1 je passe la");
+
         KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
             try {
             //System.out.println("coucou curent turn == " + player_turn + " current decrement == " + current_decrement );
                 if (player_turn == 0 && _game_infos.get_black_player_type() == 1){
-                    playMove(game.best_move(player_turn+1, player_turn+1));
+                    if (ia_playing == false){
+                            executor = Executors.newSingleThreadExecutor();
+                            future = executor.submit(() -> {
+                                return game.best_move(player_turn+1, player_turn+1);
+                            });
+                        ia_playing = true;
+                    }
+                    else if (future.isDone()){
+                        playMove(future.get());
+                        ia_playing = false;
+                        executor.shutdown();
+                    }
+                        //check fni du thread
                     setCandidats(game.m.candidat.lst, game.m.values);
                     showCandidats();
                 }
@@ -209,7 +232,6 @@ public class Gomoku
                 e.printStackTrace();
                 System.exit(0);
             }
-
             if (player_turn != current_decrement){
                 current_decrement = current_decrement == 0?1:0;
                 gameInfos.set_last_move_time(end_move_time - start_move_time);
