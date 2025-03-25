@@ -192,6 +192,7 @@ public class Pente extends MinMax {
 
         //nb_candidates = candidat.old_load(depth, turn);
         nb_candidates = candidat.old_load(depth);
+        //display_map();
 
         if (depth == 0)
         {
@@ -259,7 +260,7 @@ public class Pente extends MinMax {
 
         if (depth == Game.max_depth)
         {
-            print_values(values);
+            candidat.display_candidat(map);
             System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", prisoners[0], prisoners[1]);
         }
 

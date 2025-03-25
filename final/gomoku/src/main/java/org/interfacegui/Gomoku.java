@@ -27,7 +27,7 @@ import org.modelai.Candidat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ExecutionException;
+//import java.util.concurrent.ExecutionException;
 
 //coder les free 3et reccup list coup interdits + prisonnier et liste prisonniers et fin de parties sur 10 prisioniers //pente et renju faire des emthodes defaut dans rules
 //mettre qulques boutons test dans home choix des regles + temps (faire ecoulement du temps)  + choix du type de joueur noir et blanc( humain ou machine?) +  
@@ -156,7 +156,7 @@ public class Gomoku
         System.out.println("candidats = " + candidats.size());
         System.out.println("values = " + values.length);
         System.out.println("le coup choisi == " + game.val);
-        for (int i = 0; i < candidats.size(); i++) {
+        for (int i = 0; i < values.length; i++) {
             candidatsList.add(new Point(candidats.get(i).y, candidats.get(i).x));
             candidatsList.get(candidatsList.size() - 1).set_val(values[i]);
         }
@@ -221,7 +221,7 @@ public class Gomoku
                     playMove(game.best_move(player_turn+1, player_turn+1));
                     setCandidats(game.m.candidat.lst, game.m.values);
                     showCandidats();
-                    _map.get(_map.size()-1).printMap();
+                    //_map.get(_map.size()-1).printMap();
                     System.out.println();
 
                 }

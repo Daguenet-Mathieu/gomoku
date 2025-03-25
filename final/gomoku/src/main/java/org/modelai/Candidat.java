@@ -49,6 +49,52 @@ public class Candidat
         return false;
     }
 
+    private boolean isame(int a, int b)
+    {
+        if (a == b)
+            return a != 0;
+        return false;
+    }
+    private boolean inner_alignement(int i, int j)
+    {
+        if (j+1 != 19 && j-1 != -1 && isame(MinMax.map[i][j + 1], MinMax.map[i][j - 1]))
+            return true;
+        if (i+1 != 19 && i-1 != -1 && isame(MinMax.map[i + 1][j], MinMax.map[i - 1][j]))
+            return true;
+        if (i + 1 != 19 && i-1 != -1 && j + 1 != 19 && j - 1 != -1 && isame(MinMax.map[i+1][j-1], MinMax.map[i-1][j+1]))
+            return true;
+        if (i + 1 != 19 && i-1 != -1 && j + 1 != 19 && j - 1 != -1 && isame(MinMax.map[i-1][j-1], MinMax.map[i+1][j+1]))
+            return true;
+            
+        return false;
+    }
+
+
+    private boolean near(int i, int j, int num)
+    {
+        int cmp = 0;
+        if (j+1 != 19 && isplay(MinMax.map[i][j + 1]))
+            cmp++;
+        if (j-1 != -1 && isplay(MinMax.map[i][j - 1]))
+            cmp++;
+        if (i+1 != 19 && isplay(MinMax.map[i + 1][j]))
+            cmp++;
+        if (i-1 != -1 && isplay(MinMax.map[i - 1][j]))
+            cmp++;
+        if (i+1 != 19 && j-1 != -1 && isplay(MinMax.map[i+1][j-1]))
+            cmp++;
+        if (i-1 != -1 && j-1 != -1 && isplay(MinMax.map[i-1][j-1]))
+            cmp++;
+        if (i+1 != 19 && j+1 != 19 && isplay(MinMax.map[i+1][j+1]))
+            cmp++;
+        if (i-1 != -1 && j+1 != 19 && isplay(MinMax.map[i-1][j+1]))
+            cmp++;
+        
+        if (cmp >= num)
+            return true;
+        return false;
+    }
+
     private boolean near(int i, int j)
     {
         if (j+1 != 19 && isplay(MinMax.map[i][j + 1]))
@@ -105,8 +151,11 @@ public class Candidat
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
             //for (int j = 0 ; j < 19 ; j++)
             {
-                if (MinMax.map[i][j] == 0 && is_case(i, j))
-                    this.lst.add(new Candidat.coord(i, j));
+                if (MinMax.map[i][j] == 0)
+                {
+                    if (is_case(i, j) || inner_alignement(i, j))
+                        this.lst.add(new Candidat.coord(i, j));
+                }
             }
         }
         return this.lst.size();
@@ -127,9 +176,25 @@ public class Candidat
         return this.lst.size();
     }
 
+    public int probable_candidate(int num)
+    {
+        for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+        //for (int i = 0 ; i < 19 ; i++)
+        {
+           for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+            //for (int j = 0 ; j < 19 ; j++)
+            {
+                if (MinMax.map[i][j] == 0 && near(i, j, num))
+                    this.lst.add(new Candidat.coord(i, j));
+            }
+        }
+        return this.lst.size();
+    }
+
     public int old_load(int depth)
     {
         int ret;
+        int max_near;
         // System.out.println("==================");
         // display_map(map);
         // System.out.println("===================")
@@ -150,53 +215,86 @@ public class Candidat
         //         return ret;
         // }
 
-        if (depth == Game.max_depth)
+        if (true)
         {
             ret = interesting_candidate(MinMax.map); // only for the 1st maybe
+            //System.out.printf("is it interessant ? %d\n", ret);
             if (ret != 0)
+            {
+                if (depth == Game.max_depth)
+                {
+                    MinMax.scsimul.display();
+                    display_candidat(null);
+                }
                 return ret;
+            }
             else
                 {
+                    if (depth == Game.max_depth)
+                        System.out.println("nothin on ministat first move");
+                    max_near = 3;
+                    while(ret == 0)
+                    {
+                        ret = probable_candidate(max_near);
+                        max_near--;
+                        if (depth == Game.max_depth)
+                            System.out.printf("max_near %d, ret %d\n", max_near, ret);
+                    }
                     // System.out.println("zeroooo for interesting");
                 }
         }
 
+        return ret;
 
-
-        // if (depth <= 2)
+        // for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+        // //for (int i = 0 ; i < 19 ; i++)
         // {
-        //     for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+        //    for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+        //     //for (int j = 0 ; j < 19 ; j++)
         //     {
-        //         for (int j = limin.y -1 ; j < limax.y + 1 ; j++)
-        //         {
-        //             if (map[i][j] == 0 && is_case(i, j))
-        //                 this.lst.add(new Candidat.coord(i, j)); 
-        //         }
+        //         if (MinMax.map[i][j] == 0 && near(i, j))
+        //             this.lst.add(new Candidat.coord(i, j));
         //     }
-        //     if (this.lst.size() != 0)
-        //         return this.lst.size();
         // }
 
-        //System.out.printf("limitation %d %d %d %d\n", limin.x - 1, limax.x + 1 , limin.y - 1, limax.y + 1);
 
-        for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
-        //for (int i = 0 ; i < 19 ; i++)
-        {
-           for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
-            //for (int j = 0 ; j < 19 ; j++)
-            {
-                if (MinMax.map[i][j] == 0 && near(i, j))
-                    this.lst.add(new Candidat.coord(i, j));
-            }
-        }
-            // if (map[9][10] == 2 && depth == 3)
-            // {
-            //     display_map(map);
-            //     display_candidat(map);
-            //     System.exit(0);
-            // }
-        //System.out.printf("Size of candidates %d\n", this.lst.size());
-        return this.lst.size();
+
+
+
+        // // if (depth <= 2)
+        // // {
+        // //     for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+        // //     {
+        // //         for (int j = limin.y -1 ; j < limax.y + 1 ; j++)
+        // //         {
+        // //             if (map[i][j] == 0 && is_case(i, j))
+        // //                 this.lst.add(new Candidat.coord(i, j)); 
+        // //         }
+        // //     }
+        // //     if (this.lst.size() != 0)
+        // //         return this.lst.size();
+        // // }
+
+        // //System.out.printf("limitation %d %d %d %d\n", limin.x - 1, limax.x + 1 , limin.y - 1, limax.y + 1);
+
+        // for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+        // //for (int i = 0 ; i < 19 ; i++)
+        // {
+        //    for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+        //     //for (int j = 0 ; j < 19 ; j++)
+        //     {
+        //         if (MinMax.map[i][j] == 0 && near(i, j))
+        //             this.lst.add(new Candidat.coord(i, j));
+        //     }
+        // }
+        //     // if (map[9][10] == 2 && depth == 3)
+        //     // {
+        //     //     display_map(map);
+        //     //     display_candidat(map);
+        //     //     System.exit(0);
+        //     // }
+        // //System.out.printf("Size of candidates %d\n", this.lst.size());
+        // return this.lst.size();
 
     }
 
@@ -407,7 +505,7 @@ public class Candidat
         {
             for (int j = 0 ; j < 19 ; j++)
             {
-                mapc[i][j] = map[i][j];
+                mapc[i][j] = MinMax.map[i][j];
             }
         }
     
