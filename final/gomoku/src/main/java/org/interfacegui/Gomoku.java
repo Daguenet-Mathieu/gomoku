@@ -148,13 +148,21 @@ public class Gomoku
     }
 
     void setCandidats(ArrayList<Candidat.coord> candidats, float[] values) {
-        if (candidats == null || values == null || game.val == null) return;
+        if (candidats == null || values == null || game.val == null || ia_playing == true) return;
 
         candidatsList = new ArrayList<>();
         bestMoveScore = game.val;
         
         System.out.println("candidats = " + candidats.size());
         System.out.println("values = " + values.length);
+        System.out.println("best == " + game.m.best.y + " " + game.m.best.y );
+        System.out.println("move == " + game.m.move.y + " " + game.m.move.y );
+        for (int i = 0; i < candidats.size(); i++){
+            System.out.println("candidat[" + i + "] = " + candidats.get(i).y + " " + candidats.get(i).x);
+        }
+        for (int i = 0; i < values.length; i++){
+            System.out.println("values[" + i + "] = " + values[i] + " " +  values[i]);
+        }
         System.out.println("le coup choisi == " + game.val);
         for (int i = 0; i < values.length; i++) {
             candidatsList.add(new Point(candidats.get(i).y, candidats.get(i).x));
@@ -212,10 +220,9 @@ public class Gomoku
                         playMove(future.get());
                         ia_playing = false;
                         executor.shutdown();
+                        setCandidats(game.m.candidat.lst, game.m.values);
+                        showCandidats();
                     }
-                        //check fni du thread
-                    setCandidats(game.m.candidat.lst, game.m.values);
-                    showCandidats();
                 }
                 else if (player_turn == 1 && _game_infos.get_white_player_type() == 1){
                     playMove(game.best_move(player_turn+1, player_turn+1));
@@ -428,11 +435,15 @@ public class Gomoku
             System.out.println("Le bouton next a été cliqué !");
         });
         gameInfos.getCandidatsButton().setOnAction(event -> {
+            if (ia_playing == true)
+                return ;
             toggleCandidat = toggleCandidat == true? false : true;
             changeCandidatVisibility(toggleCandidat);
         });
 
         gameInfos.getHintButton().setOnAction(event -> {
+            if (ia_playing == true)
+                return ;
             toggleHint = toggleHint == true? false : true;
             if (hintList == null){
                 game.best_move(player_turn+1, player_turn+1);
