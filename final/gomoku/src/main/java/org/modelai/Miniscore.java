@@ -504,11 +504,11 @@ public class Miniscore {
     {
             if (!this.victory)
             {
-                sc.victory(cur_turn);
+                //sc.victory(cur_turn);
                 this.victory = true;
                 return;
             }
-            sc.unvictory(cur_turn);
+            //sc.unvictory(cur_turn);
             this.victory=false;
     }
 
@@ -944,7 +944,7 @@ public class Miniscore {
         //System.out.println("player2");
         display_str(2);
         display_miniscore();
-        display_free();
+        //display_free();
     }
 
 }

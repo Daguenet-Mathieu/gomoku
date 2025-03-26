@@ -176,6 +176,17 @@ public class Candidat
         return this.lst.size();
     }
 
+    private boolean picked(int i, int j)
+    {
+        if (this.lst.size() == 0)
+            return true;
+
+        if ((i + j) % 5 == 0)
+            return true;
+        return false;
+
+    }
+
     public int probable_candidate(int num)
     {
         for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
@@ -184,7 +195,7 @@ public class Candidat
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
             //for (int j = 0 ; j < 19 ; j++)
             {
-                if (MinMax.map[i][j] == 0 && near(i, j, num))
+                if (MinMax.map[i][j] == 0 && near(i, j, num) && picked(i, j))
                     this.lst.add(new Candidat.coord(i, j));
             }
         }
@@ -220,25 +231,14 @@ public class Candidat
             ret = interesting_candidate(MinMax.map); // only for the 1st maybe
             //System.out.printf("is it interessant ? %d\n", ret);
             if (ret != 0)
-            {
-                if (depth == Game.max_depth)
-                {
-                    MinMax.scsimul.display();
-                    display_candidat(null);
-                }
                 return ret;
-            }
             else
                 {
-                    if (depth == Game.max_depth)
-                        System.out.println("nothin on ministat first move");
                     max_near = 3;
                     while(ret == 0)
                     {
                         ret = probable_candidate(max_near);
                         max_near--;
-                        if (depth == Game.max_depth)
-                            System.out.printf("max_near %d, ret %d\n", max_near, ret);
                     }
                     // System.out.println("zeroooo for interesting");
                 }

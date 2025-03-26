@@ -511,6 +511,23 @@ public class MinMax
         return false;
     }
 
+    private boolean check_dir(int x, int y, int dx, int dy, int player)
+    {
+        int count;
+
+        count = 0;
+
+        for (int i=dx , j = dy; in_goban(x+i, y+j) && map[x + i][y + j] == player ; i+=dx, j+=dy)
+            count +=1;
+
+        for (int i = -dx, j = -dy ; in_goban(x + i, y + j) && map[x + i][y + j] == player ; i-=dx, j-=dy)
+            count +=1;
+
+        if (count >= 4)
+            return true;
+        return false;
+    }
+
     protected boolean check_win_4_dir(int x, int y)
     {
         if (check_dir(x,y, 0, 1))
@@ -520,6 +537,20 @@ public class MinMax
         if (check_dir(x, y, 1, 1))
             return true;
         if (check_dir(x, y, 1, -1))
+            return true;
+        //true if
+        return false;
+    }
+
+    protected boolean check_win_4_dir(int x, int y, int player)
+    {
+        if (check_dir(x,y, 0, 1, player))
+            return true;
+        if (check_dir(x, y, 1, 0, player))
+            return true;
+        if (check_dir(x, y, 1, 1, player))
+            return true;
+        if (check_dir(x, y, 1, -1, player))
             return true;
         //true if
         return false;
@@ -619,9 +650,9 @@ public class MinMax
         else
         {
             if (len == 0)
-                return -11000;
+                return -12000; //11000
         }
-        return -9200;
+        return -10000; // 9200
     }
 
     // void update_val(float val, int turn, int player)

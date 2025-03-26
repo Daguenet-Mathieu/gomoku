@@ -7,11 +7,13 @@ public class Pente extends MinMax {
     static public int [] prisoners;
     static ArrayList <Pente.Prison> prisonlst;
     public static boolean cut = true;
+    public static int stop = 0;
 
     private class Prison
     {
         public Candidat.coord pos;
         public Candidat.coord warder;
+
 
 
         public Prison(int x, int y, int warx, int wary)
@@ -43,6 +45,24 @@ public class Pente extends MinMax {
         prisonlst.add(new Pente.Prison(x,y, warx, wary));
     }
 
+    private int is_capture(int x, int y, int dx, int dy, int p, int o)
+    {
+        int count = 0;
+
+        if (in_goban(x+3*dx, y+3*dy) && map[x + dx][y + dy] == o && map[x + 2 * dx][y + 2 * dy] == o && map[x + 3 * dx][y + 3 * dy] == p)
+        {
+            count+=2;
+        }
+
+        if (in_goban(x-3*dx, y - 3*dy) && map[x - dx][y - dy] == o && map[x - 2 * dx][y - 2 * dy] == o && map[x - 3 * dx][y - 3 * dy] == p)
+        {
+            count+=2;
+        }
+
+        return count;
+
+    }
+
     private boolean remove_capture(int x, int y, int dx, int dy, int p, int o)
     {
         if (in_goban(x+3*dx, y+3*dy) && map[x + dx][y + dy] == o && map[x + 2 * dx][y + 2 * dy] == o && map[x + 3 * dx][y + 3 * dy] == p)
@@ -61,6 +81,20 @@ public class Pente extends MinMax {
         return false;
     }
 
+    private boolean is_captured(int x, int y, int turn)
+    {  
+        final int op = turn == 1 ? 2 : 1;
+        int count = 0;
+
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            count += is_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
+        }
+        if (prisoners[(turn + 2) %2] + count >= 10)
+            return true;
+        return false;
+    }
+
 
     private void remove_captured(int x, int y, int turn)
     {  
@@ -74,19 +108,19 @@ public class Pente extends MinMax {
     public boolean play(Candidat.coord c, int player)
     {
         //System.out.printf("pente play %d %d\n", c.x, c.y);
-        this.move = c;
+
+
+        if (check_win_4_dir(c.x, c.y, player) || is_captured(c.x, c.y, player))
+            return true;
+
         map[c.x][c.y] = player;
+        this.move = c;
         remove_captured(c.x, c.y, player);
 
         this.candidat.save(c);
         scsimul.analyse_move(c.x, c.y, player);
 
-
-
-        if (prisoners[(player + 2) % 2] >=10)
-            return true;
-
-        return check_win_4_dir(c.x, c.y);
+        return false;
     }
 
     public void play_prisoners(int val, int warx, int wary)
@@ -200,6 +234,14 @@ public class Pente extends MinMax {
             //display_map();
             //scsimul.display();
             res = eval(player, len, turn);
+            // if (res > 1000)
+            // {
+            //         scsimul.display();
+            //         display_map();
+            //         stop++;
+            // }
+            // if (stop == 5)
+            //     System.exit(0);
             return res;
         }
 
@@ -216,14 +258,26 @@ public class Pente extends MinMax {
             if (turn == player)
             {
                 if (m.play(candidat.lst.get(i), turn))
+                {
                     res = value_victory(player, turn, len);
+                    // if (res == 12000 || res == -12000)
+                    // {
+                    //     best = new Candidat.coord(12, 9);
+                    //     System.out.println("BESTIIIIE");
+                    //     values[i] = res;
+                    //     return res;
+                    // }
+                }
                 else
+                {
                     res = m.minmaxab(depth - 1, change(turn), player, Math.max(alpha, cur_alpha), beta);
+                    m.unplay(m.move, depth);
+                }
 
                 values[i] = res;
                 cur_alpha = Math.max(cur_alpha, res);
 
-                m.unplay(m.move, depth);
+                //m.unplay(m.move, depth);
 
                 if (cut && cur_alpha > beta) // beta cut
                 {
@@ -238,13 +292,25 @@ public class Pente extends MinMax {
             else
             {
                 if (m.play(candidat.lst.get(i),turn))
+                {
                     res = value_victory(player, turn, len);
+                    // if (res == 12000 || res == -12000)
+                    // {
+                    //     best = new Candidat.coord(12, 9);
+                    //     System.out.println("BESTIIIIE");
+                    //     values[i] = res;
+                    //     return res;
+                    // }
+                }
                 else
+                {
                     res = m.minmaxab(depth - 1, change(turn), player, alpha, Math.min(beta, cur_beta));
+                    m.unplay(m.move, depth);
+                }
                 values[i] = res;
                 cur_beta = Math.min(cur_beta, res);
 
-                m.unplay(m.move, depth);
+                //m.unplay(m.move, depth);
 
                 if (cut && alpha > cur_beta) // alpha cut
                 {
@@ -262,6 +328,7 @@ public class Pente extends MinMax {
         {
             candidat.display_candidat(map);
             System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", prisoners[0], prisoners[1]);
+            scsimul.display();
         }
 
         if (turn == player)
