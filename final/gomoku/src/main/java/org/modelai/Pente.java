@@ -216,6 +216,18 @@ public class Pente extends MinMax {
             return min(values);
     }
 
+    private void debugstr() throws ArithmeticException
+    {
+        // if (scsimul.check_str() == false)
+        // {
+        //     System.out.printf("Error at %d\n", pos_counter);
+        //     display_map();
+        //     scsimul.display();
+        //     throw new ArithmeticException();
+        // }
+        return;
+    }
+
 
     public float minmaxab(int depth, int turn, int player, float alpha, float beta)
     {   
@@ -234,6 +246,7 @@ public class Pente extends MinMax {
             //display_map();
             //scsimul.display();
             res = eval(player, len, turn);
+            debugstr();
             // if (res > 1000)
             // {
             //         scsimul.display();
@@ -259,7 +272,8 @@ public class Pente extends MinMax {
             {
                 if (m.play(candidat.lst.get(i), turn))
                 {
-                    res = value_victory(player, turn, len);
+                    res = value_victory_intermediate(player, turn, len);
+                    debugstr();
                     // if (res == 12000 || res == -12000)
                     // {
                     //     best = new Candidat.coord(12, 9);
@@ -293,7 +307,8 @@ public class Pente extends MinMax {
             {
                 if (m.play(candidat.lst.get(i),turn))
                 {
-                    res = value_victory(player, turn, len);
+                    res = value_victory_intermediate(player, turn, len);
+                    debugstr();
                     // if (res == 12000 || res == -12000)
                     // {
                     //     best = new Candidat.coord(12, 9);
@@ -326,9 +341,9 @@ public class Pente extends MinMax {
 
         if (depth == Game.max_depth)
         {
-            candidat.display_candidat(map);
-            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", prisoners[0], prisoners[1]);
-            scsimul.display();
+            //candidat.display_candidat(map);
+            //System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", prisoners[0], prisoners[1]);
+            //scsimul.display();
         }
 
         if (turn == player)

@@ -155,7 +155,7 @@ public class MinMax
         {
             for (int j = 0 ; j < 19 ; j++)
             {
-                System.out.printf("%2d", map[i][j]);
+                System.out.printf("%2d", MinMax.map[i][j]);
             }
             System.out.println("");
         }
@@ -638,21 +638,53 @@ public class MinMax
         return MinMax.scsimul.victory;
     }
 
-    protected float value_victory(int player, int turn, int len)
+    protected float value_victory_intermediate(int player, int turn, int len)
     {
         pos_counter++;
         if (player == turn)
         {
             if (len == 0)
                 return 12000;
+            else if (len == 1)
+                return 11000;
             return 10000;
         }
         else
         {
             if (len == 0)
+                return -12000;
+            else if (len == 1)
+                return -11000;
+            return 10000;
+        }
+    }
+
+    protected float value_victory_smarter(int player, int turn, int len)
+    {
+        pos_counter++;
+        if (player == turn)
+            return 10000 - (len * 100);
+        else
+            return -10000 + (len * 100);
+    }
+
+    protected float value_victory(int player, int turn, int len)
+    {
+        pos_counter++;
+        if (player == turn)
+        {
+            //return 10000 - len * 100;
+            if (len == 0)
+                return 12000;
+            return 10000;
+        }
+        else
+        {
+            //return -10000 + len *100;
+            if (len == 0)
                 return -12000; //11000
         }
-        return -10000; // 9200
+       return -10000; // 9200
     }
 
     // void update_val(float val, int turn, int player)

@@ -936,6 +936,26 @@ public class Miniscore {
         System.out.printf("score %d %d diff %d\n", sc.one, sc.two, sc.one-sc.two);
     }
 
+    public boolean check_str()
+    {
+        for (int d = 0 ; d < 4 ; d++)
+        {
+            for (int i = 0 ; i < 19 ; i++)
+            {
+                for (int j = 0 ; j < 19 ; j++)
+                {
+                    if (str1[d][i][j] >= 5 || str2[d][i][j] >=5)
+                        return false;
+                    if (str1[d][i][j] != 0 && MinMax.map[i][j] != 0)
+                        return false;
+                    if (str2[d][i][j] != 0 && MinMax.map[i][j] != 0)
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
     public void display()
     {

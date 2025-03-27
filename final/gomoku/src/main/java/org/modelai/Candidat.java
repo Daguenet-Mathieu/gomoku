@@ -1,6 +1,11 @@
 package org.modelai;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.utils.DoubleFree;
 
 
@@ -10,6 +15,8 @@ public class Candidat
     public ArrayList<Integer> vanish_lst = new ArrayList<Integer>();
     public ArrayList<Candidat.coord> histo = new ArrayList<Candidat.coord>();
     public DoubleFree doubleFreethree;
+    List<Double> order = Arrays.asList(24.0, 23.0, 22.0, 21.0, 20.0, 19.0, 18.0, 17.0, 16.0, 15.0, 14.0, 13.0
+                                    ,12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.5, 1.0, 0.0);
 
     static coord limax = new coord(1, 1);
     static coord limin = new coord(18, 18);
@@ -19,8 +26,11 @@ public class Candidat
     {
         public int x;
         public int y;
+        public double st;
         public coord(int x, int y){this.x=x;this.y=y;}
+        public coord(int x, int y, double st ){this.x = x; this.y = y; this.st=st;}
         public boolean eq(int x, int y){return this.x==x&&this.y==y;}
+        public double st(){return this.st;}
     }
 
     public Candidat()
@@ -133,14 +143,31 @@ public class Candidat
         }
     }
 
-    public boolean is_case(int x, int y)
+    void load_case(int x, int y)
     {
+        int tot_case1 = 0;
+        int tot_case2 = 0;
+    
         for (int i = 0 ; i < 4 ; i++)
         {
-            if (MinMax.scsimul.str1[i][x][y] != 0 || MinMax.scsimul.str2[i][x][y] != 0)
-                return true;
+            tot_case1 += MinMax.scsimul.str1[i][x][y];
+            tot_case2 += MinMax.scsimul.str2[i][x][y];
+
         }
-        return false;
+        if (tot_case1 != 0)
+        {
+            this.lst.add(new Candidat.coord(x,y, tot_case1));
+            return;
+        }
+        else if (tot_case2 != 0)
+        {
+            this.lst.add(new Candidat.coord(x,y, tot_case2));
+            return;
+        }
+
+        if (inner_alignement(x, y))
+            this.lst.add(new Candidat.coord(x, y, 3));
+        return;
     }
 
     public int interesting_candidate(int [][] map)
@@ -153,39 +180,38 @@ public class Candidat
             {
                 if (MinMax.map[i][j] == 0)
                 {
-                    if (is_case(i, j) || inner_alignement(i, j))
-                        this.lst.add(new Candidat.coord(i, j));
+                    load_case(i, j);
                 }
             }
         }
         return this.lst.size();
     }
 
-    public int interesting_candidate(int [][] map, int turn)
-    {
-        for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
-        //for (int i = 0 ; i < 19 ; i++)
-        {
-           for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
-            //for (int j = 0 ; j < 19 ; j++)
-            {
-                if (MinMax.map[i][j] == 0 && is_case(i, j) && doubleFreethree.check_double_free(i, j, turn))
-                    this.lst.add(new Candidat.coord(i, j));
-            }
-        }
-        return this.lst.size();
-    }
+    // public int interesting_candidate(int [][] map, int turn) //check double free for candidates
+    // {
+    //     for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+    //     //for (int i = 0 ; i < 19 ; i++)
+    //     {
+    //        for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+    //         //for (int j = 0 ; j < 19 ; j++)
+    //         {
+    //             if (MinMax.map[i][j] == 0 && is_case(i, j) && doubleFreethree.check_double_free(i, j, turn))
+    //                 this.lst.add(new Candidat.coord(i, j));
+    //         }
+    //     }
+    //     return this.lst.size();
+    // }
 
-    private boolean picked(int i, int j)
-    {
-        if (this.lst.size() == 0)
-            return true;
+    // private boolean picked(int i, int j)
+    // {
+    //     if (this.lst.size() == 0)
+    //         return true;
 
-        if ((i + j) % 5 == 0)
-            return true;
-        return false;
+    //     if ((i + j) % 5 == 0)
+    //         return true;
+    //     return false;
 
-    }
+    // }
 
     public int probable_candidate(int num)
     {
@@ -195,8 +221,11 @@ public class Candidat
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
             //for (int j = 0 ; j < 19 ; j++)
             {
-                if (MinMax.map[i][j] == 0 && near(i, j, num) && picked(i, j))
+                if (MinMax.map[i][j] == 0 && near(i, j, num) )
+                {
                     this.lst.add(new Candidat.coord(i, j));
+                    return 1;
+                }
             }
         }
         return this.lst.size();
@@ -231,7 +260,11 @@ public class Candidat
             ret = interesting_candidate(MinMax.map); // only for the 1st maybe
             //System.out.printf("is it interessant ? %d\n", ret);
             if (ret != 0)
+            {
+                Collections.sort(this.lst, Comparator.comparing(item -> 
+                this.order.indexOf(item.st())));
                 return ret;
+            }
             else
                 {
                     max_near = 3;
@@ -314,7 +347,7 @@ public class Candidat
 
         if (depth == Game.max_depth)
         {
-            ret = interesting_candidate(MinMax.map, turn); // only for the 1st maybe
+            ret = interesting_candidate(MinMax.map); // only for the 1st maybe
             if (ret != 0)
                 return ret;
         }
