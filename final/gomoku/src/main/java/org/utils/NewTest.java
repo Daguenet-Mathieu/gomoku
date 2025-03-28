@@ -20,10 +20,10 @@ public class NewTest
         System.out.printf("\nmove %d %d\n", x, y);
         m.play(new Candidat.coord(x, y), turn);
         m.display_map();
-        mscore.analyse_move(x, y, turn);
-        mscore.display();
+        MinMax.scsimul.display();
         //mscore.display_free();
     }
+
 
     public void unmove(int x, int y, int turn)
     {
@@ -34,7 +34,7 @@ public class NewTest
 
         m.display_map();
         //mscore.display_free();
-        mscore.display();
+        MinMax.scsimul.display();
     }
 
     private void m_play(int x, int y, int val)
@@ -156,13 +156,18 @@ public class NewTest
     public void run()
     {
 
-        splay(5, 9, 2);
-        splay(6, 8, 1);
-        splay(7, 8, 2);
-        splay(8, 9, 1);
-        splay(9, 10, 1);
-        splay(10, 11, 2);
-        sunplay(10, 11, 2);
+
+        move(9, 9, 2);
+        move(8, 9, 2);
+        move(11, 9, 2);
+        move(7, 9, 2);
+        // splay(5, 9, 2);
+        // splay(6, 8, 1);
+        // splay(7, 8, 2);
+        // splay(8, 9, 1);
+        // splay(9, 10, 1);
+        // splay(10, 11, 2);
+        // sunplay(10, 11, 2);
         //move (10, 10, 1);
         // move (9, 9, 1);
         // move(11, 11, 1);

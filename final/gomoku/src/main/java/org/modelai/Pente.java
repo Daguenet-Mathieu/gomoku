@@ -216,15 +216,20 @@ public class Pente extends MinMax {
             return min(values);
     }
 
-    private void debugstr() throws ArithmeticException
+    private void showdebug()
     {
-        // if (scsimul.check_str() == false)
-        // {
-        //     System.out.printf("Error at %d\n", pos_counter);
-        //     display_map();
-        //     scsimul.display();
-        //     throw new ArithmeticException();
-        // }
+        display_map();
+        scsimul.display();
+    }
+
+    public void debugstr() throws ArithmeticException
+    {
+        if (scsimul.check_str() == false)
+        {
+            System.out.printf("Error at %d\n", pos_counter);
+            showdebug();
+            throw new ArithmeticException();
+        }
         return;
     }
 
@@ -239,6 +244,8 @@ public class Pente extends MinMax {
         //nb_candidates = candidat.old_load(depth, turn);
         nb_candidates = candidat.old_load(depth);
         //display_map();
+        // if(pos_counter >= 5820 && pos_counter <= 5824)
+        //     showdebug();
 
         if (depth == 0)
         {
@@ -246,7 +253,7 @@ public class Pente extends MinMax {
             //display_map();
             //scsimul.display();
             res = eval(player, len, turn);
-            debugstr();
+            //debugstr();
             // if (res > 1000)
             // {
             //         scsimul.display();
@@ -272,8 +279,8 @@ public class Pente extends MinMax {
             {
                 if (m.play(candidat.lst.get(i), turn))
                 {
-                    res = value_victory_intermediate(player, turn, len);
-                    debugstr();
+                    res = value_victory_smarter(player, turn, len);
+                    //debugstr();
                     // if (res == 12000 || res == -12000)
                     // {
                     //     best = new Candidat.coord(12, 9);
@@ -307,8 +314,8 @@ public class Pente extends MinMax {
             {
                 if (m.play(candidat.lst.get(i),turn))
                 {
-                    res = value_victory_intermediate(player, turn, len);
-                    debugstr();
+                    res = value_victory_smarter(player, turn, len);
+                    //debugstr();
                     // if (res == 12000 || res == -12000)
                     // {
                     //     best = new Candidat.coord(12, 9);

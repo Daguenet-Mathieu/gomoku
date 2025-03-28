@@ -907,8 +907,8 @@ public class Miniscore {
             if (MinMax.map[x-1][y+1] == cur_turn)
                 connect(x, y);
         }
-        if (!victory)
-            fill(x, y);
+        //if (!victory)
+        fill(x, y);
     }
 
     public void display_free()
