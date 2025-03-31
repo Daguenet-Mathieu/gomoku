@@ -12,6 +12,7 @@ import org.utils.DoubleFree;
 public class Candidat
 {
     public ArrayList<Candidat.coord> lst =  new ArrayList<Candidat.coord>();
+    public ArrayList<Candidat.coord> mandatory = new ArrayList<Candidat.coord>();
     public ArrayList<Integer> vanish_lst = new ArrayList<Integer>();
     public ArrayList<Candidat.coord> histo = new ArrayList<Candidat.coord>();
     public DoubleFree doubleFreethree;
@@ -154,16 +155,12 @@ public class Candidat
             tot_case2 += MinMax.scsimul.str2[i][x][y];
 
         }
-        if (tot_case1 != 0)
+        if (tot_case1 != 0 || tot_case2 != 0)
         {
-            this.lst.add(new Candidat.coord(x,y, tot_case1));
+            this.lst.add(new Candidat.coord(x,y, Math.max(tot_case1, tot_case2)));
             return;
         }
-        else if (tot_case2 != 0)
-        {
-            this.lst.add(new Candidat.coord(x,y, tot_case2));
-            return;
-        }
+
 
         if (inner_alignement(x, y))
             this.lst.add(new Candidat.coord(x, y, 3));
@@ -263,7 +260,9 @@ public class Candidat
             {
                 Collections.sort(this.lst, Comparator.comparing(item -> 
                 this.order.indexOf(item.st())));
-                return ret;
+                if (ret >= 6)
+                    this.lst = new ArrayList<>(this.lst.subList(0, 5));
+                return this.lst.size();
             }
             else
                 {

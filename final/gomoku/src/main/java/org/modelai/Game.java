@@ -34,7 +34,7 @@ public class Game {
             }
         }
         nb_move = 0;
-        max_depth = 7;
+        max_depth = 9;
         //max_depth = 3;
         m = minmax_tree(rules); // gomoku.rules
         m.len = 0;

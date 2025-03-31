@@ -216,7 +216,7 @@ public class Pente extends MinMax {
             return min(values);
     }
 
-    private void showdebug()
+    public void showdebug()
     {
         display_map();
         scsimul.display();
@@ -224,12 +224,12 @@ public class Pente extends MinMax {
 
     public void debugstr() throws ArithmeticException
     {
-        if (scsimul.check_str() == false)
-        {
-            System.out.printf("Error at %d\n", pos_counter);
-            showdebug();
-            throw new ArithmeticException();
-        }
+        // if (scsimul.check_str() == false)
+        // {
+        //     System.out.printf("Error at %d\n", pos_counter);
+        //     showdebug();
+        //     throw new ArithmeticException();
+        // }
         return;
     }
 
@@ -253,7 +253,7 @@ public class Pente extends MinMax {
             //display_map();
             //scsimul.display();
             res = eval(player, len, turn);
-            //debugstr();
+            debugstr();
             // if (res > 1000)
             // {
             //         scsimul.display();
@@ -280,7 +280,7 @@ public class Pente extends MinMax {
                 if (m.play(candidat.lst.get(i), turn))
                 {
                     res = value_victory_smarter(player, turn, len);
-                    //debugstr();
+                    debugstr();
                     // if (res == 12000 || res == -12000)
                     // {
                     //     best = new Candidat.coord(12, 9);
@@ -315,7 +315,7 @@ public class Pente extends MinMax {
                 if (m.play(candidat.lst.get(i),turn))
                 {
                     res = value_victory_smarter(player, turn, len);
-                    //debugstr();
+                    debugstr();
                     // if (res == 12000 || res == -12000)
                     // {
                     //     best = new Candidat.coord(12, 9);
