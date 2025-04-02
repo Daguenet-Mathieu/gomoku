@@ -938,12 +938,19 @@ public class Miniscore {
 
     public boolean check_str()
     {
+        int score1 = 0;
+        int score2 = 0;
+    
         for (int d = 0 ; d < 4 ; d++)
         {
             for (int i = 0 ; i < 19 ; i++)
             {
                 for (int j = 0 ; j < 19 ; j++)
                 {
+                    if (str1[d][i][j] != 0)
+                        score1 += factor[str1[d][i][j]];
+                    if (str2[d][i][j] != 0)
+                        score2 += factor[str2[d][i][j]];
                     if (str1[d][i][j] >= 5 || str2[d][i][j] >=5)
                         return false;
                     if (str1[d][i][j] != 0 && MinMax.map[i][j] != 0)
@@ -953,6 +960,8 @@ public class Miniscore {
                 }
             }
         }
+        if (score1 != sc.one || score2 != sc.two)
+            return false;
         return true;
     }
 

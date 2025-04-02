@@ -151,8 +151,8 @@ public class Candidat
     
         for (int i = 0 ; i < 4 ; i++)
         {
-            tot_case1 += MinMax.scsimul.str1[i][x][y];
-            tot_case2 += MinMax.scsimul.str2[i][x][y];
+            tot_case1 = Math.max(tot_case1, MinMax.scsimul.str1[i][x][y]);
+            tot_case2 = Math.max(tot_case2, MinMax.scsimul.str2[i][x][y]);
 
         }
         if (tot_case1 != 0 || tot_case2 != 0)

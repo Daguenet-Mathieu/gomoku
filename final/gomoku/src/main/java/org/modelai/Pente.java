@@ -230,6 +230,7 @@ public class Pente extends MinMax {
         //     showdebug();
         //     throw new ArithmeticException();
         // }
+        //System.out.println("checked");
         return;
     }
 
