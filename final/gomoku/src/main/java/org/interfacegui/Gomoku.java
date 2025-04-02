@@ -144,6 +144,9 @@ public class Gomoku
             if (p.val != bestMoveScore){
                 goban.set_stone_status(visible, "#00FF00", p, String.format("%.2f", p.val));
             }
+            else{
+                goban.set_stone_status(visible, "#00FF00", p, String.format("%.2f", p.val));
+            }
         }
     }
 
