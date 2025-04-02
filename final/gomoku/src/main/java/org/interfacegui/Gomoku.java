@@ -148,6 +148,9 @@ public class Gomoku
                 goban.set_stone_status(visible, "#00FF00", p, String.format("%.2f", p.val));
             }
         }
+        if (visible == false){
+            goban.updateFromMap(_map.get(map_index));
+        }
     }
 
     void setCandidats(ArrayList<Candidat.coord> candidats, float[] values) {
