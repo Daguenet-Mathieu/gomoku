@@ -68,18 +68,18 @@ public class Candidat
             return a != 0;
         return false;
     }
-    private boolean inner_alignement(int i, int j)
+    private int inner_alignement(int i, int j)
     {
         if (j+1 != 19 && j-1 != -1 && isame(MinMax.map[i][j + 1], MinMax.map[i][j - 1]))
-            return true;
+            return MinMax.map[i][j + 1];
         if (i+1 != 19 && i-1 != -1 && isame(MinMax.map[i + 1][j], MinMax.map[i - 1][j]))
-            return true;
+            return MinMax.map[i + 1][j];
         if (i + 1 != 19 && i-1 != -1 && j + 1 != 19 && j - 1 != -1 && isame(MinMax.map[i+1][j-1], MinMax.map[i-1][j+1]))
-            return true;
+            return MinMax.map[i+1][j-1];
         if (i + 1 != 19 && i-1 != -1 && j + 1 != 19 && j - 1 != -1 && isame(MinMax.map[i-1][j-1], MinMax.map[i+1][j+1]))
-            return true;
+            return MinMax.map[i-1][j-1];
             
-        return false;
+        return 0;
     }
 
 
@@ -150,6 +150,7 @@ public class Candidat
     {
         int tot_case1 = 0;
         int tot_case2 = 0;
+        int val;
     
         for (int i = 0 ; i < 4 ; i++)
         {
@@ -157,15 +158,26 @@ public class Candidat
             tot_case2 = Math.max(tot_case2, MinMax.scsimul.str2[i][x][y]);
 
         }
-        if (tot_case1 != 0 || tot_case2 != 0)
+        // if (tot_case1 != 0 || tot_case2 != 0)
+        // {
+        //     this.lst.add(new Candidat.coord(x,y, Math.max(tot_case1, tot_case2)));
+        //     return;
+        // }
+        val = inner_alignement(x, y);
+
+        if (val == 0 && (tot_case1 != 0 || tot_case2 != 0))
         {
             this.lst.add(new Candidat.coord(x,y, Math.max(tot_case1, tot_case2)));
-            return;
+        }
+        else if (val == 1)
+        {
+            this.lst.add(new Candidat.coord(x,y, Math.max(tot_case1 + 1, tot_case2)));
+        }
+        else if (val == 2)
+        {
+            this.lst.add(new Candidat.coord(x,y, Math.max(tot_case1, tot_case2 + 1)));
         }
 
-
-        if (inner_alignement(x, y))
-            this.lst.add(new Candidat.coord(x, y, 3));
         return;
     }
 
@@ -307,6 +319,7 @@ public class Candidat
             }
             else
                 {
+                    System.out.println("NEAR candidate");
                     max_near = 3;
                     while(ret == 0)
                     {

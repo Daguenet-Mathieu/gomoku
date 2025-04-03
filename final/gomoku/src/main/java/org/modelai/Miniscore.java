@@ -566,7 +566,7 @@ public class Miniscore {
             decp++;
         for (int i = 1; in_goban(x-i*dx, y-i*dy) && MinMax.map[x- i *dx][y - i *dy] == cur_turn ; i++)
             decn++;
-        //System.out.printf(" %d %d\n", decp, decn);
+        //System.out.printf("unconnect %d %d %d %d %d %d\n", x, y, dx, dy, decp, decn);
         // if (str2[dir][x+ (decp + 1 ) * dx][y + (decp + 1) * dy] == 0)
         // {
         //     System.out.printf("Info %d %d %d", x, y, dir);
@@ -761,6 +761,7 @@ public class Miniscore {
 
     public void analyse_unmove(int x, int y, int turn)
     {
+        //System.out.printf("unmove %d %d\n", x, y);
         this.cur_turn = turn;
         this.str = turn == 1 ? this.str1 : this.str2;
         if (victory)

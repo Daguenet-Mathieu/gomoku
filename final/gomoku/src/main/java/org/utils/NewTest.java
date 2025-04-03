@@ -157,10 +157,23 @@ public class NewTest
     {
 
 
+        move(10, 10, 1);
+
         move(9, 9, 2);
-        move(8, 9, 2);
-        move(11, 9, 2);
+        move(9, 10, 1);
+        move(8, 10, 2);
+        move(11, 10, 1);
+        move (13, 10, 2);
+        move(10, 8, 1);
+        move(7, 11, 2);
+        move(12, 10, 1);
         move(7, 9, 2);
+        move(11, 9, 1);
+        move(9, 11, 2);
+        move(9, 7, 1);
+        move(12, 8, 2);
+        //unmove(11, 9, 1);
+        //unmove(10, 10, 1);
         // splay(5, 9, 2);
         // splay(6, 8, 1);
         // splay(7, 8, 2);
