@@ -18,7 +18,8 @@ public class Candidat
     public DoubleFree doubleFreethree;
     // List<Double> order = Arrays.asList(24.0, 23.0, 22.0, 21.0, 20.0, 19.0, 18.0, 17.0, 16.0, 15.0, 14.0, 13.0
     //                                 ,12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.5, 1.0, 0.0);
-    List<Double> order = Arrays.asList(0.0, 1.0, 2.0, 3.0, 4.0);
+    //List<Double> order = Arrays.asList(0.0, 1.0, 2.0, 3.0, 4.0);
+    List<Double> order = Arrays.asList(4.0, 3.0, 2.0, 1.0, 0.0);
 
     static coord limax = new coord(1, 1);
     static coord limin = new coord(18, 18);
@@ -260,40 +261,47 @@ public class Candidat
             if (ret != 0)
             {
                 Candidat.coord can;
-                // if (depth == 1)
-                // {
-                // System.out.println("Candidat before sort");
-                // for (int i = 0 ; i < this.lst.size() ; i++)
-                // {
-                //     can = this.lst.get(i);
-                //     System.out.printf("%d %d %f\n", can.x, can.y, can.st);
-                // }
-                // }
+                if (depth == Game.max_depth)
+                {
+                System.out.println("Candidat before sort");
+                for (int i = 0 ; i < this.lst.size() ; i++)
+                {
+                    can = this.lst.get(i);
+                    System.out.printf("%d %d %f\n", can.x, can.y, can.st);
+                }
+                }
                 Collections.sort(this.lst, Comparator.comparing(item -> 
                 this.order.indexOf(item.st())));
 
-                // if (depth == 1)
-                // {
-                // System.out.println("Candidat after sort");
-                // for (int i = 0 ; i < this.lst.size() ; i++)
-                // {
-                //     can = this.lst.get(i);
-                //     System.out.printf("%d %d %f\n", can.x, can.y, can.st);
-                // }
-                // }
+
+
+                if (depth == Game.max_depth)
+                {
+                System.out.println("Candidat after sort");
+                for (int i = 0 ; i < this.lst.size() ; i++)
+                {
+                    can = this.lst.get(i);
+                    System.out.printf("%d %d %f\n", can.x, can.y, can.st);
+                }
+                // if (this.lst.size() == 6)
+                //     Collections.reverse(this.lst);
+                }
                 if (ret >= 7)
                 {
-                    this.lst = new ArrayList<>(this.lst.subList(this.lst.size() - 6, this.lst.size()));
-                    // if (depth == 1)
-                    // {
-                    // System.out.println("Candidat selected");
-                    // for (int i = 0 ; i < this.lst.size() ; i++)
-                    // {
-                    //     can = this.lst.get(i);
-                    //     System.out.printf("%d %d %f\n", can.x, can.y, can.st);
-                    // }
-                    // }
+                    //this.lst = new ArrayList<>(this.lst.subList(this.lst.size() - 6, this.lst.size()));
+                    this.lst = new ArrayList<>(this.lst.subList(0, 6));
+                    if (depth == Game.max_depth)
+                    {
+                    System.out.println("Candidat selected");
+                    for (int i = 0 ; i < this.lst.size() ; i++)
+                    {
+                        can = this.lst.get(i);
+                        System.out.printf("%d %d %f\n", can.x, can.y, can.st);
+                    }
+                    }
                 }
+                // if (this.lst.size() == 6)
+                //     Collections.reverse(this.lst);
 
                 return this.lst.size();
             }

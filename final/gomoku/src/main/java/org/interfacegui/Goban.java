@@ -35,9 +35,9 @@ public class Goban{
         // System.out.println("dif == " + (heigh - ((heigh / _nb_line) * (_nb_line - 1))));
         // System.out.println("margin size == " + _heigh_margin_size);
         // System.out.println("boban size == " + heigh + " nbline ==  " + _nb_line);
-        System.out.println("heigh : " + heigh + " width : " + width);
-        System.out.println("heigh margin = " + _heigh_margin_size + " width marginn = " + _width_margin_size);
-        System.out.println("square size == " + _square_size + " size gobsn = " + (_square_size * _nb_line));
+        // System.out.println("heigh : " + heigh + " width : " + width);
+        // System.out.println("heigh margin = " + _heigh_margin_size + " width marginn = " + _width_margin_size);
+        // System.out.println("square size == " + _square_size + " size gobsn = " + (_square_size * _nb_line));
     }
     private void init_square_size(){
         _square_size = _size / _nb_line;
@@ -126,7 +126,7 @@ public class Goban{
     }
 
     public void updateGoban(int new_y, int new_x){
-        System.out.println("new ize x == " + new_x + " y == " + new_y);
+        //System.out.println("new ize x == " + new_x + " y == " + new_y);
         _goban.setPrefSize(new_x, new_y);
         _size = Math.min(new_x, new_y);
         init_square_size();

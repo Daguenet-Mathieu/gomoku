@@ -190,7 +190,7 @@ public class Game {
 
 
         m.play(m.best, turn);
-        System.out.printf("IA move %d at %d %d played in %f seconds (%d pos, %d depth) mean : %f\n", nb_move + 1, m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter, max_depth + 1,return_mean_time());
+        System.out.printf("IA move %d (Turn %d) at %d %d played in %f seconds (%d pos, %d depth) mean : %f\n", nb_move + 1,(nb_move + 1) / 2 + 1, m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter, max_depth + 1,return_mean_time());
 
         if ((double)time/1000 > 0.6 && return_mean_time() > 0.46)
         {
