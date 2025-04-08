@@ -58,7 +58,7 @@ public class DoubleFree
                     continue;
             }
 
-            if ( in_goban( cur_x - dir[i][0], cur_y - dir[i][1]) &&
+            if ( in_goban( cur_x - dir[i][0], cur_y - dir[i][1]) && in_goban(cur_x, cur_y) &&
                  MinMax.map[cur_x][cur_y] == 0 && MinMax.map[cur_x - dir[i][0]][cur_y - dir[i][1]] == 0)
                 nb_0 = 0;
             else

@@ -165,6 +165,10 @@ public class Candidat
         // }
         val = inner_alignement(x, y);
 
+        if ((val == 0 && tot_case1 == 0 && tot_case2 == 0) 
+        || doubleFreethree.check_double_free(x, y, MinMax.scsimul.cur_turn) == false)
+            return;
+
         if (val == 0 && (tot_case1 != 0 || tot_case2 != 0))
         {
             this.lst.add(new Candidat.coord(x,y, Math.max(tot_case1, tot_case2)));
@@ -319,7 +323,7 @@ public class Candidat
             }
             else
                 {
-                    System.out.println("NEAR candidate");
+                    //System.out.println("NEAR candidate");
                     max_near = 3;
                     while(ret == 0)
                     {
