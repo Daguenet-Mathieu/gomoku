@@ -137,10 +137,12 @@ public class Gomoku
 
 
     void changeCandidatVisibility(boolean visible) {
-        if (candidatsList == null || candidatsList.isEmpty()) return;
+        ArrayList<Point> currentCandidats = _map.get(map_index).getCandidatsList();
+        System.out.println("map inde == " + map_index + " curent candidats == " + currentCandidats);
+        if (currentCandidats == null || currentCandidats.isEmpty()) return;
 
-        for (int i = 0; i < candidatsList.size(); i++) {
-            Point p = candidatsList.get(i);
+        for (int i = 0; i < currentCandidats.size(); i++) {
+            Point p = currentCandidats.get(i);
             if (p.val != bestMoveScore){
                 goban.set_stone_status(visible, "#00FF00", p, String.format("%.2f", p.val));
             }
@@ -154,11 +156,11 @@ public class Gomoku
     }
 
     void setCandidats(ArrayList<Candidat.coord> candidats, float[] values) {
+        System.out.println("ici on set les candidats!!!!!!!!????????????!!!!!!!!!!!!!");
         if (candidats == null || values == null || game.val == null || ia_playing == true) return;
 
         candidatsList = new ArrayList<>();
         bestMoveScore = game.val;
-        
         System.out.println("candidats = " + candidats.size());
         System.out.println("values = " + values.length);
         System.out.println("best == " + game.m.best.y + " " + game.m.best.y );
@@ -174,6 +176,7 @@ public class Gomoku
             candidatsList.add(new Point(candidats.get(i).y, candidats.get(i).x));
             candidatsList.get(candidatsList.size() - 1).set_val(values[i]);
         }
+        _map.get(map_index).setCandidatsList(candidatsList);
     }
 
 
@@ -295,10 +298,11 @@ public class Gomoku
     }
 
     private void playMove(Point point){
-        if (!rule.isValidMove(point , _map))
+        if (map_index < (_map.size() - 1) || !rule.isValidMove(point , _map))
             return ;
-        toggleCandidat = false;
+        System.out.println("map index == " + map_index );
         changeCandidatVisibility(false);
+        toggleCandidat = false;
         changeHintVisibility(false);
         hintList = null;
         toggleHint = false;
@@ -311,13 +315,14 @@ public class Gomoku
         System.out.println(); //no printmap
         _map.add(new Map(_map.get(_map.size() - 1)));
         _map.get(_map.size() - 1).addMove(point, _map.size() % 2 + 1);
+        System.out.println("size map == " + _map.size());
+        map_index = _map.size() - 1;
+        System.out.println("map_index apres update dans play move" + map_index);
 
         game.move(point, player_turn+1); // To update MinMax.map
         
         //add 0 si y a des prisonniers
         _map.get(_map.size() -1); //no printmap
-        System.out.println("size map == " + _map.size());
-        map_index = _map.size() - 1;
         rule.check_capture(point, _map.get(_map.size() - 1));
         if (rule.endGame(_map.get(_map.size() - 1), point)){
             System.out.println("partie finie!");
@@ -378,7 +383,7 @@ public class Gomoku
         game = new Game(game_infos.get_rules(), rule.get_board_size());
         _game_infos = game_infos;
         System.out.println("constructeur gomoku rule type == " + rule.getGameType());
-        map_index = 1;
+        map_index = 0;
         System.out.println("height == " + heigh + " width == " + width);
         _map = new ArrayList<Map>();
         saved = new ArrayList<Point>();
@@ -425,6 +430,8 @@ public class Gomoku
         createDelayedGameLoop();
         gameInfos.getPrevButton().setOnAction(event -> {
             if (map_index > 0){
+                changeCandidatVisibility(false);
+                toggleCandidat = false;
                 map_index--;
                 goban.updateFromMap(_map.get(map_index));
             }
@@ -434,6 +441,8 @@ public class Gomoku
         });
         gameInfos.getNextButton().setOnAction(event -> {
             if (map_index < _map.size() - 1){
+                changeCandidatVisibility(false);
+                toggleCandidat = false;
                 map_index++;
                 goban.updateFromMap(_map.get(map_index));
             }
@@ -448,7 +457,7 @@ public class Gomoku
         });
 
         gameInfos.getHintButton().setOnAction(event -> {
-            if (ia_playing == true)
+            if (ia_playing == true || game_end)
                 return ;
             toggleHint = toggleHint == true? false : true;
             if (hintList == null){

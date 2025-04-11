@@ -12,7 +12,16 @@ public class Map{
     private int _black_prisonners;
     public Point _last_move ;
     private int _move_time;
+    private ArrayList<Point> candidatsList;
 
+    public void setCandidatsList(ArrayList<Point> list) {
+        System.out.println("cajdidat list dans map == " + list);
+        candidatsList = list;
+    }
+
+    public ArrayList<Point> getCandidatsList() {
+        return (candidatsList);
+    }
 
     public Map(int size) {
         _move_time = 0;
