@@ -23,7 +23,7 @@ import javafx.scene.text.Font;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import org.modelai.Candidat;
-
+import javafx.scene.control.ComboBox;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -378,6 +378,7 @@ public class Gomoku
         //     _game_infos.widthProperty(),
         //     _game_infos.heightProperty()
         // );
+        SGF.createSgf(null, "gomoku");
         init_rules(game_infos.get_rules());
         _nb_line = rule.get_board_size();
         game = new Game(game_infos.get_rules(), rule.get_board_size());
@@ -428,6 +429,32 @@ public class Gomoku
         _goban_pane.setLayoutX(_game_infos_size_x);
         game_display.getChildren().addAll(_game_infos_pane, _goban_pane);
         createDelayedGameLoop();
+
+        gameInfos.getResignButton().setOnAction(event -> {
+                gameLoop.stop();
+                game_end = true;
+                System.out.println("player turn == " + player_turn);
+                _winner = player_turn;
+                String res = _winner == 1? "black" : "white";
+                _end_text.setText(res + " win");
+                _end_popin.setVisible(true);
+                _end_popin.setManaged(true);
+            
+        });
+        gameInfos.getUndoButton().setOnAction(event -> {
+            if (map_index < _map.size() - 1)
+                return ;
+            Point coord = _map.get(_map.size() - 1).getLastMove();
+            map_index -= 1;
+            goban.set_stone_status(false, null, coord, null);
+            game.remove(coord);//conditionner a si ia!
+            _map.remove(_map.size() - 1);
+            player_turn ^= 1;
+        });
+        gameInfos.getExportButton().setOnAction(event -> {
+            //export sgf action
+        });
+
         gameInfos.getPrevButton().setOnAction(event -> {
             if (map_index > 0){
                 changeCandidatVisibility(false);

@@ -73,6 +73,9 @@ public class GameInfos{
         private Label _last_move_label = new Label("last move time : ");
         private Label _current_move_label = new Label("move time : ");
 
+        private Button _resign;
+        private Button _undo = new Button("undo");
+        private Button _export = new Button("export");
         private Button _prev;
         private Button _next;
         private Button _candidats;
@@ -120,21 +123,23 @@ public class GameInfos{
         }
 
         private String formatTime(int milliseconds) {//faire une fct hh mm ss et un autre mm ss micro
-            if (milliseconds < 0) {
+            if (milliseconds <= 0) {
                 return "00:00";
             }
-            int remaining_milliseconds = (milliseconds % 1000) / 100;
+            int remaining_milliseconds = (milliseconds % 1000)/10;
             int total_seconds = milliseconds / 1000;
             int hours = total_seconds / 3600;
             int minutes = (total_seconds % 3600) / 60;
             int seconds = total_seconds % 60;
-            //System.out.println("milisecnd total == " + milliseconds + " remaining miliseconds == " + remaining_milliseconds + " second == " + seconds + " minute == " + minutes + " hours == " + hours);
+            // System.out.printlen("milisecnd total == " + milliseconds + " remaining miliseconds == " + remaining_milliseconds + " second == " + seconds + " minute == " + minutes + " hours == " + hours);
             if (hours > 0) {
                 return String.format("%02d:%02d", hours, minutes); // HH:MM
-            } else if (minutes > 0) {
+            }
+            else if (minutes > 0) {
                 return String.format("%02d:%02d", minutes, seconds); // MM:SS
-            } else {
-                return String.format("%02d:%02d", seconds, remaining_milliseconds); // SS:MS (centièmes)
+            }
+            else {
+                return String.format("%02d.%02d", seconds, remaining_milliseconds); // SS:MS (centièmes)
             }
         }
 
@@ -273,6 +278,7 @@ public class GameInfos{
             _game_infos.setPrefSize(x, y);
             _game_infos.setBackground(new Background(new BackgroundFill(Color.web("#ADBAC0"), null, null)));
             addText();
+            _resign = new Button("resign");
             _prev = new Button("<");
             _next = new Button(">");
             _candidats = new Button("show candidats");
@@ -294,8 +300,8 @@ public class GameInfos{
             // Ajouter le bouton au Pane
             // _prev.setPadding(new Insets(0,0,0,0));
             _button_prev_next.getChildren().addAll(_prev, _next);
-            _game_infos.getChildren().addAll(_last_move_label, _current_move_label, _candidats, _hint);
-            _game_infos.getChildren().add(_button_prev_next);
+            _game_infos.getChildren().addAll(_last_move_label, _current_move_label, _candidats, _hint, _resign, _undo);
+            _game_infos.getChildren().addAll(_button_prev_next, _export);
 
         }
 
@@ -339,6 +345,21 @@ public class GameInfos{
         public Button getCandidatsButton()
         {
             return _candidats;
+        }
+
+        public Button getResignButton()
+        {
+            return _resign;
+        }
+
+        public Button getUndoButton()
+        {
+            return _undo;
+        }
+
+        public Button getExportButton()
+        {
+            return _export;
         }
 
         public Button getHintButton()

@@ -105,4 +105,9 @@ public class Map{
             System.out.println(Arrays.toString(_map[i]));
     }
     }
+
+    public Point getLastMove(){
+        return _last_move;
+    }
+
 }

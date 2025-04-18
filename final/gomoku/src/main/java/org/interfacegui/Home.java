@@ -3,20 +3,31 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 //import javafx.scene.control.Button;
-//import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
+// import java.util.Arrays;
+import java.io.File;
+import javafx.scene.control.ScrollPane;
+import javafx.geometry.Orientation;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
+import javafx.scene.text.Text;
+import javafx.scene.Node;
+
+
+// import java.util.List;
 
 
 
 public class Home {
-    private int white_time = -1;
-    private int black_time = -1;
+    private int white_time = 0;
+    private int black_time = 0;
     private int white_player_type = 20;
     private int black_player_type = 20;
     private String rule = "Gomoku";
     private float komi = -1;
     private int handicap = -1;
+    private ArrayList<Map> sgf;
     
     private HomePage home_page = new HomePage();
 
@@ -40,59 +51,87 @@ public class Home {
     private void getTimes(){
         int[] time_size = {3600000, 60000, 1};
         
-        String str = home_page.get_black_time().getText();
-        List<String> time_parts = Arrays.asList(str.split(":"));
-        //System.out.println(time_parts.size());
-        int size = time_parts.size();
-        size = getTimeIndex(size);
-        if (size == -1)
-            return ;
-        System.out.println("split == " + time_parts); // [12, 34, 56, 789]
-        System.out.println("black time : " + str);
-        for (String part : time_parts) {
-            try {
-                int nombre = Integer.parseInt(part);
-                if (white_time == -1)
-                    white_time = 0;
-                white_time += nombre * time_size[size];
-                System.out.println("Conversion réussie : " + nombre);
-            }
-            catch (NumberFormatException error) {
-                white_time = -1;
-                System.out.println("Erreur : la chaîne n'est pas un nombre valide.");
-            }
-            size +=1 ;
+        String hours = home_page.get_black_hours().getText();
+        String min = home_page.get_black_min().getText();
+        String sec = home_page.get_black_sec().getText();
+        try {
+            black_time = Integer.parseInt(hours) * 3600000 + 
+                    Integer.parseInt(min) * 60000 + 
+                    Integer.parseInt(sec) * 1000;
+        }
+        catch (NumberFormatException e){
+            System.out.println("erreur parsing black time mettre message d'erreur et ne pas valider");
+        }
+        hours = home_page.get_white_hours().getText();
+        min = home_page.get_white_min().getText();
+        sec = home_page.get_white_sec().getText();
+
+        try {
+            white_time = Integer.parseInt(hours) * 3600000 + 
+                    Integer.parseInt(min) * 60000 + 
+                    Integer.parseInt(sec) * 1000;
+        }
+        catch (NumberFormatException e){
+            System.out.println("erreur parsing white time mettre message d'erreur et ne pas valider");
         }
 
-        str = home_page.get_white_time().getText();
-        time_parts = Arrays.asList(str.split(":"));
-        size = time_parts.size();
-        size = getTimeIndex(size);
-        if (size == -1)
-            return ;
-        System.out.println("split == " + time_parts); // [12, 34, 56, 789]
+        // String str = home_page.get_black_time().getText();
+        // List<String> time_parts = Arrays.asList(str.split(":"));
+        // //System.out.println(time_parts.size());
+        // int size = time_parts.size();
+        // size = getTimeIndex(size);
+        // if (size == -1)
+        //     return ;
+        // System.out.println("split == " + time_parts); // [12, 34, 56, 789]
+        // System.out.println("black time : " + str);
+        // for (String part : time_parts) {
+        //     try {
+        //         int nombre = Integer.parseInt(part);
+        //         if (white_time == -1)
+        //             white_time = 0;
+        //         white_time += nombre * time_size[size];
+        //         System.out.println("Conversion réussie : " + nombre);
+        //     }
+        //     catch (NumberFormatException error) {
+        //         white_time = -1;
+        //         System.out.println("Erreur : la chaîne n'est pas un nombre valide.");
+        //     }
+        //     size +=1 ;
+        // }
 
-        System.out.println("white time : " + str);
-        for (String part : time_parts) {
-            try {
-                int nombre = Integer.parseInt(part);
-                System.out.println("Conversion réussie : " + nombre);
-                if (black_time == -1)
-                    black_time = 0;
-                black_time += nombre * time_size[size];
-            }
-            catch (NumberFormatException error) {
-                System.out.println("Erreur : la chaîne n'est pas un nombre valide.");
-                black_time = -1;
-            }
-            size += 1;
-        }
+        // str = home_page.get_white_time().getText();
+        // time_parts = Arrays.asList(str.split(":"));
+        // size = time_parts.size();
+        // size = getTimeIndex(size);
+        // if (size == -1)
+        //     return ;
+        // System.out.println("split == " + time_parts); // [12, 34, 56, 789]
+
+        // System.out.println("white time : " + str);
+        // for (String part : time_parts) {
+        //     try {
+        //         int nombre = Integer.parseInt(part);
+        //         System.out.println("Conversion réussie : " + nombre);
+        //         if (black_time == -1)
+        //             black_time = 0;
+        //         black_time += nombre * time_size[size];
+        //     }
+        //     catch (NumberFormatException error) {
+        //         System.out.println("Erreur : la chaîne n'est pas un nombre valide.");
+        //         black_time = -1;
+        //     }
+        //     size += 1;
+        // }
     }
 
     public Home() {
         // Couleurs pour les boutons
         String selectedColor = "-fx-background-color: #FF0000;"; // Rouge pour sélectionné
         String deselectedColor = "-fx-background-color: #ADD8E6;"; // Bleu clair pour désélectionné
+        home_page.getLoadSgf().setOnAction(e -> {
+            home_page.addFileBox(FileBox.getFileBox());//sortir de la faut proteger le null
+        });
+
 
         // Groupe 1: Type de joueur noir
         home_page.getBlackIaTypeButton().setOnAction(e -> {
@@ -245,5 +284,12 @@ public class Home {
         if (rule == "Go" && komi < 0 || (handicap < 0 && handicap > 9))
             return false;
         return true;
+    }
+    public void set_file(){
+
+    }
+    
+    public void remove_file(){
+        
     }
 }

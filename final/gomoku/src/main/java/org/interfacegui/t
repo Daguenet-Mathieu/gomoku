@@ -1,0 +1,33 @@
+typedef struct s_file{
+char **file
+int index;
+int capacity;
+}t_file;
+
+int add_to_file(t_file *file, char *file)
+{
+    if (file->capacity == 0){
+        file->capacity = 20;
+        file->file = malloc(sizeof(char *) * 20);
+        if (!file->file)
+            return (0);
+    }
+    if (file->capacity == file ->index)
+    {
+        char **tmp = malloc(sizeof(char *) * file->capacity * 2);
+        if (!tmp)
+            return 0;//penser a free la struct
+        file->capacity *= 2;
+        int i = 0;
+        while (i < index)
+        {
+            tmp[i] = file->file[i];
+            i++;
+        }
+        free(file->file);
+        file->file = tmp;
+    }
+    file->file[file->index] = line;
+    file->index++;
+    return (1);
+}
