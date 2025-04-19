@@ -9,6 +9,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.ScrollPane;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+
 
 
 
@@ -43,11 +48,14 @@ public class HomePage{
     private Button white_three_min = new Button("3 min");
     private Button black_five_min = new Button("5 min");
     private Button black_three_min = new Button("3 min");
-
-
-
+    private Label fileName = new Label("");
+    private HBox fileBox = new HBox(10);
+    private Text reset = new Text("reset");
 
     HomePage(){
+        fileBox.getChildren().addAll(fileName, reset);
+        fileBox.setManaged(false);
+        fileBox.setVisible(false);
         white_hours.setPrefColumnCount(2);
         white_min.setPrefColumnCount(2);
         white_sec.setPrefColumnCount(2);
@@ -113,8 +121,11 @@ public class HomePage{
         
         page = new VBox(10);
         ((VBox) page).getChildren().addAll(
-            load_sgf, game_button, black_player, white_player, validation, komi_field, handicap_field);
+            fileBox, load_sgf, game_button, black_player, white_player, validation, komi_field, handicap_field);
         pageContainer.getChildren().add(page);
+        reset.setOnMouseClicked(e -> {
+            deleteFile();
+        });
     }
 
     Pane getHomePage(){
@@ -192,5 +203,24 @@ public class HomePage{
     public void addFileBox(VBox scrollPane){
         ((Pane) pageContainer).getChildren().add(scrollPane);
         scrollPane.toFront();
+    }
+
+    public void removeFileBox(String name){
+        ObservableList<Node> children = pageContainer.getChildren();
+        children.remove(children.size() - 1);
+        load_sgf.setManaged(false);
+        load_sgf.setVisible(false);
+        fileName.setText(name);
+        fileBox.setManaged(true);
+        fileBox.setVisible(true);
+    }
+
+    private void deleteFile(){
+        load_sgf.setManaged(true);
+        load_sgf.setVisible(true);
+        fileName.setText("");
+        fileBox.setManaged(false);
+        fileBox.setVisible(false);
+
     }
 }

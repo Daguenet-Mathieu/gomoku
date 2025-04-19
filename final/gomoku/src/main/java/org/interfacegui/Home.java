@@ -30,6 +30,7 @@ public class Home {
     private ArrayList<Map> sgf;
     
     private HomePage home_page = new HomePage();
+    private FileBox filebox = new FileBox(home_page);
 
     private void changeVisibility(TextField komi, TextField handicap, boolean value){
         komi.setVisible(value);
@@ -129,7 +130,7 @@ public class Home {
         String selectedColor = "-fx-background-color: #FF0000;"; // Rouge pour sélectionné
         String deselectedColor = "-fx-background-color: #ADD8E6;"; // Bleu clair pour désélectionné
         home_page.getLoadSgf().setOnAction(e -> {
-            home_page.addFileBox(FileBox.getFileBox());//sortir de la faut proteger le null
+            home_page.addFileBox(filebox.getFileBox());//sortir de la faut proteger le null
         });
 
 
