@@ -35,6 +35,9 @@ public class Home {
     private void changeVisibility(TextField komi, TextField handicap, boolean value){
         komi.setVisible(value);
         handicap.setVisible(value);
+        komi.setManaged(value);
+        handicap.setManaged(value);
+
     }
 
 

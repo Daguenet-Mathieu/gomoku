@@ -25,7 +25,6 @@ public class HomePage{
     private Button renju;
     private Button pente;
     private Button go;
-    private Button validation;
     private Button white_human;
     private Button white_ia;
     private Button black_human;
@@ -51,8 +50,14 @@ public class HomePage{
     private Label fileName = new Label("");
     private HBox fileBox = new HBox(10);
     private Text reset = new Text("reset");
+    private Button validation = new Button("Start");
+    private Button learnOrView = new Button("Learn");
+    private HBox LaunchButtons = new HBox();
+    private ArrayList<Map> sgfMap;
+
 
     HomePage(){
+        LaunchButtons.getChildren().addAll(validation, learnOrView);
         fileBox.getChildren().addAll(fileName, reset);
         fileBox.setManaged(false);
         fileBox.setVisible(false);
@@ -73,7 +78,6 @@ public class HomePage{
         renju = new Button("Renju");
         pente = new Button("Pente");
         go = new Button("Go");
-        validation = new Button("Validation");
         pageContainer = new Pane();
         
         // Appliquer le style désélectionné à tous les boutons de jeu
@@ -118,10 +122,12 @@ public class HomePage{
         handicap_field = new TextField("Handicap >= 0 or <= 9");
         komi_field.setVisible(false);
         handicap_field.setVisible(false);
-        
+        komi_field.setManaged(false);
+        handicap_field.setManaged(false);
+
         page = new VBox(10);
         ((VBox) page).getChildren().addAll(
-            fileBox, load_sgf, game_button, black_player, white_player, validation, komi_field, handicap_field);
+            fileBox, load_sgf, game_button, black_player, white_player, komi_field, handicap_field, LaunchButtons);
         pageContainer.getChildren().add(page);
         reset.setOnMouseClicked(e -> {
             deleteFile();
@@ -213,6 +219,7 @@ public class HomePage{
         fileName.setText(name);
         fileBox.setManaged(true);
         fileBox.setVisible(true);
+        learnOrView.setText("view SGF");
     }
 
     private void deleteFile(){
@@ -221,6 +228,7 @@ public class HomePage{
         fileName.setText("");
         fileBox.setManaged(false);
         fileBox.setVisible(false);
+        learnOrView.setText("learn");
 
     }
 }
