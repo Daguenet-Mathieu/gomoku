@@ -5,14 +5,14 @@ import javafx.scene.control.TextField;
 //import javafx.scene.control.Button;
 import java.util.ArrayList;
 // import java.util.Arrays;
-import java.io.File;
-import javafx.scene.control.ScrollPane;
-import javafx.geometry.Orientation;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
-import javafx.scene.control.Label;
-import javafx.scene.text.Text;
-import javafx.scene.Node;
+// import java.io.File;
+// import javafx.scene.control.ScrollPane;
+// import javafx.geometry.Orientation;
+// import javafx.scene.layout.VBox;
+// import javafx.scene.layout.HBox;
+// import javafx.scene.control.Label;
+// import javafx.scene.text.Text;
+// import javafx.scene.Node;
 
 
 // import java.util.List;
@@ -53,7 +53,6 @@ public class Home {
     }
 
     private void getTimes(){
-        int[] time_size = {3600000, 60000, 1};
         
         String hours = home_page.get_black_hours().getText();
         String min = home_page.get_black_min().getText();
@@ -78,6 +77,13 @@ public class Home {
         catch (NumberFormatException e){
             System.out.println("erreur parsing white time mettre message d'erreur et ne pas valider");
         }
+        if (black_time == 0)
+            black_time = 10 * 60 * 1000;
+        if (white_time == 0)
+            white_time = 10 * 60 * 1000;
+
+
+        
 
         // String str = home_page.get_black_time().getText();
         // List<String> time_parts = Arrays.asList(str.split(":"));

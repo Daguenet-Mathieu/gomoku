@@ -23,7 +23,6 @@ import javafx.scene.text.Font;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import org.modelai.Candidat;
-import javafx.scene.control.ComboBox;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -143,9 +142,11 @@ public class Gomoku
 
         for (int i = 0; i < currentCandidats.size(); i++) {
             Point p = currentCandidats.get(i);
-            if (p.val != bestMoveScore){
-                goban.set_stone_status(visible, "#00FF00", p, String.format("%.2f", p.val));
-            }
+            if (p.val < 0)
+                goban.set_stone_status(visible, "#FF0000", p, String.format("%.2f", p.val));
+            // if (p.val != bestMoveScore){
+            //     goban.set_stone_status(visible, "#00FF00", p, String.format("%.2f", p.val));
+            // }
             else{
                 goban.set_stone_status(visible, "#00FF00", p, String.format("%.2f", p.val));
             }
@@ -217,7 +218,7 @@ public class Gomoku
         KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
             try {
             //System.out.println("coucou curent turn == " + player_turn + " current decrement == " + current_decrement );
-                if (player_turn == 0 && _game_infos.get_black_player_type() == 1){
+                if (player_turn == 0 && _game_infos.get_black_player_type() == 1){//faire une fct
                     if (ia_playing == false){
                             executor = Executors.newSingleThreadExecutor();
                             future = executor.submit(() -> {
@@ -233,12 +234,21 @@ public class Gomoku
                         showCandidats();
                     }
                 }
-                else if (player_turn == 1 && _game_infos.get_white_player_type() == 1){
-                    playMove(game.best_move(player_turn+1, player_turn+1));
-                    setCandidats(game.m.candidat.lst, game.m.values);
-                    showCandidats();
-                    //_map.get(_map.size()-1).printMap();
-                    System.out.println();
+                else if (player_turn == 1 && _game_infos.get_white_player_type() == 1){//faire une fct
+                    if (ia_playing == false){
+                        executor = Executors.newSingleThreadExecutor();
+                        future = executor.submit(() -> {
+                            return game.best_move(player_turn+1, player_turn+1);
+                        });
+                    ia_playing = true;
+                    }
+                    else if (future.isDone()){
+                        playMove(future.get());
+                        ia_playing = false;
+                        executor.shutdown();
+                        setCandidats(game.m.candidat.lst, game.m.values);
+                        showCandidats();
+                    }
 
                 }
             }
@@ -361,6 +371,30 @@ public class Gomoku
         player_turn ^= 1;
     }
 
+    private void undoMove(){
+        if (map_index < _map.size() - 1)
+            return ;
+        Point coord = _map.get(_map.size() - 1).getLastMove();
+        map_index -= 1;
+        goban.set_stone_status(false, null, coord, null);//faire un autre fct avec un boucle
+        game.remove(coord);
+        _map.remove(_map.size() - 1);
+        player_turn ^= 1;      
+    }
+
+    // private void undoMove(){
+    //     if (map_index < _map.size() - 1)
+    //         return ;
+    //     Point coord = _map.get(_map.size() - 1).getLastMove();
+    //     map_index -= 1;
+    //     game.remove(coord);
+    //     _map.remove(_map.size() - 1);
+    //     goban.updateFromMap(_map.get(_map.size() - 1));//faire un autre fct avec un boucle
+    //     player_turn ^= 1;      
+    // }
+
+
+
     public Gomoku(int heigh, int width, Home game_infos)/*prendra les regles en paramettre vu que connu au clic*/{
         // fontSizeBinding = (DoubleBinding) Bindings.min(
         //         _game_infos	at org.interfacegui.PenteRules.endGame(PenteRules.java:27)
@@ -441,15 +475,11 @@ public class Gomoku
                 _end_popin.setManaged(true);
             
         });
+
         gameInfos.getUndoButton().setOnAction(event -> {
-            if (map_index < _map.size() - 1)
-                return ;
-            Point coord = _map.get(_map.size() - 1).getLastMove();
-            map_index -= 1;
-            goban.set_stone_status(false, null, coord, null);
-            game.remove(coord);//conditionner a si ia!
-            _map.remove(_map.size() - 1);
-            player_turn ^= 1;
+            undoMove();
+            if (_game_infos.get_black_player_type() == 1 || _game_infos.get_white_player_type() == 1)
+                undoMove();
         });
         gameInfos.getExportButton().setOnAction(event -> {
             //export sgf action

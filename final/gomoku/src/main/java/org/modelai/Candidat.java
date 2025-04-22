@@ -239,7 +239,7 @@ public class Candidat
                 if (MinMax.map[i][j] == 0 && near(i, j, num) )
                 {
                     this.lst.add(new Candidat.coord(i, j));
-                    return 1;
+                    //return 1;
                 }
             }
         }
@@ -279,6 +279,7 @@ public class Candidat
                 Candidat.coord can;
                 if (depth == Game.max_depth)
                 {
+                MinMax.scsimul.display();
                 System.out.println("Candidat before sort");
                 for (int i = 0 ; i < this.lst.size() ; i++)
                 {
@@ -324,7 +325,7 @@ public class Candidat
             else
                 {
                     //System.out.println("NEAR candidate");
-                    max_near = 3;
+                    max_near = 4;
                     while(ret == 0)
                     {
                         ret = probable_candidate(max_near);

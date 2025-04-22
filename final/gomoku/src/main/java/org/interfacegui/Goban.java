@@ -294,7 +294,7 @@ public class Goban{
             
             // Create the text
             Text label = new Text(text);
-            label.setFill(javafx.scene.paint.Color.RED);
+            label.setFill(javafx.scene.paint.Color.BLACK);
             
             // Set user data to identify this label later
             label.setUserData("label_" + coord.x + "_" + coord.y);
