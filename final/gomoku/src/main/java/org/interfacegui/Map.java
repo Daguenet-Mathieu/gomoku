@@ -10,13 +10,19 @@ public class Map{
     private int _map[][];
     private int _white_prisonners;
     private int _black_prisonners;
+    int player_color = 0;
     public Point _last_move ;
     private int _move_time;
     private ArrayList<Point> candidatsList;
+    private ArrayList<Point> _prisonners;
 
     public void setCandidatsList(ArrayList<Point> list) {
         System.out.println("cajdidat list dans map == " + list);
         candidatsList = list;
+    }
+
+    public void set_color(int color){
+        player_color = color;
     }
 
     public ArrayList<Point> getCandidatsList() {
@@ -46,6 +52,16 @@ public class Map{
         _black_prisonners = other.getBlackPrisonners();
     }
 
+    public Map(Map other, ArrayList<Map> prisonners) {
+        _move_time = 0;
+        _map = new int[other.getSize()][other.getSize()];
+        for (int i = 0; i < _map.length; i++) {
+            System.arraycopy(other._map[i], 0, _map[i], 0, _map[i].length);
+        }
+        _white_prisonners = other.getWhitePrisonners();
+        _black_prisonners = other.getBlackPrisonners();
+    }
+
     public int getSize() {
         return _map.length;
     }    
@@ -64,12 +80,12 @@ public class Map{
     //     _black_prisonners += nb;
     // }
 
-    public void addWhitePrisonners(){
-
+    public void addWhitePrisonners(int nb){
+        _white_prisonners += nb;
     }
 
-    public void addBlackPrisonners(){
-
+    public void addBlackPrisonners(int nb){
+        _black_prisonners += nb;
     }
 
     public int getWhitePrisonners(){//pour  afficher les bonnes infos en cas de replay
@@ -77,6 +93,14 @@ public class Map{
     }
     public int getBlackPrisonners(){//pour  afficher les bonnes infos en cas de replay
         return _black_prisonners;
+    }
+
+    public ArrayList<Point> get_prisonners(){
+        return _prisonners;
+    }
+
+    public void set_prisonners(ArrayList<Point> p){
+        _prisonners = p;
     }
 
     public void addMove(Point coord, int color){

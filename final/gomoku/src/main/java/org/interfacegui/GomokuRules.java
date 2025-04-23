@@ -53,6 +53,17 @@ public class GomokuRules implements Rules {
     public int get_black_prisonners(){
         return (0);
     }
+    
+    @Override
+    public void set_black_prisonners(int nb){
+        return ;
+    }
+
+    @Override
+    public void set_white_prisonners(int nb){
+        return ;
+    }
+    
 
     @Override
     public int  get_board_size(){

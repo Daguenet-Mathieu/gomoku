@@ -11,6 +11,9 @@ public interface Rules {
     ArrayList<Point> get_prisonners();
     int get_white_prisonners();
     int get_black_prisonners();
+    void set_white_prisonners(int nb);
+    void set_black_prisonners(int nb);
+
     int get_board_size();
  
     // ArrayList check_captures(Map map, Point point);

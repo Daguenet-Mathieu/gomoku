@@ -64,5 +64,16 @@ public class RenjuRules implements Rules {
         return 15;
     }
 
+    @Override
+    public void set_white_prisonners(int nb){
+        prisonners_nbr[1] = nb;
+    }
+    
+    @Override
+    public void set_black_prisonners(int nb){
+        prisonners_nbr[0] = nb;
+    }
+
+
 
 }
