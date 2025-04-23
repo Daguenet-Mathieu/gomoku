@@ -80,6 +80,7 @@ public class GameInfos{
         private Button _next;
         private Button _candidats;
         private Button _hint;
+        private Button _forbidden;
 
         private HBox _button_prev_next = new HBox();
 
@@ -328,6 +329,11 @@ public class GameInfos{
 // Centrer le contenu du bouton (texte et image) verticalement et horizontalement
             // _prev.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
             //modifier taille de tout les elements
+        }
+
+        public Button getForbiddeButton()
+        {
+            return _forbidden;
         }
 
         public VBox getGameInfos()

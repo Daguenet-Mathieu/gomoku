@@ -279,7 +279,7 @@ public class Candidat
                 Candidat.coord can;
                 if (depth == Game.max_depth)
                 {
-                MinMax.scsimul.display();
+                //MinMax.scsimul.display();
                 System.out.println("Candidat before sort");
                 for (int i = 0 ; i < this.lst.size() ; i++)
                 {

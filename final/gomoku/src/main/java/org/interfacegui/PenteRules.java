@@ -1,12 +1,13 @@
 package org.interfacegui;
 import java.util.ArrayList;
-import org.utils.Point;
+import org.utils.*;
 
 public class PenteRules implements Rules {
 
     ArrayList<Point> prisonners;//prisonnier crees par le dernier coup
     ArrayList<Point> forbidden_moves;//coups interdit pour la position actuelle
     int [] prisonners_nbr = new int[2];
+    public DoubleFree dbfree = new DoubleFree();
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
@@ -36,7 +37,16 @@ public class PenteRules implements Rules {
     }
 
     @Override
-    public ArrayList<Point> get_forbiden_moves(){
+    public ArrayList<Point> get_forbiden_moves(Map map, int color)
+    {
+        int[][] m = map.get_map();
+        forbidden_moves.clear();
+        for (int line = 0; line < get_board_size();line++)
+        {
+            for (int col = 0; col < get_board_size(); col++)
+                if (m[col][line] != 0 && this.dbfree.check_double_free(line, col, m[col][line]) == false)
+                    forbidden_moves.add(new Point (col, line));
+        }
         return forbidden_moves;
     }
 

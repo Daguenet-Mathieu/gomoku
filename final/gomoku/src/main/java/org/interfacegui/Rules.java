@@ -6,7 +6,8 @@ public interface Rules {
     boolean isValidMove(Point point, ArrayList<Map> map);
     boolean endGame(Map map, Point point);
     String getGameType();
-    ArrayList<Point> get_forbiden_moves();
+    // ArrayList<Point> get_forbiden_moves();
+    ArrayList<Point> get_forbiden_moves(Map map, int color);
     void check_capture(Point point, Map map);
     ArrayList<Point> get_prisonners();
     int get_white_prisonners();

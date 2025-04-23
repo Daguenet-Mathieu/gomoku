@@ -71,6 +71,9 @@ public class MinMax
         // }
         pos_counter=0;
         nbmove += 1;
+
+        System.out.println("After load");
+        scsimul.display();
     }
 
     public MinMax()

@@ -33,7 +33,7 @@ public class RenjuRules implements Rules {
         return "Pente";  // Le type de jeu est Go
     }
     @Override
-    public ArrayList<Point> get_forbiden_moves(){
+    public ArrayList<Point> get_forbiden_moves(Map map, int color){
         return forbidden_moves;
     }
 
@@ -63,6 +63,4 @@ public class RenjuRules implements Rules {
     public int  get_board_size(){
         return 15;
     }
-
-
 }

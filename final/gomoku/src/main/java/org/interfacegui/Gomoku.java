@@ -78,6 +78,7 @@ public class Gomoku
     private boolean ia_playing = false;
     private ExecutorService executor = null;
     private Future<Point> future = null;
+    private boolean forbiddenVisibility = false;
 
     // void changeCandidatVisibility(boolean visible){
     //     int count = 0;
@@ -108,6 +109,12 @@ public class Gomoku
     //         candidatsMap.put(score, new Point(candidats.get(i).y, candidats.get(i).x));
     //     }
     // }
+
+
+    void changeForbiddenVisibility(boolean visible , Point p) {
+
+        goban.set_stone_status(visible, "#FF0000", p, null);
+    }
 
 
     void changeHintVisibility(boolean visible) {
@@ -334,6 +341,10 @@ public class Gomoku
         //add 0 si y a des prisonniers
         _map.get(_map.size() -1); //no printmap
         rule.check_capture(point, _map.get(_map.size() - 1));
+
+        //for point in rule.capturedPoint
+        //    game.remove(point);
+
         if (rule.endGame(_map.get(_map.size() - 1), point)){
             System.out.println("partie finie!");
             if (_map.size() % 2 == 0)
@@ -354,6 +365,7 @@ public class Gomoku
         for (Point p : points) {
             System.out.println("capture 1 er affichage : " + p);  // Appel automatique à toString()
             game.remove(p); // To uppdate Minmax.map
+
         }
         points = rule.get_prisonners();
         System.out.println("nbr prisonners : " + points.size());
@@ -523,6 +535,16 @@ public class Gomoku
             }
             changeHintVisibility(toggleHint);
         });
+        gameInfos.getForbiddeButton().setOnAction(event -> {
+            if (ia_playing == true || game_end || map_index < _map.size() - 1)
+                return ;
+            ArrayList<Point> points = rule.get_forbiden_moves(_map.get(_map.size() - 1), player_turn);
+            for (Point point : points){
+                changeForbiddenVisibility(forbiddenVisibility, point);
+            }
+            forbiddenVisibility = forbiddenVisibility == true?false:true;
+        });
+        
 
 
             goban.get_goban().setOnMouseClicked(event -> {

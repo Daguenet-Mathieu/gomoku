@@ -28,7 +28,7 @@ public class GomokuRules implements Rules {
         return "Gomoku";
     }
     @Override
-    public ArrayList<Point> get_forbiden_moves(){
+    public ArrayList<Point> get_forbiden_moves(Map map, int color){//degager color
         return new ArrayList<Point>();
     }
 

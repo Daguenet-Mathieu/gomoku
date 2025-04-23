@@ -38,7 +38,7 @@ public class GoRules implements Rules {
     }
 
     @Override
-    public ArrayList<Point> get_forbiden_moves(){
+    public ArrayList<Point> get_forbiden_moves(Map map, int color){
         return forbidden_moves;
     }
 
