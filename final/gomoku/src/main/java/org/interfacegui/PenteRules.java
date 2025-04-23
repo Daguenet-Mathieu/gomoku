@@ -5,7 +5,7 @@ import org.utils.*;
 public class PenteRules implements Rules {
 
     ArrayList<Point> prisonners;//prisonnier crees par le dernier coup
-    ArrayList<Point> forbidden_moves;//coups interdit pour la position actuelle
+    ArrayList<Point> forbidden_moves = new ArrayList<Point>();//coups interdit pour la position actuelle
     int [] prisonners_nbr = new int[2];
     public DoubleFree dbfree = new DoubleFree();
 
@@ -43,9 +43,13 @@ public class PenteRules implements Rules {
         forbidden_moves.clear();
         for (int line = 0; line < get_board_size();line++)
         {
-            for (int col = 0; col < get_board_size(); col++)
-                if (m[col][line] != 0 && this.dbfree.check_double_free(line, col, m[col][line]) == false)
+            for (int col = 0; col < get_board_size(); col++){
+                System.out.println("on check la color : " + color + "x  == " + col + " y == " + line + " res fct double == " + this.dbfree.check_double_free(line, col, m[col][line]));
+                if (m[col][line] == 0 && this.dbfree.check_double_free(line, col, color) == false){
+                    System.out.println("coucou");
                     forbidden_moves.add(new Point (col, line));
+                }
+            }
         }
         return forbidden_moves;
     }
@@ -81,18 +85,18 @@ public class PenteRules implements Rules {
     }
 
     @Override
-    public void set_white_prisonners(int nb){
-        prisonners_nbr[1] = nb;
+    public int  get_board_size(){
+        return 19;
     }
-    
+
     @Override
     public void set_black_prisonners(int nb){
         prisonners_nbr[0] = nb;
     }
 
-
     @Override
-    public int  get_board_size(){
-        return 19;
+    public void set_white_prisonners(int nb){
+        prisonners_nbr[1] = nb;
     }
+    
 }

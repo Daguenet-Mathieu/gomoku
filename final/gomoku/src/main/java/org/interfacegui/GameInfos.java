@@ -80,7 +80,7 @@ public class GameInfos{
         private Button _next;
         private Button _candidats;
         private Button _hint;
-        private Button _forbidden;
+        private Button _forbidden = new Button("forbiddens");
 
         private HBox _button_prev_next = new HBox();
 
@@ -301,7 +301,7 @@ public class GameInfos{
             // Ajouter le bouton au Pane
             // _prev.setPadding(new Insets(0,0,0,0));
             _button_prev_next.getChildren().addAll(_prev, _next);
-            _game_infos.getChildren().addAll(_last_move_label, _current_move_label, _candidats, _hint, _resign, _undo);
+            _game_infos.getChildren().addAll(_last_move_label, _current_move_label, _candidats, _hint, _forbidden, _resign, _undo);
             _game_infos.getChildren().addAll(_button_prev_next, _export);
 
         }

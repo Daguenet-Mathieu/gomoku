@@ -78,7 +78,7 @@ public class Gomoku
     private boolean ia_playing = false;
     private ExecutorService executor = null;
     private Future<Point> future = null;
-    private boolean forbiddenVisibility = false;
+    private boolean forbiddenVisibility = true;
 
     // void changeCandidatVisibility(boolean visible){
     //     int count = 0;
@@ -405,14 +405,16 @@ public class Gomoku
     }
 
     private void undoMove(){
-        if (_map.size() > 1 && map_index < _map.size() - 1)
+        System.out.println("map sie == " + _map.size() + " map index == " + map_index);
+        if (_map.size() <= 1 || map_index < _map.size() - 1)
             return ;
-            System.out.println("les prisonniers qui vont etre anules sont : ");
-        for (Point p : _map.get(_map.size() - 1).get_prisonners()){
-            System.out.print(p);
+        if (_map.get(_map.size() - 1).get_prisonners() != null){
+            for (Point p : _map.get(_map.size() - 1).get_prisonners()){
+                System.out.println("les prisonniers qui vont etre anules sont : ");
+                    System.out.print(p);
+                }
+                System.out.println();
         }
-        System.out.println();
-
         Point coord = _map.get(_map.size() - 1).getLastMove();
         map_index -= 1;
         game.remove(coord);
@@ -559,7 +561,7 @@ public class Gomoku
         gameInfos.getForbiddeButton().setOnAction(event -> {
             if (ia_playing == true || game_end || map_index < _map.size() - 1)
                 return ;
-            ArrayList<Point> points = rule.get_forbiden_moves(_map.get(_map.size() - 1), player_turn);
+            ArrayList<Point> points = rule.get_forbiden_moves(_map.get(_map.size() - 1), player_turn + 1);
             for (Point point : points){
                 changeForbiddenVisibility(forbiddenVisibility, point);
             }

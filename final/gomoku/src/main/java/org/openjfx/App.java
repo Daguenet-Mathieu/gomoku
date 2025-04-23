@@ -174,8 +174,8 @@ public class App extends Application {
     // }
 
     public void switchScene(Scene newScene) {
-    stage.setScene(newScene);
-}
+        stage.setScene(newScene);
+    }
 
     public static void main(String[] args) {
         launch(args);
