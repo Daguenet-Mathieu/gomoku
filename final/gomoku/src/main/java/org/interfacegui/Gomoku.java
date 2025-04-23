@@ -373,25 +373,18 @@ public class Gomoku
             System.out.println("capture 2 em affichage : " + p);  // Appel automatique à toString()
         }
         _map.get((_map.size()-1)).remove_prisonners(points);
+        if (player_turn == 0)
+            _map.get((_map.size()-1)).addBlackPrisonners(points.size());
+        else
+            _map.get((_map.size()-1)).addWhitePrisonners(points.size());
         if (points != null && points.size() > 0){
-            if (player_turn == 0)
-                gameInfos.set_black_prisonners(Integer.toString(rule.get_black_prisonners()));
-            else
-                gameInfos.set_white_prisonners(Integer.toString(rule.get_white_prisonners()));
+            display_nb_prisonners();
         }
-        goban.updateFromMap(_map.get(_map.size() -1));
-        player_turn ^= 1;
-    }
 
-    private void undoMove(){
-        if (map_index < _map.size() - 1)
-            return ;
-        Point coord = _map.get(_map.size() - 1).getLastMove();
-        map_index -= 1;
-        goban.set_stone_status(false, null, coord, null);//faire un autre fct avec un boucle
-        game.remove(coord);
-        _map.remove(_map.size() - 1);
-        player_turn ^= 1;      
+        _map.get((_map.size()-1)).set_prisonners(points);
+        _map.get((_map.size()-1)).set_color(player_turn);
+        goban.updateFromMap(_map.get(_map.size() -1));
+        player_turn ^= 1;//le get de la regle
     }
 
     // private void undoMove(){
@@ -399,11 +392,39 @@ public class Gomoku
     //         return ;
     //     Point coord = _map.get(_map.size() - 1).getLastMove();
     //     map_index -= 1;
+    //     goban.set_stone_status(false, null, coord, null);//faire un autre fct avec un boucle
     //     game.remove(coord);
     //     _map.remove(_map.size() - 1);
-    //     goban.updateFromMap(_map.get(_map.size() - 1));//faire un autre fct avec un boucle
     //     player_turn ^= 1;      
     // }
+
+    private void display_nb_prisonners(){
+        gameInfos.set_black_prisonners(Integer.toString( _map.get((_map.size()-1)).getBlackPrisonners()));
+        gameInfos.set_white_prisonners(Integer.toString( _map.get((_map.size()-1)).getWhitePrisonners()));
+
+    }
+
+    private void undoMove(){
+        if (_map.size() > 1 && map_index < _map.size() - 1)
+            return ;
+            System.out.println("les prisonniers qui vont etre anules sont : ");
+        for (Point p : _map.get(_map.size() - 1).get_prisonners()){
+            System.out.print(p);
+        }
+        System.out.println();
+
+        Point coord = _map.get(_map.size() - 1).getLastMove();
+        map_index -= 1;
+        game.remove(coord);
+        _map.remove(_map.size() - 1);
+        goban.updateFromMap(_map.get(_map.size() - 1));
+        // if (player_turn)//CHANGER LE NB PROSONNIERS pour la bonne couleur
+
+        player_turn ^= 1;// le get de la regle 
+        rule.set_black_prisonners(_map.get((_map.size()-1)).getBlackPrisonners());
+        rule.set_white_prisonners(_map.get((_map.size()-1)).getWhitePrisonners());
+        display_nb_prisonners();
+    }
 
 
 

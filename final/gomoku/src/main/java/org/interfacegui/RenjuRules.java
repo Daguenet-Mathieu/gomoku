@@ -63,4 +63,20 @@ public class RenjuRules implements Rules {
     public int  get_board_size(){
         return 15;
     }
+<<<<<<< HEAD
+=======
+
+    @Override
+    public void set_white_prisonners(int nb){
+        prisonners_nbr[1] = nb;
+    }
+    
+    @Override
+    public void set_black_prisonners(int nb){
+        prisonners_nbr[0] = nb;
+    }
+
+
+
+>>>>>>> e33ed13c49014b5ef956f89e11b096be2820e711
 }
