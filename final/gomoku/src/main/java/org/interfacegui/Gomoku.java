@@ -237,10 +237,10 @@ public class Gomoku
                     }
                     else if (future.isDone()){
                         playMove(future.get());
-                        ia_playing = false;
                         executor.shutdown();
                         setCandidats(game.m.candidat.lst, game.m.values);
                         showCandidats();
+                        ia_playing = false;
                     }
                 }
                 else if (player_turn == 1 && _game_infos.get_white_player_type() == 1){//faire une fct
@@ -253,10 +253,10 @@ public class Gomoku
                     }
                     else if (future.isDone()){
                         playMove(future.get());
-                        ia_playing = false;
                         executor.shutdown();
                         setCandidats(game.m.candidat.lst, game.m.values);
                         showCandidats();
+                        ia_playing = false;
                     }
 
                 }
@@ -451,7 +451,7 @@ public class Gomoku
         //     _game_infos.widthProperty(),
         //     _game_infos.heightProperty()
         // );
-        SGF.createSgf(null, "gomoku");
+        // SGF.createSgf(null, "gomoku");
         init_rules(game_infos.get_rules());
         _nb_line = rule.get_board_size();
         game = new Game(game_infos.get_rules(), rule.get_board_size());
@@ -521,6 +521,7 @@ public class Gomoku
                 undoMove();
         });
         gameInfos.getExportButton().setOnAction(event -> {
+            SGF.createSgf(_map, rule.getGameType());
             //export sgf action
         });
 
@@ -563,9 +564,11 @@ public class Gomoku
             changeHintVisibility(toggleHint);
         });
         gameInfos.getForbiddeButton().setOnAction(event -> {
-            if (ia_playing == true || game_end || map_index < _map.size() - 1)
+            if (ia_playing == true /*|| game_end || map_index < _map.size() - 1*/)
                 return ;
-            ArrayList<Point> points = rule.get_forbiden_moves(_map.get(_map.size() - 1), player_turn + 1);
+            int color = _map.get(map_index).get_color() ^ 1;
+            System.out.println("map index == " + map_index + " player turn == " + player_turn + " player turn d'apres map == " + _map.get(map_index).get_color());
+            ArrayList<Point> points = rule.get_forbiden_moves(_map.get(map_index), color + 1);
             for (Point point : points){
                 changeForbiddenVisibility(forbiddenVisibility, point);
             }

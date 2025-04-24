@@ -41,16 +41,21 @@ public class PenteRules implements Rules {
     {
         int[][] m = map.get_map();
         forbidden_moves.clear();
+        map.printMap();
+        for (Point point : forbidden_moves)
+            System.out.println("apres cleat forbidden moves == " + forbidden_moves);
         for (int line = 0; line < get_board_size();line++)
         {
             for (int col = 0; col < get_board_size(); col++){
-                System.out.println("on check la color : " + color + "x  == " + col + " y == " + line + " res fct double == " + this.dbfree.check_double_free(line, col, m[col][line]));
-                if (m[col][line] == 0 && this.dbfree.check_double_free(line, col, color) == false){
-                    System.out.println("coucou");
+                boolean res = this.dbfree.check_double_free(line, col, color, m);
+                System.out.println("on check la color : " + color + "x  == " + col + " y == " + line + " res fct double == " + this.dbfree.check_double_free(line, col, color,  m) + " res == " + res);
+                if (m[col][line] == 0 && res == false){
                     forbidden_moves.add(new Point (col, line));
                 }
             }
         }
+        for (Point point : forbidden_moves)
+            System.out.println("avant envoi forbidden moves == " + point);
         return forbidden_moves;
     }
 
@@ -61,10 +66,10 @@ public class PenteRules implements Rules {
         if (prisonners.size() != 0)
         {
             capture_color = map.get_map()[point.y][point.x];
-            System.out.printf("color captured %d\n", capture_color);
+            // System.out.printf("color captured %d\n", capture_color);
             prisonners_nbr[capture_color - 1] += prisonners.size(); //to_debug
-            System.out.println("adding prisonner nbr == " + prisonners.size());
-            System.out.println("prisonner nbr == " + prisonners_nbr[capture_color - 1]);
+            // System.out.println("adding prisonner nbr == " + prisonners.size());
+            // System.out.println("prisonner nbr == " + prisonners_nbr[capture_color - 1]);
         }
 
     }

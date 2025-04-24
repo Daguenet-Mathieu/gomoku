@@ -166,7 +166,7 @@ public class Candidat
         val = inner_alignement(x, y);
 
         if ((val == 0 && tot_case1 == 0 && tot_case2 == 0) 
-        || doubleFreethree.check_double_free(x, y, MinMax.scsimul.cur_turn) == false)
+        || doubleFreethree.check_double_free(x, y, MinMax.scsimul.cur_turn, MinMax.map) == false)
             return;
 
         if (val == 0 && (tot_case1 != 0 || tot_case2 != 0))
@@ -416,7 +416,7 @@ public class Candidat
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
 
             {
-                if (MinMax.map[i][j] == 0 && near(i, j) && doubleFreethree.check_double_free(i, j, turn))
+                if (MinMax.map[i][j] == 0 && near(i, j) && doubleFreethree.check_double_free(i, j, turn, MinMax.map))
                     this.lst.add(new Candidat.coord(i, j));
             }
         }

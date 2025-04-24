@@ -1,0 +1,31 @@
+(;FF[4] SZ[19]
+;B[jj] ;AE
+;W[ii] ;AE
+;B[ji] ;AE
+;W[jk] ;AE
+;B[jh] ;AE
+;W[jg] ;AE
+;B[ij] ;AE
+;W[kj] ;AE
+;B[li] ;AE
+;W[ki] ;AE
+;B[il] ;AE[jk] [kj] 
+;W[kj] ;AE
+;B[hk] ;AE
+;W[hj] ;AE[ij] [jj] 
+;B[gj] ;AE
+;W[fi] ;AE
+;B[gk] ;AE[hj] [ii] 
+;W[jj] ;AE[ji] [jh] 
+;B[ij] ;AE
+;W[kh] ;AE
+;B[if] ;AE[jg] [kh] 
+;W[lh] ;AE
+;B[ik] ;AE
+;W[mg] ;AE
+;B[nf] ;AE
+;W[ii] ;AE
+;B[fk] ;AE
+;W[ek] ;AE
+;B[jk] ;AE
+)

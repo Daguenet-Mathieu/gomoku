@@ -10,7 +10,7 @@ public class Map{
     private int _map[][];
     private int _white_prisonners;
     private int _black_prisonners;
-    int player_color = 0;
+    int player_color;
     public Point _last_move ;
     private int _move_time;
     private ArrayList<Point> candidatsList;
@@ -21,8 +21,13 @@ public class Map{
         candidatsList = list;
     }
 
+    public int get_color(){
+        return (player_color);
+    }
+
     public void set_color(int color){
         player_color = color;
+        System.out.println("player color set in map == " + player_color);
     }
 
     public ArrayList<Point> getCandidatsList() {
@@ -113,7 +118,6 @@ public class Map{
         for (Point p : points) 
             _map[p.y][p.x] = 0;
     }
-
 
     public void set_move_time(int time){
         _move_time = time;
