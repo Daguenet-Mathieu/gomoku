@@ -98,10 +98,13 @@ public class Game {
     public void remove(Point point)
     {
         int val = MinMax.map[point.y][point.x];
+
+        System.out.printf("Point %d %d val %d removed !!!!!??????!!!!!\n", point.y, point.x, val);
+
         MinMax.map[point.y][point.x] = 0;
         scbord.analyse_unmove(point.y, point.x, val);
+        //MinMax.display_Map();
     }
-
 
     public boolean first_move()
     {
@@ -160,6 +163,7 @@ public class Game {
         else
         {
             m.load_cur_score(scbord);
+            scbord.display();
             System.out.printf("\n\tminmax launch turn %d player %d\n", turn, player);
     
             if (this.rules.equals("Pente"))
@@ -189,7 +193,7 @@ public class Game {
         timelst.add((double)time / 1000);
 
 
-        m.play(m.best, turn);
+        //m.play(m.best, turn);
         System.out.printf("IA move %d (Turn %d) at %d %d played in %f seconds (%d pos, %d depth) mean : %f\n", nb_move + 1,(nb_move + 1) / 2 + 1, m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter, max_depth + 1,return_mean_time());
 
         if ((double)time/1000 > 0.6 && return_mean_time() > 0.46)

@@ -73,7 +73,7 @@ public class MinMax
         nbmove += 1;
 
         System.out.println("After load");
-        scsimul.display();
+        //scsimul.display();
     }
 
     public MinMax()
@@ -171,7 +171,7 @@ public class MinMax
         {
             for (int j = 0 ; j < 19 ; j++)
             {
-                System.out.printf("%2d", map[i][j]);
+                System.out.printf("%2d", MinMax.map[i][j]);
             }
             System.out.println("");
         }

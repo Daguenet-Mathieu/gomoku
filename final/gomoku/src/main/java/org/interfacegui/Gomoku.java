@@ -3,6 +3,8 @@ package org.interfacegui;
 import java.util.ArrayList;
 
 import org.modelai.Game;
+import org.modelai.MinMax;
+
 //import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 //import javafx.scene.layout.HBox;
@@ -336,7 +338,9 @@ public class Gomoku
         map_index = _map.size() - 1;
         System.out.println("map_index apres update dans play move" + map_index);
 
+        
         game.move(point, player_turn+1); // To update MinMax.map
+        //MinMax.display_Map();
         
         //add 0 si y a des prisonniers
         _map.get(_map.size() -1); //no printmap

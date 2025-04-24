@@ -352,6 +352,8 @@ public class Pente extends MinMax {
             //candidat.display_candidat(map);
             //System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", prisoners[0], prisoners[1]);
             //scsimul.display();
+            //System.out.println("At the end !!!!!!!!!!!!!!!!!!!!!!!!!");
+            //display_map();
         }
 
         if (turn == player)

@@ -415,7 +415,6 @@ public class Miniscore {
     public void connect(int x, int y) //directly x y
     {
         this.str = MinMax.map[x][y] == 1 ? str1 : str2;
-
         if (str[dir][x][y] == 0)
         {
             if (in_goban(x-dx, y-dy) && MinMax.map[x-dx][y-dy] == cur_turn)
@@ -872,6 +871,79 @@ public class Miniscore {
     //     }
     // }
 
+    // public void analyse_unmove(int x, int y, int turn) //Maybe wrong modif
+    // {
+    //     //System.out.printf("unmove %d %d\n", x, y);
+    //     this.cur_turn = turn;
+    //     this.str = turn == 1 ? this.str1 : this.str2;
+    //     if (victory)
+    //     {
+    //         save_victory();
+    //         return ;
+    //     }
+    //     if (x + 1 != 19 && MinMax.map[x+1][y] == cur_turn)
+    //     {
+    //         //System.out.println("oh no");
+    //         dir = 0;
+    //         dx=1;dy=0;
+    //         unconnect(x, y);
+    //         unfill(x, y);
+    //     }
+    //     else if (x - 1 != -1 && MinMax.map[x-1][y] == cur_turn)
+    //     {
+    //         //System.out.println("this dir");
+    //         //display();
+    //         dir = 0;
+    //         dx=-1; dy=0;
+    //         unconnect(x, y);
+    //         unfill(x, y);
+    //     }
+
+    //     if (y + 1 != 19 && MinMax.map[x][y+1] == cur_turn)
+    //     {
+    //         dir = 1;
+    //         dx=0;dy=1;
+    //         unconnect(x, y);
+    //         unfill(x, y);
+    //     }
+    //     else if (y - 1 != -1 && MinMax.map[x][y-1] == cur_turn)
+    //     {
+    //         dir = 1;
+    //         dx=0;dy=-1;
+    //         unconnect(x, y);
+    //         unfill(x, y);
+    //     }
+    //     if (x + 1 != 19 && y + 1 != 19 && MinMax.map[x+1][y+1] == cur_turn)
+    //     {
+    //         dir = 2;
+    //         dx=1;dy=1;
+    //         unconnect(x, y);
+    //         unfill(x, y);
+    //     }
+    //     else if (x - 1 != -1 && y - 1 != -1 && MinMax.map[x-1][y-1] == cur_turn)
+    //     {
+    //         dir = 2;
+    //         dx=-1;dy=-1;
+    //         unconnect(x, y);
+    //         unfill(x, y);
+    //     }
+    //     if (x + 1 != 19 && y - 1 != -1 && MinMax.map[x+1][y-1] == cur_turn)
+    //     {
+    //         dir = 3;
+    //         dx=1;dy=-1;
+    //         unconnect(x, y);
+    //         unfill(x, y);
+    //     }
+    //     else if (x - 1 != -1 && y + 1 != 19 && MinMax.map[x-1][y+1] == cur_turn)
+    //     {
+    //         dir = 3;
+    //         dx=-1;dy=1;
+    //         unconnect(x, y);
+    //         unfill(x, y);
+    //     }
+
+    // }
+
     public void analyse_unmove(int x, int y, int turn)
     {
         //System.out.printf("unmove %d %d\n", x, y);
@@ -961,68 +1033,60 @@ public class Miniscore {
         this.x = x;
         this.y = y;
 
-        if (x + 1 != 19 && is_player(MinMax.map[x+1][y]))
+        if (x + 1 != 19 && MinMax.map[x+1][y] == cur_turn)
         {
-            //System.out.println("oh no");
+            //System.out.println("vertical pos detected");
             dir=0;
             dx=1;dy=0;
-            if (MinMax.map[x+1][y] == cur_turn)
-                connect(x, y);
+            connect(x, y);
 
         }
-        else if (x - 1 != -1 && is_player(MinMax.map[x-1][y]))
+        else if (x - 1 != -1 && MinMax.map[x-1][y] == cur_turn)
         {
-            //System.out.println("this dir");
+            //System.out.println("vertical neg detected");
             //display();
             dir=0;
             dx=-1; dy=0;
-            if (MinMax.map[x-1][y] == cur_turn)
-                connect(x, y);
+            connect(x, y);
         }
 
-        if (y + 1 != 19 && is_player(MinMax.map[x][y+1]))
+        if (y + 1 != 19 && MinMax.map[x][y+1] == cur_turn)
         {
             dir=1;
             dx=0;dy=1;
-            if (MinMax.map[x][y+1] == cur_turn)
-                connect(x, y);
+            connect(x, y);
         }
-        else if (y - 1 != -1 && is_player(MinMax.map[x][y-1]))
+        else if (y - 1 != -1 && MinMax.map[x][y-1] == cur_turn)
         {
             dir = 1;
             dx=0;dy=-1;
-            if (MinMax.map[x][y-1] == cur_turn)
-                connect(x, y);
+            connect(x, y);
         }
 
-        if (x + 1 != 19 && y + 1 != 19 && is_player(MinMax.map[x+1][y+1]))
+        if (x + 1 != 19 && y + 1 != 19 && MinMax.map[x+1][y+1] == cur_turn)
         {
             dir = 2;
             dx=1;dy=1;
-            if (MinMax.map[x+1][y+1] == cur_turn)
-                connect(x, y);
+            connect(x, y);
         }
-        else if (x - 1 != -1 && y - 1 != -1 && is_player(MinMax.map[x-1][y-1]))
+        else if (x - 1 != -1 && y - 1 != -1 && MinMax.map[x-1][y-1] == cur_turn)
         {
             dir = 2;
             dx=-1;dy=-1;
-            if (MinMax.map[x-1][y-1] == cur_turn)
-                connect(x, y);
+            connect(x, y);
         }
 
-        if (x + 1 != 19 && y - 1 != -1 && is_player(MinMax.map[x+1][y-1]))
+        if (x + 1 != 19 && y - 1 != -1 && MinMax.map[x+1][y-1] == cur_turn)
         {
             dir = 3;
             dx=1;dy=-1;
-            if (MinMax.map[x+1][y-1] == cur_turn)
-                connect(x, y);
+            connect(x, y);
         }
-        else if (x - 1 != -1 && y + 1 != 19 && is_player(MinMax.map[x-1][y+1]))
+        else if (x - 1 != -1 && y + 1 != 19 && MinMax.map[x-1][y+1] == cur_turn)
         {
             dir = 3;
             dx=-1;dy=1;
-            if (MinMax.map[x-1][y+1] == cur_turn)
-                connect(x, y);
+            connect(x, y);
         }
         //if (!victory)
         fill2(x, y);
