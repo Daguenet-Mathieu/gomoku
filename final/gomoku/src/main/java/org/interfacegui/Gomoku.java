@@ -249,7 +249,7 @@ public class Gomoku
                         future = executor.submit(() -> {
                             return game.best_move(player_turn+1, player_turn+1);
                         });
-                    ia_playing = true;
+                        ia_playing = true;
                     }
                     else if (future.isDone()){
                         playMove(future.get());

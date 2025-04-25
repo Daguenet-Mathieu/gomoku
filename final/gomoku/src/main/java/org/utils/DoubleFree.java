@@ -1,9 +1,11 @@
 package org.utils;
+import org.interfacegui.Map;
 import org.modelai.*;
 
 public class DoubleFree
 {
     static private int [][] dir = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};
+    //hor vertical diagpos diagneg
     private MinMax m;
     private static int goban_size = 19;
 
@@ -30,6 +32,12 @@ public class DoubleFree
     
         final int sep = val == 1 ? 2 : 1;
 
+        // if (x == 10 && y == 8)
+        // {
+        //     //Map.printMap(map);
+        //     // System.out.printf("%d %d %d \n", x, y, val);
+        // }
+
         for (int i = 0 ; i < 4 ; i++)
         {
             nb_0 = 0;
@@ -44,6 +52,9 @@ public class DoubleFree
                     nb_0++;
                 if (map[cur_x][cur_y] == val)
                     nb_val++;
+                // if (x == 10 && y == 8)
+                //     System.out.printf("%d %d val %d \n",cur_x, cur_y, map[cur_x][cur_y]);
+
                 dep++;
                 cur_x = x + dep * dir[i][0];
                 cur_y = y + dep * dir[i][1];
@@ -74,6 +85,8 @@ public class DoubleFree
                     nb_0++;
                 if (map[cur_x][cur_y] == val)
                     nb_val++;
+                // if (x == 10 && y == 8)
+                //     System.out.printf("%d %d val %d\n",cur_x, cur_y, map[cur_x][cur_y]);
                 dep++;
                 cur_x = x - (dep * dir[i][0]);
                 cur_y = y - (dep * dir[i][1]);
@@ -86,11 +99,19 @@ public class DoubleFree
                 if (cur_x + dir[i][0] == x && cur_y + dir[i][1] == y)
                     continue;
             }
+            // if (x == 10 && y == 8)
+            //     System.out.printf("nb val dir %d %d\n", i, nb_val);
             if (nb_val == 2)
             {
-                //System.out.printf("direction %d free detected\n", i);
                 nb_free++;
+                // if (x == 10 && y == 8)
+                //     System.out.printf("direction %d free detected nb_free\n", i, nb_free);
+
             }
+
+            // if (nb_free == 2)
+            //     System.out.printf("x == %d y == %d\n", x, y);
+
             if (nb_free >= 2)
                 return false;
         }

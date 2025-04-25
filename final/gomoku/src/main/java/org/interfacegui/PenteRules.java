@@ -42,15 +42,26 @@ public class PenteRules implements Rules {
         int[][] m = map.get_map();
         forbidden_moves.clear();
         map.printMap();
+        System.out.println("pour x == 8 et y == 10 " + m[10][8] + " et pour x == 10 et y == 8 " + m[8][10]);
         for (Point point : forbidden_moves)
             System.out.println("apres cleat forbidden moves == " + forbidden_moves);
-        for (int line = 0; line < get_board_size();line++)
+        for (int y = 0; y < get_board_size();y++)
         {
-            for (int col = 0; col < get_board_size(); col++){
-                boolean res = this.dbfree.check_double_free(line, col, color, m);
-                System.out.println("on check la color : " + color + "x  == " + col + " y == " + line + " res fct double == " + this.dbfree.check_double_free(line, col, color,  m) + " res == " + res);
-                if (m[col][line] == 0 && res == false){
-                    forbidden_moves.add(new Point (col, line));
+            for (int x = 0; x < get_board_size(); x++){
+                if (y == 10 && x == 8)
+                    System.out.println("puor la coordonnee qui nous interesse avanr le continue");
+                if (m[y][x] != 0)
+                    continue ;
+                boolean res = this.dbfree.check_double_free(y, x, color, m);
+                if (y == 10 && x == 8)
+                    System.out.println("puor la coordonnee qui nous interesse res : " + res);
+                if (res == false)
+                {
+                    System.out.println("chew moi x == " + y + " y == " + x);
+                }
+                //System.out.println("on check la color : " + color + "x  == " + col + " y == " + y + " res fct double == " + this.dbfree.check_double_free(y, col, color,  m) + " res == " + res);
+                if (res == false){
+                    forbidden_moves.add(new Point (x, y));
                 }
             }
         }

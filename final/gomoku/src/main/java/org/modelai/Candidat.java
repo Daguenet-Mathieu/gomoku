@@ -23,6 +23,7 @@ public class Candidat
 
     static coord limax = new coord(1, 1);
     static coord limin = new coord(18, 18);
+    int dp;
     //static public int [][] cmap;
     
     public static class coord
@@ -165,9 +166,18 @@ public class Candidat
         // }
         val = inner_alignement(x, y);
 
-        if ((val == 0 && tot_case1 == 0 && tot_case2 == 0) 
-        || doubleFreethree.check_double_free(x, y, MinMax.scsimul.cur_turn, MinMax.map) == false)
+        if (val == 0 && tot_case1 == 0 && tot_case2 == 0) 
             return;
+        if (x == 10 && y == 8 && dp == Game.max_depth)
+            System.out.printf("checking double free x y turn %d %d %d\n", x, y, MinMax.scsimul.cur_turn);
+        if (doubleFreethree.check_double_free(x, y, MinMax.scsimul.cur_turn, MinMax.map) == false)
+        {
+            if (x == 10 && y == 8 && dp == Game.max_depth)
+                System.out.println("forbidden move\n");
+            return;
+        }
+
+
 
         if (val == 0 && (tot_case1 != 0 || tot_case2 != 0))
         {
@@ -250,6 +260,7 @@ public class Candidat
     {
         int ret;
         int max_near;
+        this.dp = depth;
         // System.out.println("==================");
         // display_map(map);
         // System.out.println("===================")

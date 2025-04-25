@@ -134,6 +134,12 @@ public class Map{
     }
     }
 
+    static public void printMap(int[][] map ){
+        for(int i = 0; i < 19; i++){
+            System.out.println(Arrays.toString(map[i]));
+    }
+    }
+
     public Point getLastMove(){
         return _last_move;
     }
