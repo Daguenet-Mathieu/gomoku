@@ -954,80 +954,87 @@ public class Miniscore {
         // display();
         this.cur_turn = turn;
         this.str = turn == 1 ? this.str1 : this.str2;
+        this.opponant = turn == 1 ? 2 : 1;
+
         if (victory)
         {
             save_victory();
             return ;
         }
-        if (x + 1 != 19 && MinMax.map[x+1][y] == cur_turn)
+
+        if ((x + 1 != 19 && is_player(MinMax.map[x+1][y])) || (x - 1 != -1 && is_player(MinMax.map[x-1][y])))
         {
-            //System.out.println("oh no");
             dir = 0;
-            dx=1;dy=0;
-            //if (MinMax.map[x+1][y] == cur_turn)
-            unconnect(x, y);
-            unfill(x, y);
-        }
-        else if (x - 1 != -1 && MinMax.map[x-1][y] == cur_turn)
-        {
-            //System.out.println("this dir");
-            //display();
-            dir = 0;
-            dx=-1; dy=0;
-            //if (MinMax.map[x-1][y] == cur_turn)
-            unconnect(x, y);
+            if (x + 1 != 19 && MinMax.map[x+1][y] == cur_turn)
+            {
+                dx=1;dy=0;
+                unconnect(x, y);
+            }
+
+            else if (x - 1 != -1 && MinMax.map[x-1][y] == cur_turn)
+            {
+                dx=-1;dy=0;
+                unconnect(x, y);
+            }
+
             unfill(x, y);
         }
 
-        if (y + 1 != 19 && MinMax.map[x][y+1] == cur_turn)
+
+        if ((y + 1 != 19 && is_player(MinMax.map[x][y+1])) || (y - 1 != -1 && is_player(MinMax.map[x][y-1])))
         {
             dir = 1;
-            dx=0;dy=1;
-            //if (MinMax.map[x][y+1] == cur_turn)
-            unconnect(x, y);
+            if (y + 1 != 19 && MinMax.map[x][y+1] == cur_turn)
+            {
+                dx=0; dy=1;
+                unconnect(x, y);
+            }
+
+            else if (y - 1 != -1 && MinMax.map[x][y-1] == cur_turn)
+            {
+                dx=0;dy=-1;
+                unconnect(x, y);
+            }
+
             unfill(x, y);
         }
-        else if (y - 1 != -1 && MinMax.map[x][y-1] == cur_turn)
-        {
-            dir = 1;
-            dx=0;dy=-1;
-            //if (MinMax.map[x][y-1] == cur_turn)
-            unconnect(x, y);
-            unfill(x, y);
-        }
-        if (x + 1 != 19 && y + 1 != 19 && MinMax.map[x+1][y+1] == cur_turn)
+
+        if ((x + 1 != 19 && y + 1 != 19 && is_player(MinMax.map[x+1][y+1])) ||( x - 1 != -1 && y - 1 != -1 && is_player(MinMax.map[x-1][y-1])))
         {
             //System.out.println("Diag pos unmove detected");
             dir = 2;
-            dx=1;dy=1;
-            //if (MinMax.map[x+1][y+1] == cur_turn)
-            unconnect(x, y);
+            if (x + 1 != 19 && y + 1 != 19 && MinMax.map[x+1][y+1] == cur_turn)
+            {
+                dx=1;dy=1;
+                unconnect(x, y);
+            }
+
+            else if ( x - 1 != -1 && y - 1 != -1 && MinMax.map[x-1][y-1] == cur_turn)
+            {
+                dx=-1; dy=-1;
+                unconnect(x, y);
+            }
+
             unfill(x, y);
         }
-        else if (x - 1 != -1 && y - 1 != -1 && MinMax.map[x-1][y-1] == cur_turn)
-        {
-            dir = 2;
-            dx=-1;dy=-1;
-            //if (MinMax.map[x-1][y-1] == cur_turn)
-            unconnect(x, y);
-            unfill(x, y);
-        }
-        if (x + 1 != 19 && y - 1 != -1 && MinMax.map[x+1][y-1] == cur_turn)
+
+        if (x + 1 != 19 && y - 1 != -1 && is_player(MinMax.map[x+1][y-1]) || (x - 1 != -1 && y + 1 != 19 && is_player(MinMax.map[x-1][y+1])))
         {
             //System.out.println("diagneg1 detected");
             dir = 3;
-            dx=1;dy=-1;
+
+            if (x + 1 != 19 && y - 1 != -1 && MinMax.map[x+1][y-1] == cur_turn)
+            {
+                dx=1;dy=-1;
+                unconnect(x, y);  
+            }
+
+            else if (x - 1 != -1 && y + 1 != 19 && MinMax.map[x-1][y+1] == cur_turn)
+            {
+                dx = -1; dy=1;
+                unconnect(x, y);
+            }
             
-            unconnect(x, y);  
-            unfill(x, y);
-        }
-        else if (x - 1 != -1 && y + 1 != 19 && MinMax.map[x-1][y+1] == cur_turn)
-        {
-            //System.out.println("diagneg2 detected");
-            dir = 3;
-            dx=-1;dy=1;
-            //if (MinMax.map[x-1][y+1] == cur_turn)
-            unconnect(x, y);
             unfill(x, y);
         }
 

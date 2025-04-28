@@ -171,10 +171,11 @@ public class NewTest
         // move(15, 3, 2);
 
 
-        move(9, 9, 1);
-        move(10, 8, 1);
-        move(11, 7, 2);
-        unmove(10, 8, 1);
+        move(10, 9, 1);
+        move(11, 9, 1);
+        move(12, 9, 1);
+        move(9, 9, 2);
+        unmove(10, 9, 1);
         // move(7, 7, 1);
         // move(6, 6, 2);
         // unmove(7, 7, 1);
