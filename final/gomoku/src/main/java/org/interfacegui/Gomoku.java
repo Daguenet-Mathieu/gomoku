@@ -166,22 +166,22 @@ public class Gomoku
     }
 
     void setCandidats(ArrayList<Candidat.coord> candidats, float[] values) {
-        System.out.println("ici on set les candidats!!!!!!!!????????????!!!!!!!!!!!!!");
-        if (candidats == null || values == null || game.val == null || ia_playing == true) return;
+        System.err.println("ici on set les candidats!!!!!!!!????????????!!!!!!!!!!!!!");
+        if (candidats == null || values == null || game.val == null ) return;
 
         candidatsList = new ArrayList<>();
         bestMoveScore = game.val;
-        System.out.println("candidats = " + candidats.size());
-        System.out.println("values = " + values.length);
-        System.out.println("best == " + game.m.best.y + " " + game.m.best.y );
-        System.out.println("move == " + game.m.move.y + " " + game.m.move.y );
+        System.err.println("candidats = " + candidats.size());
+        System.err.println("values = " + values.length);
+        System.err.println("best == " + game.m.best.y + " " + game.m.best.y );
+        System.err.println("move == " + game.m.move.y + " " + game.m.move.y );
         for (int i = 0; i < candidats.size(); i++){
-            System.out.println("candidat[" + i + "] = " + candidats.get(i).y + " " + candidats.get(i).x);
+            System.err.println("candidat[" + i + "] = " + candidats.get(i).y + " " + candidats.get(i).x);
         }
         for (int i = 0; i < values.length; i++){
-            System.out.println("values[" + i + "] = " + values[i] + " " +  values[i]);
+            System.err.println("values[" + i + "] = " + values[i] + " " +  values[i]);
         }
-        System.out.println("le coup choisi == " + game.val);
+        System.err.println("le coup choisi == " + game.val);
         for (int i = 0; i < values.length; i++) {
             candidatsList.add(new Point(candidats.get(i).y, candidats.get(i).x));
             candidatsList.get(candidatsList.size() - 1).set_val(values[i]);
@@ -194,7 +194,7 @@ public class Gomoku
         if (candidatsList == null)
             return ;
         for (Point p : candidatsList) {
-            System.out.println("Score: " + p.val + " -> Point: " + p);
+            System.err.println("Score: " + p.val + " -> Point: " + p);
         }
     }
 
@@ -217,6 +217,7 @@ public class Gomoku
         _winner = 0;
         gameInfos.set_black_prisonners("0");
         gameInfos.set_white_prisonners("0");
+        ia_playing = false;
 
     }
 
@@ -239,7 +240,9 @@ public class Gomoku
                         playMove(future.get());
                         executor.shutdown();
                         setCandidats(game.m.candidat.lst, game.m.values);
+                        System.err.println("candidats pour le coup : " + (_map.size() - 1));
                         showCandidats();
+                        System.err.println("\n\n\n");
                         ia_playing = false;
                     }
                 }
@@ -255,7 +258,9 @@ public class Gomoku
                         playMove(future.get());
                         executor.shutdown();
                         setCandidats(game.m.candidat.lst, game.m.values);
+                        System.err.println("candidats pour le coup : " + (_map.size() - 1));
                         showCandidats();
+                        System.err.println("\n\n\n");
                         ia_playing = false;
                     }
 
@@ -282,6 +287,7 @@ public class Gomoku
             if (gameInfos.get_black_time() <= 0 || gameInfos.get_white_time() <= 0){
                 gameLoop.stop();
                 game_end = true;
+                ia_playing = false;
                 _winner = (gameInfos.get_black_time() <= 0) ? 2 : 1;
                 String res = _winner == 1? "black" : "white";
                 _end_text.setText(res + " win");
@@ -358,6 +364,7 @@ public class Gomoku
             _end_popin.setVisible(true);
             _end_popin.setManaged(true);
             game_end = true;
+            ia_playing = false;
             gameLoop.stop();
             _winner = player_turn;
             String res = _winner == 0? "black" : "white";
@@ -506,6 +513,7 @@ public class Gomoku
         gameInfos.getResignButton().setOnAction(event -> {
                 gameLoop.stop();
                 game_end = true;
+                ia_playing = false;
                 System.out.println("player turn == " + player_turn);
                 _winner = player_turn;
                 String res = _winner == 1? "black" : "white";
@@ -554,7 +562,7 @@ public class Gomoku
         });
 
         gameInfos.getHintButton().setOnAction(event -> {
-            if (ia_playing == true || game_end)
+            if (ia_playing || game_end)
                 return ;
             toggleHint = toggleHint == true? false : true;
             if (hintList == null){
@@ -564,7 +572,7 @@ public class Gomoku
             changeHintVisibility(toggleHint);
         });
         gameInfos.getForbiddeButton().setOnAction(event -> {
-            if (ia_playing == true /*|| game_end || map_index < _map.size() - 1*/)
+            if (ia_playing /*|| game_end || map_index < _map.size() - 1*/)
                 return ;
             int color = _map.get(map_index).get_color() ^ 1;
             System.out.println("map index == " + map_index + " player turn == " + player_turn + " player turn d'apres map == " + _map.get(map_index).get_color());
@@ -578,7 +586,7 @@ public class Gomoku
 
 
             goban.get_goban().setOnMouseClicked(event -> {
-            if (game_end == true)
+            if (game_end)
                 return ;
             int margin_w = goban.get_margin_width();
             int margin_h = goban.get_margin_height();
