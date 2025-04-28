@@ -30,10 +30,13 @@ public class NewTest
         System.out.printf("\n unmove %d %d\n", x, y);
 
         MinMax.map[x][y] = 0;
-        mscore.analyse_unmove(x, y, turn);
+        // System.out.println("before");
+        // MinMax.scsimul.display();
+        MinMax.scsimul.analyse_unmove(x, y, turn);
 
         m.display_map();
         //mscore.display_free();
+        //System.out.println("after");       
         MinMax.scsimul.display();
     }
 
@@ -169,8 +172,13 @@ public class NewTest
 
 
         move(9, 9, 1);
-        move(11, 11, 2);
-        move(10, 10, 1);
+        move(10, 8, 1);
+        move(11, 7, 2);
+        unmove(10, 8, 1);
+        // move(7, 7, 1);
+        // move(6, 6, 2);
+        // unmove(7, 7, 1);
+        // unmove(8, 8, 1);
         //move(11, 9, 1);
 
         // move(12, 10, 1);
