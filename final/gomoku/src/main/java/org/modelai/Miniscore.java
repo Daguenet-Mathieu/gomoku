@@ -965,15 +965,15 @@ public class Miniscore {
         if ((x + 1 != 19 && is_player(MinMax.map[x+1][y])) || (x - 1 != -1 && is_player(MinMax.map[x-1][y])))
         {
             dir = 0;
+            dx = 1; dy = 0;
             if (x + 1 != 19 && MinMax.map[x+1][y] == cur_turn)
             {
-                dx=1;dy=0;
                 unconnect(x, y);
             }
 
             else if (x - 1 != -1 && MinMax.map[x-1][y] == cur_turn)
             {
-                dx=-1;dy=0;
+                dx=-1;
                 unconnect(x, y);
             }
 
@@ -984,15 +984,15 @@ public class Miniscore {
         if ((y + 1 != 19 && is_player(MinMax.map[x][y+1])) || (y - 1 != -1 && is_player(MinMax.map[x][y-1])))
         {
             dir = 1;
+            dx = 0; dy = 1;
             if (y + 1 != 19 && MinMax.map[x][y+1] == cur_turn)
             {
-                dx=0; dy=1;
                 unconnect(x, y);
             }
 
             else if (y - 1 != -1 && MinMax.map[x][y-1] == cur_turn)
             {
-                dx=0;dy=-1;
+                dy=-1;
                 unconnect(x, y);
             }
 
@@ -1001,11 +1001,10 @@ public class Miniscore {
 
         if ((x + 1 != 19 && y + 1 != 19 && is_player(MinMax.map[x+1][y+1])) ||( x - 1 != -1 && y - 1 != -1 && is_player(MinMax.map[x-1][y-1])))
         {
-            //System.out.println("Diag pos unmove detected");
             dir = 2;
+            dx = 1; dy = 1;
             if (x + 1 != 19 && y + 1 != 19 && MinMax.map[x+1][y+1] == cur_turn)
             {
-                dx=1;dy=1;
                 unconnect(x, y);
             }
 
@@ -1022,10 +1021,9 @@ public class Miniscore {
         {
             //System.out.println("diagneg1 detected");
             dir = 3;
-
+            dx = 1; dy = -1;
             if (x + 1 != 19 && y - 1 != -1 && MinMax.map[x+1][y-1] == cur_turn)
             {
-                dx=1;dy=-1;
                 unconnect(x, y);  
             }
 

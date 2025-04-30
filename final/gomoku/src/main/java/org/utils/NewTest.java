@@ -170,12 +170,31 @@ public class NewTest
         // move(16, 4, 1);
         // move(15, 3, 2);
 
-
-        move(10, 9, 1);
-        move(11, 9, 1);
-        move(12, 9, 1);
+        move(8, 8, 2);
         move(9, 9, 2);
-        unmove(10, 9, 1);
+        move(7, 7, 1);
+        move(9, 8, 1);
+        move(9, 7, 1);
+        unmove(7, 7, 1);
+        return;
+        // weird
+        // move(6, 5, 1);
+        // move(8, 8, 2);
+        // move(9, 9, 2);
+        // move(7, 7, 1);
+        // move(9, 8, 1);
+        // move(9, 7, 1);
+        // move(7, 9, 2);
+
+        // unmove(7, 7, 1);
+        // move(9, 6, 1);
+        // weird
+
+        // move(10, 9, 1);
+        // move(11, 9, 1);
+        // move(12, 9, 1);
+        // move(9, 9, 2);
+        // unmove(10, 9, 1);
         // move(7, 7, 1);
         // move(6, 6, 2);
         // unmove(7, 7, 1);

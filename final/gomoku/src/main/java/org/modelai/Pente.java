@@ -253,12 +253,16 @@ public class Pente extends MinMax {
         if (depth == 0)
         {
             pos_counter++;
-            if (pos_counter  % 1000 == 7)
-            {
-                System.out.printf("Counter %d %d\n", pos_counter, nbmove);
-                display_map();
-                scsimul.display();
-            }
+            // if (pos_counter  % 1000 == 7)
+            // {
+            //     System.out.printf("Counter %d %d\n", pos_counter, nbmove);
+            //     display_map();
+            //     scsimul.display();
+            // }
+
+            // System.out.printf("Counter %d %d\n", pos_counter, nbmove);
+            // display_map();
+            // scsimul.display();
             res = eval(player, len, turn);
             debugstr();
             // if (res > 1000)
