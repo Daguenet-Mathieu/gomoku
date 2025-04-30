@@ -236,6 +236,18 @@ public class Pente extends MinMax {
         return;
     }
 
+    public int prisonpnt(int player)
+    {
+        if (player == 1)
+        {
+            return (prisoners[1] - prisoners[0]) * 2;
+        }
+        else
+        {
+            return (prisoners[0] - prisoners[1])  * 2;
+        }
+
+    }
 
     public float minmaxab(int depth, int turn, int player, float alpha, float beta)
     {   
@@ -263,7 +275,7 @@ public class Pente extends MinMax {
             // System.out.printf("Counter %d %d\n", pos_counter, nbmove);
             // display_map();
             // scsimul.display();
-            res = eval(player, len, turn);
+            res = eval(player, len, turn) + prisonpnt(player);
             debugstr();
             // if (res > 1000)
             // {

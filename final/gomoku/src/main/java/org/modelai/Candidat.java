@@ -109,6 +109,28 @@ public class Candidat
         return false;
     }
 
+    private int near_num(int i, int j)
+    {
+        int cmp = 0;
+        if (j+1 != 19 && isplay(MinMax.map[i][j + 1]))
+            cmp++;
+        if (j-1 != -1 && isplay(MinMax.map[i][j - 1]))
+            cmp++;
+        if (i+1 != 19 && isplay(MinMax.map[i + 1][j]))
+            cmp++;
+        if (i-1 != -1 && isplay(MinMax.map[i - 1][j]))
+            cmp++;
+        if (i+1 != 19 && j-1 != -1 && isplay(MinMax.map[i+1][j-1]))
+            cmp++;
+        if (i-1 != -1 && j-1 != -1 && isplay(MinMax.map[i-1][j-1]))
+            cmp++;
+        if (i+1 != 19 && j+1 != 19 && isplay(MinMax.map[i+1][j+1]))
+            cmp++;
+        if (i-1 != -1 && j+1 != 19 && isplay(MinMax.map[i-1][j+1]))
+            cmp++;
+        return cmp;
+    }
+
     private boolean near(int i, int j)
     {
         if (j+1 != 19 && isplay(MinMax.map[i][j + 1]))
@@ -168,12 +190,8 @@ public class Candidat
 
         if (val == 0 && tot_case1 == 0 && tot_case2 == 0) 
             return;
-        if (x == 10 && y == 8 && dp == Game.max_depth)
-            System.out.printf("checking double free x y turn %d %d %d\n", x, y, MinMax.scsimul.cur_turn);
         if (doubleFreethree.check_double_free(x, y, MinMax.scsimul.cur_turn, MinMax.map) == false)
         {
-            if (x == 10 && y == 8 && dp == Game.max_depth)
-                System.out.println("forbidden move\n");
             return;
         }
 
@@ -248,7 +266,7 @@ public class Candidat
             {
                 if (MinMax.map[i][j] == 0 && near(i, j, num) )
                 {
-                    this.lst.add(new Candidat.coord(i, j));
+                    this.lst.add(new Candidat.coord(i, j, num));
                     //return 1;
                 }
             }
@@ -256,10 +274,36 @@ public class Candidat
         return this.lst.size();
     }
 
+    public int all_probable_candidate(int turn)
+    {
+        int res;
+        for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+        //for (int i = 0 ; i < 19 ; i++)
+        {
+           for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+            //for (int j = 0 ; j < 19 ; j++)
+            {
+                res = near_num(i, j);
+                if (MinMax.map[i][j] == 0 && res !=0 && doubleFreethree.check_double_free(i, j, turn, MinMax.map))
+                {
+                    this.lst.add(new Candidat.coord(i, j, res));
+                    //return 1;
+                }
+            }
+        }
+        Collections.sort(this.lst, Comparator.comparing(item -> 
+        this.order.indexOf(item.st())));
+        if (this.lst.size() >= 7)
+        {
+            this.lst = new ArrayList<>(this.lst.subList(0, 6));
+        }
+        return this.lst.size();
+    }
+
     public int old_load(int depth)
     {
         int ret;
-        int max_near;
+        //int max_near;
         this.dp = depth;
         // System.out.println("==================");
         // display_map(map);
@@ -335,14 +379,16 @@ public class Candidat
             }
             else
                 {
-                    //System.out.println("NEAR candidate");
-                    max_near = 4;
-                    while(ret == 0)
-                    {
-                        ret = probable_candidate(max_near);
-                        max_near--;
-                    }
-                    // System.out.println("zeroooo for interesting");
+                //System.out.println("NEAR candidate");
+                ret = all_probable_candidate(MinMax.scsimul.cur_turn);
+
+                //     max_near = 4;
+                //     while(ret != 0)
+                //     {
+                //         ret = probable_candidate(max_near);
+                //         max_near--;
+                //     }
+                //     // System.out.println("zeroooo for interesting");
                 }
         }
 
@@ -404,7 +450,6 @@ public class Candidat
     {
         int ret;
 
-        
         if (depth == 0)
             return 0;
 
