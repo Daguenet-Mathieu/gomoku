@@ -6,6 +6,7 @@ public class NewTest
 {
     public Miniscore mscore;
     public MinMax m;
+    DoubleFree db;
     Scanner scanner = new Scanner(System.in);
     public int [][] dir = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};
 
@@ -13,6 +14,7 @@ public class NewTest
     {
         this.m = new Pente();
         this.mscore = new Miniscore();
+        this.db = new DoubleFree();
     }
 
     public void move(int x, int y, int turn)
@@ -170,13 +172,27 @@ public class NewTest
         // move(16, 4, 1);
         // move(15, 3, 2);
 
-        move(8, 8, 2);
-        move(9, 9, 2);
-        move(7, 7, 1);
-        move(9, 8, 1);
-        move(9, 7, 1);
-        unmove(7, 7, 1);
-        return;
+        move (9, 8, 1);
+        move(9, 7, 2);
+        move(9, 9, 1 );
+        move(9, 10, 1);
+        move(9, 11, 2);
+        move(10, 8, 1);
+        move(10, 10, 1);
+        move(11, 7, 1);
+        move(11, 10, 1);
+        move(11, 11, 1);
+        move(12, 6, 2);
+        move(12, 10, 2);
+        move(12, 12, 2);
+        move(8, 10, 1);
+        move(7, 10, 2);
+        move(7, 11, 2);
+        move (7, 7, 2);
+
+        db.check_valid(10, 9, 1, MinMax.map);
+        db.check_valid(11, 8, 1, MinMax.map);
+
         // weird
         // move(6, 5, 1);
         // move(8, 8, 2);

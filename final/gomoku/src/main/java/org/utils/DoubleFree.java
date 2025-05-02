@@ -101,13 +101,14 @@ public class DoubleFree
             }
             // if (x == 10 && y == 8)
             //     System.out.printf("nb val dir %d %d\n", i, nb_val);
-            if (nb_val == 2)
+            if (nb_val == 2) // >=2 break, weird !
             {
                 nb_free++;
                 // if (x == 10 && y == 8)
                 //     System.out.printf("direction %d free detected nb_free\n", i, nb_free);
 
             }
+            //System.out.printf("nb_free %d %d\n", nb_free, i);
 
             // if (nb_free == 2)
             //     System.out.printf("x == %d y == %d\n", x, y);

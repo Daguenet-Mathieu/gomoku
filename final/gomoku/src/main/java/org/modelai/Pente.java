@@ -239,14 +239,9 @@ public class Pente extends MinMax {
     public int prisonpnt(int player)
     {
         if (player == 1)
-        {
             return (prisoners[1] - prisoners[0]) * 2;
-        }
         else
-        {
             return (prisoners[0] - prisoners[1])  * 2;
-        }
-
     }
 
     public float minmaxab(int depth, int turn, int player, float alpha, float beta)

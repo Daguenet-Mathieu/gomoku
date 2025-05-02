@@ -268,6 +268,10 @@ public class Miniscore {
         {
             if (cur_turn == 1)
             {
+                // if (st == 2 && in_goban(x-dx, y-dy) && MinMax.map[x-dx][y-dy] == opponant)
+                // {
+                //     sc.one -=10;
+                // }
                 sc.one -= factor[str1[dir][x][y]];
                 if (in_goban(x+dx, y+dy) && MinMax.map[x+dx][y+dy] == cur_turn)
                     str1[dir][x][y] = Math.min(4, str1[dir][x][y] + st);
@@ -278,6 +282,10 @@ public class Miniscore {
             }
             else
             {
+                // if (st == 2 && in_goban(x-dx, y-dy) && MinMax.map[x-dx][y-dy] == opponant)
+                // {
+                //     sc.two -=10;
+                // }
                 sc.two -= factor[str2[dir][x][y]];
                 if (in_goban(x+dx, y+dy) && MinMax.map[x+dx][y+dy] == cur_turn)
                     str2[dir][x][y] = Math.min(4, str2[dir][x][y] + st);
@@ -365,20 +373,8 @@ public class Miniscore {
         return in_goban(x, y) && MinMax.map[x][y] == 0;
     }
 
-    public void new_alignment(int dec1, int dec2, int st)
+    public void new_alignment_free_info(int res, int st, int dec1, int dec2)
     {
-        int res = 0;
-        if (case_in_goban(x + (dec1 * dx), y + (dec1 * dy)))
-        {
-            rep_case(x + (dec1 * dx), y + (dec1 * dy), st);
-            res++;
-        }
-        if (case_in_goban(x + (dec2 * dx), y + (dec2 * dy)))
-        {
-            rep_case(x + (dec2 * dx), y + (dec2 * dy), st);
-            res++;
-        }
-
         if (res == 1 && st == 3)
         {
             //System.out.printf("deb x%d y%d minmax : ", x + (dec1 * dx), y + (dec1 * dy), MinMax.map[x + (dec1 * dx)][y + (dec1 * dy)]);
@@ -411,6 +407,22 @@ public class Miniscore {
             str[dir+4][x + (dec1 * dx)][y + (dec1 * dy)] = res;
         if (case_in_goban(x + (dec2 * dx), y + (dec2 * dy)))
             str[dir+4][x + (dec2 * dx)][y + (dec2 * dy)] = res;
+    }
+
+    public void new_alignment(int dec1, int dec2, int st)
+    {
+        //int res = 0;
+        if (case_in_goban(x + (dec1 * dx), y + (dec1 * dy)))
+        {
+            rep_case(x + (dec1 * dx), y + (dec1 * dy), st);
+            //res++;
+        }
+        if (case_in_goban(x + (dec2 * dx), y + (dec2 * dy)))
+        {
+            rep_case(x + (dec2 * dx), y + (dec2 * dy), st);
+            //res++;
+        }
+        //new_alignment_free_info(res, st, dec1, dec2);
     }
 
 
@@ -563,10 +575,40 @@ public class Miniscore {
         }
     }
 
+    public void fill_free_info(int i, int st, int player)
+    {
+        int sig = 0;
+        int [][][] cur_str;
+        int cur_op;
+        
+        if (player == 1)
+        {
+            cur_str = str1;
+            cur_op = 2;
+        }
+        else
+        {
+            cur_str = str2;
+            cur_op = 1;
+        }
+
+        if (in_goban(x + ddir[i][0], y + ddir[i][1]) && MinMax.map[x + ddir[i][0]][y + ddir[i][1]] == player)
+            sig = 1;
+        if (in_goban(x - ddir[i][0], y - ddir[i][1]) && MinMax.map[x - ddir[i][0]][y - ddir[i][1]] == player)
+            sig = -1;
+
+
+        if (cur_turn == cur_op && in_goban(x + (st + 1) * sig * ddir[i][0], y + (st + 1) * sig * ddir[i][1])
+            && cur_str[i+4][x + (st + 1) * sig * ddir[i][0]][y + (st + 1) * sig * ddir[i][1]] == player) //check pos
+        {
+            cur_str[i+4][x + (st + 1) * sig * ddir[i][0]][y + (st + 1) * sig * ddir[i][1]] = 1;
+        }
+        cur_str[i+4][x][y]=0;
+    }
+
     public void fill2(int x, int y)
     {
         int st;
-        int sig = 0;
         for (int i = 0 ; i < 4 ; i++)
         {
             if (str1[i][x][y] != 0)
@@ -575,21 +617,10 @@ public class Miniscore {
                 st = str1[i][x][y];
                 sc.one -= (factor[st]);
 
-                if (in_goban(x + ddir[i][0], y + ddir[i][1]) && MinMax.map[x + ddir[i][0]][y + ddir[i][1]] == 1)
-                    sig = 1;
-                if (in_goban(x - ddir[i][0], y - ddir[i][1]) && MinMax.map[x - ddir[i][0]][y - ddir[i][1]] == 1)
-                    sig = -1;
-
-                //System.out.printf("testing %d %d : %d\n", x + (st + 1) * sig * ddir[i][0], y + (st + 1) * sig * ddir[i][1], str1[i+4][x + (st + 1) * sig * ddir[i][0]][y + (st + 1) * sig * ddir[i][1]]);
-
-                if (cur_turn == 2 && in_goban(x + (st + 1) * sig * ddir[i][0], y + (st + 1) * sig * ddir[i][1])
-                && str1[i+4][x + (st + 1) * sig * ddir[i][0]][y + (st + 1) * sig * ddir[i][1]] == 2) //check pos
-                {
-                    str1[i+4][x + (st + 1) * sig * ddir[i][0]][y + (st + 1) * sig * ddir[i][1]] = 1;
-                }
-                
+            
                 str1[i][x][y]=0;
-                str1[i+4][x][y]=0;
+                //fill_free_info(i, st, 1);
+
             }
 
             if (str2[i][x][y] != 0)
@@ -597,19 +628,8 @@ public class Miniscore {
                 st = str2[i][x][y];
                 sc.two -= (factor[st]);
 
-                if (in_goban(x + ddir[i][0], y + ddir[i][1]) && MinMax.map[x + ddir[i][0]][y + ddir[i][1]] == 2)
-                    sig = 1;
-                if (in_goban(x - ddir[i][0], y - ddir[i][1]) && MinMax.map[x - ddir[i][0]][y - ddir[i][1]] == 2)
-                    sig = -1;
-
-                if (cur_turn == 1 && in_goban(x + (st + 1) * sig * ddir[i][0], y + (st + 1) * sig * ddir[i][1]) && 
-                    str2[i+4][x + (st + 1) * sig * ddir[i][0]][y + (st + 1) * sig * ddir[i][1]] == 2)
-                {
-                    str2[i+4][x + (st + 1) * sig * ddir[i][0]][y + (st + 1) * sig * ddir[i][1]] = 1;
-                }
-        
+                //fill_free_info(i, st, 2);
                 str2[i][x][y]=0;
-                str2[i+4][x][y]=0;
             }
         }
     }
@@ -644,7 +664,6 @@ public class Miniscore {
                 if (in_goban(x-(decn+1)*dx, y-(decn+1)*dy) && this.str[dir][x-(decn+1)*dx][y-(decn+1)*dy] != 0)
                 {
                     dec_free(4, cur_turn);
-
                 }
                 else
                 {
@@ -661,7 +680,6 @@ public class Miniscore {
             }
         }
     }
-
 
     public void unconnect(int x, int y)
     {
@@ -704,8 +722,6 @@ public class Miniscore {
         if (decn >= 2)
             add_case(x - (decn+1) * dx, y - (decn+1) * dy, decn); // could be 6
 
-
-        
         if (decp < 2)
             decp =0;
         if (decn <2)
