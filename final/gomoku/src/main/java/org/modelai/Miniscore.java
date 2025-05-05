@@ -18,6 +18,7 @@ public class Miniscore {
     int [] free4;
     int [] simp4;
     int [] free3;
+    int [] capt;
 
     boolean victory;
 
@@ -35,6 +36,7 @@ public class Miniscore {
         this.free4 = new int[2];
         this.simp4 = new int[2];
         this.free3 = new int[2];
+        this.capt = new int[2];
         free4[0] = 0; free4[1] = 0;
         free3[0] = 0; free3[1] = 0;
         simp4[0] = 0; simp4[1] = 0;
@@ -411,7 +413,18 @@ public class Miniscore {
 
     public void new_alignment(int dec1, int dec2, int st)
     {
-        //int res = 0;
+        if (st == 2)
+        {
+           //System.out.printf("dec1 %d , dec2, %d dx %d dy %d\n", dec1, dec2, dx, dy);
+            mod_capt(dec1, dec2, 1);
+        }
+
+        // if (st == 3)
+        // {
+        //     mod_capt(dec1, dec2, -1);
+        // }
+
+
         if (case_in_goban(x + (dec1 * dx), y + (dec1 * dy)))
         {
             rep_case(x + (dec1 * dx), y + (dec1 * dy), st);
@@ -441,7 +454,8 @@ public class Miniscore {
             else
             {
                 // rep_case(x - dx, y - dy, 2);
-                // rep_case(x + 2 * dx, y + 2 * dy, 2);
+                // rep_case(x + 2 * dx, y + 2 * dy, 2)
+
                 new_alignment(-1, 2, 2);
             }
         }
@@ -451,6 +465,7 @@ public class Miniscore {
             //System.out.println("I am 2 !");
             if (in_goban(x-dx, y-dy) && MinMax.map[x-dx][y-dy] == cur_turn)
             {
+
                 if (in_goban(x-3*dx, y-3*dy) && str[dir][x - 3*dx][y - 3*dy] == 2)
                 {
                     // rep_case(x - 3 * dx, y - 3 * dy, 4);
@@ -609,15 +624,40 @@ public class Miniscore {
     public void fill2(int x, int y)
     {
         int st;
+        int sig;
+
         for (int i = 0 ; i < 4 ; i++)
         {
             if (str1[i][x][y] != 0)
             {
                 //System.out.printf("filling %d %d\n", x, y);
                 st = str1[i][x][y];
-                sc.one -= (factor[st]);
 
-            
+                if (st == 2)
+                {
+                    if (MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 1)
+                        sig = 1;
+                    else
+                        sig = -1;
+        
+                    if (cur_turn == 1)
+                    {
+                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 2)
+                        {
+                            capt[1]--;
+                        }
+                    }
+                    else
+                    {
+                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 0)
+                        {
+                            capt[1]++;
+                        }
+                    }
+                }
+
+
+                sc.one -= (factor[st]);            
                 str1[i][x][y]=0;
                 //fill_free_info(i, st, 1);
 
@@ -626,6 +666,30 @@ public class Miniscore {
             if (str2[i][x][y] != 0)
             {
                 st = str2[i][x][y];
+
+                if (st == 2)
+                {
+                    if (MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 2)
+                        sig = 1;
+                    else
+                        sig = -1;
+        
+                    if (cur_turn == 2)
+                    {
+                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 1)
+                        {
+                            capt[0]--;
+                        }
+                    }
+                    else
+                    {
+                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 0)
+                        {
+                            capt[0]++;
+                        }
+                    }
+                }
+
                 sc.two -= (factor[st]);
 
                 //fill_free_info(i, st, 2);
@@ -681,6 +745,18 @@ public class Miniscore {
         }
     }
 
+    public void mod_capt(int dec1, int dec2, int val)
+    {
+        if (!in_goban(x+dec1*dx, y+dec1*dy) || !in_goban(x+dec2*dx, y+dec2*dy))
+            return;
+
+        if (MinMax.map[x+dec1*dx][y+dec1*dy] == opponant && MinMax.map[x+dec2*dx][y+dec2*dy] == 0)
+            capt[opponant - 1]+=val;
+        else if (MinMax.map[x+dec1*dx][y+dec1*dy] == 0 && MinMax.map[x+dec2*dx][y+dec2*dy] == opponant)
+            capt[opponant - 1 ]+=val;
+        
+    }
+
     public void unconnect(int x, int y)
     {
 
@@ -699,20 +775,29 @@ public class Miniscore {
             decp++;
         for (int i = 1; in_goban(x-i*dx, y-i*dy) && MinMax.map[x- i *dx][y - i *dy] == cur_turn ; i++)
             decn++;
-        //System.out.printf("unconnect %d %d %d %d %d %d\n", x, y, dx, dy, decp, decn);
-        // if (str2[dir][x+ (decp + 1 ) * dx][y + (decp + 1) * dy] == 0)
-        // {
-        //     System.out.printf("Info %d %d %d", x, y, dir);
-        //     MinMax.display_Map();
-        //     display();
-        // }
-        // if (decn == 0)
-        //     update_free_unconnect(decp + 1, x, y);
-        // if (decp == 0)
-        //     update_free_unconnect(decn + 1, x, y);
-        //System.out.printf("decp, decn %d %d", decp, decn);
 
-        //newupdate_free_unconnect(decp, decn, x, y); compute frees
+
+        if (decp + decn + 1 == 3)
+        {
+            if (decp != 0 && in_goban(x+3*dx, y+3*dy) && MinMax.map[x+3*dx][y+3*dy] == opponant)
+                capt[opponant-1]++;
+            else if (decn != 0 && in_goban(x-3*dx, y-3*dy) && MinMax.map[x-3*dx][y-3*dy] == opponant)
+                capt[opponant-1]++;
+        }
+
+        if (decp + decn + 1 == 2)
+        {
+            //System.out.printf("YES %d %d\n", decp, decn);
+            if (decp !=0)
+                mod_capt( -1, 2, -1);
+            else if (decn != 0)
+                mod_capt(-2, 1, -1);
+            // if (decp != 0 && in_goban(x+2*dx, y+2*dy) && MinMax.map[x+2*dx][y+2*dy] == opponant)
+            //     capt[opponant-1]--;
+            // else if (decn != 0 && in_goban(x-2*dx, y-2*dy) && MinMax.map[x-2*dx][y-2*dy] == opponant)
+            //     capt[opponant-1]--;
+        }
+
         
         remp_case(x + (decp +1 ) * dx, y + (decp + 1) * dy, decp + 1); // could be 6
         rem_case(x - (decn + 1) * dx, y - (decn + 1) * dy);
@@ -790,6 +875,22 @@ public class Miniscore {
         //update_free_unfill(x, y, nbp, nbn); compute frees
 
         //System.out.printf("nbp, nbn,val %d %d %d\n", nbp, nbn, val);
+
+        if (nbn == 2 && in_goban(x-3*dx, y-3*dy))
+        {
+            if (MinMax.map[x-3*dx][y-3*dy] == 0)
+                capt[cur_turn - 1]--;
+            if (MinMax.map[x-3*dx][y-3*dy] == cur_turn)
+                capt[cur_turn - 1]++;
+        }
+
+        if (nbp == 2 && in_goban(x+3*dx, y+3*dy))
+        {
+            if (MinMax.map[x+3*dx][y+3*dy] == 0)
+                capt[cur_turn - 1]--;
+            if (MinMax.map[x+3*dx][y+3*dy] == cur_turn)
+                capt[cur_turn - 1]++;
+        }
 
         if (nbn < 2)
             nbn = 0;
@@ -1143,7 +1244,7 @@ public class Miniscore {
 
     public void display_miniscore()
     {
-        System.out.printf("score %d %d diff %d\n", sc.one, sc.two, sc.one-sc.two);
+        System.out.printf("score %d %d diff %d (%d %d)\n", sc.one, sc.two, sc.one-sc.two, capt[0], capt[1]);
     }
 
     public boolean check_str()

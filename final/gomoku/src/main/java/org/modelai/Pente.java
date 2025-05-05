@@ -101,7 +101,8 @@ public class Pente extends MinMax {
         final int op = turn == 1 ? 2 : 1;
 
         for (int i = 0 ; i < 4 ; i++)
-            remove_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
+            if (remove_capture(x, y, ddir[i][0], ddir[i][1], turn, op))
+                MinMax.scsimul.capt[turn - 1]--;
     }
 
 
@@ -120,7 +121,15 @@ public class Pente extends MinMax {
         this.candidat.save(c);
         scsimul.analyse_move(c.x, c.y, player);
 
+        // if (pos_counter <=13)
+        // {
+        //     MinMax.display_Map();
+        //     scsimul.display();
+        // }
+
         return false;
+
+
     }
 
     public void play_prisoners(int val, int warx, int wary)
@@ -156,6 +165,12 @@ public class Pente extends MinMax {
         map[c.x][c.y] = 0;
         scsimul.analyse_unmove(c.x, c.y, val);
         play_prisoners(val, c.x, c.y);
+
+        // if (pos_counter <=13)
+        // {
+        //     MinMax.display_Map();
+        //     scsimul.display();
+        // }
     }
 
     public Pente (int len)
@@ -260,12 +275,13 @@ public class Pente extends MinMax {
         if (depth == 0)
         {
             pos_counter++;
-            // if (pos_counter  % 1000 == 7)
-            // {
-            //     System.out.printf("Counter %d %d\n", pos_counter, nbmove);
-            //     display_map();
-            //     scsimul.display();
-            // }
+            //if (pos_counter  % 10 == 7 && (scsimul.capt[0] !=0 || scsimul.capt[1] != 0))
+            if (false) //<=12
+            {
+                System.out.printf("Counter %d %d\n", pos_counter, nbmove);
+                display_map();
+                scsimul.display();
+            }
 
             // System.out.printf("Counter %d %d\n", pos_counter, nbmove);
             // display_map();
