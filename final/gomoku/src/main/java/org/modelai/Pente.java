@@ -280,12 +280,12 @@ public class Pente extends MinMax {
         {
             pos_counter++;
             //if (pos_counter  % 10 == 7 && (scsimul.capt[0] !=0 || scsimul.capt[1] != 0))
-            if (true || ( pos_counter >=1822 && pos_counter <= 1823)) //<=12
-            {
-                System.out.printf("Counter %d %d\n", pos_counter, nbmove);
-                display_map();
-                scsimul.display();
-            }
+            // if (true || ( pos_counter >=1822 && pos_counter <= 1823)) //<=12
+            // {
+            //     System.out.printf("Counter %d %d\n", pos_counter, nbmove);
+            //     display_map();
+            //     scsimul.display();
+            // }
 
             // System.out.printf("Counter %d %d\n", pos_counter, nbmove);
             // display_map();
