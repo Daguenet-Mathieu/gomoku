@@ -13,6 +13,7 @@ import java.util.ArrayList;
 // import javafx.scene.control.Label;
 // import javafx.scene.text.Text;
 // import javafx.scene.Node;
+import javafx.beans.property.StringProperty;
 
 
 // import java.util.List;
@@ -192,6 +193,41 @@ public class Home {
             home_page.getPenteButton().setStyle(deselectedColor);
             home_page.getRenjuButton().setStyle(deselectedColor);
             home_page.getGoButton().setStyle(deselectedColor);
+        });
+
+        home_page.getStringRule().addListener((observable, oldValue, newValue) -> {
+            String[] rules_type = new String[] {"gomoku", "pente", "renju", "go"};
+            Button[] rules_button = new Button[] {
+                home_page.getGomokuButton(),
+                home_page.getPenteButton(),
+                home_page.getRenjuButton(),
+                home_page.getGoButton()
+            };
+            int i = 0;
+            boolean matched = false;
+            while (i < rules_type.length){
+                if (rules_type[i].equals(newValue)){
+                    rules_button[i].setStyle(selectedColor);
+                    matched = true;
+                }
+                else
+                    rules_button[i].setStyle(deselectedColor);
+                i++;
+            }
+            if (matched == false){
+                System.out.println("default rules reset sur string event");
+                rule = "Gomoku";
+                return ;
+            }
+            System.out.println("new rules set sur string event");
+            // System.out.println("gomoku");
+            if ("go".equals(rules_type[i])){
+                changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), true);
+            }
+            else{
+                changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+            }
+            rule = rules_type[i];
         });
 
         home_page.getPenteButton().setOnAction(e -> {

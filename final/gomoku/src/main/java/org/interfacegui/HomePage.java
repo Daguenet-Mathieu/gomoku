@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 
 
@@ -50,6 +51,9 @@ public class HomePage{
     private Button learnOrView = new Button("Learn");
     private HBox LaunchButtons = new HBox();
     private ArrayList<Map> sgfMap;
+    private boolean sgfFile = false;
+    private Label error_file = new Label();
+    private StringProperty rule_type = new SimpleStringProperty("");
 
 
     HomePage(){
@@ -120,10 +124,12 @@ public class HomePage{
         handicap_field.setVisible(false);
         komi_field.setManaged(false);
         handicap_field.setManaged(false);
+        error_file.setVisible(false);
+        error_file.setManaged(false);
 
         page = new VBox(10);
         ((VBox) page).getChildren().addAll(
-            fileBox, load_sgf, game_button, black_player, white_player, komi_field, handicap_field, LaunchButtons);
+            error_file, fileBox, load_sgf, game_button, black_player, white_player, komi_field, handicap_field, LaunchButtons);
         pageContainer.getChildren().add(page);
         reset.setOnMouseClicked(e -> {
             deleteFile();
@@ -209,13 +215,26 @@ public class HomePage{
 
     public void removeFileBox(String name){
         ObservableList<Node> children = pageContainer.getChildren();
+
         children.remove(children.size() - 1);
+        if (SGF.parseFile() == false){
+            error_file.setText(name + " is not a valid sgf file");
+            error_file.setManaged(true);
+            error_file.setVisible(true);
+            return ;
+        }
+        else{
+            error_file.setManaged(false);
+            error_file.setVisible(false);
+        }
         load_sgf.setManaged(false);
         load_sgf.setVisible(false);
         fileName.setText(name);
         fileBox.setManaged(true);
         fileBox.setVisible(true);
         learnOrView.setText("view SGF");
+        sgfFile = true;
+        rule_type.set(SGF.get_game_rule());
     }
 
     private void deleteFile(){
@@ -225,6 +244,15 @@ public class HomePage{
         fileBox.setManaged(false);
         fileBox.setVisible(false);
         learnOrView.setText("learn");
+        sgfFile = false;
+        rule_type.set("");
+    }
 
+    public StringProperty getStringRule(){
+        return rule_type;
+    }
+
+    public boolean is_sgf(){
+        return sgfFile;
     }
 }
