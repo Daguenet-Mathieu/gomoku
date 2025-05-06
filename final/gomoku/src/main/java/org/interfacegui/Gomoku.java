@@ -38,6 +38,7 @@ import java.util.concurrent.Future;
 
 public class Gomoku
 {
+    // private SGF sgf = new SGF();
     private Pane game_display;
     //plateau de jeu
     //regles de jeu

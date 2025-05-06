@@ -26,6 +26,7 @@ public class FileBox{
     private Button dir_validation;
     private HomePage homePage;
     private String absolutePath;
+    private SGF sgf = new SGF();
 
     FileBox(HomePage h){
         homePage = h;
@@ -88,6 +89,7 @@ public class FileBox{
                 String value = ((Label) file.getChildren().get(0)).getText();
                 System.out.println("value == " + (absolutePath + value));
                 if (("..".equals(value) || new File(absolutePath + File.separator + value).isDirectory()) == false){
+                    SGF.setFile(((Label) file.getChildren().get(0)).getText());
                     homePage.removeFileBox(value);
                     return ;
                 }
@@ -148,7 +150,7 @@ public class FileBox{
             scrollPane.setFitToWidth(true);  // Ajuste la largeur du contenu à la taille du parent
     // scrollPane.setMaxWidth(Double.MAX_VALUE);  // Pas de largeur fixe
             scrollPane.setFitToWidth(false);
-            File sgf_dir = SGF.openSGFDir();//proteger le null //juste charger fenetre vide!?
+            File sgf_dir = sgf.openSGFDir();//proteger le null //juste charger fenetre vide!?
             absolutePath = sgf_dir.getAbsolutePath();
             add_directory_details(sgf_dir);
             // // box.setOnMouseClicked(event -> {
