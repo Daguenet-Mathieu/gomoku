@@ -6,6 +6,7 @@ public class NewTest
 {
     public Miniscore mscore;
     public MinMax m;
+    DoubleFree db;
     Scanner scanner = new Scanner(System.in);
     public int [][] dir = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};
 
@@ -13,6 +14,7 @@ public class NewTest
     {
         this.m = new Pente();
         this.mscore = new Miniscore();
+        this.db = new DoubleFree();
     }
 
     public void move(int x, int y, int turn)
@@ -28,11 +30,7 @@ public class NewTest
     public void unmove(int x, int y, int turn)
     {
         System.out.printf("\n unmove %d %d\n", x, y);
-
-        MinMax.map[x][y] = 0;
-        // System.out.println("before");
-        // MinMax.scsimul.display();
-        MinMax.scsimul.analyse_unmove(x, y, turn);
+        m.unplay(new Candidat.coord(x, y), turn);
 
         m.display_map();
         //mscore.display_free();
@@ -169,12 +167,62 @@ public class NewTest
         // move (17, 5, 2);
         // move(16, 4, 1);
         // move(15, 3, 2);
+        
+        move(8, 8, 2);
+        move (9, 7, 2);
+        move (10, 7, 1);
+        move(10, 6, 1);
+        unmove(10, 6, 1);
+        // move (8, 8, 1);
+        // move(8, 9, 1);
+        // move(8, 10, 2);
+        // unmove(8, 10, 2);
 
 
-        move(9, 9, 1);
-        move(10, 8, 1);
-        move(11, 7, 2);
-        unmove(10, 8, 1);
+
+        //move(8,11, 2);
+
+        // Validation
+
+        // move (9, 8, 1);
+        // move(9, 7, 2);
+        // move(9, 9, 1 );
+        // move(9, 10, 1);
+        // move(9, 11, 2);
+        // move(10, 8, 1);
+        // move(10, 10, 1);
+        // move(11, 7, 1);
+        // move(11, 10, 1);
+        // move(11, 11, 1);
+        // move(12, 6, 2);
+        // move(12, 10, 2);
+        // move(12, 12, 2);
+        // move(8, 10, 1);
+        // move(7, 10, 2);
+        // move(7, 11, 2);
+        // move (7, 7, 2);
+
+        // db.check_valid(10, 9, 1, MinMax.map);
+        // db.check_valid(11, 8, 1, MinMax.map);
+
+        // weird
+        // move(6, 5, 1);
+        // move(8, 8, 2);
+        // move(9, 9, 2);
+        // move(7, 7, 1);
+        // move(9, 8, 1);
+        // move(9, 7, 1);
+        // move(7, 9, 2);
+
+        // unmove(7, 7, 1);
+        // move(9, 6, 1);
+        // weird
+
+        // move(10, 9, 1);
+        // move(11, 9, 1);
+        // move(12, 9, 1);
+        // move(9, 9, 2);
+        // unmove(10, 9, 1);
         // move(7, 7, 1);
         // move(6, 6, 2);
         // unmove(7, 7, 1);
@@ -256,8 +304,7 @@ public class NewTest
         // m.display_map();
         // check_valid(9, 8, 1);
 
-
-
+        
 
 
         //move(8, 10, 1);
@@ -270,8 +317,6 @@ public class NewTest
         // unmove(9, 8, 2);
         // move(9, 8, 2);
         
-
-
         // move(8, 5, 1);
 
         // move(10, 6, 1);

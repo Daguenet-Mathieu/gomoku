@@ -665,6 +665,13 @@ public class MinMax
     protected float value_victory_smarter(int player, int turn, int len)
     {
         pos_counter++;
+
+        // if (pos_counter % 1000 == 7)
+        // {        
+        //     System.out.printf("Counter %d %d\n", pos_counter, nbmove);
+        //     display_map();
+        //     scsimul.display();
+        // }
         if (player == turn)
             return 10000 - (len * 100);
         else
