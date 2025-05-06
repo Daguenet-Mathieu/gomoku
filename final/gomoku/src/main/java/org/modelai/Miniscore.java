@@ -644,6 +644,7 @@ public class Miniscore {
                     {
                         if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 2)
                         {
+                            //System.out.println("DIM1");
                             capt[1]--;
                         }
                     }
@@ -678,6 +679,7 @@ public class Miniscore {
                     {
                         if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 1)
                         {
+                            //System.out.println("DIM2");
                             capt[0]--;
                         }
                     }
@@ -749,11 +751,21 @@ public class Miniscore {
     {
         if (!in_goban(x+dec1*dx, y+dec1*dy) || !in_goban(x+dec2*dx, y+dec2*dy))
             return;
+        // System.out.printf("op %d\n", opponant);
+        // System.out.printf("idx1 %d %d\n", x + dec1 * dx, y + dec1*dy);
+        // System.out.printf("idx2 %d %d\n", x + dec2 * dx, y + dec2*dy);
+        // System.out.printf("dec %d %d\n", MinMax.map[x+dec1*dx][y+dec1*dy], MinMax.map[x+dec2*dx][y+dec2*dy]);
 
         if (MinMax.map[x+dec1*dx][y+dec1*dy] == opponant && MinMax.map[x+dec2*dx][y+dec2*dy] == 0)
+        {
+            //System.out.printf("DIMmod1 %d\n", val);
             capt[opponant - 1]+=val;
+        }
         else if (MinMax.map[x+dec1*dx][y+dec1*dy] == 0 && MinMax.map[x+dec2*dx][y+dec2*dy] == opponant)
-            capt[opponant - 1 ]+=val;
+        {
+            //System.out.printf("DIMmod2 %d\n", val);
+            capt[opponant - 1]+=val;
+        }
         
     }
 
@@ -785,17 +797,31 @@ public class Miniscore {
                 capt[opponant-1]++;
         }
 
-        if (decp + decn + 1 == 2)
+        else if (decp + decn + 1 == 2)
         {
             //System.out.printf("YES %d %d\n", decp, decn);
             if (decp !=0)
+            {
+                //System.out.printf("minus p 1 %d %d\n", dx, dy);
                 mod_capt( -1, 2, -1);
+            }
             else if (decn != 0)
+            {
+                //System.out.printf("minus n 1 %d %d\n", dx, dy);
                 mod_capt(-2, 1, -1);
+            }
             // if (decp != 0 && in_goban(x+2*dx, y+2*dy) && MinMax.map[x+2*dx][y+2*dy] == opponant)
             //     capt[opponant-1]--;
             // else if (decn != 0 && in_goban(x-2*dx, y-2*dy) && MinMax.map[x-2*dx][y-2*dy] == opponant)
             //     capt[opponant-1]--;
+        }
+
+        else if (decp + decn + 1 == 4)
+        {
+            if (decp == 2 && in_goban(x+3*dx, y+3*dy) && MinMax.map[x+3*dx][y+3*dy] == opponant)
+                capt[opponant-1]++; 
+            else if (decn == 2 && in_goban(x-3*dx, y-3*dy) && MinMax.map[x-3*dx][y-3*dy] == opponant)
+                capt[opponant-1]++;
         }
 
         
@@ -809,7 +835,7 @@ public class Miniscore {
 
         if (decp < 2)
             decp =0;
-        if (decn <2)
+        if (decn < 2)
             decn=0;
 
         add_case(x, y, Math.min(decp+decn, 4));
@@ -879,15 +905,23 @@ public class Miniscore {
         if (nbn == 2 && in_goban(x-3*dx, y-3*dy))
         {
             if (MinMax.map[x-3*dx][y-3*dy] == 0)
+            {
+                //System.out.println("DIM4");
                 capt[cur_turn - 1]--;
+            }
             if (MinMax.map[x-3*dx][y-3*dy] == cur_turn)
+            {
                 capt[cur_turn - 1]++;
+            }
         }
 
         if (nbp == 2 && in_goban(x+3*dx, y+3*dy))
         {
             if (MinMax.map[x+3*dx][y+3*dy] == 0)
+            {
+                //System.out.println("DIM5");
                 capt[cur_turn - 1]--;
+            }
             if (MinMax.map[x+3*dx][y+3*dy] == cur_turn)
                 capt[cur_turn - 1]++;
         }
@@ -1072,6 +1106,8 @@ public class Miniscore {
         this.cur_turn = turn;
         this.str = turn == 1 ? this.str1 : this.str2;
         this.opponant = turn == 1 ? 2 : 1;
+        this.x=x;
+        this.y=y;
 
         if (victory)
         {

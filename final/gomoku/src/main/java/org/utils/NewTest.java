@@ -167,12 +167,21 @@ public class NewTest
         // move (17, 5, 2);
         // move(16, 4, 1);
         // move(15, 3, 2);
+
+        move(7, 7, 2);
+        move(8, 8, 1);
+        move(9, 9, 1);
+        move(10, 8, 2);
+        move(9, 11, 1);
+        move(10, 11, 2);
+        move(11, 11, 2);
+        move(10, 10, 2);
         
-        move(8, 8, 2);
-        move (9, 7, 2);
-        move (10, 7, 1);
-        move(10, 6, 1);
-        unmove(10, 6, 1);
+        // move(8, 8, 2);
+        // move (9, 7, 2);
+        // move (10, 7, 1);
+        // move(10, 6, 1);
+        // unmove(10, 6, 1);
         // move (8, 8, 1);
         // move(8, 9, 1);
         // move(8, 10, 2);
