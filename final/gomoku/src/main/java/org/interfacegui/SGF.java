@@ -23,10 +23,10 @@ public class SGF{
         "MA", "N", "PM", "SL", "SQ", "TR", "UC", "V", "VW", "ST",
         "AN", "BR", "BT", "CP", "DT", "EV", "GC", "GN", "ON", "OT",
         "PB", "PW", "RE", "RO", "SO", "TM", "US", "WR", "WT", "TB",
-        "TW", "AS", "IP", "IY", "SE", "SU", "RU"
+        "TW", "AS", "IP", "IY", "SE", "SU", "FF"
     };
 
-    private static final String[] supported = new String[] {"KM", "HA", "AP", "CA", "FF", "GM", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL"};
+    private static final String[] supported = new String[] {"KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL"};
 // "KM"//komi
 // "HA"//handicap??
 // *AP  Application     root	      composed simpletext ':' number // je garde
@@ -94,7 +94,7 @@ public class SGF{
     public static void createSgf(ArrayList<Map> map, String rule){
         //creer le filename
             final int rule_type = "go".equals(rule) ? 1 : 4;
-            String fileContent = "(;FF[4] " + "GM[" + rule_type + "4] SZ[19] CA[UTF-8] AP[CGoban:3]\n";
+            String fileContent = "(;FF[4] " + "GM[" + rule_type + "4]" + " RU[" + rule + "] SZ[19] CA[UTF-8] AP[CGoban:3]\n";
             LocalDate localDate = LocalDate.now();
             LocalTime localTime = LocalTime.now();
             String fileName = localDate.toString() + "_" + localTime.toString();
@@ -134,6 +134,13 @@ public class SGF{
     }
 
     public static boolean getHeaderInfos(){
+        Integer board_size;
+        int gm;
+        String ru;
+        // String ?;
+        //ha km
+        //skip white space Charachter.whitespace ? stringbuilder at i?
+        //check ( ; puis get les infos header si pas info skip jusqua [ puis tout les [] sans char entre
         return true;
     }
 
