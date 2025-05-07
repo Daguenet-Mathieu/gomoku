@@ -128,7 +128,7 @@ public class Miniscore {
         return false;
     }
 
-    private void remp_case(int x, int y, int val)
+    private void remp_case(int x, int y, int val, int sig)
     {
         //System.out.printf("removing case at %d %d val %d\n", x, y, val);
         if (x >=0 && x < 19 && y >=0 && y <19)
@@ -136,8 +136,9 @@ public class Miniscore {
             if (cur_turn == 1)
             {                
                 sc.one -= factor[str1[dir][x][y]];
-                if (in_goban(x+dx, y+dy) && MinMax.map[x+dx][y+dy] == cur_turn && MinMax.map[x][y] == 0)
+                if (in_goban(x+sig*dx, y+sig*dy) && MinMax.map[x+sig*dx][y+sig*dy] == cur_turn && MinMax.map[x][y] == 0)
                 {
+                    //System.out.println("here");
                     str1[dir][x][y] -= val;
                     if (str1[dir][x][y] <0)
                     {
@@ -156,7 +157,7 @@ public class Miniscore {
             {
                 //System.out.println("HEEEERE2");
                 sc.two -= factor[str2[dir][x][y]];
-                if (in_goban(x+dx, y+dy) && MinMax.map[x+dx][y+dy] == cur_turn && MinMax.map[x][y] == 0)
+                if (in_goban(x+sig*dx, y+sig*dy) && MinMax.map[x+sig*dx][y+sig*dy] == cur_turn && MinMax.map[x][y] == 0)
                 {
                     str2[dir][x][y] -= val;
                     if (str2[dir][x][y] <0)
@@ -175,7 +176,7 @@ public class Miniscore {
 
     }
 
-    private void rem_case(int x, int y)
+    public void rem_case(int x, int y)
     {
         //System.out.printf("removing case at %d %d\n", x, y);
         if (x >=0 && x < 19 && y >=0 && y <19)
@@ -183,6 +184,10 @@ public class Miniscore {
             if (cur_turn == 1)
             {
                 sc.one -= factor[str1[dir][x][y]];
+                // if (MinMax.nbmove == 2 && MinMax.pos_counter == 918)
+                //     {
+                //         System.out.printf("DONE %d %d to 0", x, y);
+                //     }
                 str1[dir][x][y] = 0;
             }
             else
@@ -630,12 +635,12 @@ public class Miniscore {
         {
             if (str1[i][x][y] != 0)
             {
-                //System.out.printf("filling %d %d\n", x, y);
+                //System.out.printf("filling %d %d %d\n", x, y, str1[i][x][y]);
                 st = str1[i][x][y];
 
                 if (st == 2)
                 {
-                    if (MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 1)
+                    if (MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 1 && MinMax.map[x+2*ddir[i][0]][y + 2*ddir[i][1]] == 1)
                         sig = 1;
                     else
                         sig = -1;
@@ -670,7 +675,7 @@ public class Miniscore {
 
                 if (st == 2)
                 {
-                    if (MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 2)
+                    if (MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 2 && MinMax.map[x+2*ddir[i][0]][y +2*ddir[i][1]] == 2)
                         sig = 1;
                     else
                         sig = -1;
@@ -791,9 +796,10 @@ public class Miniscore {
 
         if (decp + decn + 1 == 3)
         {
-            if (decp != 0 && in_goban(x+3*dx, y+3*dy) && MinMax.map[x+3*dx][y+3*dy] == opponant)
+            //System.out.printf("INDEED %d %d\n", decp, decn);
+            if (decp == 2 && in_goban(x+3*dx, y+3*dy) && MinMax.map[x+3*dx][y+3*dy] == opponant)
                 capt[opponant-1]++;
-            else if (decn != 0 && in_goban(x-3*dx, y-3*dy) && MinMax.map[x-3*dx][y-3*dy] == opponant)
+            else if (decn == 2 && in_goban(x-3*dx, y-3*dy) && MinMax.map[x-3*dx][y-3*dy] == opponant)
                 capt[opponant-1]++;
         }
 
@@ -825,7 +831,9 @@ public class Miniscore {
         }
 
         
-        remp_case(x + (decp +1 ) * dx, y + (decp + 1) * dy, decp + 1); // could be 6
+        remp_case(x + (decp +1 ) * dx, y + (decp + 1) * dy, decp + 1, 1); // could be 6
+        //remp_case(x + (decp +1 ) * dx, y + (decp + 1) * dy, decp + 1, 1); // could be 6
+        //remp_case(x - (decn + 1) * dx, y - (decn + 1) * dy, decp + decn, -1);
         rem_case(x - (decn + 1) * dx, y - (decn + 1) * dy);
 
         if (decp >=2)
