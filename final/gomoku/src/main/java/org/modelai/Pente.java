@@ -38,10 +38,13 @@ public class Pente extends MinMax {
     private void remove(int x, int y, int warx, int wary)
     {
         int val = map[x][y];
+        int tmp = map[warx][wary];
+        map[warx][wary]=0;
         prisoners[val - 1]++;
         //System.out.printf("%d %d removed\n", x, y);
         map[x][y] = 0;
         scsimul.analyse_unmove(x, y, val);
+        map[warx][wary]=tmp;
         prisonlst.add(new Pente.Prison(x,y, warx, wary));
     }
 
@@ -101,16 +104,15 @@ public class Pente extends MinMax {
         final int op = turn == 1 ? 2 : 1;
 
         for (int i = 0 ; i < 4 ; i++)
-            if (remove_capture(x, y, ddir[i][0], ddir[i][1], turn, op))
-                MinMax.scsimul.capt[turn - 1]--;
+            remove_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
+            // if (remove_capture(x, y, ddir[i][0], ddir[i][1], turn, op))
+            //     MinMax.scsimul.capt[turn - 1]--;
     }
 
 
     public boolean play(Candidat.coord c, int player)
     {
         //System.out.printf("pente play %d %d\n", c.x, c.y);
-
-
         if (check_win_4_dir(c.x, c.y, player) || is_captured(c.x, c.y, player))
             return true;
 
@@ -121,8 +123,9 @@ public class Pente extends MinMax {
         this.candidat.save(c);
         scsimul.analyse_move(c.x, c.y, player);
 
-        // if (pos_counter <=13)
+        // if (pos_counter >=1822 && pos_counter <= 1823)
         // {
+        //     System.out.printf("pente play %d %d\n", c.x, c.y);
         //     MinMax.display_Map();
         //     scsimul.display();
         // }
@@ -166,8 +169,9 @@ public class Pente extends MinMax {
         scsimul.analyse_unmove(c.x, c.y, val);
         play_prisoners(val, c.x, c.y);
 
-        // if (pos_counter <=13)
+        // if (pos_counter >= 1822 && pos_counter <= 1823)
         // {
+        //     System.out.printf("pente unplay %d %d\n", c.x,c.y);
         //     MinMax.display_Map();
         //     scsimul.display();
         // }
@@ -201,8 +205,8 @@ public class Pente extends MinMax {
         {
             pos_counter++;
 
-            //display_map();
-            //scsimul.display();
+            // display_map();
+            // scsimul.display();
 
             return eval(player, len, turn);
         }
@@ -266,7 +270,7 @@ public class Pente extends MinMax {
         float cur_beta;
         float res;
 
-        //nb_candidates = candidat.old_load(depth, turn);
+        //nb_candidates = candidat.old_load(depth, turn);s
         nb_candidates = candidat.old_load(depth);
         //display_map();
         // if(pos_counter >= 5820 && pos_counter <= 5824)
@@ -276,12 +280,12 @@ public class Pente extends MinMax {
         {
             pos_counter++;
             //if (pos_counter  % 10 == 7 && (scsimul.capt[0] !=0 || scsimul.capt[1] != 0))
-            if (false) //<=12
-            {
-                System.out.printf("Counter %d %d\n", pos_counter, nbmove);
-                display_map();
-                scsimul.display();
-            }
+            // if (true || ( pos_counter >=1822 && pos_counter <= 1823)) //<=12
+            // {
+            //     System.out.printf("Counter %d %d\n", pos_counter, nbmove);
+            //     display_map();
+            //     scsimul.display();
+            // }
 
             // System.out.printf("Counter %d %d\n", pos_counter, nbmove);
             // display_map();
