@@ -62,6 +62,8 @@ public class MinMax
         }
         scsimul.sc.one = score.sc.one;
         scsimul.sc.two = score.sc.two;
+        scsimul.capt[0] = score.capt[0];
+        scsimul.capt[1] = score.capt[1];
 
         // for (int i = 0 ; i < 2 ; i++)
         // {
