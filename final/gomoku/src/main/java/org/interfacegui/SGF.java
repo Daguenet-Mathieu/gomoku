@@ -1,19 +1,22 @@
 package org.interfacegui;
 import org.utils.*;
 import java.util.ArrayList;
+// import java.io.*;
 import java.io.FileWriter;
 import java.io.Writer;
+import java.io.Reader;
+import java.io.FileReader;
 import java.time.LocalTime;
 import java.time.LocalDate;
 import java.io.File;
+import java.util.LinkedHashMap;
 
 
 public class SGF{
 
-    private static ArrayList<Map> game_moves;
-    private static String rules;
     private static File file;
-
+    private static String rules;
+    private static ArrayList<Map> game_moves;
     private static final String[] ignore = new String[] {
         "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AB", "AW",
         "AR", "CR", "DD", "DM", "FG", "GB", "GW", "HO", "LB", "LN",
@@ -60,7 +63,7 @@ public class SGF{
             return directory;
         }
         catch(Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return null;
 
@@ -80,7 +83,7 @@ public class SGF{
                         fileContent += "[" + alpha.charAt(p.x) + "" + alpha.charAt(p.y) + "]";
                     }
                     fileContent += "\n";
-                    i^=1;
+                    i^=1;//changer pour get_color de Map
                 }
             }
             fileContent = fileContent.substring(0, fileContent.length() - 1);
@@ -113,7 +116,7 @@ public class SGF{
                 writer.close();
             }
             catch(Exception e){
-                System.out.println(e);
+                e.printStackTrace();
             }
 
         //ouvrir le dossier sgf si succes remplir le fichier //sinon message d'erreur?
@@ -130,15 +133,39 @@ public class SGF{
         return null;
     }
 
+    public static boolean getHeaderInfos(){
+        return true;
+    }
+
+    public static boolean getGameContent(){
+        return true;
+    }
+
     public static boolean parseFile(){
         if ("sgf".equals(getExtension(file)) == false)
             return false;
-        //fichier demarre par ( et termine par )
-        //chaque coup demarre par un ;
-        //get end content go to next ] et return index a utliser dans get value et dans skip val
-        //si non gere skip val en boucle
-        //si gere add a la map comme un coup normal si coup invalide rejeter le fichier
         //si ( branche ls 1er c'est la 1er et la suite de l'actuelle un fois ) sauter tout les () et ski aussi les () dans () "(((...)))"si brancheS s'attendre a )) a la fin
+        int bufferSize = 100;
+        char[] buffer = new char[bufferSize];
+        StringBuilder file_content = new StringBuilder();
+        int charsRead;
+        try {//try with ressource ?!??
+            Reader reader = new FileReader( file);
+            while ((charsRead = reader.read(buffer, 0, bufferSize)) > 0){
+                // file_content += new String(buffer);
+                file_content.append(buffer, 0, charsRead);
+            }
+            reader.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        System.out.println("file content == " + file_content);
+        //String file content //recuperer tout les fichier avec reader
+        //boolean//getHeaderInfos(file_content)//remove les elements parses?
+        //si ok init la ArrayuList<Map> //static var
+        //boolean get gameContent(file_content)
         return true;
     }
 
@@ -150,7 +177,11 @@ public class SGF{
         return game_moves;
     }
 
-    public static void setFile(String filename){
-        file = new File(filename);
+    public static String get_file_name(){
+        return file.getName();
+    }
+
+    public static void setFile(String absolute_path, String filename){
+        file = new File(absolute_path, filename);
     }
 }

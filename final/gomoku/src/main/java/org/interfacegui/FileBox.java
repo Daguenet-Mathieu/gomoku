@@ -89,8 +89,8 @@ public class FileBox{
                 String value = ((Label) file.getChildren().get(0)).getText();
                 System.out.println("value == " + (absolutePath + value));
                 if (("..".equals(value) || new File(absolutePath + File.separator + value).isDirectory()) == false){
-                    SGF.setFile(((Label) file.getChildren().get(0)).getText());
-                    homePage.removeFileBox(value);
+                    SGF.setFile(absolutePath, ((Label) file.getChildren().get(0)).getText());
+                    homePage.removeFileBox();
                     return ;
                 }
                 System.out.println("c'estun dossier!");
