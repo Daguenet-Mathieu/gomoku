@@ -1,5 +1,6 @@
 package org.interfacegui;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -11,7 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
-
+import javafx.scene.paint.Color;
+import javafx.geometry.Pos;
 
 
 public class HomePage{
@@ -78,7 +80,7 @@ public class HomePage{
         renju = new Button("Renju");
         pente = new Button("Pente");
         go = new Button("Go");
-        pageContainer = new Pane();
+        pageContainer = new StackPane();
         
         // Appliquer le style désélectionné à tous les boutons de jeu
         gomoku.setStyle(selectedColor);
@@ -127,7 +129,9 @@ public class HomePage{
         error_file.setVisible(false);
         error_file.setManaged(false);
 
+        error_file.setTextFill(Color.RED);
         page = new VBox(10);
+        // ((VBox)page).setAlignment(Pos.CENTER);
         ((VBox) page).getChildren().addAll(
             error_file, fileBox, load_sgf, game_button, black_player, white_player, komi_field, handicap_field, LaunchButtons);
         pageContainer.getChildren().add(page);
@@ -213,12 +217,12 @@ public class HomePage{
         scrollPane.toFront();
     }
 
-    public void removeFileBox(String name){
+    public void removeFileBox(){
         ObservableList<Node> children = pageContainer.getChildren();
 
         children.remove(children.size() - 1);
         if (SGF.parseFile() == false){
-            error_file.setText(name + " is not a valid sgf file");
+            error_file.setText(SGF.get_file_name() + " is not a valid sgf file");
             error_file.setManaged(true);
             error_file.setVisible(true);
             return ;
@@ -229,7 +233,7 @@ public class HomePage{
         }
         load_sgf.setManaged(false);
         load_sgf.setVisible(false);
-        fileName.setText(name);
+        fileName.setText(SGF.get_file_name());
         fileBox.setManaged(true);
         fileBox.setVisible(true);
         learnOrView.setText("view SGF");
