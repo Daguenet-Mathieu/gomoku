@@ -1,5 +1,6 @@
 package org.interfacegui;
 import org.utils.*;
+import org.ast.*;
 import java.util.ArrayList;
 // import java.io.*;
 import java.io.FileWriter;
@@ -10,14 +11,36 @@ import java.time.LocalTime;
 import java.time.LocalDate;
 import java.io.File;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
+
+// public enum NodeType{ DATA, OTHER_DATA_TYPE, ...., BRANCH_NODE }
+
+// public abstract class Union //public interface Union{ 
+// IMPOSER DE definir set get value
+// 
+// }
+
+// public class UnionBranch extends Union{
+//   Node node;
+// }
+
+// public class UnionData extends Union{
+//   String Data;
+// }
+
+// public class Node{
+//    NodeType typeInfo;
+//    Union Data;
+//    Node next;
+// }
 
 public class SGF{
 
     private static File file;
     private static String rules;
     private static ArrayList<Map> game_moves;
-    private static final String[] ignore = new String[] {
+    private static final String[] ignoreSet = new String[] {
         "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AB", "AW",
         "AR", "CR", "DD", "DM", "FG", "GB", "GW", "HO", "LB", "LN",
         "MA", "N", "PM", "SL", "SQ", "TR", "UC", "V", "VW", "ST",
@@ -26,7 +49,17 @@ public class SGF{
         "TW", "AS", "IP", "IY", "SE", "SU", "FF"
     };
 
-    private static final String[] supported = new String[] {"KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL"};
+    // private static final Set<String> ignoreSet = new String[] {
+    //     "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AB", "AW",
+    //     "AR", "CR", "DD", "DM", "FG", "GB", "GW", "HO", "LB", "LN",
+    //     "MA", "N", "PM", "SL", "SQ", "TR", "UC", "V", "VW", "ST",
+    //     "AN", "BR", "BT", "CP", "DT", "EV", "GC", "GN", "ON", "OT",
+    //     "PB", "PW", "RE", "RO", "SO", "TM", "US", "WR", "WT", "TB",
+    //     "TW", "AS", "IP", "IY", "SE", "SU", "FF"
+    // };
+    // private static final Set<String> supportedSet = Set.of("KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL");
+
+    private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL"};
 // "KM"//komi
 // "HA"//handicap??
 // *AP  Application     root	      composed simpletext ':' number // je garde
@@ -47,6 +80,15 @@ public class SGF{
     // private static ArrayList<Map> build_sgf(){
     //     return null;
     // }
+
+    private static int indexOf(String value, String[] array){
+        for (int i = 0; i < array.length; i++)
+        {
+            if (value.equals(array[i]))
+                return i;
+        }
+        return -1;
+    }
 
     public static File openSGFDir(){
         try {
@@ -133,10 +175,24 @@ public class SGF{
         return null;
     }
 
-    public static boolean getHeaderInfos(){
-        Integer board_size;
+    public static boolean getGameContent(String file_content){
+        Integer board_size;//changer
         int gm;
         String ru;
+        
+        //str.charAt(i)
+        for (Integer i = 0; i < file_content.length(); i++){
+            String word = "test";//getCurrentWord(String, i);
+            // if (supportedSet.contains(word)){//file_content.charAT(i);//supportedSet.contains(possibleNullString);
+            //     //faire action\
+            //     //si ru //sz //km //... ff// ha// soit remplacer soit rejeter
+            // }
+            // else if (ignoreSet.contains(word)){
+            //     //jump a la fin des values de l'instruciton []...[]
+            // }
+            // else
+            //     ;//erreur et quitter false
+        }
         // String ?;
         //ha km
         //skip white space Charachter.whitespace ? stringbuilder at i?
@@ -144,37 +200,39 @@ public class SGF{
         return true;
     }
 
-    public static boolean getGameContent(){
-        return true;
-    }
+    // public static boolean getGameContent(){
+    //     return true;
+    // }
+    public static boolean parseFile()
+    {
+        return true ;}
+    // public static boolean parseFile(){
+    //     if ("sgf".equals(getExtension(file)) == false)
+    //         return false;
+    //     //si ( branche ls 1er c'est la 1er et la suite de l'actuelle un fois ) sauter tout les () et ski aussi les () dans () "(((...)))"si brancheS s'attendre a )) a la fin
+    //     int bufferSize = 100;
+    //     char[] buffer = new char[bufferSize];
+    //     StringBuilder file_content = new StringBuilder();
+    //     int charsRead;
+    //     try {//try with ressource ?!??
+    //         Reader reader = new FileReader( file);
+    //         while ((charsRead = reader.read(buffer, 0, bufferSize)) > 0){
+    //             // file_content += new String(buffer);
+    //             file_content.append(buffer, 0, charsRead);
+    //         }
+    //         reader.close();
+    //     }
+    //     catch(Exception e){
+    //         e.printStackTrace();
+    //     }
 
-    public static boolean parseFile(){
-        if ("sgf".equals(getExtension(file)) == false)
-            return false;
-        //si ( branche ls 1er c'est la 1er et la suite de l'actuelle un fois ) sauter tout les () et ski aussi les () dans () "(((...)))"si brancheS s'attendre a )) a la fin
-        int bufferSize = 100;
-        char[] buffer = new char[bufferSize];
-        StringBuilder file_content = new StringBuilder();
-        int charsRead;
-        try {//try with ressource ?!??
-            Reader reader = new FileReader( file);
-            while ((charsRead = reader.read(buffer, 0, bufferSize)) > 0){
-                // file_content += new String(buffer);
-                file_content.append(buffer, 0, charsRead);
-            }
-            reader.close();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-
-        System.out.println("file content == " + file_content);
-        //String file content //recuperer tout les fichier avec reader
-        //boolean//getHeaderInfos(file_content)//remove les elements parses?
-        //si ok init la ArrayuList<Map> //static var
-        //boolean get gameContent(file_content)
-        return true;
-    }
+    //     System.out.println("file content == " + file_content);
+    //     //String file content //recuperer tout les fichier avec reader
+    //     //boolean//getHeaderInfos(file_content)//remove les elements parses?
+    //     //si ok init la ArrayuList<Map> //static var
+    //     //boolean get gameContent(file_content)
+    //     return true;
+    // }
 
     public static String get_game_rule(){
         return rules;
