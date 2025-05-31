@@ -3,12 +3,12 @@ import org.utils.*;
 import java.util.ArrayList;
 
 
-class ArrayValue extends Union {
+public class ArrayValue extends Union {
     ArrayList<Point> value;
 
-    public ArrayValue(String command, ArrayList<Point> value) {
+    public ArrayValue(String command) {
         super(command);
-        this.value = value;
+        this.value = new ArrayList();
     }
 
     public void AddMove(Point p){
@@ -18,5 +18,4 @@ class ArrayValue extends Union {
     public ArrayList<Point> getValue(){
         return this.value;
     }
-
 }

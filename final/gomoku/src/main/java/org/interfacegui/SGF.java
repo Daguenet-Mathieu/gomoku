@@ -12,7 +12,8 @@ import java.time.LocalDate;
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Set;
-
+import java.io.IOException;
+import java.text.ParseException;
 
 // public enum NodeType{ DATA, OTHER_DATA_TYPE, ...., BRANCH_NODE }
 
@@ -41,8 +42,8 @@ public class SGF{
     private static String rules;
     private static ArrayList<Map> game_moves;
     private static final String[] ignoreSet = new String[] {
-        "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AB", "AW",
-        "AR", "CR", "DD", "DM", "FG", "GB", "GW", "HO", "LB", "LN",
+        "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AR", "CR",
+        "DD", "DM", "FG", "GB", "GW", "HO", "LB", "LN",
         "MA", "N", "PM", "SL", "SQ", "TR", "UC", "V", "VW", "ST",
         "AN", "BR", "BT", "CP", "DT", "EV", "GC", "GN", "ON", "OT",
         "PB", "PW", "RE", "RO", "SO", "TM", "US", "WR", "WT", "TB",
@@ -59,7 +60,8 @@ public class SGF{
     // };
     // private static final Set<String> supportedSet = Set.of("KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL");
 
-    private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL"};
+    private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL", "AB", "AW"};
+    private static final String[] listCmdSet = new String[] {"AB", "AW", "AE", };
 // "KM"//komi
 // "HA"//handicap??
 // *AP  Application     root	      composed simpletext ':' number // je garde
@@ -80,15 +82,6 @@ public class SGF{
     // private static ArrayList<Map> build_sgf(){
     //     return null;
     // }
-
-    private static int indexOf(String value, String[] array){
-        for (int i = 0; i < array.length; i++)
-        {
-            if (value.equals(array[i]))
-                return i;
-        }
-        return -1;
-    }
 
     public static File openSGFDir(){
         try {
@@ -175,64 +168,199 @@ public class SGF{
         return null;
     }
 
-    public static boolean getGameContent(String file_content){
-        Integer board_size;//changer
-        int gm;
-        String ru;
+    // public static boolean getGameContent(String file_content){
+    //     Integer board_size;//changer
+    //     int gm;
+    //     String ru;
         
-        //str.charAt(i)
-        for (Integer i = 0; i < file_content.length(); i++){
-            String word = "test";//getCurrentWord(String, i);
-            // if (supportedSet.contains(word)){//file_content.charAT(i);//supportedSet.contains(possibleNullString);
-            //     //faire action\
-            //     //si ru //sz //km //... ff// ha// soit remplacer soit rejeter
-            // }
-            // else if (ignoreSet.contains(word)){
-            //     //jump a la fin des values de l'instruciton []...[]
-            // }
-            // else
-            //     ;//erreur et quitter false
-        }
-        // String ?;
-        //ha km
-        //skip white space Charachter.whitespace ? stringbuilder at i?
-        //check ( ; puis get les infos header si pas info skip jusqua [ puis tout les [] sans char entre
-        return true;
-    }
+    //     //str.charAt(i)
+    //     for (Integer i = 0; i < file_content.length(); i++){
+    //         String word = "test";//getCurrentWord(String, i);
+    //         // if (supportedSet.contains(word)){//file_content.charAT(i);//supportedSet.contains(possibleNullString);
+    //         //     //faire action\
+    //         //     //si ru //sz //km //... ff// ha// soit remplacer soit rejeter
+    //         // }
+    //         // else if (ignoreSet.contains(word)){
+    //         //     //jump a la fin des values de l'instruciton []...[]
+    //         // }
+    //         // else
+    //         //     ;//erreur et quitter false
+    //     }
+    //     // String ?;
+    //     //ha km
+    //     //skip white space Charachter.whitespace ? stringbuilder at i?
+    //     //check ( ; puis get les infos header si pas info skip jusqua [ puis tout les [] sans char entre
+    //     return true;
+    // }
 
     // public static boolean getGameContent(){
     //     return true;
     // }
-    public static boolean parseFile()
-    {
-        return true ;}
-    // public static boolean parseFile(){
-    //     if ("sgf".equals(getExtension(file)) == false)
-    //         return false;
-    //     //si ( branche ls 1er c'est la 1er et la suite de l'actuelle un fois ) sauter tout les () et ski aussi les () dans () "(((...)))"si brancheS s'attendre a )) a la fin
-    //     int bufferSize = 100;
-    //     char[] buffer = new char[bufferSize];
-    //     StringBuilder file_content = new StringBuilder();
-    //     int charsRead;
-    //     try {//try with ressource ?!??
-    //         Reader reader = new FileReader( file);
-    //         while ((charsRead = reader.read(buffer, 0, bufferSize)) > 0){
-    //             // file_content += new String(buffer);
-    //             file_content.append(buffer, 0, charsRead);
-    //         }
-    //         reader.close();
-    //     }
-    //     catch(Exception e){
-    //         e.printStackTrace();
-    //     }
+    // public static boolean parseFile()
+    // {
+        // return true ;}
 
-    //     System.out.println("file content == " + file_content);
-    //     //String file content //recuperer tout les fichier avec reader
-    //     //boolean//getHeaderInfos(file_content)//remove les elements parses?
-    //     //si ok init la ArrayuList<Map> //static var
-    //     //boolean get gameContent(file_content)
-    //     return true;
-    // }
+    private static void trimSpace(StringBuilder sb) {
+        int i = 0;
+        while (i < sb.length() && Character.isWhitespace(sb.charAt(i))) {
+            i++;
+        }
+        if (i > 0) {
+            sb.delete(0, i);
+    }
+}
+
+
+    private  static Union getNode (CommandType type, String name){
+        switch (type)
+        {
+            case BRANCH:
+                return new Node();
+            case COMMAND:
+                return new Command();
+            case ARRAY_VALUE:
+                return new ArrayValue(name);
+            case STRING_VALUE:
+                return new StringValue(name);
+            case COORD_VALUE:
+                return new CoordValue(name);
+            case NUM_VALUE:
+                return new NumValue(name);
+            default:
+                return null;
+        }       
+    }
+
+    private  static String getCommand(StringBuilder file){
+
+        // // Effacer les 3 premiers caractères
+        // file.delete(0, 3);
+
+        // // Effacer le premier caractère
+        // file.deleteCharAt(0);
+        int index = file.indexOf("[");//proteger pas trouve
+        if (index == -1)
+            return null;
+        String command = file.substring(0, index);
+        System.out.print("command == " + command);
+        file.delete(0, index - 1);
+        return command;
+    }
+
+    private  static double getValueNum(StringBuilder file){
+        int index = file.indexOf("]");
+        double value = 0;
+        return value;
+    }
+
+    private  static Point getValueCoord(StringBuilder file){
+        Point value = new Point();
+        return value;
+    }
+
+    private  static ArrayList<Point> getValueArray(StringBuilder file){
+        ArrayList<Point> value = new ArrayList<Point>();
+        return value;
+    }
+
+    private  static String getValueString(StringBuilder file){
+
+        // // Effacer les 3 premiers caractères
+        // file.delete(0, 3);
+
+        // // Effacer le premier caractère
+        // file.deleteCharAt(0);
+        
+        int index = file.indexOf("[");
+        System.out.print("command == " + file.substring(0, index));
+        return null;
+    }
+
+
+    private static int indexOf(String value, String[] array){
+        for (int i = 0; i < array.length; i++)
+        {
+            if (value.equals(array[i]))
+                return i;
+        }
+        return -1;
+    }
+
+    private static void buildTree(StringBuilder file, Node tree, int deepth) throws ParseException{ 
+        if (deepth > 361)
+            throw new ParseException("too many branch", 0);
+        while (file.toString().isEmpty() == false){
+            trimSpace(file);
+            char next_char = file.charAt(0);
+            if (next_char == ')'){
+                //efacer le char
+                return ;
+            }
+            else if (next_char == '('){
+                // System.out.println("je passe par (")
+                file.deleteCharAt(0);
+                //creer Node et donner a build tree
+                //ajouter le node return a Node de cette fct
+            }
+            else if (next_char == ';'){
+                // System.out.println("je passe par (")
+                file.deleteCharAt(0);
+                String command = getCommand(file);
+                if (command == null )//check si dans une des listes
+                    throw new ParseException("invalid syntaxe", 0);
+                //creer Node
+                //efecaer ;
+                //en boucle 
+                    //creer Node et faire:
+                    //get command
+                    //fill command content
+                    //parse space
+            }
+            else
+                throw new ParseException("invalid file format", 0);
+        }
+        if (deepth != 1)
+            throw new ParseException("invalid syntaxe", 0);
+        return ;
+    } 
+    
+    public static boolean parseFile(){
+        if ("sgf".equals(getExtension(file)) == false)
+            return false;
+        //si ( branche ls 1er c'est la 1er et la suite de l'actuelle un fois ) sauter tout les () et ski aussi les () dans () "(((...)))"si brancheS s'attendre a )) a la fin
+        int bufferSize = 100;
+        char[] buffer = new char[bufferSize];
+        StringBuilder file_content = new StringBuilder();
+        int charsRead;
+        try {//try with ressource ?!??
+            Reader reader = new FileReader( file);
+            while ((charsRead = reader.read(buffer, 0, bufferSize)) > 0){
+                // file_content += new String(buffer);
+                file_content.append(buffer, 0, charsRead);
+            }
+            reader.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        System.out.println("file content == " + file_content);
+        Node tree = new Node();
+        tree.DataType = new Node();
+        try{
+            buildTree(file_content, tree, 0);
+        
+            // res = executeTree();
+        }
+        catch (ParseException e){
+            return false;
+        }
+        //String file content //recuperer tout les fichier avec reader
+        //boolean//getHeaderInfos(file_content)//remove les elements parses?
+        //si ok init la ArrayuList<Map> //static var
+        //boolean get gameContent(file_content)
+        return true;
+    }
 
     public static String get_game_rule(){
         return rules;

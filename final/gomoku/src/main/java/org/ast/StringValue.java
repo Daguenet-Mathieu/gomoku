@@ -1,15 +1,16 @@
 package org.ast;
 
-class StringValue extends Union {
-    private final String value;
+public class StringValue extends Union {
+    private String value;
 
-    public StringValue(String command, String value) {
+    public StringValue(String command) {
         super(command);
-        this.value = value;
     }
 
     public String getValue(){
         return this.value;
     }
-
+    public void setValue(String value){
+        this.value = value;
+    }
 }

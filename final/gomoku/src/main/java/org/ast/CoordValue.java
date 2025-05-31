@@ -1,16 +1,19 @@
 package org.ast;
 import org.utils.*;
 
-class CoordValue extends Union {
-    private final Point value;
+public class CoordValue extends Union {
+    private Point value;
 
-    public CoordValue(String command, Point value) {
+    public CoordValue(String command) {
         super(command);
-        this.value = value;
     }
 
     public Point getValue(){
         return this.value;
+    }
+
+    public void setValue(Point value){
+        this.value = value;
     }
 
 }
