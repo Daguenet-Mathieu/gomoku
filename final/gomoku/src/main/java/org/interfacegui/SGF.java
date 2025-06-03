@@ -47,7 +47,7 @@ public class SGF{
         "MA", "N", "PM", "SL", "SQ", "TR", "UC", "V", "VW", "ST",
         "AN", "BR", "BT", "CP", "DT", "EV", "GC", "GN", "ON", "OT",
         "PB", "PW", "RE", "RO", "SO", "TM", "US", "WR", "WT", "TB",
-        "TW", "AS", "IP", "IY", "SE", "SU", "FF"
+        "TW", "AS", "IP", "IY", "SE", "SU", "FF", "BL", "WL"
     };
 
     // private static final Set<String> ignoreSet = new String[] {
@@ -60,8 +60,9 @@ public class SGF{
     // };
     // private static final Set<String> supportedSet = Set.of("KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL");
 
-    private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL", "AB", "AW"};
-    private static final String[] listCmdSet = new String[] {"AB", "AW", "AE", };
+    private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "AB", "AW"};
+    private static final String[] listCmdSet = new String[] {"AB", "AW", "AE"};
+    private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "AP", "CA", "SZ"};
 // "KM"//komi
 // "HA"//handicap??
 // *AP  Application     root	      composed simpletext ':' number // je garde
@@ -216,8 +217,8 @@ public class SGF{
         {
             case BRANCH:
                 return new Node();
-            case COMMAND:
-                return new Command();
+            case MOVE:
+                return new Node();
             case ARRAY_VALUE:
                 return new ArrayValue(name);
             case STRING_VALUE:
@@ -231,7 +232,7 @@ public class SGF{
         }       
     }
 
-    private  static String getCommand(StringBuilder file){
+    private  static String getCommandName(StringBuilder file){
 
         // // Effacer les 3 premiers caractères
         // file.delete(0, 3);
@@ -242,8 +243,9 @@ public class SGF{
         if (index == -1)
             return null;
         String command = file.substring(0, index);
+        //verifier si dans supposrted ou unsupported set
         System.out.print("command == " + command);
-        file.delete(0, index - 1);
+        file.delete(0, index);
         return command;
     }
 
@@ -270,10 +272,13 @@ public class SGF{
 
         // // Effacer le premier caractère
         // file.deleteCharAt(0);
-        
+        trimSpace(file);
         int index = file.indexOf("[");
-        System.out.print("command == " + file.substring(0, index));
-        return null;
+        String value = file.substring(0, index);
+        System.out.print("command == " + value);
+        file.delete(0, 2 + value.length());
+        trimSpace(file);
+        return value;
     }
 
 
@@ -286,42 +291,87 @@ public class SGF{
         return -1;
     }
 
-    private static void buildTree(StringBuilder file, Node tree, int deepth) throws ParseException{ 
+    private static void eraseCmd(StringBuilder file){
+        trimSpace(file);
+        while (file.charAt(0) == '[')
+        {
+            getCommandName(file);
+        }
+    }
+
+    private static Node parseMove(StringBuilder file) throws ParseException{
+        Node commandList = null;
+        while (file.toString().isEmpty() == false && file.charAt(0) != ';')
+        {
+            String commandName = getCommandName(file);
+            if (commandName == null )//check si dans une des listes
+                throw new ParseException("invalid syntaxe", 0);
+            if (indexOf(commandName, ignoreSet) != -1)
+            {
+                // Node currentCommand = getNode(getCmdType(), commandName);
+            }
+            else
+            {
+                eraseCmd(file);
+            }
+        }
+        return commandList;
+    }
+
+    private static Node buildTree(StringBuilder file, int deepth) throws ParseException{ 
+        Node tree = new Node();
+        Node currentBranch = tree;
+        Node currentMove = null;
+        boolean branchDone = false;
         if (deepth > 361)
             throw new ParseException("too many branch", 0);
         while (file.toString().isEmpty() == false){
             trimSpace(file);
+            if (file.length() == 0)
+                return tree;
             char next_char = file.charAt(0);
+            file.deleteCharAt(0);
+            
             if (next_char == ')'){
-                //efacer le char
-                return ;
+                if (deepth == 0)
+                    throw new ParseException("invalid syntaxe", 0);
+                else
+                    return tree;
             }
             else if (next_char == '('){
                 // System.out.println("je passe par (")
-                file.deleteCharAt(0);
-                //creer Node et donner a build tree
-                //ajouter le node return a Node de cette fct
+                Node branch = buildTree(file, deepth + 1);
+                if (branch.DataType == null && branch.next == null)
+                    throw new ParseException("invalid syntaxe", 0);
+                if (currentMove == null)
+                {
+                    currentBranch.next = branch;
+                    currentBranch = branch;
+                }
+                else
+                {
+                    currentMove.next = branch;
+                    currentMove = branch;
+                }
+                branchDone = true;
             }
             else if (next_char == ';'){
+                if (branchDone == true)
+                    throw new ParseException("invalid file format", 0);
                 // System.out.println("je passe par (")
-                file.deleteCharAt(0);
-                String command = getCommand(file);
-                if (command == null )//check si dans une des listes
-                    throw new ParseException("invalid syntaxe", 0);
-                //creer Node
-                //efecaer ;
-                //en boucle 
-                    //creer Node et faire:
-                    //get command
-                    //fill command content
-                    //parse space
+                Node newMove = new Node();
+                newMove.value = CommandType.MOVE;
+                newMove.DataType = parseMove(file);
+                if (currentMove != null)
+                    currentMove.next = newMove;
+                else
+                    currentBranch.DataType = newMove;
+                currentMove = newMove;
             }
             else
                 throw new ParseException("invalid file format", 0);
         }
-        if (deepth != 1)
-            throw new ParseException("invalid syntaxe", 0);
-        return ;
+        return tree;
     } 
     
     public static boolean parseFile(){
@@ -345,12 +395,11 @@ public class SGF{
         }
 
         System.out.println("file content == " + file_content);
-        Node tree = new Node();
-        tree.DataType = new Node();
+        Node tree;
         try{
-            buildTree(file_content, tree, 0);
+            tree = buildTree(file_content, 0);
         
-            // res = executeTree();
+            // res = executeTree();//bool
         }
         catch (ParseException e){
             return false;
