@@ -244,8 +244,9 @@ public class SGF{
             return null;
         String command = file.substring(0, index);
         //verifier si dans supposrted ou unsupported set
-        System.out.print("command == " + command);
+        // System.out.println("command dans get command == " + command);
         file.delete(0, index);
+        // System.out.println("file == " + file);
         return command;
     }
 
@@ -272,12 +273,17 @@ public class SGF{
 
         // // Effacer le premier caractère
         // file.deleteCharAt(0);
+        // System.out.println("in strin val 1");
         trimSpace(file);
-        int index = file.indexOf("[");
-        String value = file.substring(0, index);
-        System.out.print("command == " + value);
+        // System.out.println("in strin val 2");
+        //check bien [
+        int index = file.indexOf("]");
+        // System.out.println("in strin val 3 inde == " + index);
+        String value = file.substring(1, index);
+        // System.out.println("val == " + value);
         file.delete(0, 2 + value.length());
         trimSpace(file);
+        // System.out.println("file == " + file);
         return value;
     }
 
@@ -291,29 +297,40 @@ public class SGF{
         return -1;
     }
 
-    private static void eraseCmd(StringBuilder file){
-        trimSpace(file);
-        while (file.charAt(0) == '[')
-        {
-            getCommandName(file);
-        }
-    }
+    // private static void eraseCmd(StringBuilder file){
+    //     trimSpace(file);
+    //     while (file.charAt(0) == '[')
+    //     {
+    //         getCommandName(file);
+    //     }
+    // }
 
     private static Node parseMove(StringBuilder file) throws ParseException{
         Node commandList = null;
-        while (file.toString().isEmpty() == false && file.charAt(0) != ';')
+        while (file.toString().isEmpty() == false && file.charAt(0) != '(' && file.charAt(0) != ')' && file.charAt(0) != ';')
         {
             String commandName = getCommandName(file);
+            // System.out.println("coucou");
+            // System.out.println("cmd == " + commandName);
             if (commandName == null )//check si dans une des listes
                 throw new ParseException("invalid syntaxe", 0);
-            if (indexOf(commandName, ignoreSet) != -1)
-            {
-                // Node currentCommand = getNode(getCmdType(), commandName);
-            }
-            else
-            {
-                eraseCmd(file);
-            }
+            // System.out.println("coucou2");
+            String val = getValueString(file);
+            // System.out.println("coucou3");
+            // System.out.println("value == " + val);
+            // System.out.println("file == " + file);
+
+           // if (indexOf(commandName, ignoreSet) != -1)
+           // {
+           //     String val = getValueString(file);
+           //     System.out.println("value == " + val);
+           //     System.out.println("file == " + file);
+           //     // Node currentCommand = getNode(getCmdType(), commandName);
+           // }
+           // else
+           // {
+           //     eraseCmd(file);
+           // }
         }
         return commandList;
     }
@@ -323,6 +340,7 @@ public class SGF{
         Node currentBranch = tree;
         Node currentMove = null;
         boolean branchDone = false;
+        System.out.println("deepth == " + deepth + " file == " + file);
         if (deepth > 361)
             throw new ParseException("too many branch", 0);
         while (file.toString().isEmpty() == false){
@@ -331,10 +349,12 @@ public class SGF{
                 return tree;
             char next_char = file.charAt(0);
             file.deleteCharAt(0);
-            
+            System.out.println("deepth == " + deepth + " next char == " + next_char + " file == " + file);
             if (next_char == ')'){
-                if (deepth == 0)
+                if (deepth == 0){
+                    System.out.println("file quand ) et 0 == " + file);
                     throw new ParseException("invalid syntaxe", 0);
+                }
                 else
                     return tree;
             }
@@ -362,6 +382,7 @@ public class SGF{
                 Node newMove = new Node();
                 newMove.value = CommandType.MOVE;
                 newMove.DataType = parseMove(file);
+                System.out.println("ici1111");
                 if (currentMove != null)
                     currentMove.next = newMove;
                 else
@@ -402,6 +423,8 @@ public class SGF{
             // res = executeTree();//bool
         }
         catch (ParseException e){
+            System.out.println("Parse error: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
         //String file content //recuperer tout les fichier avec reader
