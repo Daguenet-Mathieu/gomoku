@@ -307,6 +307,7 @@ public class SGF{
 
     private static Node parseMove(StringBuilder file) throws ParseException{
         Node commandList = null;
+        Node currentNode = null;
         while (file.toString().isEmpty() == false && file.charAt(0) != '(' && file.charAt(0) != ')' && file.charAt(0) != ';')
         {
             String commandName = getCommandName(file);
@@ -316,6 +317,14 @@ public class SGF{
                 throw new ParseException("invalid syntaxe", 0);
             // System.out.println("coucou2");
             String val = getValueString(file);
+            Node newMove = new Node();
+            newMove.DataType = new StringValue(commandName);
+            newMove.DataType.setValue(val);
+            if (commandList == null)
+                commandList = newMove;
+            else
+                currentNode.next = newMove;
+            currentNode = newMove;
             // System.out.println("coucou3");
             // System.out.println("value == " + val);
             // System.out.println("file == " + file);
@@ -382,7 +391,6 @@ public class SGF{
                 Node newMove = new Node();
                 newMove.value = CommandType.MOVE;
                 newMove.DataType = parseMove(file);
-                System.out.println("ici1111");
                 if (currentMove != null)
                     currentMove.next = newMove;
                 else

@@ -11,8 +11,9 @@ public class ArrayValue extends Union {
         this.value = new ArrayList();
     }
 
-    public void AddMove(Point p){
-        this.value.add(p);
+    @Override
+    public void setValue(Object value){
+        this.value.add((Point)value);
     }
 
     public ArrayList<Point> getValue(){

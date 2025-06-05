@@ -2,18 +2,19 @@ package org.ast;
 import org.utils.*;
 
 public class NumValue extends Union {
-    private double value;
+    private Number value;
     
     public NumValue(String command) {
         super(command);
     }
 
-    public double getValue(){
+    public Number getValue(){
         return (this.value);
     }
 
-    public void setValue(double value){
-        this.value = value;
+    @Override
+    public void setValue(Object value){
+        this.value = ((Number) value).doubleValue();
     }
 
 }

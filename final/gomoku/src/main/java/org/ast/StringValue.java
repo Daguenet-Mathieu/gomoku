@@ -10,7 +10,9 @@ public class StringValue extends Union {
     public String getValue(){
         return this.value;
     }
-    public void setValue(String value){
-        this.value = value;
+
+    @Override
+    public void setValue(Object value){
+        this.value = (String)value;
     }
 }

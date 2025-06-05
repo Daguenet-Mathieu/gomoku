@@ -12,8 +12,9 @@ public class CoordValue extends Union {
         return this.value;
     }
 
-    public void setValue(Point value){
-        this.value = value;
+    @Override
+    public void setValue(Object value){
+        this.value = (Point)value;
     }
 
 }
