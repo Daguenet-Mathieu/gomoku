@@ -2,7 +2,7 @@ package org.openjfx;
 
 //import org.utils.TictacToe;
 
-//import org.utils.NewTest;
+import org.utils.NewTest;
 
 public class Launcher {
     public static void main(String[] args) {

@@ -41,7 +41,7 @@ public class Pente extends MinMax {
         int tmp = map[warx][wary];
         map[warx][wary]=0;
         prisoners[val - 1]++;
-        //System.out.printf("%d %d removed\n", x, y);
+        System.out.printf("%d %d removed\n", x, y);
         map[x][y] = 0;
         scsimul.analyse_unmove(x, y, val);
         map[warx][wary]=tmp;
@@ -148,10 +148,12 @@ public class Pente extends MinMax {
             p = prisonlst.get(prisonlst.size()-1);
             while (p.warder.x == warx && p.warder.y == wary)
             {
-                map[p.pos.x][p.pos.y] = o;
+
                 prisoners[o - 1]--;
-                //System.out.printf("%d %d replayed\n", p.pos.x, p.pos.y);
+                System.out.printf("%d %d replayed\n", p.pos.x, p.pos.y);
+                map[p.pos.x][p.pos.y] = o;
                 scsimul.analyse_move(p.pos.x, p.pos.y, o);
+
                 prisonlst.remove(prisonlst.size()-1);
                 if (prisonlst.size() == 0)
                     return ;
@@ -252,6 +254,22 @@ public class Pente extends MinMax {
         //     throw new ArithmeticException();
         // }
         //System.out.println("checked");
+
+        // System.out.printf("Counter %d %d\n", pos_counter, nbmove);
+        // display_map();
+        // scsimul.display(2);
+
+        // if (pos_counter >= 25898 && pos_counter <= 28900 && nbmove == 3)
+        // {
+        //     display_map();
+        //     scsimul.display(2);
+        // }
+
+        if (scsimul.check_capt() == true)
+            {
+                System.out.printf("Counter %d %d", pos_counter, nbmove);
+                System.exit(0);
+            }
         return;
     }
 
@@ -276,24 +294,37 @@ public class Pente extends MinMax {
         // if(pos_counter >= 5820 && pos_counter <= 5824)
         //     showdebug();
 
+        //if (pos_counter%1000 == 0)
+        // if (false)
+        // {
+        //         System.out.printf("Counter %d %d\n", pos_counter, nbmove);
+        //         display_map();
+        //         scsimul.display(2);
+        // }
+        // if (scsimul.check_capt())
+        //     System.exit(0);
+        // if (pos_counter == 28900)
+        //     System.exit(0);
+        // if (pos_counter >= 10374 && nbmove == 7)
+        // {
+        //     display_map();
+        //     scsimul.display(2);
+        // }
+
         if (depth == 0)
         {
             pos_counter++;
 
             //if (pos_counter  % 100 == 0 && (scsimul.capt[0] !=0 || scsimul.capt[1] != 0))
+            //if (pos_counter % 100 == 0)
             //if ( nbmove == 2 && (pos_counter >=1921 && pos_counter <= 1922)) //<=12
             // if (nbmove == 2 && ((pos_counter >=918 && pos_counter <= 920)))
-            // {
-            //     System.out.printf("Counter %d %d\n", pos_counter, nbmove);
-            //     display_map();
-            //     scsimul.display();
-            // }
 
             // System.out.printf("Counter %d %d\n", pos_counter, nbmove);
             // display_map();
             // scsimul.display();
             res = eval(player, len, turn) + prisonpnt(player);
-            debugstr();
+            //debugstr();
             // if (res > 1000)
             // {
             //         scsimul.display();
@@ -320,7 +351,7 @@ public class Pente extends MinMax {
                 if (m.play(candidat.lst.get(i), turn))
                 {
                     res = value_victory_smarter(player, turn, len);
-                    debugstr();
+                    //debugstr();
                     // if (res == 12000 || res == -12000)
                     // {
                     //     best = new Candidat.coord(12, 9);
@@ -355,7 +386,7 @@ public class Pente extends MinMax {
                 if (m.play(candidat.lst.get(i),turn))
                 {
                     res = value_victory_smarter(player, turn, len);
-                    debugstr();
+                    //debugstr();
                     // if (res == 12000 || res == -12000)
                     // {
                     //     best = new Candidat.coord(12, 9);
