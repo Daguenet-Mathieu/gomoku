@@ -23,9 +23,9 @@ public class NewTest
         m.play(new Candidat.coord(x, y), turn);
         m.display_map();
         MinMax.scsimul.display();
+        MinMax.scsimul.check_capt();
         //mscore.display_free();
     }
-
 
     public void unmove(int x, int y, int turn)
     {
@@ -36,6 +36,7 @@ public class NewTest
         //mscore.display_free();
         //System.out.println("after");       
         MinMax.scsimul.display();
+        MinMax.scsimul.check_capt();
     }
 
     private void m_play(int x, int y, int val)
@@ -175,14 +176,145 @@ public class NewTest
         // move(6, 10, 1);
         // move(5, 11, 1);
 
+        //moin2
 
-        move(8, 8, 1);
-        move(9, 8, 1);
-        move(11, 8, 1);
-        move(12, 8, 1);
-        move(13, 8, 1);
+        //moin1
+        //unmove 8-6 (1)
+        //unmove 8-7 (2)
+        //unmove 9-8 (2)
+        //move 7-6 (1)
 
-        unmove(8, 8, 1);
+        move(8, 8, 2);
+        move(8, 9, 1);
+        move(8, 11, 1);
+        move(8, 12, 1);
+        move (8, 13, 2);
+        // move(7, 9, 2);
+        // move(8, 8, 1);
+        // move(9, 7, 1);
+        // move(10, 6, 1);
+        // move(11, 5, 1);
+        // move(12, 4, 2);
+        // unmove(10, 6, 1);
+
+        // unmove(11, 5, 1);
+
+        // apart
+        // move(6, 6, 2);
+        // move(7,7, 1);
+        // move(8, 8, 1);
+        // move(8, 9, 2);
+        // move(7, 9, 1);
+        // move(9, 7, 1);
+        // move(10, 6, 1);
+        // move(9, 8, 2);
+        // move(10, 7, 2);
+        // move(10, 8, 2);
+        // move(10, 10, 2);
+        // move(11, 8, 2);
+        // move(11, 9, 2);
+        // move(12, 8, 1);
+
+        // //then
+        // System.out.println("THEN");
+        // unmove(11, 9, 2);
+        // move(9, 9, 1);
+        // move(10, 9, 1);
+        // unmove(7, 9, 1);
+        // unmove(10, 7, 2);
+        // unmove(10, 9, 1);
+        // unmove(9, 9, 1);
+        // move(11 ,9, 2);
+        // appart
+
+        // move(8, 9, 2);
+        // move(8, 10, 2);
+        // move(8, 12, 2);
+        // move(8, 13, 2);
+        //move(8, 12, 2);
+        //move(8, 10, 1);
+
+        //history
+        // move(7, 8, 1);
+        // move (8, 6, 1);
+        // move(8, 7, 2);
+        // move(8, 8, 2);
+        // move(8, 9, 2);
+        // move(8, 10, 2);
+        // move(9, 7, 1);
+        // move(9, 8, 2);
+        // move(9, 9, 1);
+        // move(10, 7, 1);
+        // move(10, 8, 2);
+        // move(10, 9, 1);
+        // move(11, 8, 1);
+        //history
+        //move(8, 7, 1);
+        // move(9, 10, 2);
+        // move(10, 9, 2);
+        // move(11, 7, 1);
+        // move(11, 8, 1);
+        // move(11, 9, 1);
+
+        // unmove(11, 7, 1);
+
+
+
+
+        //history
+
+        // move (8, 6, 1);
+        // move(8, 11, 1);
+        // //move(8, 11, 1);
+        // move(11, 7, 2);
+        // move(11, 8, 1);
+        // move(11, 9, 1);
+
+        // unmove(8, 11, 1);
+        // move(10, 9, 2);
+        // move(9, 10, 2);
+        // unmove(11, 7, 2);
+        // move(11, 10, 2);
+
+        //zero
+        // move(8, 8, 2);
+        // move(8, 9, 2);
+        // move(8, 10, 2);
+        // move(8, 11, 1);
+        // move(9, 8, 1);
+        // move(9, 9, 1);
+        // move(9, 10, 1);
+        // move(10, 7, 2);
+        // move(10, 8, 1);
+        // move(11, 8, 1);
+        // move(12, 8, 2);
+
+        // unmove(8, 11, 1);
+        // unmove(8, 9, 2);
+        
+        //one
+        // move(4, 8, 1); //falc
+        // move (5, 8, 1); //falc
+
+        // move(7, 8, 1);
+        // move(8, 8, 1);
+        // move(9, 8, 1);
+        // move(10, 8, 1);
+
+        // move(12, 8, 1);
+        // move(13, 8, 1);
+        // move(14, 8, 1);
+
+        // unmove(10, 8, 1);
+        //two
+        // move(8, 8, 1);
+        // move(9, 8, 1);
+        // move(10, 8, 1);
+
+        // move (6, 8, 1);
+        // move(5, 8, 1);
+        //endtwo
+
         //move(12, 8, 1);
         //move(13, 8, 1);
         //move(13, 8, 1);
