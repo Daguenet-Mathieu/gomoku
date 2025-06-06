@@ -1,4 +1,6 @@
 package org.modelai;
+import java.util.ArrayList;
+
 import org.utils.*;
 
 public class Miniscore {
@@ -15,12 +17,15 @@ public class Miniscore {
     int dx;
     int dy;
     int dir;
+
     int [] free4;
     int [] simp4;
     int [] free3;
     int [] capt;
 
     boolean victory;
+
+    ArrayList<Blocker> blocklist = new ArrayList<Blocker>();
 
     //static int [] factor = {0, 0, 2, 5, 10, 10};
     static int [] factor = {0, 0, 2, 10, 25, 0, 0};
@@ -761,6 +766,55 @@ public class Miniscore {
                 //fill_free_info(i, st, 2);
                 str2[i][x][y]=0;
             }
+            if (in_goban(x + 5 * ddir[i][0], y + 5 * ddir[i][1]) && MinMax.map[x + 5 * ddir[i][0]][y + 5 * ddir[i][1]] == cur_turn)
+            {
+                search_blocker(i, 1);   
+            }
+            if (in_goban(x - 5 * ddir[i][0], y - 5 * ddir[i][1]) && MinMax.map[x - 5 * ddir[i][0]][y - 5 * ddir[i][1]] == cur_turn)
+            {
+                search_blocker(i, -1);   
+            }
+        }
+    }
+
+    private void search_blocker(int dir, int sig)
+    {
+        int val = 0;
+        int nb = 0;
+        int xval=-1;
+        int yval=-1;
+        int cur = MinMax.map[x+ddir[dir][0]*sig][y + ddir[dir][1]*sig];
+
+        for (int i = 1 ; in_goban(x+ddir[dir][0]*sig*i, y + ddir[dir][1]*sig*i) && cur != 2;
+            cur= MinMax.map[x+ddir[dir][0]*sig*i][y + ddir[dir][1]*sig*i], i++)
+        {
+            //System.out.printf("x y cur opp %d %d %d %d\n", x, y, cur, opponant);
+            if (cur == opponant)
+            {
+                nb++;
+            }
+            else if (cur == 0)
+            {
+                xval = x+ddir[dir][0]*sig*i;
+                yval = y+ddir[dir][1]*sig*i;
+            }
+        }
+
+        //System.out.printf("info search blockers %d %d %d\n", nb, xval, yval);
+
+        if (nb == 3 && xval !=-1 && yval != -1)
+        {
+            if (cur_turn == 1)
+                val = str2[dir][xval][yval];
+            else
+                val = str1[dir][xval][yval];
+
+            Blocker res = new Blocker(val);
+            res.bl1(x, y);
+            res.bl2(x+ 5*ddir[dir][0]*sig, y + 5 * ddir[dir][1]*sig);
+            res.val(xval, yval);
+
+            this.blocklist.add(res);
         }
     }
 
@@ -1512,24 +1566,45 @@ public class Miniscore {
         display_str(1);
         //System.out.println("player2");
         display_str(2);
+        display_blockers();
         display_miniscore();
         //display_free();
     }
 
-    public void display(int mod)
+    public void display_blockers()
     {
-        if (mod > 0)
+        Blocker b;
+        if (this.blocklist.size() !=0)
         {
-            display_str(1);
-            display_str(2);
+            for (int i = 0 ; i < blocklist.size() ; i++)
+            {
+                b = blocklist.get(i);
+                System.out.printf("blockers [%d %d]  [%d %d] to %d %d of str %d\n", 
+                b.bl1[0], b.bl1[1], b.bl2[0], b.bl2[1], b.val[0], b.val[1], b.str);
+            }
         }
-        display_miniscore();
-        if (mod == -1 || mod == 2)
-        {
-            if (check_capt())
-                System.exit(0);
-        }
+        // else
+        // {
+        //     System.out.println("no blockers");
+        // }
     }
+
+    // public void display(int mod)
+    // {
+    //     System.out.println("DISPLAYED");
+    //     if (mod > 0)
+    //     {
+    //         display_str(1);
+    //         display_str(2);
+    //     }
+    //     display_miniscore();
+    //     display_blockers();
+    //     if (mod == -1 || mod == 2)
+    //     {
+    //         if (check_capt())
+    //             System.exit(0);
+    //     }
+    // }
 
     private int iscapt(int x, int y)
     {
@@ -1586,7 +1661,7 @@ public class Miniscore {
             System.out.printf("Check capt : (%d %d) found %d %d\n", this.capt[0], this.capt[1], capt1, capt2);
             return true;
         }
-        System.out.printf("found %d %d correct\n", capt1, capt2);
+        //System.out.printf("found %d %d correct\n", capt1, capt2);
 
         return false;
     }
