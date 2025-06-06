@@ -16,7 +16,7 @@ public class ArrayValue extends Union {
         this.value.add((Point)value);
     }
 
-    public ArrayList<Point> getValue(){
-        return this.value;
-    }
+    // public ArrayList<Point> getValue(){
+        // return this.value;
+    // }
 }

@@ -13,4 +13,8 @@ public abstract class Union {
     }
     
     public abstract void setValue(Object value);
+
+    public String getValue(){
+        return this.command;
+    }
 }

@@ -7,7 +7,7 @@ public class StringValue extends Union {
         super(command);
     }
 
-    public String getValue(){
+    public String getVal(){
         return this.value;
     }
 

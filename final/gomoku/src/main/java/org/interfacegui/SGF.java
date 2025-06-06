@@ -346,13 +346,16 @@ public class SGF{
 
     private static Node buildTree(StringBuilder file, int deepth) throws ParseException{ 
         Node tree = new Node();
-        Node currentBranch = tree;
+        Node currentNode = tree;
         Node currentMove = null;
+
+        // System.out.println("deepth == " + deepth);
+        // Node currentMove = null;
         boolean branchDone = false;
         System.out.println("deepth == " + deepth + " file == " + file);
         if (deepth > 361)
             throw new ParseException("too many branch", 0);
-        while (file.toString().isEmpty() == false){
+        while (file.length() != 0){
             trimSpace(file);
             if (file.length() == 0)
                 return tree;
@@ -361,6 +364,7 @@ public class SGF{
             System.out.println("deepth == " + deepth + " next char == " + next_char + " file == " + file);
             if (next_char == ')'){
                 if (deepth == 0){
+                    System.out.println("je passe par )");
                     System.out.println("file quand ) et 0 == " + file);
                     throw new ParseException("invalid syntaxe", 0);
                 }
@@ -368,34 +372,33 @@ public class SGF{
                     return tree;
             }
             else if (next_char == '('){
-                // System.out.println("je passe par (")
+                System.out.println("je passe par (");
                 Node branch = buildTree(file, deepth + 1);
                 if (branch.DataType == null && branch.next == null)
                     throw new ParseException("invalid syntaxe", 0);
-                if (currentMove == null)
-                {
-                    currentBranch.next = branch;
-                    currentBranch = branch;
-                }
-                else
-                {
-                    currentMove.next = branch;
-                    currentMove = branch;
-                }
+                currentNode.next = branch;
+                currentNode = branch;
                 branchDone = true;
+                System.out.println("next == " + tree.next);
+                System.out.println("next == " + currentNode);
             }
             else if (next_char == ';'){
+                System.out.println("je passe par ;");
                 if (branchDone == true)
                     throw new ParseException("invalid file format", 0);
                 // System.out.println("je passe par (")
                 Node newMove = new Node();
                 newMove.value = CommandType.MOVE;
                 newMove.DataType = parseMove(file);
-                if (currentMove != null)
-                    currentMove.next = newMove;
+                if (currentMove == null)
+                {
+                    currentNode.DataType = newMove;
+                    // currentMove = newMove;
+                }
                 else
-                    currentBranch.DataType = newMove;
+                    currentMove.next = newMove;
                 currentMove = newMove;
+                currentNode = newMove;
             }
             else
                 throw new ParseException("invalid file format", 0);
@@ -403,6 +406,37 @@ public class SGF{
         return tree;
     } 
     
+    private static void printTree(Node tree)
+    {
+        System.out.println("data == " + tree.getValue());
+        System.out.println("data == " + tree.DataType);
+        System.out.println("data next == " + tree.next);
+        System.out.println("data data type == " + tree.next.DataType.getValue());
+        System.out.println("data data type == " + tree.next.DataType.getClass());
+        System.out.println("data data type == " + ((Node)tree.next.DataType).next);
+        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).DataType).DataType).getValue());
+        // Node node = ((Node)tree.next.DataType).DataType;
+        Node node = (Node)((Node)tree.next.DataType).DataType;
+
+        while (node.next != null){
+            // System.out.println("node == " + (StringValue)node.DataType.getValue());
+            System.out.println("node == " + ((StringValue) node.DataType).getValue());
+            System.out.println("node == " + ((StringValue) node.DataType).getVal());
+            node = node.next;
+        }
+        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).DataType).DataType).getVal());
+
+        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.DataType).DataType).getValue());
+        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.DataType).DataType).getVal());
+        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.next.DataType).DataType).getValue());
+        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.next.DataType).DataType).getVal());
+        System.out.println("data data type == " + ((Node)tree.next.DataType).next.next);
+
+        // System.out.println("data next next == " + tree.next.next.next);
+        // if ("branch".equals(tree.DataType.getValue()))
+            // System.out.println("branch");
+    }
+
     public static boolean parseFile(){
         if ("sgf".equals(getExtension(file)) == false)
             return false;
@@ -427,7 +461,8 @@ public class SGF{
         Node tree;
         try{
             tree = buildTree(file_content, 0);
-        
+            System.out.println("tree == " + tree);
+            printTree(tree);
             // res = executeTree();//bool
         }
         catch (ParseException e){

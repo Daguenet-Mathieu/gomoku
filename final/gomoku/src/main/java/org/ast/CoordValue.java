@@ -8,9 +8,9 @@ public class CoordValue extends Union {
         super(command);
     }
 
-    public Point getValue(){
-        return this.value;
-    }
+    // public Point getValue(){
+        // return this.value;
+    // }
 
     @Override
     public void setValue(Object value){

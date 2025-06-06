@@ -14,4 +14,5 @@ public class Node extends Union{
     public void setValue(Object value){
         this.DataType = (Union)value;
     }
+    
 }
