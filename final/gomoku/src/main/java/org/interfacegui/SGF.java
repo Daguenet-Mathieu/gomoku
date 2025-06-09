@@ -317,14 +317,15 @@ public class SGF{
                 throw new ParseException("invalid syntaxe", 0);
             // System.out.println("coucou2");
             String val = getValueString(file);
-            Node newMove = new Node();
-            newMove.DataType = new StringValue(commandName);
-            newMove.DataType.setValue(val);
+            Node newInstruct = new Node();
+            newInstruct.value = CommandType.INSTRUCTION;
+            newInstruct.DataType = new StringValue(commandName);
+            newInstruct.DataType.setValue(val);
             if (commandList == null)
-                commandList = newMove;
+                commandList = newInstruct;
             else
-                currentNode.next = newMove;
-            currentNode = newMove;
+                currentNode.next = newInstruct;
+            currentNode = newInstruct;
             // System.out.println("coucou3");
             // System.out.println("value == " + val);
             // System.out.println("file == " + file);
@@ -346,6 +347,7 @@ public class SGF{
 
     private static Node buildTree(StringBuilder file, int deepth) throws ParseException{ 
         Node tree = new Node();
+        tree.value = CommandType.BRANCH;
         Node currentNode = tree;
         Node currentMove = null;
 
@@ -374,6 +376,7 @@ public class SGF{
             else if (next_char == '('){
                 System.out.println("je passe par (");
                 Node branch = buildTree(file, deepth + 1);
+                branch.value = CommandType.BRANCH;
                 if (branch.DataType == null && branch.next == null)
                     throw new ParseException("invalid syntaxe", 0);
                 currentNode.next = branch;
@@ -405,37 +408,118 @@ public class SGF{
         }
         return tree;
     } 
-    
-    private static void printTree(Node tree)
-    {
-        System.out.println("data == " + tree.getValue());
-        System.out.println("data == " + tree.DataType);
-        System.out.println("data next == " + tree.next);
-        System.out.println("data data type == " + tree.next.DataType.getValue());
-        System.out.println("data data type == " + tree.next.DataType.getClass());
-        System.out.println("data data type == " + ((Node)tree.next.DataType).next);
-        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).DataType).DataType).getValue());
-        // Node node = ((Node)tree.next.DataType).DataType;
-        Node node = (Node)((Node)tree.next.DataType).DataType;
 
-        while (node.next != null){
-            // System.out.println("node == " + (StringValue)node.DataType.getValue());
-            System.out.println("node == " + ((StringValue) node.DataType).getValue());
-            System.out.println("node == " + ((StringValue) node.DataType).getVal());
-            node = node.next;
+
+    private static void printTree(Node tree, int depth) {
+        if (tree == null)
+            return;
+
+        String indent = "  ".repeat(depth);
+        System.out.println(indent + "Node type: " + tree.value);
+        // if (tree.value == CommandType.MOVE){
+        //     System.out.println("datatrype == " + tree.DataType + "     " + ((StringValue) ((Node) tree.DataType).DataType));
+        // }
+
+        if (tree.value == CommandType.MOVE) {
+            Node list = (Node)tree.DataType;
+            while (list != null){
+                StringValue str = (StringValue) list.DataType;
+                System.out.println(indent + "  Command: " + str.getCommand() + " -> " + str.getVal());
+                list = list.next;
+            }
         }
-        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).DataType).DataType).getVal());
 
-        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.DataType).DataType).getValue());
-        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.DataType).DataType).getVal());
-        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.next.DataType).DataType).getValue());
-        System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.next.DataType).DataType).getVal());
-        System.out.println("data data type == " + ((Node)tree.next.DataType).next.next);
+        if (tree.value == CommandType.BRANCH && tree.DataType instanceof Node) {
+            System.out.println(indent + "Entering branch:");
+            printTree((Node) tree.DataType, depth + 1);
+        }
 
-        // System.out.println("data next next == " + tree.next.next.next);
-        // if ("branch".equals(tree.DataType.getValue()))
-            // System.out.println("branch");
+        // Appelle récursivement le frère
+        printTree(tree.next, depth);
     }
+
+
+// private static void printTree(Node tree) {
+//     if (tree == null)
+//         return;
+//     System.out.println("\t\tvalue == " + tree.value.toString());
+    
+//     // Affiche les données du noeud courant
+//     if (tree.value == CommandType.MOVE && tree.DataType != null) {
+//         Node node = (Node) tree;
+//         // System.out.println("new CMD ");
+//         while (node != null) {
+//             // System.out.println("instance of == " + node.DataType);
+//             if (node.DataType instanceof StringValue) {
+//                 StringValue str = (StringValue) node.DataType;
+//                 System.out.print("instruciton: " + str.getValue());
+//                 System.out.println(" value: " + str.getVal());
+//             }
+//             node = node.next;
+//         }
+//     }
+
+//     // Si ce noeud a une branche (DataType comme sous-arbre)
+//     if (tree.DataType instanceof Node) {
+//         System.out.println("\t\tje recurse ici 1");
+//         printTree((Node) tree.DataType);
+//     }
+
+//     // Passe au frère (next)
+//         System.out.println("\t\tje recurse ici 2");
+//         printTree(tree.next);
+// }
+
+
+    // private static void printTree(Node tree)
+    // {
+    //     System.out.println("coucou ici");
+    //     if (tree == null)
+    //         return ;
+    //     // System.out.println("data == " + tree.getValue());
+    //     // System.out.println("data == " + tree.DataType);
+    //     // System.out.println("data next == " + tree.next);
+    //     // System.out.println("data data type == " + tree.next.DataType.getValue());
+    //     // System.out.println("data data type == " + tree.next.DataType.getClass());
+    //     // System.out.println("data data type == " + ((Node)tree.next.DataType).next);
+    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).DataType).DataType).getValue());
+    //     // Node node = ((Node)tree.next.DataType).DataType;
+    //     Node cmd  = (Node) tree.DataType;
+    //     Node node  = null;
+    //     while (cmd != null && cmd.value == CommandType.MOVE)
+    //     {
+    //         int i = 0;
+    //         System.out.println("i == " + i);
+    //         i++;
+    //         if (tree.DataType != null)
+    //         {
+    //             node = ((Node)cmd.DataType);
+    //             while (node.next != null)
+    //             {
+    //                 // System.out.println("node == " + (StringValue)node.DataType.getValue());
+    //                 System.out.println("node == " + ((StringValue) node.DataType).getValue());
+    //                 System.out.println("node == " + ((StringValue) node.DataType).getVal());
+    //                 node = node.next;
+    //             }
+    //         }
+    //         // cmd = (Node)((Node)cmd.DataType).next;
+    //         cmd = cmd.next;
+    //     }
+    //     if (cmd != null)
+    //         printTree(cmd.next);
+    //     printTree(tree.next);
+    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).DataType).DataType).getVal());
+
+    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.DataType).DataType).getValue());
+    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.DataType).DataType).getVal());
+    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.next.DataType).DataType).getValue());
+    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.next.DataType).DataType).getVal());
+    //     // System.out.println("data data type == " + ((Node)tree.next.DataType).next.next);
+
+    //     // System.out.println("data next next == " + tree.next.next.next);
+    //     // if ("branch".equals(tree.DataType.getValue()))
+    //         // System.out.println("branch");
+    // }
 
     public static boolean parseFile(){
         if ("sgf".equals(getExtension(file)) == false)
@@ -462,7 +546,7 @@ public class SGF{
         try{
             tree = buildTree(file_content, 0);
             System.out.println("tree == " + tree);
-            printTree(tree);
+            printTree(tree, 0);
             // res = executeTree();//bool
         }
         catch (ParseException e){
