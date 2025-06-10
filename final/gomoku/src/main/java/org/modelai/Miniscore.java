@@ -676,16 +676,23 @@ public class Miniscore {
                 //System.out.printf("filling %d %d %d\n", x, y, str1[i][x][y]);
                 st = str1[i][x][y];
 
-                if (st == 2 || (st == 3 && MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 1 && MinMax.map[x- ddir[i][0]][y - ddir[i][1]] == 1))
+                if (st == 2 || (st == 3 && 
+                in_goban(x+ ddir[i][0], y + ddir[i][1]) &&
+                MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 1 &&
+                in_goban(x- ddir[i][0], y - ddir[i][1]) &&
+                MinMax.map[x- ddir[i][0]][y - ddir[i][1]] == 1))
                 {
-                    if (MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 1 && MinMax.map[x+2*ddir[i][0]][y + 2*ddir[i][1]] == 1)
+                    if (in_goban( x+ ddir[i][0], y + ddir[i][1]) &&
+                        MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 1 && in_goban(x+2* ddir[i][0], y +2* ddir[i][1]) &&
+                    MinMax.map[x+2*ddir[i][0]][y + 2*ddir[i][1]] == 1)
                         sig = 1;
                     else
                         sig = -1;
         
                     //if (cur_turn == 1)
                     //{
-                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 2)
+                        if (in_goban(x+ sig * 3* ddir[i][0], y + sig * 3 * ddir[i][1]) &&
+                            MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 2)
                         {
                             //System.out.println("DIM1");
                             capt[1]--;
@@ -693,7 +700,8 @@ public class Miniscore {
                     //}
                     if (cur_turn == 2)
                     {
-                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 0)
+                        if (in_goban(x+ sig * 3* ddir[i][0], y + sig * 3 * ddir[i][1]) &&
+                            MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 0)
                         {
                             //System.out.println("inc fill 1");
                             capt[1]++;
@@ -724,16 +732,22 @@ public class Miniscore {
             {
                 st = str2[i][x][y];
 
-                if (st == 2 || (st == 3 && MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 2 && MinMax.map[x- ddir[i][0]][y - ddir[i][1]] == 2))
+                if (st == 2 || (st == 3 && 
+                in_goban(x+ ddir[i][0], y + ddir[i][1])
+                && MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 2 && 
+                in_goban(x- ddir[i][0], y - ddir[i][1]) &&
+                MinMax.map[x- ddir[i][0]][y - ddir[i][1]] == 2))
                 {
-                    if (MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 2 && MinMax.map[x+2*ddir[i][0]][y +2*ddir[i][1]] == 2)
+                    if (in_goban(x+ ddir[i][0], y + ddir[i][1]) && MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 2 &&
+                     in_goban(x+2*ddir[i][0], y +2*ddir[i][1]) && MinMax.map[x+2*ddir[i][0]][y +2*ddir[i][1]] == 2)
                         sig = 1;
                     else
                         sig = -1;
         
                     //if (cur_turn == 2)
                     //{
-                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 1)
+                        if ( in_goban(x+ sig * 3* ddir[i][0], y + sig * 3 * ddir[i][1]) &&
+                            MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 1)
                         {
                             //System.out.println("DIM2");
                             capt[0]--;
@@ -741,7 +755,8 @@ public class Miniscore {
                     //}
                     else if (cur_turn == 1)
                     {
-                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 0)
+                        if (in_goban(x+ sig * 3* ddir[i][0], y + sig * 3 * ddir[i][1]) &&
+                            MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 0)
                         {
                             //System.out.println("inc fill2");
                             capt[0]++;
@@ -783,22 +798,24 @@ public class Miniscore {
         int nb = 0;
         int xval=-1;
         int yval=-1;
-        int cur = MinMax.map[x+ddir[dir][0]*sig][y + ddir[dir][1]*sig];
 
-        for (int i = 1 ; in_goban(x+ddir[dir][0]*sig*i, y + ddir[dir][1]*sig*i) && cur != 2;
-            cur= MinMax.map[x+ddir[dir][0]*sig*i][y + ddir[dir][1]*sig*i], i++)
+        for (int i = 1 ; in_goban(x+ddir[dir][0]*sig*i, y + ddir[dir][1]*sig*i) && i < 5;i++)
         {
-            //System.out.printf("x y cur opp %d %d %d %d\n", x, y, cur, opponant);
-            if (cur == opponant)
+            //System.out.printf("x y cur opp %d %d %d %d\n", x+ddir[dir][0]*sig*i, y + ddir[dir][1]*sig*i, 
+            //MinMax.map[x+ddir[dir][0]*sig*i][y + ddir[dir][1]*sig*i], opponant);
+    
+            if (MinMax.map[x+ddir[dir][0]*sig*i][y + ddir[dir][1]*sig*i] == opponant)
             {
                 nb++;
             }
-            else if (cur == 0)
+            else if (MinMax.map[x+ddir[dir][0]*sig*i][y + ddir[dir][1]*sig*i] == 0)
             {
                 xval = x+ddir[dir][0]*sig*i;
                 yval = y+ddir[dir][1]*sig*i;
             }
         }
+
+
 
         //System.out.printf("info search blockers %d %d %d\n", nb, xval, yval);
 
@@ -809,12 +826,34 @@ public class Miniscore {
             else
                 val = str1[dir][xval][yval];
 
-            Blocker res = new Blocker(val);
+            Blocker res = new Blocker(val, opponant, dir);
             res.bl1(x, y);
             res.bl2(x+ 5*ddir[dir][0]*sig, y + 5 * ddir[dir][1]*sig);
             res.val(xval, yval);
 
             this.blocklist.add(res);
+        }
+    }
+
+    private void update_blocker()
+    {
+        Blocker b;
+
+        for (int i = 0 ; i < this.blocklist.size() ; i++)
+        {
+            b = this.blocklist.get(i);
+
+            if (b.player == 1)
+                b.str = str1[b.dir][b.val[0]][b.val[1]];
+            else
+                b.str = str2[b.dir][b.val[0]][b.val[1]];
+
+            if (MinMax.map[b.bl1[0]] [b.bl1[1]] != b.blockcolor ||
+                MinMax.map[b.bl2[0]] [b.bl2[1]] != b.blockcolor)
+            {
+                this.blocklist.remove(i);
+                i--;
+            }
         }
     }
 
@@ -1365,6 +1404,8 @@ public class Miniscore {
         {
             unfill0(x, y, i);
         }
+
+        update_blocker();
         // else
         //     unfill0(x, y, 3);
     }
@@ -1500,6 +1541,7 @@ public class Miniscore {
         }
         //if (!victory)
         fill2(x, y);
+        update_blocker();
     }
 
     public void display_free()
@@ -1583,10 +1625,10 @@ public class Miniscore {
                 b.bl1[0], b.bl1[1], b.bl2[0], b.bl2[1], b.val[0], b.val[1], b.str);
             }
         }
-        // else
-        // {
-        //     System.out.println("no blockers");
-        // }
+        else
+        {
+            System.out.println("no blockers");
+        }
     }
 
     // public void display(int mod)

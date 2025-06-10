@@ -41,7 +41,7 @@ public class Pente extends MinMax {
         int tmp = map[warx][wary];
         map[warx][wary]=0;
         prisoners[val - 1]++;
-        System.out.printf("%d %d removed\n", x, y);
+        //System.out.printf("%d %d removed\n", x, y);
         map[x][y] = 0;
         scsimul.analyse_unmove(x, y, val);
         map[warx][wary]=tmp;
@@ -150,7 +150,7 @@ public class Pente extends MinMax {
             {
 
                 prisoners[o - 1]--;
-                System.out.printf("%d %d replayed\n", p.pos.x, p.pos.y);
+                //System.out.printf("%d %d replayed\n", p.pos.x, p.pos.y);
                 map[p.pos.x][p.pos.y] = o;
                 scsimul.analyse_move(p.pos.x, p.pos.y, o);
 
@@ -207,8 +207,12 @@ public class Pente extends MinMax {
         {
             pos_counter++;
 
-            // display_map();
-            // scsimul.display();
+            // if (this.scsimul.blocklist.size() != 0)
+            // {
+
+            //     display_map();
+            //     scsimul.display();
+            // }
 
             return eval(player, len, turn);
         }
@@ -281,6 +285,11 @@ public class Pente extends MinMax {
             return (prisoners[0] - prisoners[1])  * 2;
     }
 
+    public int blockedpoint()
+    {
+        return 0;
+    }
+
     public float minmaxab(int depth, int turn, int player, float alpha, float beta)
     {   
         int nb_candidates;
@@ -320,9 +329,13 @@ public class Pente extends MinMax {
             //if ( nbmove == 2 && (pos_counter >=1921 && pos_counter <= 1922)) //<=12
             // if (nbmove == 2 && ((pos_counter >=918 && pos_counter <= 920)))
 
-            // System.out.printf("Counter %d %d\n", pos_counter, nbmove);
-            // display_map();
-            // scsimul.display();
+            //if (scsimul.blocklist.size() != 0)
+            // if (pos_counter % 200 == 0)
+            // {
+            //     System.out.printf("Counter %d %d\n", pos_counter, nbmove);
+            //     display_map();
+            //     scsimul.display();
+            // }
             res = eval(player, len, turn) + prisonpnt(player);
             //debugstr();
             // if (res > 1000)
