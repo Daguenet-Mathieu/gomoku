@@ -8,6 +8,7 @@ public class Pente extends MinMax {
     static ArrayList <Pente.Prison> prisonlst;
     public static boolean cut = true;
     public static int stop = 0;
+    public static int [] prisonersfactor = {0, 2, 2, 4, 4, 8, 8, 16, 16, 32, 32};
 
     private class Prison
     {
@@ -22,6 +23,7 @@ public class Pente extends MinMax {
             warder = new Candidat.coord(warx, wary);
         }
     }
+
 
     public Pente()
     {
@@ -41,7 +43,7 @@ public class Pente extends MinMax {
         int tmp = map[warx][wary];
         map[warx][wary]=0;
         prisoners[val - 1]++;
-        System.out.printf("%d %d removed\n", x, y);
+        //System.out.printf("%d %d removed\n", x, y);
         map[x][y] = 0;
         scsimul.analyse_unmove(x, y, val);
         map[warx][wary]=tmp;
@@ -150,7 +152,7 @@ public class Pente extends MinMax {
             {
 
                 prisoners[o - 1]--;
-                System.out.printf("%d %d replayed\n", p.pos.x, p.pos.y);
+                //System.out.printf("%d %d replayed\n", p.pos.x, p.pos.y);
                 map[p.pos.x][p.pos.y] = o;
                 scsimul.analyse_move(p.pos.x, p.pos.y, o);
 
@@ -207,8 +209,12 @@ public class Pente extends MinMax {
         {
             pos_counter++;
 
-            // display_map();
-            // scsimul.display();
+            // if (this.scsimul.blocklist.size() != 0)
+            // {
+
+            //     display_map();
+            //     scsimul.display();
+            // }
 
             return eval(player, len, turn);
         }
@@ -273,12 +279,49 @@ public class Pente extends MinMax {
         return;
     }
 
+    // public int prisonpnt(int player)
+    // {
+    //     int res = 0;
+    //     if (player == 1)
+    //     {
+    //         res = prisonersfactor[prisoners[1]] - prisonersfactor[prisoners[0]];
+    //     }
+    //     else
+    //     {
+    //         res = prisonersfactor[prisoners[0]] - prisonersfactor[prisoners[1]];
+    //     }
+    //     return res;
+    // }
+
+
     public int prisonpnt(int player)
     {
         if (player == 1)
             return (prisoners[1] - prisoners[0]) * 2;
         else
             return (prisoners[0] - prisoners[1])  * 2;
+    }
+
+
+    public int potentialpnt(int player)
+    {
+       // System.out.printf("potentiel added %d %d\n", MinMax.scsimul.capt[0], MinMax.scsimul.capt[1]);
+        if (player == 1)
+            return (MinMax.scsimul.capt[0] - MinMax.scsimul.capt[1] ) * 8;
+        else
+            return (MinMax.scsimul.capt[1] - MinMax.scsimul.capt[0] ) * 8;
+    }
+
+    public int blockedpnt(int player)
+    {
+        if (player == 1)
+        {
+            return - scsimul.bpoint[0] + scsimul.bpoint[1];
+        }
+        else 
+        {
+            return scsimul.bpoint[0] - scsimul.bpoint[1];
+        }
     }
 
     public float minmaxab(int depth, int turn, int player, float alpha, float beta)
@@ -320,10 +363,14 @@ public class Pente extends MinMax {
             //if ( nbmove == 2 && (pos_counter >=1921 && pos_counter <= 1922)) //<=12
             // if (nbmove == 2 && ((pos_counter >=918 && pos_counter <= 920)))
 
-            // System.out.printf("Counter %d %d\n", pos_counter, nbmove);
-            // display_map();
-            // scsimul.display();
-            res = eval(player, len, turn) + prisonpnt(player);
+            //if (scsimul.blocklist.size() != 0)
+            // if (pos_counter % 10 == 0)
+            // {
+            //     System.out.printf("Counter %d %d\n", pos_counter, nbmove);
+            //     display_map();
+            //     scsimul.display();
+            // }
+            res = eval(player, len, turn) + prisonpnt(player) + potentialpnt(player) + blockedpnt(player);
             //debugstr();
             // if (res > 1000)
             // {

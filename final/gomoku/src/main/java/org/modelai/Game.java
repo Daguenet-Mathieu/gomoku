@@ -99,7 +99,7 @@ public class Game {
     {
         int val = MinMax.map[point.y][point.x];
 
-        System.out.printf("Point %d %d val %d removed !!!!!??????!!!!!\n", point.y, point.x, val);
+        //System.out.printf("Point %d %d val %d removed !!!!!??????!!!!!\n", point.y, point.x, val);
 
         MinMax.map[point.y][point.x] = 0;
         scbord.analyse_unmove(point.y, point.x, val);

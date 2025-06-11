@@ -22,6 +22,7 @@ public class Miniscore {
     int [] simp4;
     int [] free3;
     int [] capt;
+    int [] bpoint;
 
     boolean victory;
 
@@ -42,6 +43,8 @@ public class Miniscore {
         this.simp4 = new int[2];
         this.free3 = new int[2];
         this.capt = new int[2];
+        this.bpoint = new int[2];
+    
         free4[0] = 0; free4[1] = 0;
         free3[0] = 0; free3[1] = 0;
         simp4[0] = 0; simp4[1] = 0;
@@ -676,16 +679,23 @@ public class Miniscore {
                 //System.out.printf("filling %d %d %d\n", x, y, str1[i][x][y]);
                 st = str1[i][x][y];
 
-                if (st == 2 || (st == 3 && MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 1 && MinMax.map[x- ddir[i][0]][y - ddir[i][1]] == 1))
+                if (st == 2 || (st == 3 && 
+                in_goban(x+ ddir[i][0], y + ddir[i][1]) &&
+                MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 1 &&
+                in_goban(x- ddir[i][0], y - ddir[i][1]) &&
+                MinMax.map[x- ddir[i][0]][y - ddir[i][1]] == 1))
                 {
-                    if (MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 1 && MinMax.map[x+2*ddir[i][0]][y + 2*ddir[i][1]] == 1)
+                    if (in_goban( x+ ddir[i][0], y + ddir[i][1]) &&
+                        MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 1 && in_goban(x+2* ddir[i][0], y +2* ddir[i][1]) &&
+                    MinMax.map[x+2*ddir[i][0]][y + 2*ddir[i][1]] == 1)
                         sig = 1;
                     else
                         sig = -1;
         
                     //if (cur_turn == 1)
                     //{
-                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 2)
+                        if (in_goban(x+ sig * 3* ddir[i][0], y + sig * 3 * ddir[i][1]) &&
+                            MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 2)
                         {
                             //System.out.println("DIM1");
                             capt[1]--;
@@ -693,7 +703,8 @@ public class Miniscore {
                     //}
                     if (cur_turn == 2)
                     {
-                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 0)
+                        if (in_goban(x+ sig * 3* ddir[i][0], y + sig * 3 * ddir[i][1]) &&
+                            MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 0)
                         {
                             //System.out.println("inc fill 1");
                             capt[1]++;
@@ -724,16 +735,22 @@ public class Miniscore {
             {
                 st = str2[i][x][y];
 
-                if (st == 2 || (st == 3 && MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 2 && MinMax.map[x- ddir[i][0]][y - ddir[i][1]] == 2))
+                if (st == 2 || (st == 3 && 
+                in_goban(x+ ddir[i][0], y + ddir[i][1])
+                && MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 2 && 
+                in_goban(x- ddir[i][0], y - ddir[i][1]) &&
+                MinMax.map[x- ddir[i][0]][y - ddir[i][1]] == 2))
                 {
-                    if (MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 2 && MinMax.map[x+2*ddir[i][0]][y +2*ddir[i][1]] == 2)
+                    if (in_goban(x+ ddir[i][0], y + ddir[i][1]) && MinMax.map[x+ ddir[i][0]][y + ddir[i][1]] == 2 &&
+                     in_goban(x+2*ddir[i][0], y +2*ddir[i][1]) && MinMax.map[x+2*ddir[i][0]][y +2*ddir[i][1]] == 2)
                         sig = 1;
                     else
                         sig = -1;
         
                     //if (cur_turn == 2)
                     //{
-                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 1)
+                        if ( in_goban(x+ sig * 3* ddir[i][0], y + sig * 3 * ddir[i][1]) &&
+                            MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 1)
                         {
                             //System.out.println("DIM2");
                             capt[0]--;
@@ -741,7 +758,8 @@ public class Miniscore {
                     //}
                     else if (cur_turn == 1)
                     {
-                        if (MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 0)
+                        if (in_goban(x+ sig * 3* ddir[i][0], y + sig * 3 * ddir[i][1]) &&
+                            MinMax.map[x+ sig * 3* ddir[i][0]][y + sig * 3 * ddir[i][1]] == 0)
                         {
                             //System.out.println("inc fill2");
                             capt[0]++;
@@ -768,53 +786,92 @@ public class Miniscore {
             }
             if (in_goban(x + 5 * ddir[i][0], y + 5 * ddir[i][1]) && MinMax.map[x + 5 * ddir[i][0]][y + 5 * ddir[i][1]] == cur_turn)
             {
-                search_blocker(i, 1);   
+                create_blocker(i, 1);   
             }
             if (in_goban(x - 5 * ddir[i][0], y - 5 * ddir[i][1]) && MinMax.map[x - 5 * ddir[i][0]][y - 5 * ddir[i][1]] == cur_turn)
             {
-                search_blocker(i, -1);   
+                create_blocker(i, -1);   
             }
         }
     }
 
-    private void search_blocker(int dir, int sig)
+    private void create_blocker(int dir, int sig)
     {
-        int val = 0;
-        int nb = 0;
-        int xval=-1;
-        int yval=-1;
-        int cur = MinMax.map[x+ddir[dir][0]*sig][y + ddir[dir][1]*sig];
+        Blocker res = new Blocker(cur_turn, dir, sig);
+        res.bl1(x, y);
+        res.bl2(x+ 5*ddir[dir][0]*sig, y + 5 * ddir[dir][1]*sig);
+        res.update_block_info();
+        this.blocklist.add(res);
+    }
 
-        for (int i = 1 ; in_goban(x+ddir[dir][0]*sig*i, y + ddir[dir][1]*sig*i) && cur != 2;
-            cur= MinMax.map[x+ddir[dir][0]*sig*i][y + ddir[dir][1]*sig*i], i++)
+    // private void search_blocker(int dir, int sig)
+    // {
+    //     int val = 0;
+    //     int nb = 0;
+    //     int xval=-1;
+    //     int yval=-1;
+
+    //     for (int i = 1 ; in_goban(x+ddir[dir][0]*sig*i, y + ddir[dir][1]*sig*i) && i < 5;i++)
+    //     {
+    //         //System.out.printf("x y cur opp %d %d %d %d\n", x+ddir[dir][0]*sig*i, y + ddir[dir][1]*sig*i, 
+    //         //MinMax.map[x+ddir[dir][0]*sig*i][y + ddir[dir][1]*sig*i], opponant);
+    
+    //         if (MinMax.map[x+ddir[dir][0]*sig*i][y + ddir[dir][1]*sig*i] == opponant)
+    //         {
+    //             nb++;
+    //         }
+    //         else if (MinMax.map[x+ddir[dir][0]*sig*i][y + ddir[dir][1]*sig*i] == 0)
+    //         {
+    //             xval = x+ddir[dir][0]*sig*i;
+    //             yval = y+ddir[dir][1]*sig*i;
+    //         }
+    //     }
+
+
+
+    //     //System.out.printf("info search blockers %d %d %d\n", nb, xval, yval);
+
+    //     if (nb == 3 && xval !=-1 && yval != -1)
+    //     {
+    //         if (cur_turn == 1)
+    //             val = str2[dir][xval][yval];
+    //         else
+    //             val = str1[dir][xval][yval];
+
+    //         Blocker res = new Blocker(val, opponant, dir, sig);
+    //         res.bl1(x, y);
+    //         res.bl2(x+ 5*ddir[dir][0]*sig, y + 5 * ddir[dir][1]*sig);
+    //         res.val(xval, yval);
+
+    //         this.blocklist.add(res);
+    //     }
+    // }
+
+    private void update_blocker()
+    {
+        Blocker b;
+        bpoint[0] = 0;
+        bpoint[1] = 0;
+
+        for (int i = 0 ; i < this.blocklist.size() ; i++)
         {
-            //System.out.printf("x y cur opp %d %d %d %d\n", x, y, cur, opponant);
-            if (cur == opponant)
+            b = this.blocklist.get(i);
+
+            b.update_block_info();
+            for (int j = 0 ; j < b.rank ; j++)
             {
-                nb++;
+                if (b.color == 1)
+                    bpoint[0] += factor[str1[b.dir][b.cases[j][0]][b.cases[j][1]]];
+                else
+                    bpoint[1] += factor[str2[b.dir][b.cases[j][0]][b.cases[j][1]]];
+
             }
-            else if (cur == 0)
+            if (MinMax.map[b.bl1[0]] [b.bl1[1]] != b.blockcolor ||
+                MinMax.map[b.bl2[0]] [b.bl2[1]] != b.blockcolor)
             {
-                xval = x+ddir[dir][0]*sig*i;
-                yval = y+ddir[dir][1]*sig*i;
+                this.blocklist.remove(i);
+                i--;
             }
-        }
-
-        //System.out.printf("info search blockers %d %d %d\n", nb, xval, yval);
-
-        if (nb == 3 && xval !=-1 && yval != -1)
-        {
-            if (cur_turn == 1)
-                val = str2[dir][xval][yval];
-            else
-                val = str1[dir][xval][yval];
-
-            Blocker res = new Blocker(val);
-            res.bl1(x, y);
-            res.bl2(x+ 5*ddir[dir][0]*sig, y + 5 * ddir[dir][1]*sig);
-            res.val(xval, yval);
-
-            this.blocklist.add(res);
         }
     }
 
@@ -1365,6 +1422,8 @@ public class Miniscore {
         {
             unfill0(x, y, i);
         }
+
+        update_blocker();
         // else
         //     unfill0(x, y, 3);
     }
@@ -1500,6 +1559,7 @@ public class Miniscore {
         }
         //if (!victory)
         fill2(x, y);
+        update_blocker();
     }
 
     public void display_free()
@@ -1524,7 +1584,8 @@ public class Miniscore {
 
     public void display_miniscore()
     {
-        System.out.printf("score %d %d diff %d (%d %d)\n", sc.one, sc.two, sc.one-sc.two, capt[0], capt[1]);
+        int res = sc.one - sc.two + capt[0]  * 10 - capt[1] * 10;
+        System.out.printf("score %d %d diff %d (%d %d) [%d]\nbpoint %d %d\n", sc.one, sc.two, sc.one-sc.two, capt[0], capt[1], res, bpoint[0], bpoint[1]);
     }
 
     public boolean check_str()
@@ -1579,14 +1640,20 @@ public class Miniscore {
             for (int i = 0 ; i < blocklist.size() ; i++)
             {
                 b = blocklist.get(i);
-                System.out.printf("blockers [%d %d]  [%d %d] to %d %d of str %d\n", 
-                b.bl1[0], b.bl1[1], b.bl2[0], b.bl2[1], b.val[0], b.val[1], b.str);
+                System.out.printf("blockers [%d %d]  [%d %d] ", 
+                b.bl1[0], b.bl1[1], b.bl2[0], b.bl2[1]);
+                for (int j = 0 ; j < b.rank ; j++)
+                {
+                    System.out.printf("|%d %d|", b.cases[j][0], b.cases[j][1]);
+                }
+                System.out.printf("\n");
             }
+
         }
-        // else
-        // {
-        //     System.out.println("no blockers");
-        // }
+        else
+        {
+            System.out.println("no blockers");
+        }
     }
 
     // public void display(int mod)
