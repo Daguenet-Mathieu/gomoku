@@ -40,6 +40,7 @@ public class SGF{
 
     private static File file;
     private static String rules;
+    private static String errorMsg;
     private static ArrayList<Map> game_moves;
     private static final String[] ignoreSet = new String[] {
         "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AR", "CR",
@@ -49,7 +50,6 @@ public class SGF{
         "PB", "PW", "RE", "RO", "SO", "TM", "US", "WR", "WT", "TB",
         "TW", "AS", "IP", "IY", "SE", "SU", "FF", "BL", "WL"
     };
-
     // private static final Set<String> ignoreSet = new String[] {
     //     "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AB", "AW",
     //     "AR", "CR", "DD", "DM", "FG", "GB", "GW", "HO", "LB", "LN",
@@ -63,6 +63,8 @@ public class SGF{
     private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "AB", "AW"};
     private static final String[] listCmdSet = new String[] {"AB", "AW", "AE"};
     private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "AP", "CA", "SZ"};
+    private static final String[] PointCmdSet = new String[] {"B", "W"};
+    private static final String[] NumCmdSet = new String[] {"SZ", "HA", "KM"};
 // "KM"//komi
 // "HA"//handicap??
 // *AP  Application     root	      composed simpletext ':' number // je garde
@@ -128,34 +130,30 @@ public class SGF{
     }
 
     public static void createSgf(ArrayList<Map> map, String rule){
-        //creer le filename
-            final int rule_type = "go".equals(rule) ? 1 : 4;
-            String fileContent = "(;FF[4] " + "GM[" + rule_type + "4]" + " RU[" + rule + "] SZ[19] CA[UTF-8] AP[CGoban:3]\n";
-            LocalDate localDate = LocalDate.now();
-            LocalTime localTime = LocalTime.now();
-            String fileName = localDate.toString() + "_" + localTime.toString();
-            if (fileName.indexOf(".") != -1)
-                fileName = "./sgf/" + rule + "_" + fileName.substring(0, fileName.indexOf("."));
-            File file = new File(fileName + ".sgf");
-            int i = 1;
-            while (file.exists()){
-                file = new File(fileName + "(" + i + ")" + ".sgf");
-                i++;
-            }
-            file.setWritable(true);
-            file.setReadable(true);
-            // write(new Path(file.getPath()), ff.getBytes());
-            try {
-                Writer writer = new FileWriter(file, true);
-                fileContent = add_moves(fileContent, map);
-                writer.write(fileContent, 0, fileContent.length());
-                writer.close();
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
-
-        //ouvrir le dossier sgf si succes remplir le fichier //sinon message d'erreur?
+        final int rule_type = "go".equals(rule) ? 1 : 4;
+        String fileContent = "(;FF[4] " + "GM[" + rule_type + "4]" + " RU[" + rule + "] SZ[19] CA[UTF-8] AP[Gomoku:1]\n";
+        LocalDate localDate = LocalDate.now();
+        LocalTime localTime = LocalTime.now();
+        String fileName = localDate.toString() + "_" + localTime.toString();
+        if (fileName.indexOf(".") != -1)
+            fileName = "./sgf/" + rule + "_" + fileName.substring(0, fileName.indexOf("."));
+        File file = new File(fileName + ".sgf");
+        int i = 1;
+        while (file.exists()){
+            file = new File(fileName + "(" + i + ")" + ".sgf");
+            i++;
+        }
+        file.setWritable(true);
+        file.setReadable(true);
+        try {
+            Writer writer = new FileWriter(file, true);
+            fileContent = add_moves(fileContent, map);
+            writer.write(fileContent, 0, fileContent.length());
+            writer.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     private static String getExtension(File file){
@@ -211,6 +209,18 @@ public class SGF{
     }
 }
 
+    private static CommandType getTypeCmd(String name){
+        if (name == null)
+            return CommandType.BRANCH;
+        if (indexOf(name, NumCmdSet) != -1)
+            return CommandType.NUM_VALUE;
+        if (indexOf(name, PointCmdSet) != -1)
+            return CommandType.COORD_VALUE;
+        if (indexOf(name, listCmdSet) != -1)
+            return CommandType.ARRAY_VALUE;
+        else
+            return CommandType.STRING_VALUE;
+    }
 
     private  static Union getNode (CommandType type, String name){
         switch (type)
@@ -238,7 +248,7 @@ public class SGF{
         // file.delete(0, 3);
 
         // // Effacer le premier caractère
-        // file.deleteCharAt(0);
+        // file.deleteCharAt(0);commandName
         int index = file.indexOf("[");//proteger pas trouve
         if (index == -1)
             return null;
@@ -250,30 +260,23 @@ public class SGF{
         return command;
     }
 
-    private  static double getValueNum(StringBuilder file){
+    private  static double getValueNum(string val){
         int index = file.indexOf("]");
         double value = 0;
         return value;
     }
 
-    private  static Point getValueCoord(StringBuilder file){
+    private  static Point getValueCoord(string val){
         Point value = new Point();
         return value;
     }
 
-    private  static ArrayList<Point> getValueArray(StringBuilder file){
+    private  static ArrayList<Point> getValueArray(string val){
         ArrayList<Point> value = new ArrayList<Point>();
         return value;
     }
 
     private  static String getValueString(StringBuilder file){
-
-        // // Effacer les 3 premiers caractères
-        // file.delete(0, 3);
-
-        // // Effacer le premier caractère
-        // file.deleteCharAt(0);
-        // System.out.println("in strin val 1");
         trimSpace(file);
         // System.out.println("in strin val 2");
         //check bien [
@@ -291,7 +294,7 @@ public class SGF{
     private static int indexOf(String value, String[] array){
         for (int i = 0; i < array.length; i++)
         {
-            if (value.equals(array[i]))
+            if (array[i].equals(value))
                 return i;
         }
         return -1;
@@ -317,6 +320,8 @@ public class SGF{
                 throw new ParseException("invalid syntaxe", 0);
             // System.out.println("coucou2");
             String val = getValueString(file);
+            if (val == null )//check si dans une des listes
+                throw new ParseException("invalid syntaxe", 0);
             Node newInstruct = new Node();
             newInstruct.value = CommandType.INSTRUCTION;
             newInstruct.DataType = new StringValue(commandName);
@@ -416,10 +421,6 @@ public class SGF{
 
         String indent = "  ".repeat(depth);
         System.out.println(indent + "Node type: " + tree.value);
-        // if (tree.value == CommandType.MOVE){
-        //     System.out.println("datatrype == " + tree.DataType + "     " + ((StringValue) ((Node) tree.DataType).DataType));
-        // }
-
         if (tree.value == CommandType.MOVE) {
             Node list = (Node)tree.DataType;
             while (list != null){
@@ -433,98 +434,39 @@ public class SGF{
             System.out.println(indent + "Entering branch:");
             printTree((Node) tree.DataType, depth + 1);
         }
-
-        // Appelle récursivement le frère
         printTree(tree.next, depth);
     }
 
+    private static void executeTree(Node tree, int depth) throws ParseException{
+        if (tree == null)
+            return;
 
-// private static void printTree(Node tree) {
-//     if (tree == null)
-//         return;
-//     System.out.println("\t\tvalue == " + tree.value.toString());
-    
-//     // Affiche les données du noeud courant
-//     if (tree.value == CommandType.MOVE && tree.DataType != null) {
-//         Node node = (Node) tree;
-//         // System.out.println("new CMD ");
-//         while (node != null) {
-//             // System.out.println("instance of == " + node.DataType);
-//             if (node.DataType instanceof StringValue) {
-//                 StringValue str = (StringValue) node.DataType;
-//                 System.out.print("instruciton: " + str.getValue());
-//                 System.out.println(" value: " + str.getVal());
-//             }
-//             node = node.next;
-//         }
-//     }
+        String indent = "  ".repeat(depth);
+        System.out.println(indent + "Node type: " + tree.value);
+        if (tree.value == CommandType.MOVE) {
+            Node list = (Node)tree.DataType;
+            Map map = new Map(19);
+            game_moves.add(map);
+            while (list != null){
+                StringValue str = (StringValue) list.DataType;
+                System.out.println(indent + "  Command: " + str.getCommand() + " -> " + str.getVal());
+                list = list.next;
+            }
+        }
 
-//     // Si ce noeud a une branche (DataType comme sous-arbre)
-//     if (tree.DataType instanceof Node) {
-//         System.out.println("\t\tje recurse ici 1");
-//         printTree((Node) tree.DataType);
-//     }
-
-//     // Passe au frère (next)
-//         System.out.println("\t\tje recurse ici 2");
-//         printTree(tree.next);
-// }
-
-
-    // private static void printTree(Node tree)
-    // {
-    //     System.out.println("coucou ici");
-    //     if (tree == null)
-    //         return ;
-    //     // System.out.println("data == " + tree.getValue());
-    //     // System.out.println("data == " + tree.DataType);
-    //     // System.out.println("data next == " + tree.next);
-    //     // System.out.println("data data type == " + tree.next.DataType.getValue());
-    //     // System.out.println("data data type == " + tree.next.DataType.getClass());
-    //     // System.out.println("data data type == " + ((Node)tree.next.DataType).next);
-    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).DataType).DataType).getValue());
-    //     // Node node = ((Node)tree.next.DataType).DataType;
-    //     Node cmd  = (Node) tree.DataType;
-    //     Node node  = null;
-    //     while (cmd != null && cmd.value == CommandType.MOVE)
-    //     {
-    //         int i = 0;
-    //         System.out.println("i == " + i);
-    //         i++;
-    //         if (tree.DataType != null)
-    //         {
-    //             node = ((Node)cmd.DataType);
-    //             while (node.next != null)
-    //             {
-    //                 // System.out.println("node == " + (StringValue)node.DataType.getValue());
-    //                 System.out.println("node == " + ((StringValue) node.DataType).getValue());
-    //                 System.out.println("node == " + ((StringValue) node.DataType).getVal());
-    //                 node = node.next;
-    //             }
-    //         }
-    //         // cmd = (Node)((Node)cmd.DataType).next;
-    //         cmd = cmd.next;
-    //     }
-    //     if (cmd != null)
-    //         printTree(cmd.next);
-    //     printTree(tree.next);
-    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).DataType).DataType).getVal());
-
-    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.DataType).DataType).getValue());
-    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.DataType).DataType).getVal());
-    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.next.DataType).DataType).getValue());
-    //     // System.out.println("data data type == " + ((StringValue)((Node)((Node)tree.next.DataType).next.next.DataType).DataType).getVal());
-    //     // System.out.println("data data type == " + ((Node)tree.next.DataType).next.next);
-
-    //     // System.out.println("data next next == " + tree.next.next.next);
-    //     // if ("branch".equals(tree.DataType.getValue()))
-    //         // System.out.println("branch");
-    // }
+        if (tree.value == CommandType.BRANCH && tree.DataType instanceof Node) {
+            System.out.println(indent + "Entering branch:");
+            printTree((Node) tree.DataType, depth + 1);
+        }
+        printTree(tree.next, depth);
+    }
 
     public static boolean parseFile(){
         if ("sgf".equals(getExtension(file)) == false)
+        {
+            errorMsg = "invalid file ext";
             return false;
-        //si ( branche ls 1er c'est la 1er et la suite de l'actuelle un fois ) sauter tout les () et ski aussi les () dans () "(((...)))"si brancheS s'attendre a )) a la fin
+        }
         int bufferSize = 100;
         char[] buffer = new char[bufferSize];
         StringBuilder file_content = new StringBuilder();
@@ -538,6 +480,7 @@ public class SGF{
             reader.close();
         }
         catch(Exception e){
+            errorMsg = "error while reading file";
             e.printStackTrace();
         }
 
@@ -547,17 +490,15 @@ public class SGF{
             tree = buildTree(file_content, 0);
             System.out.println("tree == " + tree);
             printTree(tree, 0);
-            // res = executeTree();//bool
+            game_moves = new ArrayList<Map>();
+            executeTree(tree, 0);
         }
         catch (ParseException e){
             System.out.println("Parse error: " + e.getMessage());
+            errorMsg = e.getMessage();
             e.printStackTrace();
             return false;
         }
-        //String file content //recuperer tout les fichier avec reader
-        //boolean//getHeaderInfos(file_content)//remove les elements parses?
-        //si ok init la ArrayuList<Map> //static var
-        //boolean get gameContent(file_content)
         return true;
     }
 
@@ -575,5 +516,8 @@ public class SGF{
 
     public static void setFile(String absolute_path, String filename){
         file = new File(absolute_path, filename);
+    }
+    public static String getErrorMsg(){
+        return errorMsg;
     }
 }

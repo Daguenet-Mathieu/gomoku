@@ -15,6 +15,7 @@ public class Map{
     private int _move_time;
     private ArrayList<Point> candidatsList;
     private ArrayList<Point> _prisonners;
+    private String _comment;
 
     public void setCandidatsList(ArrayList<Point> list) {
         System.out.println("cajdidat list dans map == " + list);
@@ -144,4 +145,11 @@ public class Map{
         return _last_move;
     }
 
+    public String getComment(){
+        return _comment;
+    }
+
+    public void setComment(String comment){
+        this._comment = comment;
+    }
 }
