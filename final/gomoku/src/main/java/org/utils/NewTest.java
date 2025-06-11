@@ -183,16 +183,30 @@ public class NewTest
         //unmove 8-7 (2)
         //unmove 9-8 (2)
         //move 7-6 (1)
-        move(0, 0, 1);
-        move(1, 1, 1);
-        move(2, 2, 1);
-        move(4, 4, 2);
+        // move(0, 0, 1);
+        // move(1, 1, 1);
+        // move(2, 2, 1);
+        // move(4, 4, 2);
 
-        // move(8, 8, 2);
-        // move(8, 9, 1);
-        // move(8, 10, 1);
-        // move(8, 11, 1);
-        // move (8, 13, 2);
+        move(8, 8, 2);
+        move (8, 13, 2);
+        move(8, 9, 1);
+        move(8, 10, 1);
+        move(8, 11, 1);
+        move(8, 12, 1);
+
+        unmove(8, 10, 1);
+
+        unmove(8, 8, 2);
+
+
+        // move(7, 12, 1);
+        // move(6, 12, 1);
+        // move(5, 12, 2);
+
+        // move(9, 12, 1);
+        // move(10, 12, 2);
+
 
         // move(7, 13, 2);
         // move(6, 13, 1);
