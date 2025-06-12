@@ -2,7 +2,6 @@ package org.ast;
 import org.utils.*;
 
 public class Node extends Union{
-    public CommandType value;//necessaire? mettre dans unioon?
     public Union       DataType;
     public Node        next;
 

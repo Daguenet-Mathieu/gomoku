@@ -8,9 +8,13 @@ public class NumValue extends Union {
         super(command);
     }
 
-    // public Number getValue(){
-        // return (this.value);
-    // }
+    public NumValue(String command, CommandType type) {
+        super(command, type);
+    }
+
+    public Number getVal(){
+        return (this.value);
+    }
 
     @Override
     public void setValue(Object value){

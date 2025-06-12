@@ -65,6 +65,7 @@ public class SGF{
     private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "AP", "CA", "SZ"};
     private static final String[] PointCmdSet = new String[] {"B", "W"};
     private static final String[] NumCmdSet = new String[] {"SZ", "HA", "KM"};
+
 // "KM"//komi
 // "HA"//handicap??
 // *AP  Application     root	      composed simpletext ':' number // je garde
@@ -230,13 +231,13 @@ public class SGF{
             case MOVE:
                 return new Node();
             case ARRAY_VALUE:
-                return new ArrayValue(name);
+                return new ArrayValue(name, type);
             case STRING_VALUE:
-                return new StringValue(name);
+                return new StringValue(name, type);
             case COORD_VALUE:
-                return new CoordValue(name);
+                return new CoordValue(name, type);
             case NUM_VALUE:
-                return new NumValue(name);
+                return new NumValue(name, type);
             default:
                 return null;
         }       
@@ -260,26 +261,63 @@ public class SGF{
         return command;
     }
 
-    private  static double getValueNum(string val){
-        int index = file.indexOf("]");
-        double value = 0;
-        return value;
+    private  static Number getValueNum(String val, String cmdName) throws ParseException{
+        if ("KM".equals(cmdName))
+        {
+            try {
+                return Double.parseDouble(val);
+            }
+            catch (NumberFormatException e) {
+                throw new ParseException("invalid syntaxe " + val, 0);
+            }
+        }
+        else{
+            try {
+                return Integer.parseInt(val);
+            }
+            catch (NumberFormatException e) {
+                throw new ParseException("invalid syntaxe " + val, 0);
+            }
+        }
     }
 
-    private  static Point getValueCoord(string val){
+    private  static Point getValueCoord(String val) throws ParseException{
         Point value = new Point();
+        if (val.length() != 2)
+            throw new ParseException("invalid syntaxe " + val, 0);
+        if (Character.isAlphabetic(val.charAt(0))) {
+            int index = Character.toLowerCase(val.charAt(0)) - 'a';
+            System.out.println("index y == " + index);
+            value.y = index;
+        }
+        else
+            throw new ParseException("invalid syntaxe " + val, 0);
+        if (Character.isAlphabetic(val.charAt(1))) {
+            int index = Character.toLowerCase(val.charAt(1)) - 'a';
+            System.out.println("index x == " + index);
+            value.x = index;
+        }
+        else
+            throw new ParseException("invalid syntaxe " + val, 0);
         return value;
     }
 
-    private  static ArrayList<Point> getValueArray(string val){
+    private  static ArrayList<Point> getValueArray(String val, StringBuilder file) throws ParseException{
         ArrayList<Point> value = new ArrayList<Point>();
+        System.out.println("----------------------------------------------------------------------------------------");
+        System.out.println("val ==  " + val);
+        System.out.println("file ==  " + file);
+        System.out.println("----------------------------------------------------------------------------------------");
+//tant que getValueString retourne pas null ajouter a value
         return value;
     }
 
-    private  static String getValueString(StringBuilder file){
+    private  static String getValueString(StringBuilder file) throws ParseException{
         trimSpace(file);
         // System.out.println("in strin val 2");
         //check bien [
+        if (file.charAt(0) != '[')
+            throw new ParseException("invalid syntaxe ", 0);
         int index = file.indexOf("]");
         // System.out.println("in strin val 3 inde == " + index);
         String value = file.substring(1, index);
@@ -323,9 +361,18 @@ public class SGF{
             if (val == null )//check si dans une des listes
                 throw new ParseException("invalid syntaxe", 0);
             Node newInstruct = new Node();
-            newInstruct.value = CommandType.INSTRUCTION;
-            newInstruct.DataType = new StringValue(commandName);
-            newInstruct.DataType.setValue(val);
+            newInstruct.setType(CommandType.INSTRUCTION);
+            newInstruct.DataType = getNode(getTypeCmd(commandName), commandName);
+            if (indexOf(commandName, NumCmdSet) != -1){
+                System.out.println( "NUm val pars ==  " + getValueNum(val, commandName));
+                newInstruct.DataType.setValue(getValueNum(val, commandName));
+            }
+            else if (indexOf(commandName, PointCmdSet) != -1)
+                newInstruct.DataType.setValue(getValueCoord(val));
+            else if (indexOf(commandName, listCmdSet) != -1)
+                newInstruct.DataType.setValue(getValueArray(val, file));
+            else
+                newInstruct.DataType.setValue(val);
             if (commandList == null)
                 commandList = newInstruct;
             else
@@ -352,7 +399,7 @@ public class SGF{
 
     private static Node buildTree(StringBuilder file, int deepth) throws ParseException{ 
         Node tree = new Node();
-        tree.value = CommandType.BRANCH;
+        tree.setType(CommandType.BRANCH);
         Node currentNode = tree;
         Node currentMove = null;
 
@@ -381,7 +428,7 @@ public class SGF{
             else if (next_char == '('){
                 System.out.println("je passe par (");
                 Node branch = buildTree(file, deepth + 1);
-                branch.value = CommandType.BRANCH;
+                branch.setType(CommandType.BRANCH);
                 if (branch.DataType == null && branch.next == null)
                     throw new ParseException("invalid syntaxe", 0);
                 currentNode.next = branch;
@@ -396,7 +443,7 @@ public class SGF{
                     throw new ParseException("invalid file format", 0);
                 // System.out.println("je passe par (")
                 Node newMove = new Node();
-                newMove.value = CommandType.MOVE;
+                newMove.setType(CommandType.MOVE);
                 newMove.DataType = parseMove(file);
                 if (currentMove == null)
                 {
@@ -420,17 +467,26 @@ public class SGF{
             return;
 
         String indent = "  ".repeat(depth);
-        System.out.println(indent + "Node type: " + tree.value);
-        if (tree.value == CommandType.MOVE) {
+        System.out.println(indent + "Node type: " + tree.getType());
+        if (tree.getType() == CommandType.MOVE) {
             Node list = (Node)tree.DataType;
             while (list != null){
-                StringValue str = (StringValue) list.DataType;
-                System.out.println(indent + "  Command: " + str.getCommand() + " -> " + str.getVal());
+                Union str = list.DataType;
+                if (str.getType() == CommandType.NUM_VALUE)
+                    System.out.println(indent + " NUM Command: " + ((NumValue)str).getCommand() + " -> " + ((NumValue)str).getVal());
+                else if (str.getType() == CommandType.ARRAY_VALUE)
+                    ;
+                    // System.out.println(indent + " list Command: " + ((ArrayValue)str).getCommand() + " -> " + str.getVal());
+                else if (str.getType() == CommandType.COORD_VALUE)
+                    System.out.println(indent + " coord Command: " + ((CoordValue)str).getCommand() + " -> " + "y == " + ((CoordValue)str).getVal().y + " x " + ((CoordValue)str).getVal().x);
+                else
+                    System.out.println(indent + " str Command: " + ((StringValue)str).getCommand() + " -> " + ((StringValue)str).getVal());
+
                 list = list.next;
             }
         }
 
-        if (tree.value == CommandType.BRANCH && tree.DataType instanceof Node) {
+        if (tree.getType() == CommandType.BRANCH && tree.DataType instanceof Node) {
             System.out.println(indent + "Entering branch:");
             printTree((Node) tree.DataType, depth + 1);
         }
@@ -442,8 +498,8 @@ public class SGF{
             return;
 
         String indent = "  ".repeat(depth);
-        System.out.println(indent + "Node type: " + tree.value);
-        if (tree.value == CommandType.MOVE) {
+        System.out.println(indent + "Node type: " + tree.getType());
+        if (tree.getType() == CommandType.MOVE) {
             Node list = (Node)tree.DataType;
             Map map = new Map(19);
             game_moves.add(map);
@@ -454,7 +510,7 @@ public class SGF{
             }
         }
 
-        if (tree.value == CommandType.BRANCH && tree.DataType instanceof Node) {
+        if (tree.getType() == CommandType.BRANCH && tree.DataType instanceof Node) {
             System.out.println(indent + "Entering branch:");
             printTree((Node) tree.DataType, depth + 1);
         }
@@ -491,7 +547,7 @@ public class SGF{
             System.out.println("tree == " + tree);
             printTree(tree, 0);
             game_moves = new ArrayList<Map>();
-            executeTree(tree, 0);
+            // executeTree(tree, 0);
         }
         catch (ParseException e){
             System.out.println("Parse error: " + e.getMessage());

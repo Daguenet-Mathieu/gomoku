@@ -8,15 +8,19 @@ public class ArrayValue extends Union {
 
     public ArrayValue(String command) {
         super(command);
-        this.value = new ArrayList();
     }
+
+    public ArrayValue(String command, CommandType type) {
+        super(command, type);
+    }
+
 
     @Override
     public void setValue(Object value){
-        this.value.add((Point)value);
+        this.value = ((ArrayList<Point>)value);
     }
 
-    // public ArrayList<Point> getValue(){
-        // return this.value;
-    // }
+    public ArrayList<Point> getVal(){
+        return this.value;
+    }
 }

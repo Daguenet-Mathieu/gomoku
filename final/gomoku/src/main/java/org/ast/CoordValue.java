@@ -8,9 +8,13 @@ public class CoordValue extends Union {
         super(command);
     }
 
-    // public Point getValue(){
-        // return this.value;
-    // }
+    public CoordValue(String command, CommandType type) {
+        super(command, type);
+    }
+
+    public Point getVal(){
+        return this.value;
+    }
 
     @Override
     public void setValue(Object value){
