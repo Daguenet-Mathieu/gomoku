@@ -38,9 +38,12 @@ import java.text.ParseException;
 
 public class SGF{
 
-    private static File file;
-    private static String rules;
-    private static String errorMsg;
+    private static File     file;
+    private static String   rules;
+    private static int      size;
+    private static int      komi;
+    private static int      handicap;
+    private static String   errorMsg;
     private static ArrayList<Map> game_moves;
     private static final String[] ignoreSet = new String[] {
         "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AR", "CR",
@@ -48,7 +51,7 @@ public class SGF{
         "MA", "N", "PM", "SL", "SQ", "TR", "UC", "V", "VW", "ST",
         "AN", "BR", "BT", "CP", "DT", "EV", "GC", "GN", "ON", "OT",
         "PB", "PW", "RE", "RO", "SO", "TM", "US", "WR", "WT", "TB",
-        "TW", "AS", "IP", "IY", "SE", "SU", "FF", "BL", "WL"
+        "TW", "AS", "IP", "IY", "SE", "SU", "FF", "BL", "WL", "CA", "AP"
     };
     // private static final Set<String> ignoreSet = new String[] {
     //     "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AB", "AW",
@@ -62,7 +65,7 @@ public class SGF{
 
     private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "AB", "AW"};
     private static final String[] listCmdSet = new String[] {"AB", "AW", "AE"};
-    private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "AP", "CA", "SZ"};
+    private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "SZ"};
     private static final String[] PointCmdSet = new String[] {"B", "W"};
     private static final String[] NumCmdSet = new String[] {"SZ", "HA", "KM"};
 
@@ -493,6 +496,8 @@ public class SGF{
         printTree(tree.next, depth);
     }
 
+    //boolean set header()  si false throw dire multiple definition of name si != de val deja set? ou tjs quitter? 
+
     private static void executeTree(Node tree, int depth) throws ParseException{
         if (tree == null)
             return;
@@ -502,19 +507,25 @@ public class SGF{
         if (tree.getType() == CommandType.MOVE) {
             Node list = (Node)tree.DataType;
             Map map = new Map(19);
-            game_moves.add(map);
             while (list != null){
-                StringValue str = (StringValue) list.DataType;
-                System.out.println(indent + "  Command: " + str.getCommand() + " -> " + str.getVal());
+                //si cmd header add a la bonne var 
+                //
+                // if ()
+                //else()
+                //si c'est dans list point try add
+                //si c'est dans list 
+                // StringValue str = (StringValue) list.DataType;
+                // System.out.println(indent + "  Command: " + str.getCommand() + " -> " + str.getVal());
                 list = list.next;
             }
+            game_moves.add(map);
         }
 
         if (tree.getType() == CommandType.BRANCH && tree.DataType instanceof Node) {
             System.out.println(indent + "Entering branch:");
-            printTree((Node) tree.DataType, depth + 1);
+            executeTree((Node) tree.DataType, depth + 1);
         }
-        printTree(tree.next, depth);
+        executeTree(tree.next, depth);
     }
 
     public static boolean parseFile(){
@@ -547,7 +558,11 @@ public class SGF{
             System.out.println("tree == " + tree);
             printTree(tree, 0);
             game_moves = new ArrayList<Map>();
-            // executeTree(tree, 0);
+            rules = null;
+            size = 0;
+            komi = -1;
+            handicap = -1;
+            executeTree(tree, 0);
         }
         catch (ParseException e){
             System.out.println("Parse error: " + e.getMessage());

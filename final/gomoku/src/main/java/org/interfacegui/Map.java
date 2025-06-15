@@ -36,6 +36,7 @@ public class Map{
     }
 
     public Map(int size) {
+        _comment = new String();
         _move_time = 0;
         _map = new int[size][size];
         for (int i = 0; i < _map.length; i++) {
@@ -49,6 +50,7 @@ public class Map{
     }
 
     public Map(Map other) {
+        _comment = new String();
         _move_time = 0;
         _map = new int[other.getSize()][other.getSize()];
         for (int i = 0; i < _map.length; i++) {
@@ -59,6 +61,7 @@ public class Map{
     }
 
     public Map(Map other, ArrayList<Map> prisonners) {
+        _comment = new String();
         _move_time = 0;
         _map = new int[other.getSize()][other.getSize()];
         for (int i = 0; i < _map.length; i++) {
@@ -109,6 +112,20 @@ public class Map{
         _prisonners = p;
     }
 
+    public boolean tryAddToMap(String cmd, Point coord){
+        if (coord.y >= _map.length || coord.y >= _map.length)
+            return false;
+        int color = 0;
+        if ("B".equals(cmd) || "AB".equals(cmd))
+            color = 1;
+        else if ("W".equals(cmd) || "AW".equals(cmd))
+            color = 2;
+        if ((color == 0 && _map[coord.y][coord.x] == 0) || (color != 0 && _map[coord.y][coord.x] != 0))
+            return false;
+        _map[coord.y][coord.x] = color;
+        return true;
+    }
+
     public void addMove(Point coord, int color){
         _last_move = coord;
         if (coord != null)
@@ -150,6 +167,6 @@ public class Map{
     }
 
     public void setComment(String comment){
-        this._comment = comment;
+        this._comment += comment;
     }
 }
