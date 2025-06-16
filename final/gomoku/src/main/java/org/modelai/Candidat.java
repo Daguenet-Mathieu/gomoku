@@ -192,6 +192,12 @@ public class Candidat
             return;
         if (doubleFreethree.check_double_free(x, y, MinMax.scsimul.cur_turn, MinMax.map) == false)
         {
+            if (this.dp == Game.max_depth)
+            {
+            System.out.printf("Double free at %d %d (%d): eliminated\n", x, y, MinMax.scsimul.cur_turn);
+            //if (x == 8 && y == 9)
+                MinMax.display_Map();
+            }
             return;
         }
 
@@ -300,7 +306,7 @@ public class Candidat
         return this.lst.size();
     }
 
-    public int old_load(int depth)
+    public int old_load(int depth) // only used
     {
         int ret;
         //int max_near;

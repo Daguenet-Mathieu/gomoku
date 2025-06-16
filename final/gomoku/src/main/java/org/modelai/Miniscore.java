@@ -784,13 +784,32 @@ public class Miniscore {
                 //fill_free_info(i, st, 2);
                 str2[i][x][y]=0;
             }
-            if (in_goban(x + 5 * ddir[i][0], y + 5 * ddir[i][1]) && MinMax.map[x + 5 * ddir[i][0]][y + 5 * ddir[i][1]] == cur_turn)
+            if (in_goban(x + 5 * ddir[i][0], y + 5 * ddir[i][1]))
             {
-                create_blocker(i, 1);   
+                if (MinMax.map[x + 5 * ddir[i][0]][y + 5 * ddir[i][1]] == cur_turn)
+                {
+                    create_blocker(i, 1);   
+                }
             }
-            if (in_goban(x - 5 * ddir[i][0], y - 5 * ddir[i][1]) && MinMax.map[x - 5 * ddir[i][0]][y - 5 * ddir[i][1]] == cur_turn)
+            //else if (x == 14 && i != 1 || y == 14 && i != 0 || x == 4 && i == 3)
+            else if (!(x > 4 && x < 14 && y < 4 && y < 14))
             {
-                create_blocker(i, -1);   
+                //System.out.printf("create1 %d %d %d\n", x, y, i);
+                create_blocker(i, 1);
+            }
+
+            if (in_goban(x - 5 * ddir[i][0], y - 5 * ddir[i][1]))
+            { 
+                if (MinMax.map[x - 5 * ddir[i][0]][y - 5 * ddir[i][1]] == cur_turn)
+                {
+                    create_blocker(i, -1);   
+                }
+            }
+            else if (!(x > 4 && x < 14 && y < 4 && y < 14))
+            //else if (x == 4 && i != 1 || y == 4 && i != 0 || x == 14 && i == 3)
+            {
+                //System.out.printf("create2 %d %d %d\n", x, y, i);
+                create_blocker(i, -1);
             }
         }
     }
@@ -799,9 +818,17 @@ public class Miniscore {
     {
         Blocker res = new Blocker(cur_turn, dir, sig);
         res.bl1(x, y);
-        res.bl2(x+ 5*ddir[dir][0]*sig, y + 5 * ddir[dir][1]*sig);
+
+        //System.out.printf("check limits %d %d\n ", x+ sig* 5*ddir[dir][0], y + sig * 5 * ddir[dir][1]);
+
+        if (!in_goban(x+ sig* 5*ddir[dir][0], y + sig * 5 * ddir[dir][1]))
+            res.bl2(-1, -1);
+        else
+            res.bl2(x+ 5*ddir[dir][0]*sig, y + 5 * ddir[dir][1]*sig);
+        //System.out.printf("after creation %d %d %d %d\n", res.bl1[0], res.bl1[1], res.bl2[0], res.bl2[1]);
         res.update_block_info();
         this.blocklist.add(res);
+        //System.out.printf("added %d\n", this.blocklist.size());
     }
 
     // private void search_blocker(int dir, int sig)
@@ -866,10 +893,14 @@ public class Miniscore {
                     bpoint[1] += factor[str2[b.dir][b.cases[j][0]][b.cases[j][1]]];
 
             }
-            if (MinMax.map[b.bl1[0]] [b.bl1[1]] != b.blockcolor ||
-                MinMax.map[b.bl2[0]] [b.bl2[1]] != b.blockcolor)
+            if (MinMax.map[b.bl1[0]] [b.bl1[1]] != b.blockcolor || ( b.bl2[0] != -1 &&
+                MinMax.map[b.bl2[0]] [b.bl2[1]] != b.blockcolor))
             {
+                // if ( ( b.bl2[0] != -1 &&
+                // MinMax.map[b.bl2[0]] [b.bl2[1]] != b.blockcolor))
+                    //System.out.printf("correct remove %d", i);
                 this.blocklist.remove(i);
+                //System.out.println("removed");
                 i--;
             }
         }

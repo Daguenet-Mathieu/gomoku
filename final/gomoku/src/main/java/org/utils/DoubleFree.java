@@ -21,6 +21,38 @@ public class DoubleFree
         return false;
     }
 
+    private boolean check_win(int x, int y, int val, int i, int [][]map )
+    {
+        int cur_x;
+        int cur_y;
+        int dep = 1;
+        int res = 0;
+    
+        cur_x = x + dep * dir[i][0];
+        cur_y = y + dep * dir[i][1];
+        while(in_goban(cur_x, cur_y) && map[cur_x][cur_y] == val)
+            {
+                res++;
+                dep++;
+                cur_x = x + dep * dir[i][0];
+                cur_y = y + dep * dir[i][1];
+            }
+
+        dep = -1;
+        cur_x = x + dep * dir[i][0];
+        cur_y = y + dep * dir[i][1];
+         while(in_goban(cur_x, cur_y) && map[cur_x][cur_y] == val)
+            {
+                res++;
+                dep--;
+                cur_x = x + dep * dir[i][0];
+                cur_y = y + dep * dir[i][1];
+            }
+        if (res>=4)
+            return true;
+        return false;
+    }
+
     public boolean check_double_free(int x, int y, int val, int[][] map)
     {
         int nb_0;
@@ -43,6 +75,9 @@ public class DoubleFree
             nb_0 = 0;
             dep = 1;
             nb_val = 0;
+
+            if (check_win(x, y, val, i, map)) //maybe check if 4 more accurate
+                return true;
 
             cur_x = x + dep * dir[i][0];
             cur_y = y + dep * dir[i][1];
@@ -99,10 +134,12 @@ public class DoubleFree
                 if (cur_x + dir[i][0] == x && cur_y + dir[i][1] == y)
                     continue;
             }
+
             // if (x == 10 && y == 8)
             //     System.out.printf("nb val dir %d %d\n", i, nb_val);
             if (nb_val == 2) // >=2 break, weird !
             {
+
                 nb_free++;
                 // if (x == 10 && y == 8)
                 //     System.out.printf("direction %d free detected nb_free\n", i, nb_free);
@@ -111,7 +148,7 @@ public class DoubleFree
             //System.out.printf("nb_free %d %d\n", nb_free, i);
 
             // if (nb_free == 2)
-            //     System.out.printf("x == %d y == %d\n", x, y);
+            //     System   .out.printf("x == %d y == %d\n", x, y);
 
             if (nb_free >= 2)
                 return false;

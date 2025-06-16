@@ -47,8 +47,9 @@ public class MinMax
         int y;
     }
 
-    public void load_cur_score(Miniscore score)
+    public void load_cur_score(Miniscore score, int turn)
     {
+        scsimul.cur_turn = turn;
         for (int d = 0 ; d < 8 ; d++)
         {
             for(int i = 0 ; i < 19 ; i++)

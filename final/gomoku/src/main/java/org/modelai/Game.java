@@ -162,7 +162,7 @@ public class Game {
         }
         else
         {
-            m.load_cur_score(scbord);
+            m.load_cur_score(scbord, turn);
             scbord.display();
             System.out.printf("\n\tminmax launch turn %d player %d\n", turn, player);
     

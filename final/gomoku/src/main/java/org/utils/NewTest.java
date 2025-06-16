@@ -176,7 +176,25 @@ public class NewTest
         // move(6, 10, 1);
         // move(5, 11, 1);
 
-        //moin2
+        move(6, 5, 1);
+        move(6, 6, 1);
+        move(6, 7, 1);
+        move(6, 8, 1);
+        move(6, 4, 2);
+        move(6, 10, 1);
+        move(5, 10, 1);
+        move(6, 11, 1);
+        move(8, 7, 1);
+        move(8, 9, 1);
+        move(9, 9, 1);
+
+        if (db.check_double_free(6, 9, 1, MinMax.map) == true)
+            System.out.printf("all fine");
+        else
+            System.out.printf("double free detected");
+
+
+
 
         //moin1
         //unmove 8-6 (1)
@@ -188,16 +206,17 @@ public class NewTest
         // move(2, 2, 1);
         // move(4, 4, 2);
 
-        move(8, 8, 2);
-        move (8, 13, 2);
-        move(8, 9, 1);
-        move(8, 10, 1);
-        move(8, 11, 1);
-        move(8, 12, 1);
+        // move(8, 8, 2);
+        // move (8, 13, 2);
+        // move(8, 9, 1);
+        // move(8, 10, 1);
+        // move(8, 11, 1);
+        // move(8, 12, 1);
 
-        unmove(8, 10, 1);
+        // unmove(8, 10, 1);
 
-        unmove(8, 8, 2);
+        // unmove(8, 8, 2);
+
 
 
         // move(7, 12, 1);

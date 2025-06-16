@@ -1,7 +1,6 @@
 package org.utils;
 
 import org.modelai.MinMax;
-
 public class Blocker {
 
     //public int [] val = new int[2];
@@ -45,12 +44,21 @@ public class Blocker {
             this.color = 1;
     }
 
+    private boolean in_goban(int x, int y) //move utils
+    {
+        if (x >=0 && x < 19 && y >=0 && y < 19)
+            return true;
+        return false;
+    }
+
     public void update_block_info()
     {
         rank = 0;
         
         for (int i = 1 ; i < 5 ; i++)
         {
+            if (!in_goban(bl1[0]+ddir[dir][0]*sig*i, bl1[1]+ddir[dir][1]*sig*i))
+                break;
             if (MinMax.map[bl1[0]+ddir[dir][0]*sig*i][bl1[1]+ddir[dir][1]*sig*i] == 0)
             {
                 cases[rank][0] = bl1[0]+ddir[dir][0]*sig*i;
