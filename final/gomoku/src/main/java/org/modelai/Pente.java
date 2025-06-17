@@ -324,6 +324,11 @@ public class Pente extends MinMax {
         }
     }
 
+    private float supeval(int player, int len, int turn)
+    {
+        return eval(player, len, turn) + prisonpnt(player) + potentialpnt(player) + blockedpnt(player);
+    }
+
     public float minmaxab(int depth, int turn, int player, float alpha, float beta)
     {   
         int nb_candidates;
@@ -403,7 +408,7 @@ public class Pente extends MinMax {
             {
                 if (m.play(candidat.lst.get(i), turn))
                 {
-                    res = value_victory_smarter(player, turn, len);
+                    res = value_victory_smarter(player, turn, len) + supeval(player, len, turn);
                     //debugstr();
                     // if (res == 12000 || res == -12000)
                     // {
@@ -438,7 +443,7 @@ public class Pente extends MinMax {
             {
                 if (m.play(candidat.lst.get(i),turn))
                 {
-                    res = value_victory_smarter(player, turn, len);
+                    res = value_victory_smarter(player, turn, len) + supeval(player, len, turn);
                     //debugstr();
                     // if (res == 12000 || res == -12000)
                     // {

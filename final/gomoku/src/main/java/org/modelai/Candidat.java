@@ -364,10 +364,10 @@ public class Candidat
                 // if (this.lst.size() == 6)
                 //     Collections.reverse(this.lst);
                 }
-                if (ret >= 7)
+                if (ret >= 8)
                 {
                     //this.lst = new ArrayList<>(this.lst.subList(this.lst.size() - 6, this.lst.size()));
-                    this.lst = new ArrayList<>(this.lst.subList(0, 6));
+                    this.lst = new ArrayList<>(this.lst.subList(0, 7));
                     if (depth == Game.max_depth)
                     {
                     System.out.println("Candidat selected");
