@@ -40,10 +40,12 @@ public class SGF{
 
     private static File     file;
     private static String   rules;
+    private static int      ruleType;
     private static int      size;
     private static int      komi;
     private static int      handicap;
     private static String   errorMsg;
+    private static boolean  header;
     private static ArrayList<Map> game_moves;
     private static final String[] ignoreSet = new String[] {
         "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AR", "CR",
@@ -63,9 +65,9 @@ public class SGF{
     // };
     // private static final Set<String> supportedSet = Set.of("KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL");
 
-    private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "AB", "AW"};
+    private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "SZ", "C", "AE", "PL", "B", "W", "AB", "AW"};
     private static final String[] listCmdSet = new String[] {"AB", "AW", "AE"};
-    private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "SZ"};
+    private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "SZ", "RU"};
     private static final String[] PointCmdSet = new String[] {"B", "W"};
     private static final String[] NumCmdSet = new String[] {"SZ", "HA", "KM"};
 
@@ -498,22 +500,105 @@ public class SGF{
 
     //boolean set header()  si false throw dire multiple definition of name si != de val deja set? ou tjs quitter? 
 
+    private static void handleKomi(Union node) throws ParseException{
+        NumValue komi =  (NumValue) node;
+        //komi != -1
+        //throw new ParseException("error, unexpected KM : multiples definition" + , 0);
+
+    }
+
+    private static void handleHandicap(Union node) throws ParseException{
+        NumValue handicap =  (NumValue) node;
+        //handicap != -1
+        //throw new ParseException("error, unexpected HA : multiples definition" + , 0);
+
+    }
+
+    private static void handleGameType(Union node) throws ParseException{
+        NumValue gameType =  (NumValue) node;
+        //ruleType != 0 
+        //throw new ParseException("error, unexpected GM : multiples definition" + , 0);
+        //set rule type
+    }
+
+    private static void handleBoardSize(Union node) throws ParseException{
+        NumValue size =  (NumValue) node;
+        //size != 0 
+        //throw new ParseException("error, unexpected SZ : multiples definition" + , 0);
+    }
+
+    private static void handleRuleset(Union node) throws ParseException{
+        StringValue rule =  (StringValue) node;
+        //rules not equals null
+        //throw new ParseException("error, unexpected RU : multiples definition" + , 0);
+        // if ()
+    }
+
+    private static void    setheader(Union node) throws ParseException{
+        System.out.println(node.getCommand());
+        String command = node.getCommand();
+        switch (command) {
+            case "KM":
+                handleKomi(node);
+                break;
+            case "HA":
+                handleHandicap(node);
+                break;
+            case "GM":
+                handleGameType(node);
+                break;
+            case "SZ":
+                handleBoardSize(node);
+                break;
+            case "RU":
+                handleRuleset(node);
+                break;
+        }
+    }
+
+    private static void    setCommand(Map map, Union node){
+
+    }
+
+    private static void checkHeader(){
+        if (size == 0)
+            size = 19;
+        if (rules == null)
+            rules = "Gomoku";
+        if (komi == -1)
+            komi = 0;
+        if (handicap == -1)
+            handicap = 0;
+    }
+
     private static void executeTree(Node tree, int depth) throws ParseException{
         if (tree == null)
             return;
-
-        String indent = "  ".repeat(depth);
-        System.out.println(indent + "Node type: " + tree.getType());
+        // String indent = "  ".repeat(depth);
+        // System.out.println(indent + "Node type: " + tree.getType());
         if (tree.getType() == CommandType.MOVE) {
             Node list = (Node)tree.DataType;
-            Map map = new Map(19);
+            Map map = null;
+            if (header == false)
+                map = new Map(size);
             while (list != null){
-                //si cmd header add a la bonne var 
+                int isHeader = indexOf(list.DataType.getCommand(), rootCmdSet);
+                if (header == false && isHeader != -1)
+                    throw new ParseException("error, unexpected : " + list.DataType.getCommand(), 0);
+                if (header == true && isHeader != -1)
+                    setheader(list.DataType);
+                else if (isHeader != -1){
+                    header = false;
+                    checkHeader();
+                }
+                if (header = true)
+                    setCommand(map, list.DataType);
+                //si cmd header add a la bonne var
                 //
                 // if ()
                 //else()
                 //si c'est dans list point try add
-                //si c'est dans list 
+                //si c'est dans list
                 // StringValue str = (StringValue) list.DataType;
                 // System.out.println(indent + "  Command: " + str.getCommand() + " -> " + str.getVal());
                 list = list.next;
@@ -522,7 +607,7 @@ public class SGF{
         }
 
         if (tree.getType() == CommandType.BRANCH && tree.DataType instanceof Node) {
-            System.out.println(indent + "Entering branch:");
+            // System.out.println(indent + "Entering branch:");
             executeTree((Node) tree.DataType, depth + 1);
         }
         executeTree(tree.next, depth);
@@ -559,9 +644,11 @@ public class SGF{
             printTree(tree, 0);
             game_moves = new ArrayList<Map>();
             rules = null;
+            ruleType = 0;
             size = 0;
             komi = -1;
             handicap = -1;
+            header = false;
             executeTree(tree, 0);
         }
         catch (ParseException e){
