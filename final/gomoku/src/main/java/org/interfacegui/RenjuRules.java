@@ -1,6 +1,7 @@
 package org.interfacegui;
 import java.util.ArrayList;
 import org.utils.Point;
+
 public class RenjuRules implements Rules {
 
     ArrayList<Point> prisonners;//prisonnier crees par le dernier coup
@@ -72,4 +73,10 @@ public class RenjuRules implements Rules {
     public void set_black_prisonners(int nb){
         prisonners_nbr[0] = nb;
     }
+
+    @Override
+    public boolean areCapturable(ArrayList<Point> points, Map map){
+        return false;
+    }
+
 }

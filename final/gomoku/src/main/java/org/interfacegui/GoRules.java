@@ -79,7 +79,10 @@ public class GoRules implements Rules {
         prisonners_nbr[0] = nb;
     }
 
-
+    @Override
+    public boolean areCapturable(ArrayList<Point> point, Map map){
+        return false;
+    }
 
 
 }

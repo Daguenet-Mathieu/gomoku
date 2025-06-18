@@ -8,6 +8,8 @@ public class PenteRules implements Rules {
     ArrayList<Point> forbidden_moves = new ArrayList<Point>();//coups interdit pour la position actuelle
     int [] prisonners_nbr = new int[2];
     public DoubleFree dbfree = new DoubleFree();
+    int advWinning = 0;//0 1 2? need check first si 5 sur le plateau ou fqarder en memoire le point?
+
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
@@ -114,5 +116,53 @@ public class PenteRules implements Rules {
     public void set_white_prisonners(int nb){
         prisonners_nbr[1] = nb;
     }
-    
+
+        private boolean checkDir(Point point, Map map, int incrementX, int incrementY, final int color){
+        int size = 1;
+        int iPos = 2;
+        int iNeg = 2;
+        int colorAdv = (color == 1) ? 2 : 1;
+        while (size <= 2){
+            if (map.get_map()[point.x + incrementX * iPos][point.x + incrementY * iPos] == color)
+                size++;
+            iPos++;
+        }
+        while (size <= 2){
+            if (map.get_map()[point.x - incrementX * iNeg][point.x - incrementY * iNeg] == color)
+                size++;
+            iNeg++;
+        }
+        if (size != 2)
+            return false;
+        int colorStart = map.get_map()[point.x - incrementX * iNeg][point.x - incrementY * iNeg];
+        int colorEnd = map.get_map()[point.x + incrementX * iPos][point.x + incrementY * iPos];
+        if ((colorStart == colorAdv && colorEnd == 0) || (colorEnd == colorAdv && colorStart == 0))
+            return true;
+        return false;
+    }
+
+
+    private boolean isCapturable(Point point, Map map, final int color){
+        if (checkDir(point, map, 1, 0, color) == true)//horixontal
+            return true;
+        if (checkDir(point, map, 0, 1, color) == true)//vertical
+            return true;
+        if (checkDir(point, map, 1, 1, color) == true)//diagtop
+            return true;
+        if (checkDir(point, map, 1, -1, color) == true)//diaglow
+            return true;
+        return false;
+    }
+
+    @Override
+    public boolean areCapturable(ArrayList<Point> points, Map map){ 
+        for (Point p : points){
+            final int color = map.get_map()[p.x][p.y];
+            if (isCapturable(p, map, color) == true){
+                advWinning = color;
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -14,7 +14,7 @@ public class ArrayValue extends Union {
         super(command, type);
     }
 
-
+    @SuppressWarnings("unchecked")
     @Override
     public void setValue(Object value){
         this.value = ((ArrayList<Point>)value);

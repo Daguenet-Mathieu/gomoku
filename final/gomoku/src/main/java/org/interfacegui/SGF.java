@@ -42,7 +42,7 @@ public class SGF{
     private static String   rules;
     private static int      ruleType;
     private static int      size;
-    private static int      komi;
+    private static double      komi;
     private static int      handicap;
     private static String   errorMsg;
     private static boolean  header;
@@ -67,7 +67,7 @@ public class SGF{
 
     private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "SZ", "C", "AE", "PL", "B", "W", "AB", "AW"};
     private static final String[] listCmdSet = new String[] {"AB", "AW", "AE"};
-    private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "SZ", "RU"};
+    private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "SZ", "RU", "AP", "CA", "FF", "ST"};
     private static final String[] PointCmdSet = new String[] {"B", "W"};
     private static final String[] NumCmdSet = new String[] {"SZ", "HA", "KM"};
 
@@ -501,41 +501,41 @@ public class SGF{
     //boolean set header()  si false throw dire multiple definition of name si != de val deja set? ou tjs quitter? 
 
     private static void handleKomi(Union node) throws ParseException{
-        NumValue komi =  (NumValue) node;
-        //komi != -1
-        //throw new ParseException("error, unexpected KM : multiples definition" + , 0);
-
+        if (komi != -1)
+            throw new ParseException("error, unexpected KM : multiples definition" + ((NumValue)node).getVal(), 0);
+        komi = ((NumValue)node).getVal().doubleValue();
     }
 
     private static void handleHandicap(Union node) throws ParseException{
-        NumValue handicap =  (NumValue) node;
-        //handicap != -1
-        //throw new ParseException("error, unexpected HA : multiples definition" + , 0);
-
+        // NumValue handicap =  (NumValue) node;
+        if (handicap != -1)
+            throw new ParseException("error, unexpected HA : multiples definition" + ((NumValue)node).getVal(), 0);
+        handicap = ((NumValue)node).getVal().intValue();
     }
 
     private static void handleGameType(Union node) throws ParseException{
-        NumValue gameType =  (NumValue) node;
-        //ruleType != 0 
-        //throw new ParseException("error, unexpected GM : multiples definition" + , 0);
-        //set rule type
+        // NumValue gameType =  (NumValue) node;
+        if (ruleType != 0) 
+            throw new ParseException("error, unexpected GM : multiples definition" + ((NumValue)node).getVal(), 0);
+        ruleType = ((NumValue)node).getVal().intValue();
     }
 
     private static void handleBoardSize(Union node) throws ParseException{
-        NumValue size =  (NumValue) node;
-        //size != 0 
-        //throw new ParseException("error, unexpected SZ : multiples definition" + , 0);
+        // NumValue size =  (NumValue) node;
+        if (size != 0) 
+            throw new ParseException("error, unexpected SZ : multiples definition" + ((NumValue)node).getVal(), 0);
+        size = ((NumValue)node).getVal().intValue();
     }
 
     private static void handleRuleset(Union node) throws ParseException{
-        StringValue rule =  (StringValue) node;
-        //rules not equals null
-        //throw new ParseException("error, unexpected RU : multiples definition" + , 0);
-        // if ()
+        // StringValue rule =  (StringValue) node;
+        if (rules != null)
+            throw new ParseException("error, unexpected RU : multiples definition" + ((StringValue)node).getVal(), 0);
+        rules = ((StringValue)node).getVal();
     }
 
     private static void    setheader(Union node) throws ParseException{
-        System.out.println(node.getCommand());
+        // System.out.println(node.getCommand());
         String command = node.getCommand();
         switch (command) {
             case "KM":
@@ -556,8 +556,8 @@ public class SGF{
         }
     }
 
-    private static void    setCommand(Map map, Union node){
-
+    private static void    setCommand(Map map, Union node) throws ParseException{
+        System.out.println("set command : " + node.getCommand());
     }
 
     private static void checkHeader(){
@@ -583,15 +583,16 @@ public class SGF{
                 map = new Map(size);
             while (list != null){
                 int isHeader = indexOf(list.DataType.getCommand(), rootCmdSet);
-                if (header == false && isHeader != -1)
-                    throw new ParseException("error, unexpected : " + list.DataType.getCommand(), 0);
+                System.out.println("header " + header + " is header == " + isHeader + " cmd == " + list.DataType.getCommand());
+                // if (header == false && isHeader != -1)
+                //     throw new ParseException("error, unexpected : " + list.DataType.getCommand(), 0);
                 if (header == true && isHeader != -1)
                     setheader(list.DataType);
                 else if (isHeader != -1){
                     header = false;
                     checkHeader();
                 }
-                if (header = true)
+                if (header == true)
                     setCommand(map, list.DataType);
                 //si cmd header add a la bonne var
                 //
@@ -648,13 +649,14 @@ public class SGF{
             size = 0;
             komi = -1;
             handicap = -1;
-            header = false;
+            header = true;
             executeTree(tree, 0);
         }
         catch (ParseException e){
             System.out.println("Parse error: " + e.getMessage());
             errorMsg = e.getMessage();
             e.printStackTrace();
+            System.out.println("coucou");
             return false;
         }
         return true;

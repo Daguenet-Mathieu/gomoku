@@ -14,6 +14,7 @@ public interface Rules {
     int get_black_prisonners();
     void set_white_prisonners(int nb);
     void set_black_prisonners(int nb);
+    boolean areCapturable(ArrayList<Point> points, Map map);
 
     int get_board_size();
  
@@ -205,7 +206,7 @@ public interface Rules {
         }
         if (count >= 5)
             return true;
-        else 
+        else
             return false;
     }
 
@@ -283,4 +284,6 @@ public interface Rules {
             return true;
         return false;
     }
+
+
 }

@@ -70,5 +70,8 @@ public class GomokuRules implements Rules {
         return 19;
     }
 
+    @Override
+    public boolean areCapturable(ArrayList<Point> points, Map map){
+        return false;
+    }
 }
-
