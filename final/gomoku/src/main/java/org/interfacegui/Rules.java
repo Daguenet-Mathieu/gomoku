@@ -14,9 +14,16 @@ public interface Rules {
     int get_black_prisonners();
     void set_white_prisonners(int nb);
     void set_black_prisonners(int nb);
-    boolean areCapturable(ArrayList<Point> points, Map map);
+    boolean areCapturable(ArrayList<Point> points, Map map, final int color);
+    int getWinner();
+    void setWinner(int w);
 
     int get_board_size();
+
+    ArrayList<Point> verticalWin = new ArrayList<Point>();
+    ArrayList<Point> horizontalWin = new ArrayList<Point>();
+    ArrayList<Point> diagonalLeftWin = new ArrayList<Point>();
+    ArrayList<Point> diagonalRightWin = new ArrayList<Point>();
  
     // ArrayList check_captures(Map map, Point point);
     // Méthode par défaut qui vérifie si le coup est valide (si la case est vide)
@@ -152,8 +159,6 @@ public interface Rules {
             return false;
     }
 
-//exception 019 out of bond
-
     default boolean check_horizontal(Map map, Point point){
         boolean right = true;
         boolean left = true;
@@ -161,16 +166,19 @@ public interface Rules {
         final int color = map.get_map()[point.y][point.x];
         if (color == 0)
             return false;
-        for (int i = 1; count < 5 && (right == true || left == true); i++)
+        horizontalWin.add(point);
+        for (int i = 1; (right == true || left == true); i++)
         {
             if (right && point.x - i >= 0 && check_with_dir(map, point, -i, 0, color)){
                 count += 1;
+                horizontalWin.add(new Point(point.x - i, point.y));
             }
             else{
                 right = false;
             }
             if (left  && point.x + i < map.getSize() && check_with_dir(map, point, i, 0, color)){
                 count += 1;
+                horizontalWin.add(new Point(point.x + i, point.y));
             }
             else{
                 left = false;
@@ -189,16 +197,19 @@ public interface Rules {
         final int color = map.get_map()[point.y][point.x];
         if (color == 0)
             return false;
+        verticalWin.add(point);
         for (int i = 1; count < 5 && (right == true || left == true); i++)
         {
             if (right && point.y - i >= 0 && check_with_dir(map, point, 0, -i, color)){
                 count += 1;
+                verticalWin.add(new Point(point.x, point.y - i));
             }
             else{
                 right = false;
             }
             if (left  && point.y + i < map.getSize() && check_with_dir(map, point, 0, i, color)){
                 count += 1;
+                verticalWin.add(new Point(point.x, point.y + i));
             }
             else{
                 left = false;
@@ -218,16 +229,19 @@ public interface Rules {
         final int color = map.get_map()[point.y][point.x];
         if (color == 0)
             return false;
+        diagonalLeftWin.add(point);
         for (int i = 1; count < 5 && (right == true || left == true); i++)
         {
             if (right && point.y - i >= 0 && point.x - i >= 0 && check_with_dir(map, point, -i, -i, color)){
                 count += 1;
+                diagonalLeftWin.add(new Point(point.x - i, point.y - i));
             }
             else{
                 right = false;
             }
             if (left  && point.y + i < map.getSize() && point.x + i < map.getSize() && check_with_dir(map, point, i, i, color)){
                 count += 1;
+                diagonalLeftWin.add(new Point(point.x + i, point.y + i));
             }
             else{
                 left = false;
@@ -247,16 +261,21 @@ public interface Rules {
         final int color = map.get_map()[point.y][point.x];
         if (color == 0)
             return false;
+        diagonalRightWin.add(point);
         for (int i = 1; count < 5 && (right == true || left == true); i++)
         {
             if (right && point.x + i < map.getSize() && point.y - i >= 0 && check_with_dir(map, point, i, -i, color)){
                 count += 1;
+                System.out.println("J'add a diag r");
+                diagonalRightWin.add(new Point(point.x + i, point.y - i));
             }
             else{
                 right = false;
             }
             if (left && point.y + i < map.getSize() && point.x - i >= 0 && check_with_dir(map, point, -i, i, color)){
                 count += 1;
+                System.out.println("J'add a diag r");
+                diagonalRightWin.add(new Point(point.x - i, point.y + i));
             }
             else{
                 left = false;
@@ -269,21 +288,42 @@ public interface Rules {
     }
 
 
-    default boolean check_diagonal(Map map, Point point){
-        if (check_diagonal_left(map, point) || check_diagonal_right(map, point))
-            return true;
-        else
-            return false;    
+    default void check_diagonal(Map map, Point point){
+        check_diagonal_left(map, point);
+        check_diagonal_right(map, point);    
     }
 
     default boolean check_five(Map map, Point point){
         System.out.println("square state == " + map.get_map()[point.y][point.x]);
         if (map.get_map()[point.y][point.x] == 0)
             return false;
-        if (check_horizontal(map, point) || check_vertical(map, point) || check_diagonal(map, point))
+        verticalWin.clear();
+        horizontalWin.clear();
+        diagonalLeftWin.clear();
+        diagonalRightWin.clear();
+        check_horizontal(map, point);
+        check_vertical(map, point);
+        check_diagonal(map, point);
+        System.out.println("dans rules vertical == " + verticalWin.size() + " horizontal == " + horizontalWin.size() + " diagonale left  == " + diagonalLeftWin.size()  + " dagonale right == " + diagonalRightWin.size());
+        if (verticalWin.size() >= 5 || horizontalWin.size() >= 5 || diagonalLeftWin.size() >= 5 || diagonalRightWin.size() >= 5)
             return true;
         return false;
     }
 
+    default ArrayList<Point> getVerticalWin(){
+        return verticalWin;
+    }
+
+    default ArrayList<Point> getHorizontalWin(){
+        return horizontalWin;
+    }
+
+    default ArrayList<Point> getDiagonalLeftWin(){
+        return diagonalLeftWin;
+    }
+    
+    default ArrayList<Point> getDiagonalRightWin(){
+        return diagonalRightWin;
+    }
 
 }

@@ -7,6 +7,7 @@ public class RenjuRules implements Rules {
     ArrayList<Point> prisonners;//prisonnier crees par le dernier coup
     ArrayList<Point> forbidden_moves;//coups interdit pour la position actuelle
     int [] prisonners_nbr = new int[2];
+    int winner;
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
@@ -75,8 +76,17 @@ public class RenjuRules implements Rules {
     }
 
     @Override
-    public boolean areCapturable(ArrayList<Point> points, Map map){
+    public boolean areCapturable(ArrayList<Point> points, Map map, final int color){
         return false;
     }
 
+    @Override
+    public int getWinner(){
+        return this.winner;
+    }
+
+    @Override
+    public void setWinner(int w){
+        this.winner = w;
+    }
 }

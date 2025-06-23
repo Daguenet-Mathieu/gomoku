@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import org.utils.Point;
 
 public class GomokuRules implements Rules {
+
+    int winner;
+
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
         // Utilisation de la méthode par défaut pour vérifier si la case est vide
@@ -71,7 +74,17 @@ public class GomokuRules implements Rules {
     }
 
     @Override
-    public boolean areCapturable(ArrayList<Point> points, Map map){
+    public boolean areCapturable(ArrayList<Point> points, Map map, final int color){
         return false;
+    }
+
+    @Override
+    public int getWinner(){
+        return this.winner;
+    }
+
+    @Override
+    public void setWinner(int w){
+        this.winner = w;
     }
 }
