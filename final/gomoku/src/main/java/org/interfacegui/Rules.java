@@ -253,7 +253,7 @@ public interface Rules {
             return false;    
     }
 
-//part de la droite et va vers la gauche
+    //part de la droite et va vers la gauche
     default boolean check_diagonal_right(Map map, Point point){
         boolean right = true;
         boolean left = true;
