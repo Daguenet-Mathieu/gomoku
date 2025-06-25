@@ -133,7 +133,7 @@ public class Proto extends MinMax {
     {   
         int nb_candidates;
 
-        nb_candidates = candidat.old_load(depth);
+        nb_candidates = candidat.old_load(depth, turn);
 
         if (depth == 0)
         {

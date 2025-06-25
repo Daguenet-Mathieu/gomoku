@@ -15,15 +15,19 @@ public class Candidat
     public ArrayList<Candidat.coord> mandatory = new ArrayList<Candidat.coord>();
     public ArrayList<Integer> vanish_lst = new ArrayList<Integer>();
     public ArrayList<Candidat.coord> histo = new ArrayList<Candidat.coord>();
+    public ArrayList<Candidat.coord> forced_capture = new ArrayList<Candidat.coord>();
     public DoubleFree doubleFreethree;
+
     // List<Double> order = Arrays.asList(24.0, 23.0, 22.0, 21.0, 20.0, 19.0, 18.0, 17.0, 16.0, 15.0, 14.0, 13.0
     //                                 ,12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.5, 1.0, 0.0);
     //List<Double> order = Arrays.asList(0.0, 1.0, 2.0, 3.0, 4.0);
-    List<Double> order = Arrays.asList(4.0, 3.0, 2.0, 1.0, 0.0);
+    List<Double> order = Arrays.asList(4.0, 3.0, 2.5, 2.0, 1.0, 0.0);
+    static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
 
     static coord limax = new coord(1, 1);
     static coord limin = new coord(18, 18);
     int dp;
+    int turn;
     //static public int [][] cmap;
     
     public static class coord
@@ -171,12 +175,28 @@ public class Candidat
 
     void load_case(int x, int y)
     {
-        int tot_case1 = 0;
-        int tot_case2 = 0;
+        double tot_case1 = 0;
+        double tot_case2 = 0;
         int val;
     
         for (int i = 0 ; i < 4 ; i++)
         {
+            if (MinMax.scsimul.str1[i][x][y] == 2)
+            {
+                if (turn == 2 && ( (in_goban(x-3*ddir[i][0], y-3*ddir[i][1]) && MinMax.map[x-3*ddir[i][0]][y-3*ddir[i][1]] == turn) ||
+                                   (in_goban(x+3*ddir[i][0], y+3*ddir[i][1]) && MinMax.map[x+3*ddir[i][0]][y+3*ddir[i][1]] == turn)))
+                        tot_case1 = Math.max(tot_case1, 2.5);
+            }
+  
+
+
+            if (MinMax.scsimul.str2[i][x][y] == 2)
+            {
+                if (turn == 1 && ( (in_goban(x-3*ddir[i][0], y-3*ddir[i][1]) && MinMax.map[x-3*ddir[i][0]][y-3*ddir[i][1]] == turn) ||
+                                  ( in_goban(x+3*ddir[i][0], y+3*ddir[i][1]) && MinMax.map[x+3*ddir[i][0]][y+3*ddir[i][1]] == turn)))
+                    tot_case1 = Math.max(tot_case1, 2.5);
+            }
+
             tot_case1 = Math.max(tot_case1, MinMax.scsimul.str1[i][x][y]);
             tot_case2 = Math.max(tot_case2, MinMax.scsimul.str2[i][x][y]);
 
@@ -192,12 +212,12 @@ public class Candidat
             return;
         if (doubleFreethree.check_double_free(x, y, MinMax.scsimul.cur_turn, MinMax.map) == false)
         {
-            if (this.dp == Game.max_depth)
-            {
-            System.out.printf("Double free at %d %d (%d): eliminated\n", x, y, MinMax.scsimul.cur_turn);
-            //if (x == 8 && y == 9)
-                MinMax.display_Map();
-            }
+            // if (this.dp == Game.max_depth)
+            // {
+            // System.out.printf("Double free at %d %d (%d): eliminated\n", x, y, MinMax.scsimul.cur_turn);
+            // //if (x == 8 && y == 9)
+            //     MinMax.display_Map();
+            // }
             return;
         }
 
@@ -306,11 +326,12 @@ public class Candidat
         return this.lst.size();
     }
 
-    public int old_load(int depth) // only used
+    public int old_load(int depth, int turn) // only used
     {
         int ret;
         //int max_near;
         this.dp = depth;
+        this.turn = turn;
         // System.out.println("==================");
         // display_map(map);
         // System.out.println("===================")
@@ -319,6 +340,14 @@ public class Candidat
             return 0;
 
         this.lst.clear();
+        this.forced_capture.clear();
+
+        if (forced_capture.size() != 0)
+        {
+            this.lst = new ArrayList<Candidat.coord>(forced_capture);
+            return this.lst.size();
+        }
+
         if (depth == Game.max_depth)
         {
             load_lim(MinMax.map);
@@ -452,46 +481,46 @@ public class Candidat
 
     }
 
-    public int old_load(int depth, int turn)
-    {
-        int ret;
+    // public int old_load(int depth, int turn)
+    // {
+    //     int ret;
 
-        if (depth == 0)
-            return 0;
+    //     if (depth == 0)
+    //         return 0;
 
-        this.lst.clear();
-        if (depth == Game.max_depth)
-        {
-            load_lim(MinMax.map);
-        }
+    //     this.lst.clear();
+    //     if (depth == Game.max_depth)
+    //     {
+    //         load_lim(MinMax.map);
+    //     }
 
-        if (depth == Game.max_depth)
-        {
-            ret = interesting_candidate(MinMax.map); // only for the 1st maybe
-            if (ret != 0)
-                return ret;
-        }
+    //     if (depth == Game.max_depth)
+    //     {
+    //         ret = interesting_candidate(MinMax.map); // only for the 1st maybe
+    //         if (ret != 0)
+    //             return ret;
+    //     }
 
-        for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+    //     for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
 
-        {
-           for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+    //     {
+    //        for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
 
-            {
-                if (MinMax.map[i][j] == 0 && near(i, j) && doubleFreethree.check_double_free(i, j, turn, MinMax.map))
-                    this.lst.add(new Candidat.coord(i, j));
-            }
-        }
+    //         {
+    //             if (MinMax.map[i][j] == 0 && near(i, j) && doubleFreethree.check_double_free(i, j, turn, MinMax.map))
+    //                 this.lst.add(new Candidat.coord(i, j));
+    //         }
+    //     }
 
-        if (this.lst.size() == 0)
-        {
-            System.out.println("pas de candidats");
-            System.exit(0);
-        }
+    //     if (this.lst.size() == 0)
+    //     {
+    //         System.out.println("pas de candidats");
+    //         System.exit(0);
+    //     }
     
-        return this.lst.size();
+    //     return this.lst.size();
 
-    }
+    // }
 
     public void save(coord c)
     {

@@ -111,11 +111,43 @@ public class Pente extends MinMax {
             //     MinMax.scsimul.capt[turn - 1]--;
     }
 
+    public float value_victory_smarter(int player, int turn, int len)
+    {
+        pos_counter++;
+
+        // if (pos_counter % 1000 == 7)
+        // {        
+        //     System.out.printf("Counter %d %d\n", pos_counter, nbmove);
+        //     display_map();
+        //     scsimul.display();
+        // }
+        int nb = candidat.forced_capture.size();
+
+        if (player == turn)
+        {
+            if (prisoners[(turn + 1) %2] + (nb * 2) >= 10)
+            {
+                return -10000 + ((len + nb) * 100);
+            }
+            return 10000 - ((len + nb) * 100);
+        }
+        else
+        {
+            if (prisoners[(turn + 1) %2] + (nb * 2) >= 10)
+            {
+                return 10000 - ((len + nb) * 100);
+            }
+            return -10000 + ((len + nb) * 100);
+        }
+    }
+
 
     public boolean play(Candidat.coord c, int player)
     {
         //System.out.printf("pente play %d %d\n", c.x, c.y);
-        if (check_win_4_dir(c.x, c.y, player) || is_captured(c.x, c.y, player))
+        // if (check_win_4_dir(c.x, c.y, player) || is_captured(c.x, c.y, player))
+        //     return true;
+        if (complete_check_win(c.x, c.y, player) || is_captured(c.x, c.y, player))
             return true;
 
         map[c.x][c.y] = player;
@@ -203,7 +235,7 @@ public class Pente extends MinMax {
         int nb_candidates;
 
         //nb_candidates = candidat.old_load(depth, turn);
-        nb_candidates = candidat.old_load(depth);
+        nb_candidates = candidat.old_load(depth, turn);
 
         if (depth == 0)
         {
@@ -294,12 +326,13 @@ public class Pente extends MinMax {
     // }
 
 
+
     public int prisonpnt(int player)
     {
         if (player == 1)
             return (prisoners[1] - prisoners[0]) * 2;
         else
-            return (prisoners[0] - prisoners[1])  * 2;
+            return (prisoners[0] - prisoners[1]) * 2;
     }
 
 
@@ -338,7 +371,7 @@ public class Pente extends MinMax {
 
         //nb_candidates = candidat.old_load(depth, turn);s
         scsimul.cur_turn = turn;
-        nb_candidates = candidat.old_load(depth);
+        nb_candidates = candidat.old_load(depth, turn);
         //display_map();
         // if(pos_counter >= 5820 && pos_counter <= 5824)
         //     showdebug();
@@ -472,7 +505,6 @@ public class Pente extends MinMax {
                     return cur_beta;
                 }
             }
-
         }
 
         if (depth == Game.max_depth)

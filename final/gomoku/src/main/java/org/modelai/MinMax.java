@@ -517,7 +517,7 @@ public class MinMax
         return false;
     }
 
-    private boolean check_dir(int x, int y, int dx, int dy, int player)
+    protected boolean check_dir(int x, int y, int dx, int dy, int player)
     {
         int count;
 
@@ -534,6 +534,72 @@ public class MinMax
         return false;
     }
 
+    protected boolean capture_add_forced(int x, int y, int dx, int dy, int p, int o)
+    {
+
+        if (in_goban(x+2*dx, y+2*dy) && in_goban(x-dx, y-dy) &&
+         map[x - dx][y - dy] == o && map[x + 1 * dx][y + 1 * dy] == p && map[x + 2 * dx][y + 2 * dy] == 0)
+        {
+            candidat.forced_capture.add(new Candidat.coord(x + 2*dx, y+2*dy));
+            //System.out.printf("adding focing move : %d %d\n", x+ 2 *dx, y+ 2 * dy);
+        }
+
+        if (in_goban(x+2*dx, y+2*dy) && in_goban(x-dx, y-dy) &&
+         map[x - dx][y - dy] == 0 && map[x + 1 * dx][y + 1 * dy] == p && map[x + 2 * dx][y + 2 * dy] == o)
+        {
+            candidat.forced_capture.add(new Candidat.coord(x - dx, y-dy));
+            //System.out.printf("adding forcing move : %d %d\n", x-dx, y-dy);
+        }
+
+        return true;
+
+    }
+
+    private boolean complete_check_dir(int x, int y, int dx, int dy, int player)
+    {
+        int count;
+        int opponant = player == 1 ? 2 : 1;
+
+        count = 0;
+
+        for (int i=dx , j = dy; in_goban(x+i, y+j) && map[x + i][y + j] == player ; i+=dx, j+=dy)
+            count +=1;
+
+        for (int i = -dx, j = -dy ; in_goban(x + i, y + j) && map[x + i][y + j] == player ; i-=dx, j-=dy)
+            count +=1;
+
+        if (count >= 4)
+        {
+            for (int i=dx , j = dy; in_goban(x+i, y+j) && map[x + i][y + j] == player ; i+=dx, j+=dy)
+            {
+
+                for (int k = 0 ; k < 4 ; k++)
+                {
+                    capture_add_forced(x + i, y + j, ddir[k][0], ddir[k][1], player, opponant);
+                }
+            }
+            for (int i = -dx, j = -dy ; in_goban(x + i, y + j) && map[x + i][y + j] == player ; i-=dx, j-=dy)
+            {
+                for (int k = 0 ; k < 4 ; k++)
+                {
+                    capture_add_forced(x + i, y + j, ddir[k][0], ddir[k][1], player, opponant);
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean complete_check_win(int x, int y, int player)
+    {
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            if (complete_check_dir(x, y, ddir[i][0],ddir[i][1], player))
+                return true;
+        }
+        return false;
+    }
+
     protected boolean check_win_4_dir(int x, int y)
     {
         if (check_dir(x,y, 0, 1))
@@ -544,7 +610,6 @@ public class MinMax
             return true;
         if (check_dir(x, y, 1, -1))
             return true;
-        //true if
         return false;
     }
 
@@ -558,7 +623,7 @@ public class MinMax
             return true;
         if (check_dir(x, y, 1, -1, player))
             return true;
-        //true if
+    
         return false;
     }
 
@@ -665,21 +730,7 @@ public class MinMax
         }
     }
 
-    protected float value_victory_smarter(int player, int turn, int len)
-    {
-        pos_counter++;
 
-        // if (pos_counter % 1000 == 7)
-        // {        
-        //     System.out.printf("Counter %d %d\n", pos_counter, nbmove);
-        //     display_map();
-        //     scsimul.display();
-        // }
-        if (player == turn)
-            return 10000 - (len * 100);
-        else
-            return -10000 + (len * 100);
-    }
 
     protected float value_victory(int player, int turn, int len)
     {
@@ -731,7 +782,7 @@ public class MinMax
         int nb_candidates;
         float reteval;
 
-        nb_candidates = candidat.old_load(depth);
+        nb_candidates = candidat.old_load(depth, turn);
         // if (depth != 0)
         //     System.out.printf("nb candidates %d", nb_candidates);
         //can = new ArrayList<Candidat.coord>(candidat.lst);
