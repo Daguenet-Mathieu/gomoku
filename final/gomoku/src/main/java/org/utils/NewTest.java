@@ -159,6 +159,16 @@ public class NewTest
     {
 
 
+        move(8, 8, 1);
+        move(10, 8, 2);
+        move(8, 9, 1);
+        move(8, 7, 1);
+        move(9, 8, 1);
+        move(8, 5, 1);
+        move(8, 6, 1);
+        move(7, 8, 2);
+
+
         // move(15, 3, 1);
 
         // move(14, 4, 2);
@@ -177,33 +187,33 @@ public class NewTest
         // move(5, 11, 1);
 
 
-        move (5, 8, 2);
-        move(6, 9, 1);
-        move(7, 4, 1);
-        move(7, 8, 2);
-        move(7, 10, 1);
-        move(7, 12, 2);
-        move(8, 5, 2);
-        move(8, 7, 2);
-        move(8, 8, 1);
-        move(8, 11, 1);
-        move(9, 5, 2);
-        move(9, 6, 2);
-        move(9, 9, 2);
-        move(9, 10, 1);
-        move(10, 5, 2);
-        move(10, 7, 2);
-        move(10, 8, 1);
-        move(10, 9, 1);
-        move(11, 4, 1);
-        move(11, 5, 1);
-        move(11, 8, 2);
-        move(11, 10, 2);
-        move(12, 9, 1);
-        if (db.check_double_free(9, 7, 2, MinMax.map) == true)
-            System.out.printf("all fine");
-        else
-            System.out.printf("double free detected");
+        // move (5, 8, 2);
+        // move(6, 9, 1);
+        // move(7, 4, 1);
+        // move(7, 8, 2);
+        // move(7, 10, 1);
+        // move(7, 12, 2);
+        // move(8, 5, 2);
+        // move(8, 7, 2);
+        // move(8, 8, 1);
+        // move(8, 11, 1);
+        // move(9, 5, 2);
+        // move(9, 6, 2);
+        // move(9, 9, 2);
+        // move(9, 10, 1);
+        // move(10, 5, 2);
+        // move(10, 7, 2);
+        // move(10, 8, 1);
+        // move(10, 9, 1);
+        // move(11, 4, 1);
+        // move(11, 5, 1);
+        // move(11, 8, 2);
+        // move(11, 10, 2);
+        // move(12, 9, 1);
+        // if (db.check_double_free(9, 7, 2, MinMax.map) == true)
+        //     System.out.printf("all fine");
+        // else
+        //     System.out.printf("double free detected");
 
 
 
