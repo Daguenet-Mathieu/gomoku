@@ -74,7 +74,7 @@ public class GomokuRules implements Rules {
     }
 
     @Override
-    public boolean areCapturable(ArrayList<Point> points, Map map, final int color){
+    public boolean areCapturable(ArrayList<Point> points, Map map, final int color, int dir){
         return false;
     }
 

@@ -45,13 +45,13 @@ public class PenteRules implements Rules {
         }
         if (check_five(map, point))
         {
-            if (verticalWin.size() >= 5 && areCapturable(verticalWin, map, color) == true)
+            if (verticalWin.size() >= 5 && areCapturable(verticalWin, map, color, 0) == true)
                 return false;
-            if (horizontalWin.size() >= 5 && areCapturable(horizontalWin, map, color) == true)
+            if (horizontalWin.size() >= 5 && areCapturable(horizontalWin, map, color, 1) == true)
                 return false;
-            if (diagonalLeftWin.size() >= 5 && areCapturable(diagonalLeftWin, map, color) == true)
+            if (diagonalLeftWin.size() >= 5 && areCapturable(diagonalLeftWin, map, color, 2) == true)
                 return false;
-            if (diagonalRightWin.size() >= 5 && areCapturable(diagonalRightWin, map, color) == true)
+            if (diagonalRightWin.size() >= 5 && areCapturable(diagonalRightWin, map, color, 3) == true)
                 return false;
             this.winner = color;
             return true;
@@ -154,58 +154,16 @@ public class PenteRules implements Rules {
     }
 
     private boolean inMap(int y, int x){
-        // System.out.println("dans in map : x == " + x + " y == " + y);
         if (x < 0 || x >= get_board_size() || y < 0 || y >= get_board_size())
             return false;
         return true;
     }
 
     private int getColor(Point point, int incrementX, int incrementY, Map map){
-        // System.out.println("je test les coordonnees dans get color : x == " +  point.x + incrementX + " y == " + point.y + incrementY + " ");
-        // System.out.println("je test : x == " + (point.x + incrementX) + " y == " + (point.y + incrementY));
-        // System.out.println("la case est : " + map.get_map()[point.y + incrementY][point.x + incrementX]);
         return map.get_map()[point.y + incrementY][point.x + incrementX];
     }
 
     private boolean checkDir(Point point, Map map, int incrementX, int incrementY, final int color){
-        // int size = 1;
-        // int iPos = 2;
-        // int colorAdv = (color == 1) ? 2 : 1;
-        // // System.out.println("hors loop en pos je teste : x == " + (point.x + incrementX+ iPos) + " y == " + (point.y + incrementY+ iPos) + " la couleur est == " + map.get_map()[point.y + incrementY + iPos][point.x + incrementX + iPos]);
-        // while (inMap(point.y + incrementY + iPos, point.x + incrementX + iPos) && color == getColor(point, incrementX + iPos, incrementY + iPos, map)){
-        //     // System.out.println("in loop en pos je teste : x == " + (point.x + incrementX+ iPos) + " y == " + (point.y + incrementY+ iPos) + " la couleur est == " + map.get_map()[point.y + incrementY + iPos][point.x + incrementX + iPos]);
-        //     // System.out.println("y == " + point.y + " y increment == " + incrementY + " x == " + point.x + " x increment == " + incrementX + " iPos == " + iPos);
-        //     // if (point.y + incrementY + iPos > 18 || point.y + incrementY + iPos < 0 || point.x + incrementX + iPos > 18 || point.x + incrementX + iPos < 0)
-        //     //     break ;
-        //     System.out.println("pas de break!");
-        //     // System.out.println("y == " + point.y + " y incrment == " + (point.y + incrementY) + " x == " + point.x + " x increment == " + (point.x + incrementX));
-        //     if (map.get_map()[point.y + incrementY + iPos][point.x + incrementX + iPos] == color)
-        //         size++;
-        //     iPos++;
-        //     System.out.println("increment?");
-        // }
-        // int iNeg = 2;
-        // // System.out.println("size == " + size + " hors loop en neg je teste : x == " + (point.x - (incrementX + iNeg)) + " y == " + (point.y - (incrementY + iNeg)) + " la couleur est == " + map.get_map()[point.y - (incrementY + iNeg)][point.x - (incrementX + iNeg)]);
-        // while (inMap(point.y - (incrementY + iNeg), point.x - (incrementX + iNeg)) && color == getColor(point, -(incrementX + iNeg), -(incrementY + iNeg), map)){
-        //     // System.out.println("in loop en neg je teste : x == " + (point.x - (incrementX + iNeg)) + " y == " + (point.y - (incrementY + iNeg)) + " la couleur est == " + map.get_map()[point.y - (incrementY + iNeg)][point.x - (incrementX + iNeg)]);
-        //     // if (point.y + incrementY + iNeg > 18 || point.y + incrementY + iNeg < 0 || point.x + incrementX + iNeg > 18 || point.x + incrementX + iNeg < 0)
-        //     //     break ;
-        //     System.out.println("pas de break!");
-        //     if (map.get_map()[point.y - (incrementY + iNeg)][point.x - (incrementX + iNeg)] == color)
-        //         size++;
-        //     iNeg++;
-        //     System.out.println("increment?");
-        // }
-        // System.out.println("size == " + size);
-        // if (size != 2)
-        //     return false;
-        // if (inMap((point.x - incrementX), (point.y - incrementY)) == false || inMap(point.x + (incrementX + 2), point.y + (incrementY + 2)) == false)
-        //     return false;
-        // int colorStart = map.get_map()[point.y - incrementY][point.x - incrementX];
-        // int colorEnd = map.get_map()[point.y + (incrementY + 2)][point.x + (incrementX + 2)];
-        // System.out.println("color start == " + colorStart + "color end == " + colorEnd);
-        // if ((colorStart == colorAdv && colorEnd == 0) || (colorEnd == colorAdv && colorStart == 0))//dire qu'une win est en attente?
-        //     return true;
         if (point.x + incrementX < 0 || point.y + incrementY < 0 || point.x - incrementX < 0 || point.y - incrementY < 0)
             return false;
         System.out.println("tjs en course 1");
@@ -234,6 +192,7 @@ public class PenteRules implements Rules {
         int advColor = color == 1? 2 : 1;
         if (before == false){
             System.out.println("j'ai trouve un before");
+            System.out.println("je test : y == " + (p1.y - incrY) + " x == " + (p1.x - incrX) + " et y == " + (p2.y + incrY) + " et x == " + (p2.x + incrX));
             if (map.get_map()[p1.y - incrY][p1.x - incrX] == 0 && map.get_map()[p2.y + incrY][p2.x + incrX] == advColor)
                 return true;
             System.out.println("pas le premier test");
@@ -243,6 +202,7 @@ public class PenteRules implements Rules {
         }
         else{
             System.out.println("j'ai trouve un after");
+            System.out.println("je test : y == " + (p2.y - incrY) + " x == " + (p2.x - incrX) + " et y == " + (p1.y + incrY) + " et x == " + (p1.x + incrX));
             if (map.get_map()[p2.y - incrY][p2.x - incrX] == 0 && map.get_map()[p1.y + incrY][p1.x + incrX] == advColor)
                 return true;
             System.out.println("pas le premier test");
@@ -272,15 +232,53 @@ public class PenteRules implements Rules {
         return false;
     }
 
-    @Override
-    public boolean areCapturable(ArrayList<Point> points, Map map, final int color){ 
-        System.out.println("coucou!!!!!!!!!!!!!!!!!!!!!!!!");
-        for (Point p : points){
-            if (isCapturable(p, map, color) == true){
-                advWinning = color;
-                return true;
+    private void sortList(ArrayList<Point> list)
+    {
+        for (int i = 0; i < list.size() - 1; i++) {
+            Point p1 = list.get(i);
+            Point p2 = list.get(i + 1);
+            if (p2.y < p1.y || (p2.y == p1.y && p2.x < p1.x)) {
+                list.set(i, p2);
+                list.set(i + 1, p1);
+                i = -1;
             }
         }
+    }
+
+    private boolean checkFiveAfterCapture(ArrayList<Point> list, ArrayList<Point> capturable, int dir){
+        ArrayList<Point> newList = new ArrayList<Point>();
+        boolean rm;
+        for (Point l : list){
+            rm = false;
+            for (Point p : capturable){
+                if (l == p){
+                    rm = true;
+                }
+            }
+            if (rm == false)
+                newList.add(l);
+        }
+        sortList(newList);
+        for (int i = 0; i < newList.size() - 1; i++){
+            Point point1 = newList.get(i);
+            Point point2 = newList.get(i + 1);
+            System.out.println("point 1 == " + point1 + " point2 " + point2);
+            System.out.println("1er == " + Math.abs(point1.x - point2.x) + " 2em " + Math.abs(point1.y - point2.y));
+            if (Math.abs(point1.x - point2.x) >= 2 || Math.abs(point1.y - point2.y) >= 2)
+                return true;
+        }
         return false;
+    }
+
+    @Override
+    public boolean areCapturable(ArrayList<Point> points, Map map, final int color, int dir){ 
+        System.out.println("coucou!!!!!!!!!!!!!!!!!!!!!!!!");
+        ArrayList<Point> capturable = new ArrayList<Point>();
+        for (Point p : points){
+            if (isCapturable(p, map, color) == true){
+                capturable.add(p);
+            }
+        }
+        return checkFiveAfterCapture(points, capturable, dir);//enleverl es capturablessort et check si 
     }
 }

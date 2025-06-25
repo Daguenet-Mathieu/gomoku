@@ -14,7 +14,7 @@ public interface Rules {
     int get_black_prisonners();
     void set_white_prisonners(int nb);
     void set_black_prisonners(int nb);
-    boolean areCapturable(ArrayList<Point> points, Map map, final int color);
+    boolean areCapturable(ArrayList<Point> points, Map map, final int color, int dir);
     int getWinner();
     void setWinner(int w);
 
@@ -198,7 +198,7 @@ public interface Rules {
         if (color == 0)
             return false;
         verticalWin.add(point);
-        for (int i = 1; count < 5 && (right == true || left == true); i++)
+        for (int i = 1; (right == true || left == true); i++)
         {
             if (right && point.y - i >= 0 && check_with_dir(map, point, 0, -i, color)){
                 count += 1;
@@ -230,7 +230,7 @@ public interface Rules {
         if (color == 0)
             return false;
         diagonalLeftWin.add(point);
-        for (int i = 1; count < 5 && (right == true || left == true); i++)
+        for (int i = 1; (right == true || left == true); i++)
         {
             if (right && point.y - i >= 0 && point.x - i >= 0 && check_with_dir(map, point, -i, -i, color)){
                 count += 1;
@@ -262,7 +262,7 @@ public interface Rules {
         if (color == 0)
             return false;
         diagonalRightWin.add(point);
-        for (int i = 1; count < 5 && (right == true || left == true); i++)
+        for (int i = 1; (right == true || left == true); i++)
         {
             if (right && point.x + i < map.getSize() && point.y - i >= 0 && check_with_dir(map, point, i, -i, color)){
                 count += 1;

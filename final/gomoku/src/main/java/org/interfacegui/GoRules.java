@@ -81,7 +81,7 @@ public class GoRules implements Rules {
     }
 
     @Override
-    public boolean areCapturable(ArrayList<Point> point, Map map, final int color){
+    public boolean areCapturable(ArrayList<Point> point, Map map, final int color, int dir){
         return false;
     }
 
