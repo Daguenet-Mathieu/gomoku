@@ -141,12 +141,12 @@ public interface Rules {
 
     default boolean checkEmptySqure(int x, int y, Map map) {
         if ((x < 0 || x >= 19) || (y < 0 || y >= 19)){
-            System.out.println("out of range.");
+            // System.out.println("out of range.");
             return false;
 
         }
         if (map.get_map()[y][x] != 0) {
-            System.out.println("Le coup ne peut pas être joué ici, la case est déjà occupée.");
+            // System.out.println("Le coup ne peut pas être joué ici, la case est déjà occupée.");
             return false;
         }
         return true;
@@ -266,7 +266,7 @@ public interface Rules {
         {
             if (right && point.x + i < map.getSize() && point.y - i >= 0 && check_with_dir(map, point, i, -i, color)){
                 count += 1;
-                System.out.println("J'add a diag r");
+                // System.out.println("J'add a diag r");
                 diagonalRightWin.add(new Point(point.x + i, point.y - i));
             }
             else{
@@ -274,7 +274,7 @@ public interface Rules {
             }
             if (left && point.y + i < map.getSize() && point.x - i >= 0 && check_with_dir(map, point, -i, i, color)){
                 count += 1;
-                System.out.println("J'add a diag r");
+                // System.out.println("J'add a diag r");
                 diagonalRightWin.add(new Point(point.x - i, point.y + i));
             }
             else{
@@ -294,7 +294,7 @@ public interface Rules {
     }
 
     default boolean check_five(Map map, Point point){
-        System.out.println("square state == " + map.get_map()[point.y][point.x]);
+        // System.out.println("square state == " + map.get_map()[point.y][point.x]);
         if (map.get_map()[point.y][point.x] == 0)
             return false;
         verticalWin.clear();
@@ -304,7 +304,7 @@ public interface Rules {
         check_horizontal(map, point);
         check_vertical(map, point);
         check_diagonal(map, point);
-        System.out.println("dans rules vertical == " + verticalWin.size() + " horizontal == " + horizontalWin.size() + " diagonale left  == " + diagonalLeftWin.size()  + " dagonale right == " + diagonalRightWin.size());
+        // System.out.println("dans rules vertical == " + verticalWin.size() + " horizontal == " + horizontalWin.size() + " diagonale left  == " + diagonalLeftWin.size()  + " dagonale right == " + diagonalRightWin.size());
         if (verticalWin.size() >= 5 || horizontalWin.size() >= 5 || diagonalLeftWin.size() >= 5 || diagonalRightWin.size() >= 5)
             return true;
         return false;

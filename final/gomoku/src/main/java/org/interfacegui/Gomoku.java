@@ -355,29 +355,10 @@ public class Gomoku
 
         //for point in rule.capturedPoint
         //    game.remove(point);
-
-        if (rule.endGame(_map.get(_map.size() - 1), point)){
-            System.out.println("partie finie!");
-            if (_map.size() % 2 == 0)
-                System.out.println("noir gagne!");
-            else
-                System.out.println("blanc gagne!");
-            _end_popin.setVisible(true);
-            _end_popin.setManaged(true);
-            game_end = true;
-            ia_playing = false;
-            gameLoop.stop();
-            _winner = player_turn;
-            String res = _winner == 0? "black" : "white";
-            _end_text.setText(res + " win");
-        }
-        else
-            System.out.println("non!");
         ArrayList<Point> points = rule.GetCapturedStones(point, _map.get(_map.size() - 1));
         for (Point p : points) {
             System.out.println("capture 1 er affichage : " + p);  // Appel automatique à toString()
             game.remove(p); // To uppdate Minmax.map
-
         }
         points = rule.get_prisonners();
         System.out.println("nbr prisonners : " + points.size());
@@ -395,6 +376,26 @@ public class Gomoku
 
         _map.get((_map.size()-1)).set_prisonners(points);
         _map.get((_map.size()-1)).set_color(player_turn);
+
+        if (rule.endGame(_map.get(_map.size() - 1), point)){
+            System.out.println("partie finie!");
+            int winner = rule.getWinner();
+            if (winner == 1)
+                System.out.println("noir gagne!");
+            else
+                System.out.println("blanc gagne!");
+            _end_popin.setVisible(true);
+            _end_popin.setManaged(true);
+            game_end = true;
+            ia_playing = false;
+            gameLoop.stop();
+            System.out.println("winner == " + winner);
+            _winner = winner - 1;
+            String res = _winner == 0 ? "black" : "white";
+            _end_text.setText(res + " win");
+        }
+        else
+            System.out.println("non!");
         goban.updateFromMap(_map.get(_map.size() -1));
         player_turn ^= 1;//le get de la regle
     }
@@ -439,8 +440,6 @@ public class Gomoku
         rule.set_white_prisonners(_map.get((_map.size()-1)).getWhitePrisonners());
         display_nb_prisonners();
     }
-
-
 
     public Gomoku(int heigh, int width, Home game_infos)/*prendra les regles en paramettre vu que connu au clic*/{
         // fontSizeBinding = (DoubleBinding) Bindings.min(
