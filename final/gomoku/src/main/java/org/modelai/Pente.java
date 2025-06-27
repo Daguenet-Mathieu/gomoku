@@ -147,10 +147,13 @@ public class Pente extends MinMax {
         //System.out.printf("pente play %d %d\n", c.x, c.y);
         // if (check_win_4_dir(c.x, c.y, player) || is_captured(c.x, c.y, player))
         //     return true;
+
+
         if (complete_check_win(c.x, c.y, player) || is_captured(c.x, c.y, player))
             return true;
-
+        
         map[c.x][c.y] = player;
+
         this.move = c;
         remove_captured(c.x, c.y, player);
 

@@ -995,7 +995,8 @@ public class Miniscore {
 
         //System.out.println("HEEEEERE");
        // this.str = cur_player == 1 ? str1 : str2; //generaliser
-        
+
+       //System.out.printf("unconnect %d %d %d %d\n", x, y, dx, dy);
     
         decp = 0;
         decn = 0;
@@ -1087,6 +1088,8 @@ public class Miniscore {
             add_case(x, y, 3);
         else if (decp == 2 || decn == 2)
             add_case(x, y, 2);
+        else if (decp + decn >= 4)
+            add_case(x, y, 4);
 
     }
 
@@ -1136,6 +1139,8 @@ public class Miniscore {
         int val = cur_turn == 1 ? 2 : 1;
         int nbp = 0;
         int nbn = 0;
+
+        //System.out.printf("simple unfill executed ?%d %d \n", x, y);
 
 
         for (int i = 1; in_goban(x+i*dx, y+i*dy) && MinMax.map[x + i * dx][y+ i * dy] == val ; i++)
@@ -1365,11 +1370,11 @@ public class Miniscore {
 
 
 
-        if (victory)
-        {
-            save_victory();
-            return ;
-        }
+        // if (victory)
+        // {
+        //     save_victory();
+        //     return ;
+        // }
 
         if ((x + 1 != 19 && is_player(MinMax.map[x+1][y])) || (x - 1 != -1 && is_player(MinMax.map[x-1][y])))
         {
@@ -1472,6 +1477,7 @@ public class Miniscore {
     public void unfill0(int x, int y, int dir)
     {
         int cmp;
+        //System.out.printf("executed %d %d\n", cur_turn, dir);
         if (in_goban(x+ddir[dir][0], y+ddir[dir][1]) &&
         MinMax.map[x+ddir[dir][0]][y+ddir[dir][1]] == 0)
         {
@@ -1484,12 +1490,14 @@ public class Miniscore {
                     cmp++;
                 if (cur_turn == 1)
                 {
+                    //System.out.println("one");
                     sc.one -= factor[str1[dir][x+ddir[dir][0]][y+ddir[dir][1]]];
                     str1[dir][x+ddir[dir][0]][y+ddir[dir][1]]=cmp;
                     sc.one += factor[cmp];
                 }
                 else
                 {
+                    //System.out.println("two");
                     sc.two -= factor[str2[dir][x+ddir[dir][0]][y+ddir[dir][1]]];
                     str2[dir][x+ddir[dir][0]][y+ddir[dir][1]]=cmp;
                     sc.two += factor[cmp];
@@ -1509,12 +1517,14 @@ public class Miniscore {
                     cmp++;
                 if (cur_turn == 1)
                 {
+                    //System.out.println("three");
                     sc.one -= factor[str1[dir][x-ddir[dir][0]][y-ddir[dir][1]]];
                     str1[dir][x-ddir[dir][0]][y-ddir[dir][1]]=cmp;
                     sc.one += factor[cmp];
                 }
                 else
                 {
+                    //System.out.println("four");
                     sc.two -= factor[str2[dir][x-ddir[dir][0]][y-ddir[dir][1]]];
                     str2[dir][x-ddir[dir][0]][y-ddir[dir][1]]=cmp;
                     sc.two += factor[cmp];

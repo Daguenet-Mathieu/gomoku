@@ -95,6 +95,33 @@ public class Game {
         nb_move++;
     }
 
+    public void victory_str(Point p, int dir, int turn)
+    {
+        for (int i = 1 ; MinMax.map[p.y+i*MinMax.ddir[dir][0]][p.x+i*MinMax.ddir[dir][1]] == turn; i++)
+        {
+            if (MinMax.map[p.y+i*MinMax.ddir[dir][0]][p.x+i*MinMax.ddir[dir][1]] == 0)
+            {
+                if (turn == 1)
+                    scbord.str1[dir][p.y+i*MinMax.ddir[dir][0]][p.x+i*MinMax.ddir[dir][1]] = 4;
+                else
+                    scbord.str2[dir][p.y+i*MinMax.ddir[dir][0]][p.x+i*MinMax.ddir[dir][1]] = 4;
+            }
+        }
+
+        for (int i = 1 ; MinMax.map[p.y-i*MinMax.ddir[dir][0]][p.x-i*MinMax.ddir[dir][1]] == turn; i++)
+        {
+            if (MinMax.map[p.y-i*MinMax.ddir[dir][0]][p.x-i*MinMax.ddir[dir][1]] == 0)
+            {
+                if (turn == 1)
+                    scbord.str1[dir][p.y-i*MinMax.ddir[dir][0]][p.x-i*MinMax.ddir[dir][1]] = 4;
+                else
+                    scbord.str2[dir][p.y-i*MinMax.ddir[dir][0]][p.x-i*MinMax.ddir[dir][1]] = 4;
+            }
+        }
+    }
+
+
+
     public void remove(Point point)
     {
         int val = MinMax.map[point.y][point.x];
@@ -163,7 +190,9 @@ public class Game {
         else
         {
             m.load_cur_score(scbord, turn);
-            scbord.display();
+            //MinMax.display_Map();
+            //scbord.display();
+            MinMax.scsimul.display();
             System.out.printf("\n\tminmax launch turn %d player %d\n", turn, player);
     
             if (this.rules.equals("Pente"))

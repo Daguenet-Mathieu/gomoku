@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class NewTest
 {
     public Miniscore mscore;
-    public MinMax m;
+    public Pente m;
     DoubleFree db;
     Scanner scanner = new Scanner(System.in);
     public int [][] dir = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};
@@ -160,13 +160,25 @@ public class NewTest
 
 
         move(8, 8, 1);
-        move(10, 8, 2);
-        move(8, 9, 1);
-        move(8, 7, 1);
-        move(9, 8, 1);
-        move(8, 5, 1);
-        move(8, 6, 1);
-        move(7, 8, 2);
+        move(9, 7, 1);
+        move(10, 6, 2);
+        move(7, 8, 1);
+        move(6, 8, 1);
+        move(5, 8, 1);
+        System.out.println("win move 4 8");
+        MinMax.map[4][8] = 1;
+        MinMax.scsimul.analyse_move(4, 8, 1);
+        m.display_map();
+        MinMax.scsimul.display();
+        //move(4, 8, 1);
+        unmove(8, 8, 1);
+        //move(7, 9, 2);
+
+        // move(8, 8, 1);
+        // move(9, 8, 1);
+        // move(10, 8, 1);
+        // move(11, 8, 2);
+        // unmove(11, 8, 2);
 
 
         // move(15, 3, 1);
