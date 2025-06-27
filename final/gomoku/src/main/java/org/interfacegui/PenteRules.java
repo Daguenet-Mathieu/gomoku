@@ -294,6 +294,7 @@ public class PenteRules implements Rules {
 
     private boolean checkFiveInRow(ArrayList<Point> list)
     {
+        sortList(list);
         int five = 1;
         for (int i = 0; i < list.size() - 1; i++)
         {
@@ -325,7 +326,6 @@ public class PenteRules implements Rules {
             if (rm == false)
                 newList.add(l);
         }
-        sortList(newList);
         // System.out.println("list : " + list);
         // System.out.println("new list : " + newList);
         return checkFiveInRow(newList);
