@@ -106,24 +106,22 @@ public class GoRules implements Rules {
     }
 
 
-    private void floodFill(Point p, int[][] map, int color, ArrayList<Point> list){
+    private void floodFill(Point p, int[][] map, int color, ArrayList<Point> list, int value){//tableau de couleur pour le comptage?
         printMap(map);
         // System.out.println("dans floodfill color == " + color + " case checked color == " + map[p.y][p.x]);
         if (p.x < 0 || p.y < 0 || p.x >= get_board_size() || p.y >= get_board_size() || map[p.y][p.x] != color)
         {
-            System.out.println("je me casse du flood fill!!!!");
             return ;
         }
-        System.out.println("tjs ici!!!!");
         if (map[p.y][p.x] == color)
         {
             list.add(new Point(p.x, p.y));
-            map[p.y][p.x] = 7;
+            map[p.y][p.x] = value;
         }
-        floodFill(new Point(p.x + 1, p.y), map, color, list);
-        floodFill(new Point(p.x - 1, p.y), map, color, list);
-        floodFill(new Point(p.x, p.y + 1), map, color, list);
-        floodFill(new Point(p.x, p.y - 1), map, color, list);
+        floodFill(new Point(p.x + 1, p.y), map, color, list, value);
+        floodFill(new Point(p.x - 1, p.y), map, color, list, value);
+        floodFill(new Point(p.x, p.y + 1), map, color, list, value);
+        floodFill(new Point(p.x, p.y - 1), map, color, list, value);
     }
 
     private ArrayList<Point> getCapturableList(Point coord, Map map, int color, int advColor){
@@ -132,7 +130,7 @@ public class GoRules implements Rules {
             return p;
         // System.out.println("color == " + color + " adv color == " + advColor + " cehcked case color == " + map.get_map()[coord.y][coord.x]);
         if (map.get_map()[coord.y][coord.x] == advColor)
-            floodFill(coord, copyMap(map), advColor, p);
+            floodFill(coord, copyMap(map), advColor, p, 7);
         System.out.println("nb prisonners == " + p.size());
         checkCapturedStones(p, map);
         System.out.println("nb prisonners == " + p.size());
