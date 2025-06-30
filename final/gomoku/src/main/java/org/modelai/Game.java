@@ -90,14 +90,14 @@ public class Game {
 
     public void move(Point point, int turn)
     {
-        int res;
+        //int res;
         MinMax.map[point.y][point.x] = turn;
         scbord.analyse_move(point.y, point.x, turn);
         if (this.rules == "Pente")
         {
-            res = Pente.count_capture(point.y, point.x, turn);
-            if (res!= 0)
-                System.out.printf("Some captures added point %d %d turn %d: val %d", point.y, point.x, turn, res);
+            //res = Pente.count_capture(point.y, point.x, turn);
+            // if (res!= 0)
+            //     System.out.printf("Some captures added point %d %d turn %d: val %d", point.y, point.x, turn, res);
             Pente.prisoners[turn %2] += Pente.count_capture(point.y, point.x, turn);
         }
         nb_move++;

@@ -559,7 +559,7 @@ public class MinMax
             //System.out.printf("adding forcing move : %d %d\n", x-dx, y-dy);
         }
 
-        System.out.printf("Capture add forced on %d %d found %d\n ", x, y, candidat.forced_capture.size());
+        //System.out.printf("Capture add forced on %d %d found %d\n ", x, y, candidat.forced_capture.size());
 
         return true;
 
