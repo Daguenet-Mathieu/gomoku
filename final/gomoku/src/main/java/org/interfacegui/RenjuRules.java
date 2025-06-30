@@ -90,4 +90,10 @@ public class RenjuRules implements Rules {
     public void setWinner(int w){
         this.winner = w;
     }
+
+    @Override
+    public boolean hasIa(){
+        return false;
+    }
+
 }

@@ -17,6 +17,7 @@ public interface Rules {
     boolean areCapturable(ArrayList<Point> points, Map map, final int color, int dir);
     int getWinner();
     void setWinner(int w);
+    boolean hasIa();
 
     int get_board_size();
 

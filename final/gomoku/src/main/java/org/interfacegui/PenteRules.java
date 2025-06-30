@@ -344,4 +344,11 @@ public class PenteRules implements Rules {
             return false;
         return true; 
     }
+
+    @Override
+    public boolean hasIa(){
+        return true;
+    }
+
+
 }

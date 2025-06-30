@@ -71,7 +71,7 @@ public class Gomoku
     private int end_move_time;
     private ArrayList<Point> candidatsList;
     private float bestMoveScore;
-    private ArrayList<Point> hintList;
+    private ArrayList<Point> hintList; 
     // private DoubleBinding fontSizeBinding;
 
     private Game game;
@@ -130,7 +130,7 @@ public class Gomoku
     }
 
     void setHint(ArrayList<Candidat.coord> hint, float[] values) {
-        if (hint == null || values == null) return;
+        if (rule.hasIa() == true && (hint == null || values == null)) return;
 
         hintList = new ArrayList<>();
         // bestMoveScore = game.val;
@@ -168,7 +168,7 @@ public class Gomoku
 
     void setCandidats(ArrayList<Candidat.coord> candidats, float[] values) {
         System.err.println("ici on set les candidats!!!!!!!!????????????!!!!!!!!!!!!!");
-        if (candidats == null || values == null || game.val == null ) return;
+        if (rule.hasIa() == false || candidats == null || values == null || game.val == null) return;
 
         candidatsList = new ArrayList<>();
         bestMoveScore = game.val;
@@ -225,8 +225,9 @@ public class Gomoku
     public void createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
         gameLoop = new Timeline();
         System.out.println("-1 je passe la");
-
         KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
+        if (rule.hasIa() == true)
+        {
             try {
             //System.out.println("coucou curent turn == " + player_turn + " current decrement == " + current_decrement );
                 if (player_turn == 0 && _game_infos.get_black_player_type() == 1){//faire une fct
@@ -272,34 +273,35 @@ public class Gomoku
                 e.printStackTrace();
                 System.exit(0);
             }
-            if (player_turn != current_decrement){
-                current_decrement = current_decrement == 0?1:0;
-                gameInfos.set_last_move_time(end_move_time - start_move_time);
-                start_move_time = 0;
-                end_move_time = 0;
-                return ;
-            }
-            gameInfos.set_current_move_time(end_move_time - start_move_time);
-            if (player_turn == 0)
-                gameInfos.sub_black_time(10);
-            else
-                gameInfos.sub_white_time(10);
-            end_move_time += 10;
-            if (gameInfos.get_black_time() <= 0 || gameInfos.get_white_time() <= 0){
-                gameLoop.stop();
-                game_end = true;
-                ia_playing = false;
-                _winner = (gameInfos.get_black_time() <= 0) ? 2 : 1;
-                String res = _winner == 1? "black" : "white";
-                _end_text.setText(res + " win");
-                _end_popin.setVisible(true);
-                _end_popin.setManaged(true);
-            }
-            //check si 1 joueur a 0 ou < geme fini set le vainqueur arreter la loop
-            // if (ia_turn()) {
-                // do_ia_move();
-            // }
-            // count_time();
+        }
+        if (player_turn != current_decrement){
+            current_decrement = current_decrement == 0?1:0;
+            gameInfos.set_last_move_time(end_move_time - start_move_time);
+            start_move_time = 0;
+            end_move_time = 0;
+            return ;
+        }
+        gameInfos.set_current_move_time(end_move_time - start_move_time);
+        if (player_turn == 0)
+            gameInfos.sub_black_time(10);
+        else
+            gameInfos.sub_white_time(10);
+        end_move_time += 10;
+        if (gameInfos.get_black_time() <= 0 || gameInfos.get_white_time() <= 0){
+            gameLoop.stop();
+            game_end = true;
+            ia_playing = false;
+            _winner = (gameInfos.get_black_time() <= 0) ? 2 : 1;
+            String res = _winner == 1? "black" : "white";
+            _end_text.setText(res + " win");
+            _end_popin.setVisible(true);
+            _end_popin.setManaged(true);
+        }
+        //check si 1 joueur a 0 ou < geme fini set le vainqueur arreter la loop
+        // if (ia_turn()) {
+            // do_ia_move();
+        // }
+        // count_time();
         });
 
         gameLoop.getKeyFrames().add(keyFrame);
@@ -345,8 +347,8 @@ public class Gomoku
         map_index = _map.size() - 1;
         System.out.println("map_index apres update dans play move" + map_index);
 
-        
-        game.move(point, player_turn+1); // To update MinMax.map
+        if (rule.hasIa() == true)
+            game.move(point, player_turn+1); // To update MinMax.map
         //MinMax.display_Map();
         
         //add 0 si y a des prisonniers
@@ -358,7 +360,8 @@ public class Gomoku
         ArrayList<Point> points = rule.GetCapturedStones(point, _map.get(_map.size() - 1));
         for (Point p : points) {
             System.out.println("capture 1 er affichage : " + p);  // Appel automatique à toString()
-            game.remove(p); // To uppdate Minmax.map
+            if (rule.hasIa() == true)
+                game.remove(p); // To uppdate Minmax.map
         }
         points = rule.get_prisonners();
         System.out.println("nbr prisonners : " + points.size());
@@ -430,7 +433,8 @@ public class Gomoku
         }
         Point coord = _map.get(_map.size() - 1).getLastMove();
         map_index -= 1;
-        game.remove(coord);
+        if (rule.hasIa() == true)
+            game.remove(coord);
         _map.remove(_map.size() - 1);
         goban.updateFromMap(_map.get(_map.size() - 1));
         // if (player_turn)//CHANGER LE NB PROSONNIERS pour la bonne couleur
@@ -562,7 +566,7 @@ public class Gomoku
         });
 
         gameInfos.getHintButton().setOnAction(event -> {
-            if (ia_playing || game_end)
+            if (rule.hasIa() == false || ia_playing || game_end)
                 return ;
             toggleHint = toggleHint == true? false : true;
             if (hintList == null){
