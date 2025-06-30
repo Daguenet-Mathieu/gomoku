@@ -159,19 +159,36 @@ public class NewTest
     {
 
 
-        move(8, 8, 1);
-        move(9, 7, 1);
-        move(10, 6, 2);
+        // move(8, 8, 1);
+        // move(8, 9, 1);
+        // move(8, 10, 2);
+        // move(8, 7, 2);
+        // System.out.printf("prisoners %d %d\n", Pente.prisoners[0], Pente.prisoners[1]);
+        // unmove(8, 7, 2);
+        // System.out.printf("prisoners %d %d\n", Pente.prisoners[0], Pente.prisoners[1]);
+
+        move(9, 8, 2);
         move(7, 8, 1);
-        move(6, 8, 1);
-        move(5, 8, 1);
-        System.out.println("win move 4 8");
-        MinMax.map[4][8] = 1;
-        MinMax.scsimul.analyse_move(4, 8, 1);
-        m.display_map();
-        MinMax.scsimul.display();
-        //move(4, 8, 1);
-        unmove(8, 8, 1);
+        move(6, 8, 2);
+        move(8, 8, 1);
+        move(8, 9, 1);
+        move(8, 10, 1);
+        move(8, 11, 1);
+        move(8, 12, 1);
+
+        // move(8, 8, 1);
+        // move(9, 7, 1);
+        // move(10, 6, 2);
+        // move(7, 8, 1);
+        // move(6, 8, 1);
+        // move(5, 8, 1);
+        // System.out.println("win move 4 8");
+        // MinMax.map[4][8] = 1;
+        // MinMax.scsimul.analyse_move(4, 8, 1);
+        // m.display_map();
+        // MinMax.scsimul.display();
+        // //move(4, 8, 1);
+        // unmove(8, 8, 1);
         //move(7, 9, 2);
 
         // move(8, 8, 1);
