@@ -50,16 +50,16 @@ public class Pente extends MinMax {
         prisonlst.add(new Pente.Prison(x,y, warx, wary));
     }
 
-    private int is_capture(int x, int y, int dx, int dy, int p, int o)
+    static private int is_capture(int x, int y, int dx, int dy, int p, int o)
     {
         int count = 0;
 
-        if (in_goban(x+3*dx, y+3*dy) && map[x + dx][y + dy] == o && map[x + 2 * dx][y + 2 * dy] == o && map[x + 3 * dx][y + 3 * dy] == p)
+        if (MinMax.IN_goban(x+3*dx, y+3*dy) && map[x + dx][y + dy] == o && map[x + 2 * dx][y + 2 * dy] == o && map[x + 3 * dx][y + 3 * dy] == p)
         {
             count+=2;
         }
 
-        if (in_goban(x-3*dx, y - 3*dy) && map[x - dx][y - dy] == o && map[x - 2 * dx][y - 2 * dy] == o && map[x - 3 * dx][y - 3 * dy] == p)
+        if (MinMax.IN_goban(x-3*dx, y - 3*dy) && map[x - dx][y - dy] == o && map[x - 2 * dx][y - 2 * dy] == o && map[x - 3 * dx][y - 3 * dy] == p)
         {
             count+=2;
         }
@@ -86,6 +86,18 @@ public class Pente extends MinMax {
         return false;
     }
 
+    static public int count_capture(int x, int y, int turn)
+    {
+        final int op = turn == 1 ? 2 : 1;
+        int count = 0;
+
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            count += is_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
+        }
+        return count;
+    }   
+
     private boolean is_captured(int x, int y, int turn)
     {  
         final int op = turn == 1 ? 2 : 1;
@@ -111,7 +123,7 @@ public class Pente extends MinMax {
             //     MinMax.scsimul.capt[turn - 1]--;
     }
 
-    public float value_victory_smarter(int player, int turn, int len)
+    public float value_victory_smarter(int player, int turn, int len) //not so smart
     {
         pos_counter++;
 
@@ -122,6 +134,15 @@ public class Pente extends MinMax {
         //     scsimul.display();
         // }
         int nb = candidat.forced_capture.size();
+
+        if (nb != 0)
+            System.exit(0);
+
+        if (len == 0)
+        {
+            System.out.printf("Victory ! nb capture %d, val %d", nb, 10000 - ((len + nb) * 100) );
+            System.out.printf("prisoners %d %d", prisoners[0], prisoners[1]);
+        }
 
         if (player == turn)
         {
@@ -329,11 +350,13 @@ public class Pente extends MinMax {
     // }
 
 
+    
 
+    // invert value
     public int prisonpnt(int player)
     {
         if (player == 1)
-            return (prisoners[1] - prisoners[0]) * 2;
+            return (prisoners[1] - prisoners[0]) * 2; //check sens
         else
             return (prisoners[0] - prisoners[1]) * 2;
     }
@@ -513,7 +536,7 @@ public class Pente extends MinMax {
         if (depth == Game.max_depth)
         {
             //candidat.display_candidat(map);
-            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", prisoners[0], prisoners[1]);
+            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
             display_map();
             scsimul.display();
             System.out.println("At the end !!!!!!!!!!!!!!!!!!!!!!!!!");

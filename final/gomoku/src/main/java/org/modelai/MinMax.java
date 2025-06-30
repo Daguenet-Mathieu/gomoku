@@ -498,6 +498,13 @@ public class MinMax
         return false;
     }
 
+    static public boolean IN_goban(int x, int y)
+    {
+        if (x >=0 && x < 19 && y >=0 && y < 19)
+            return true;
+        return false;
+    }
+
     private boolean check_dir(int x, int y, int dx, int dy)
     {
         int player;
@@ -537,6 +544,7 @@ public class MinMax
     protected boolean capture_add_forced(int x, int y, int dx, int dy, int p, int o)
     {
 
+
         if (in_goban(x+2*dx, y+2*dy) && in_goban(x-dx, y-dy) &&
          map[x - dx][y - dy] == o && map[x + 1 * dx][y + 1 * dy] == p && map[x + 2 * dx][y + 2 * dy] == 0)
         {
@@ -550,6 +558,8 @@ public class MinMax
             candidat.forced_capture.add(new Candidat.coord(x - dx, y-dy));
             //System.out.printf("adding forcing move : %d %d\n", x-dx, y-dy);
         }
+
+        //System.out.printf("Capture add forced on %d %d found %d\n ", x, y, candidat.forced_capture.size());
 
         return true;
 
