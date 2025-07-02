@@ -3,11 +3,20 @@ import java.util.ArrayList;
 import org.utils.Point;
 
 public interface Rules {
+
+    enum GameMode {
+        PLAYING,
+        DEATH_MARKING,
+        COUNTING,
+        ENDGAME,
+        VIEWING
+    }
+
     boolean isValidMove(Point point, ArrayList<Map> map);
     boolean endGame(Map map, Point point);
     String getGameType();
     // ArrayList<Point> get_forbiden_moves();
-    ArrayList<Point> get_forbiden_moves(Map map, int color);
+    ArrayList<Point> get_forbiden_moves(ArrayList<Map> map, int index, int color);
     void check_capture(Point point, Map map);
     ArrayList<Point> get_prisonners();
     int get_white_prisonners();
@@ -18,8 +27,8 @@ public interface Rules {
     int getWinner();
     void setWinner(int w);
     boolean hasIa();
-
     int get_board_size();
+    GameMode getGameMode();
 
     ArrayList<Point> verticalWin = new ArrayList<Point>();
     ArrayList<Point> horizontalWin = new ArrayList<Point>();

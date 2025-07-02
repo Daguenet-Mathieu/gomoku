@@ -11,6 +11,7 @@ public class PenteRules implements Rules {
     int [] prisonners_nbr = new int[2];
     public DoubleFree dbfree = new DoubleFree();
     int advWinning = 0;//0 1 2? need check first si 5 sur le plateau ou fqarder en memoire le point?
+    Rules.GameMode gameStatus = Rules.GameMode.PLAYING;;
 
 
     @Override
@@ -122,8 +123,9 @@ public class PenteRules implements Rules {
     }
 
     @Override
-    public ArrayList<Point> get_forbiden_moves(Map map, int color)
+    public ArrayList<Point> get_forbiden_moves(ArrayList<Map> maps, int index, int color)
     {
+        Map map = maps.get(index);
         int[][] m = map.get_map();
         forbidden_moves.clear();
         map.printMap();
@@ -350,5 +352,9 @@ public class PenteRules implements Rules {
         return true;
     }
 
+    @Override
+    public Rules.GameMode getGameMode(){
+        return gameStatus;
+    }
 
 }

@@ -82,7 +82,8 @@ public class Gomoku
     private ExecutorService executor = null;
     private Future<Point> future = null;
     private boolean forbiddenVisibility = true;
-
+    Rules.GameMode playingMode = Rules.GameMode.PLAYING;
+    
     // void changeCandidatVisibility(boolean visible){
     //     int count = 0;
     //     for (Float score : candidatsMap.keySet()) {
@@ -328,6 +329,7 @@ public class Gomoku
     private void playMove(Point point){
         if (map_index < (_map.size() - 1) || !rule.isValidMove(point , _map))
             return ;
+        // if ()//!PLAYING
         System.out.println("map index == " + map_index );
         changeCandidatVisibility(false);
         toggleCandidat = false;
@@ -355,7 +357,7 @@ public class Gomoku
         _map.get(_map.size() -1); //no printmap
         rule.check_capture(point, _map.get(_map.size() - 1));
 
-        //for point in rule.capturedPoint
+        //for point in rules.capturedPoint
         //    game.remove(point);
         ArrayList<Point> points = rule.GetCapturedStones(point, _map.get(_map.size() - 1));
         for (Point p : points) {
@@ -580,7 +582,7 @@ public class Gomoku
                 return ;
             int color = _map.get(map_index).get_color() ^ 1;
             System.out.println("map index == " + map_index + " player turn == " + player_turn + " player turn d'apres map == " + _map.get(map_index).get_color());
-            ArrayList<Point> points = rule.get_forbiden_moves(_map.get(map_index), color + 1);
+            ArrayList<Point> points = rule.get_forbiden_moves(_map, map_index, color + 1);
             for (Point point : points){
                 changeForbiddenVisibility(forbiddenVisibility, point);
             }

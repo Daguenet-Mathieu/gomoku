@@ -5,6 +5,7 @@ import org.utils.Point;
 public class GomokuRules implements Rules {
 
     int winner;
+    Rules.GameMode gameStatus = Rules.GameMode.PLAYING;
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
@@ -30,8 +31,16 @@ public class GomokuRules implements Rules {
     public String getGameType() {
         return "Gomoku";
     }
+
     @Override
-    public ArrayList<Point> get_forbiden_moves(Map map, int color){//degager color
+    public Rules.GameMode getGameMode(){
+        return gameStatus;
+    }
+
+    @Override
+    public ArrayList<Point> get_forbiden_moves(ArrayList<Map> maps, int index, int color)
+    {
+        Map map = maps.get(index);
         return new ArrayList<Point>();
     }
 

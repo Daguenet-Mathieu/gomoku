@@ -8,6 +8,7 @@ public class RenjuRules implements Rules {
     ArrayList<Point> forbidden_moves;//coups interdit pour la position actuelle
     int [] prisonners_nbr = new int[2];
     int winner;
+    Rules.GameMode gameStatus = Rules.GameMode.PLAYING;
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
@@ -36,7 +37,9 @@ public class RenjuRules implements Rules {
     }
 
     @Override
-    public ArrayList<Point> get_forbiden_moves(Map map, int color){
+    public ArrayList<Point> get_forbiden_moves(ArrayList<Map> maps, int index, int color)
+    {
+        Map map = maps.get(index);
         return forbidden_moves;
     }
 
@@ -95,5 +98,12 @@ public class RenjuRules implements Rules {
     public boolean hasIa(){
         return false;
     }
+
+    @Override
+    public Rules.GameMode getGameMode(){
+        return gameStatus;
+    }
+
+
 
 }
