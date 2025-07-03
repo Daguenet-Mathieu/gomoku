@@ -92,6 +92,7 @@ public class Game {
     {
         //int res;
         MinMax.map[point.y][point.x] = turn;
+
         scbord.analyse_move(point.y, point.x, turn);
         if (this.rules == "Pente")
         {
@@ -99,6 +100,8 @@ public class Game {
             // if (res!= 0)
             //     System.out.printf("Some captures added point %d %d turn %d: val %d", point.y, point.x, turn, res);
             Pente.prisoners[turn %2] += Pente.count_capture(point.y, point.x, turn);
+            m.complete_check_win(point.y, point.x, turn);
+            MinMax.map[point.y][point.x] = turn;
         }
         nb_move++;
     }
@@ -194,6 +197,10 @@ public class Game {
         if (nb_move == 0)
         {
             m.best = new Candidat.coord(9, 9);
+        }
+        else if (Pente.prisoners[player %2] == 8)
+        {
+            System.out.println("I have 8 captures !");
         }
         else
         {

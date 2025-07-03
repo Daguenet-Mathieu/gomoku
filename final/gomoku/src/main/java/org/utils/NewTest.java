@@ -167,14 +167,15 @@ public class NewTest
         // unmove(8, 7, 2);
         // System.out.printf("prisoners %d %d\n", Pente.prisoners[0], Pente.prisoners[1]);
 
-        move(9, 8, 2);
-        move(7, 8, 1);
-        move(6, 8, 2);
+        //move(9, 8, 2);
+        move(9, 8, 1);
+        //move(9, 8, 2);
+        move(10, 8, 2);
         move(8, 8, 1);
         move(8, 9, 1);
-        move(8, 10, 1);
         move(8, 11, 1);
         move(8, 12, 1);
+        move(8, 10, 1);
 
         // move(8, 8, 1);
         // move(9, 7, 1);
