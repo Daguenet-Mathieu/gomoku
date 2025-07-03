@@ -9,6 +9,17 @@ public class Pente extends MinMax {
     public static boolean cut = true;
     public static int stop = 0;
     public static int [] prisonersfactor = {0, 2, 2, 4, 4, 8, 8, 16, 16, 32, 32};
+    public static boolean victory_capture = false;
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
 
     private class Prison
     {
@@ -108,7 +119,10 @@ public class Pente extends MinMax {
             count += is_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
         }
         if (prisoners[(turn + 2) %2] + count >= 10)
+        {
+            victory_capture = true;
             return true;
+        }
         return false;
     }
 
@@ -123,9 +137,12 @@ public class Pente extends MinMax {
             //     MinMax.scsimul.capt[turn - 1]--;
     }
 
-    public float value_victory_smarter(int player, int turn, int len) //not so smart
+    //inside nb
+
+    public float value_victory_smarter(int player, int turn, int len, int nb, boolean print) //not so smart
     {
         pos_counter++;
+        int res;
 
         // if (pos_counter % 1000 == 7)
         // {        
@@ -133,33 +150,57 @@ public class Pente extends MinMax {
         //     display_map();
         //     scsimul.display();
         // }
-        int nb = candidat.forced_capture.size();
-
-        if (nb != 0)
-            System.exit(0);
-
-        if (len == 0)
-        {
-            System.out.printf("Victory ! nb capture %d, val %d", nb, 10000 - ((len + nb) * 100) );
-            System.out.printf("prisoners %d %d", prisoners[0], prisoners[1]);
-        }
+        //int nb = candidat.forced_capture.size();
 
         if (player == turn)
         {
+            if (victory_capture)
+            {
+                victory_capture = false;
+                return 10000 - len * 100;
+            }
             if (prisoners[(turn + 1) %2] + (nb * 2) >= 10)
             {
-                return -10000 + ((len + nb) * 100);
+                res =  -10000 + ((len + nb) * 100);
+                //return -10000 + ((len + nb) * 100);
             }
-            return 10000 - ((len + nb) * 100);
+            res = 10000 - ((len + nb) * 100);
+            //return 10000 - ((len + nb) * 100);
+
         }
         else
         {
+            if (victory_capture)
+            {
+                victory_capture = false;
+                return -10000 + len * 100;
+            }
             if (prisoners[(turn + 1) %2] + (nb * 2) >= 10)
             {
-                return 10000 - ((len + nb) * 100);
+                res = 10000 - ((len + nb) * 100);
+                //return 10000 - ((len + nb) * 100);
             }
-            return -10000 + ((len + nb) * 100);
+            res = -10000 + ((len + nb) * 100);
+            //return -10000 + ((len + nb) * 100);
         }
+
+        if (print)
+        {
+            System.out.printf("Victory ! nb forced capture %d, vicotry capture ? %b, val %d\n", nb, victory_capture, res);
+            System.out.printf("prisoners %d %d\n", prisoners[0], prisoners[1]);
+        }
+
+        // if (len == 1 && player == 2 && MinMax.forced_capture.size() != 0)
+        // {
+        //     System.out.printf( ANSI_GREEN + "Victory ! nb capture %d, val %d\n" + ANSI_RESET, nb, res);
+        // }
+
+        // if (len == 0)
+        // {
+        //     System.out.printf("Victory ! nb capture %d, val %d\n", nb, res);
+        //     System.out.printf("prisoners %d %d\n", prisoners[0], prisoners[1]);
+        // }
+        return res;
     }
 
 
@@ -172,12 +213,12 @@ public class Pente extends MinMax {
 
         if (complete_check_win(c.x, c.y, player) || is_captured(c.x, c.y, player))
             return true;
+
         
         map[c.x][c.y] = player;
 
         this.move = c;
         remove_captured(c.x, c.y, player);
-
         this.candidat.save(c);
         scsimul.analyse_move(c.x, c.y, player);
 
@@ -397,7 +438,33 @@ public class Pente extends MinMax {
 
         //nb_candidates = candidat.old_load(depth, turn);s
         scsimul.cur_turn = turn;
-        nb_candidates = candidat.old_load(depth, turn);
+
+
+        
+        // if (depth == Game.max_depth && forced_capture.size() != 0)
+        // {
+        //     Candidat.coord c;
+        //     for (int i = 0 ; i < forced_capture.size() ; i++)
+        //     {
+        //         c = forced_capture.get(i);
+        //         System.out.printf(ANSI_RED + "forcedcoord %d %d\n" + ANSI_RESET, c.x, c.y);
+        //     }
+
+        // }
+
+        // if (forced_capture.size() !=0)
+        //     forced_capture.clear();
+
+        //if (depth == Game.max_depth && forced_capture.size() !=0)
+        if (false)
+        {
+            nb_candidates = candidat.forced_candidate(forced_capture);
+            forced_capture.clear(); //maybe not useful
+        }
+        else
+            nb_candidates = candidat.old_load(depth, turn);
+
+
         //display_map();
         // if(pos_counter >= 5820 && pos_counter <= 5824)
         //     showdebug();
@@ -467,7 +534,12 @@ public class Pente extends MinMax {
             {
                 if (m.play(candidat.lst.get(i), turn))
                 {
-                    res = value_victory_smarter(player, turn, len) + supeval(player, len, turn);
+
+                    //System.out.printf("after play %d\n", m.nb_forced_capture());
+                    // if (candidat.lst.get(i).x == 5 && candidat.lst.get(i).y == 9)
+                    //     res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), true) + supeval(player, len, turn);
+                    // else
+                        res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), false) + supeval(player, len, turn);
                     //debugstr();
                     // if (res == 12000 || res == -12000)
                     // {
@@ -502,7 +574,10 @@ public class Pente extends MinMax {
             {
                 if (m.play(candidat.lst.get(i),turn))
                 {
-                    res = value_victory_smarter(player, turn, len) + supeval(player, len, turn);
+                    // if (candidat.lst.get(i).x == 5 && candidat.lst.get(i).y == 9)
+                    //     res = value_victory_smarter(player, turn, len, forced_capture.size(), true) + supeval(player, len, turn);
+                    // else
+                        res = value_victory_smarter(player, turn, len, forced_capture.size(), false) + supeval(player, len, turn);
                     //debugstr();
                     // if (res == 12000 || res == -12000)
                     // {

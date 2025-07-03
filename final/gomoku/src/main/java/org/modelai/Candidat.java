@@ -15,7 +15,7 @@ public class Candidat
     public ArrayList<Candidat.coord> mandatory = new ArrayList<Candidat.coord>();
     public ArrayList<Integer> vanish_lst = new ArrayList<Integer>();
     public ArrayList<Candidat.coord> histo = new ArrayList<Candidat.coord>();
-    public ArrayList<Candidat.coord> forced_capture = new ArrayList<Candidat.coord>();
+    //public ArrayList<Candidat.coord> forced_capture = new ArrayList<Candidat.coord>();
     public DoubleFree doubleFreethree;
 
     // List<Double> order = Arrays.asList(24.0, 23.0, 22.0, 21.0, 20.0, 19.0, 18.0, 17.0, 16.0, 15.0, 14.0, 13.0
@@ -203,7 +203,16 @@ public class Candidat
         }
         // if (tot_case1 != 0 || tot_case2 != 0)
         // {
-        //     this.lst.add(new Candidat.coord(x,y, Math.max(tot_case1, tot_case2)));
+        //     this.lst.add(new Candidat.coord(x,y, Math.ma        // if (depth == Game.max_depth && forced_capture.size() != 0)
+        // {
+        //     Candidat.coord c;
+        //     for (int i = 0 ; i < forced_capture.size() ; i++)
+        //     {
+        //         c = forced_capture.get(i);
+        //         System.out.printf(ANSI_RED + "forcedcoord %d %d\n" + ANSI_RESET, c.x, c.y);
+        //     }
+
+        // }x(tot_case1, tot_case2)));
         //     return;
         // }
         val = inner_alignement(x, y);
@@ -326,6 +335,15 @@ public class Candidat
         return this.lst.size();
     }
 
+    public int forced_candidate(ArrayList<Candidat.coord> flst)
+    {
+        for (int i = 0 ; i < flst.size() ; i++)
+        {
+            this.lst.add(flst.get(i));
+        }
+        return lst.size();
+    }
+
     public int old_load(int depth, int turn) // only used
     {
         int ret;
@@ -340,17 +358,21 @@ public class Candidat
             return 0;
 
         this.lst.clear();
-        this.forced_capture.clear();
 
-        if (forced_capture.size() != 0)
-        {
-            this.lst = new ArrayList<Candidat.coord>(forced_capture);
-            return this.lst.size();
-        }
+
+        // this.forced_capture.clear();
+
+        // if (forced_capture.size() != 0)
+        // {
+        //     this.lst = new ArrayList<Candidat.coord>(forced_capture);
+        //     return this.lst.size();
+        // }
 
         if (depth == Game.max_depth)
         {
             load_lim(MinMax.map);
+            if (MinMax.forced_capture.size() !=0 )
+                return forced_candidate(MinMax.forced_capture);
         }
 
         // if (depth != 1)
