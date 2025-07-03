@@ -11,7 +11,7 @@ public class GoRules implements Rules {
     boolean pass = false;
     Rules.GameMode gameStatus = Rules.GameMode.PLAYING;
 
-    public void pass(){
+    public boolean pass(){
         switch (gameStatus) {
             case PLAYING:
                 if (pass == false)
@@ -19,14 +19,16 @@ public class GoRules implements Rules {
                 else
                     gameStatus = Rules.GameMode.DEATH_MARKING;
                 System.out.println("Mode : en cours de jeu");
-                break;
+                return true;
             case DEATH_MARKING:
                 gameStatus = Rules.GameMode.COUNTING;
                 System.out.println("Mode : sélection des pierres mortes");
-                break;
+                return false;
             case COUNTING:
                 System.out.println("Mode : décompte des points");
-                break;
+                return false;
+            default:
+                return true;
         }
         //si pass == 
         // false le mettre a true si a true changer le mode de jeu is valid changera sa facon de verifier si le coup est valid
@@ -67,12 +69,25 @@ public class GoRules implements Rules {
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
+        System.out.println(gameStatus.name());
+        Map tmp = new Map(map.get(map.size() - 1));
+        final int color = (map.size() - 1) % 2 + 1;
+        tmp.addMove(point, color);
+        check_capture(point, tmp);
+        tmp.remove_prisonners(prisonners);
+        //ArrayList<Point> tmpPrissners = getCapturableList();
+        // si tmp est pas vide le coup est invalide
+        // lancer le floodfill depuis point? ou plutot appeler getCapturableList (private ArrayList<Point> getCapturableList(Point coord, Map map, int color, int advColor){)
+        // if (isCapturable())
+            // return false; //faut simuler les captures autour aussi T.T
         if (gameStatus == Rules.GameMode.COUNTING)
             return false;
         boolean valid = checkEmptySqure(point.x, point.y, map.get(map.size() - 1));
         // Utilisation de la méthode par défaut pour vérifier si la case est vide
         System.out.println("coucou par ici equals in go");
         if (gameStatus == Rules.GameMode.PLAYING && checkForbidden(point, map, map.size() - 1, ((map.size() - 1) % 2) + 1)) {
+            if (valid)
+                pass = false;
             return valid;
         }
         else if (gameStatus == Rules.GameMode.DEATH_MARKING){
@@ -140,13 +155,13 @@ public class GoRules implements Rules {
     private boolean isCapturable(Point point, Map map){
         final int color = map.get_map()[point.y][point.x];
         // final int advColor = color == 1? 2: 1;
-        if (point.x+1 < get_board_size() && map.get_map()[point.y][point.x+1] == 0)
+        if (point.x + 1 < get_board_size() && map.get_map()[point.y][point.x+1] == 0)
             return false;
         if (point.x - 1 >= 0 && map.get_map()[point.y][point.x-1] == 0)
             return false;
-        if (point.y-1 >= 0 && map.get_map()[point.y-1][point.x] == 0)
+        if (point.y - 1 >= 0 && map.get_map()[point.y-1][point.x] == 0)
             return false;
-        if (point.y+1 < get_board_size() && map.get_map()[point.y+1][point.x] == 0)
+        if (point.y + 1 < get_board_size() && map.get_map()[point.y+1][point.x] == 0)
             return false;
         return true;
     }

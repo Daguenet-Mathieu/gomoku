@@ -104,6 +104,4 @@ public class RenjuRules implements Rules {
         return gameStatus;
     }
 
-
-
 }

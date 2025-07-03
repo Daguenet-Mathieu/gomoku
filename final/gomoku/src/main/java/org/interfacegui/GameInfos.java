@@ -78,6 +78,7 @@ public class GameInfos{
         private Button _export = new Button("export");
         private Button _prev;
         private Button _next;
+        private Button _pass = new Button("pass");
         private Button _candidats;
         private Button _hint;
         private Button _forbidden = new Button("forbiddens");
@@ -302,7 +303,7 @@ public class GameInfos{
             // _prev.setPadding(new Insets(0,0,0,0));
             _button_prev_next.getChildren().addAll(_prev, _next);
             _game_infos.getChildren().addAll(_last_move_label, _current_move_label, _candidats, _hint, _forbidden, _resign, _undo);
-            _game_infos.getChildren().addAll(_button_prev_next, _export);
+            _game_infos.getChildren().addAll(_button_prev_next, _pass, _export);
 
         }
 
@@ -373,6 +374,10 @@ public class GameInfos{
             return _hint;
         }
 
+        public Button getPassButton()
+        {
+            return _pass;
+        }
 
 
         public void clear(){

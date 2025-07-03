@@ -402,7 +402,7 @@ public class Gomoku
         else
             System.out.println("non!");
         goban.updateFromMap(_map.get(_map.size() -1));
-        player_turn ^= 1;//le get de la regle
+        updatePlayerTurn();//le get de la regle
     }
 
     // private void undoMove(){
@@ -415,6 +415,10 @@ public class Gomoku
     //     _map.remove(_map.size() - 1);
     //     player_turn ^= 1;      
     // }
+
+    private void updatePlayerTurn(){
+        player_turn ^= 1;
+    }
 
     private void display_nb_prisonners(){
         gameInfos.set_black_prisonners(Integer.toString( _map.get((_map.size()-1)).getBlackPrisonners()));
@@ -589,6 +593,15 @@ public class Gomoku
             forbiddenVisibility = forbiddenVisibility == true?false:true;
         });
         
+        gameInfos.getPassButton().setOnAction(event -> {
+            System.out.println("player tur == " + player_turn);
+            if (((GoRules)rule).pass())
+                updatePlayerTurn();
+            Map newMap = new Map(_map.get(_map.size() - 1));
+            _map.add(newMap);
+            map_index++;
+            System.out.println("player tur == " + player_turn);
+        });
 
 
             goban.get_goban().setOnMouseClicked(event -> {

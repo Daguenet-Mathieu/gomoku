@@ -29,7 +29,6 @@ public interface Rules {
     boolean hasIa();
     int get_board_size();
     GameMode getGameMode();
-
     ArrayList<Point> verticalWin = new ArrayList<Point>();
     ArrayList<Point> horizontalWin = new ArrayList<Point>();
     ArrayList<Point> diagonalLeftWin = new ArrayList<Point>();

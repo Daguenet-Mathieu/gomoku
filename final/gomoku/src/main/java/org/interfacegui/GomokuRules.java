@@ -101,4 +101,5 @@ public class GomokuRules implements Rules {
     public boolean hasIa(){
         return true;
     }
+    
 }
