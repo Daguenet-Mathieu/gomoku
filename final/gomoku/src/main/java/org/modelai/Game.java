@@ -198,10 +198,10 @@ public class Game {
         {
             m.best = new Candidat.coord(9, 9);
         }
-        else if (Pente.prisoners[player %2] == 8)
-        {
-            System.out.println("I have 8 captures !");
-        }
+        // else if (Pente.prisoners[player %2] == 8)
+        // {
+        //     System.out.println("I have 8 captures !");
+        // }
         else
         {
             m.load_cur_score(scbord, turn);

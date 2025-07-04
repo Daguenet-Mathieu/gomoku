@@ -184,9 +184,10 @@ public class DoubleFree
     
         final int sep = val == 1 ? 2 : 1;
 
-        // if (x == 10 && y == 8)
+        // if (x == 8 && y == 5)
         // {
-        //     //Map.printMap(map);
+        //     System.out.printf("val %d", val);
+        //     MinMax.display_Map();
         //     // System.out.printf("%d %d %d \n", x, y, val);
         // }
 

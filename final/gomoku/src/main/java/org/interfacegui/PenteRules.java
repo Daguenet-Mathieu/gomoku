@@ -20,7 +20,21 @@ public class PenteRules implements Rules {
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1))) {
             return false;
         }
-        if (this.dbfree.check_double_free(point.y, point.x, (map.size()%2), map.get(map.size() - 1).get_map()) == false)
+        // map.get(map.size() - 1).printMap();
+
+        // System.out.printf("on mat side point x %d y %d val %d\n", point.y, point.x, ((map.size() + 1)%2)+1);
+        // int[][] test = map.get(map.size() - 1).get_map();
+
+        // for (int i = 0  ; i < 19 ; i++)
+        // {
+        //     for (int j = 0 ; j < 19 ; j++)
+        //     {
+        //         System.out.printf("%d", test[i][j]);
+        //     }
+        //         System.out.println();
+        // }
+
+        if (this.dbfree.check_double_free(point.y, point.x, ((map.size() + 1)%2)+1, map.get(map.size() - 1).get_map()) == false)
             return false;
         //check les doubles free three
         // prisonners = GetCapturedStones(point, map.get(map.size() - 1));

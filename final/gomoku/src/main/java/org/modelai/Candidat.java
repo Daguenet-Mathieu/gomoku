@@ -21,7 +21,7 @@ public class Candidat
     // List<Double> order = Arrays.asList(24.0, 23.0, 22.0, 21.0, 20.0, 19.0, 18.0, 17.0, 16.0, 15.0, 14.0, 13.0
     //                                 ,12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.5, 1.0, 0.0);
     //List<Double> order = Arrays.asList(0.0, 1.0, 2.0, 3.0, 4.0);
-    List<Double> order = Arrays.asList(4.0, 3.0, 2.5, 2.0, 1.0, 0.0);
+    List<Double> order = Arrays.asList(5.0, 4.0, 3.0, 2.5, 2.4, 2.0, 1.0, 0.0);
     static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
 
     static coord limax = new coord(1, 1);
@@ -183,18 +183,32 @@ public class Candidat
         {
             if (MinMax.scsimul.str1[i][x][y] == 2)
             {
-                if (turn == 2 && ( (in_goban(x-3*ddir[i][0], y-3*ddir[i][1]) && MinMax.map[x-3*ddir[i][0]][y-3*ddir[i][1]] == turn) ||
-                                   (in_goban(x+3*ddir[i][0], y+3*ddir[i][1]) && MinMax.map[x+3*ddir[i][0]][y+3*ddir[i][1]] == turn)))
-                        tot_case1 = Math.max(tot_case1, 2.5);
+                if ((in_goban(x-3*ddir[i][0], y-3*ddir[i][1]) && MinMax.map[x-1*ddir[i][0]][y-1*ddir[i][1]] == 1 && MinMax.map[x-3*ddir[i][0]][y-3*ddir[i][1]] == 2) ||
+                    (in_goban(x+3*ddir[i][0], y+3*ddir[i][1]) && MinMax.map[x+1*ddir[i][0]][y+1*ddir[i][1]] == 1 && MinMax.map[x+3*ddir[i][0]][y+3*ddir[i][1]] == 2))
+                        {        
+                            if (Pente.prisoners[0] == 8)
+                                tot_case1 = 5;
+                            else if (turn == 2)
+                                tot_case1 = Math.max(tot_case1, 2.5);
+                            else
+                                tot_case1= Math.max(tot_case1, 2.4);
+                            
+                        }
             }
-  
-
 
             if (MinMax.scsimul.str2[i][x][y] == 2)
             {
-                if (turn == 1 && ( (in_goban(x-3*ddir[i][0], y-3*ddir[i][1]) && MinMax.map[x-3*ddir[i][0]][y-3*ddir[i][1]] == turn) ||
-                                  ( in_goban(x+3*ddir[i][0], y+3*ddir[i][1]) && MinMax.map[x+3*ddir[i][0]][y+3*ddir[i][1]] == turn)))
-                    tot_case1 = Math.max(tot_case1, 2.5);
+                if ((in_goban(x-3*ddir[i][0], y-3*ddir[i][1]) && MinMax.map[x-1*ddir[i][0]][y-1*ddir[i][1]] == 2 && MinMax.map[x-3*ddir[i][0]][y-3*ddir[i][1]] == 1) ||
+                    (in_goban(x+3*ddir[i][0], y+3*ddir[i][1]) && MinMax.map[x+1*ddir[i][0]][y+1*ddir[i][1]] == 2 && MinMax.map[x+3*ddir[i][0]][y+3*ddir[i][1]] == 1) )
+                    {
+
+                        if (Pente.prisoners[1] == 8)
+                            tot_case1 = 5;
+                        else if (turn == 1)
+                            tot_case1 = Math.max(tot_case1, 2.5);
+                        else
+                            tot_case1= Math.max(tot_case1, 2.4);
+                    }
             }
 
             tot_case1 = Math.max(tot_case1, MinMax.scsimul.str1[i][x][y]);
@@ -219,7 +233,7 @@ public class Candidat
 
         if (val == 0 && tot_case1 == 0 && tot_case2 == 0) 
             return;
-        if (doubleFreethree.check_double_free(x, y, MinMax.scsimul.cur_turn, MinMax.map) == false)
+        if (doubleFreethree.check_double_free(x, y, turn, MinMax.map) == false)
         {
             // if (this.dp == Game.max_depth)
             // {

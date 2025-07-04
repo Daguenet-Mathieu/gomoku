@@ -138,6 +138,23 @@ public class NewTest
         }
     }
 
+    public void check_db_valid(int x, int y, int val)
+    {
+        if (MinMax.map[x][y] != 0)
+        {
+            System.out.printf("Impossible move %d %d, case occuped by %d\n", x, y, MinMax.map[x][y]);
+            return;
+        }
+        if (db.check_double_free(x, y, val, MinMax.map) == false)
+            System.out.printf("Double free detetect at %d %d\n", x, y);
+        else
+        {
+            System.out.printf("Move %d %d possible\n", x, y);
+            m_play(x, y, val);
+            m.display_map();
+        }
+    }
+
     public void splay(int x, int y, int player)
     {
         Candidat.coord c = new Candidat.coord(x, y);
@@ -168,14 +185,44 @@ public class NewTest
         // System.out.printf("prisoners %d %d\n", Pente.prisoners[0], Pente.prisoners[1]);
 
         //move(9, 8, 2);
-        move(9, 8, 1);
-        //move(9, 8, 2);
-        move(10, 8, 2);
+        // move(9, 8, 1);
+        // //move(9, 8, 2);
+        // move(10, 8, 2);
+        // move(8, 8, 1);
+        // move(8, 9, 1);
+        // move(8, 11, 1);
+        // move(8, 12, 1);
+        // move(8, 10, 1);
+
+        move(4, 6, 1);
+        move(5, 6, 2);
+        move(5, 11, 1);
+        move(6, 6, 2);
+        move(6, 8, 2);
+        move(6, 10, 2);
+        move(7, 6, 2);
+        move(7, 8, 1);
+        move(7, 10, 1);
+        move(8, 6, 1);
         move(8, 8, 1);
-        move(8, 9, 1);
-        move(8, 11, 1);
-        move(8, 12, 1);
         move(8, 10, 1);
+        move(9, 3, 1);
+        move(9, 4, 2);
+        move(9, 5, 2);
+        move(9, 6, 2);
+        move(9, 7, 2);
+        move(9, 8, 1);
+        move(9, 9, 1);
+        move(9, 10, 1);
+        move(10, 7, 2);
+        move(10, 8, 2);
+        move(10, 10, 1);
+        move(11, 9, 2);
+        move(11, 10, 2);
+        move(11, 11, 2);
+        move(11, 12, 1);
+
+        check_db_valid(8, 5, 2);
 
         // move(8, 8, 1);
         // move(9, 7, 1);

@@ -18,7 +18,7 @@ public class Map{
     private String _comment;
 
     public void setCandidatsList(ArrayList<Point> list) {
-        System.out.println("cajdidat list dans map == " + list);
+        System.out.println("candidat list dans map == " + list);
         candidatsList = list;
     }
 
