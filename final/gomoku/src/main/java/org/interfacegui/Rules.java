@@ -33,6 +33,8 @@ public interface Rules {
     ArrayList<Point> horizontalWin = new ArrayList<Point>();
     ArrayList<Point> diagonalLeftWin = new ArrayList<Point>();
     ArrayList<Point> diagonalRightWin = new ArrayList<Point>();
+    void  setBoardSize(int value);
+
  
     // ArrayList check_captures(Map map, Point point);
     // Méthode par défaut qui vérifie si le coup est valide (si la case est vide)

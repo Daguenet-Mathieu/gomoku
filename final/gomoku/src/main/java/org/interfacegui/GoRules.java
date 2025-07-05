@@ -6,10 +6,26 @@ import java.util.Arrays;
 public class GoRules implements Rules {
     ArrayList<Point> prisonners;//prisonnier crees par le dernier coup
     ArrayList<Point> forbidden_moves = new ArrayList<Point>();//coups interdit pour la position actuelle
+    // ArrayList<Point> blackDeadStones = new ArrayList<Point>();//ppierre selectionneee morte noir
+    // ArrayList<Point> whiteDeadStones = new ArrayList<Point>();//ppierre selectionneee morte blanc
+    ArrayList<Point> deadStones = new ArrayList<Point>();
     int [] prisonners_nbr = new int[2];
     int winner;
     boolean pass = false;
     Rules.GameMode gameStatus = Rules.GameMode.PLAYING;
+    int boardSize = 19;
+
+    public ArrayList<Point> getDeadStones(){
+        return deadStones;
+    }
+
+    // public ArrayList<Point> getBlackDeadStones(){
+    //     return blackDeadStones;
+    // }
+
+    // public ArrayList<Point> getWhiteDeadStones(){
+    //     return whiteDeadStones;
+    // }
 
     public boolean pass(){
         switch (gameStatus) {
@@ -67,31 +83,51 @@ public class GoRules implements Rules {
 
     }
 
+    boolean checkSuicide(Map map, Point point, int color, int advColor){
+        map.addMove(point, color);
+        check_capture(point, map);
+        map.remove_prisonners(prisonners);
+        System.out.println("--------------------------------------------------------------------------------");
+        ArrayList<Point> listPrisonners = getCapturableList(point, map, advColor, color);
+        System.out.println("--------------------------------------------------------------------------------");
+        if (listPrisonners.size() == 0)
+            return false;
+
+        return true;
+    }
+
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
+        if (gameStatus == Rules.GameMode.COUNTING)
+            return false;
         System.out.println(gameStatus.name());
-        Map tmp = new Map(map.get(map.size() - 1));
-        final int color = (map.size() - 1) % 2 + 1;
-        tmp.addMove(point, color);
-        check_capture(point, tmp);
-        tmp.remove_prisonners(prisonners);
-        //ArrayList<Point> tmpPrissners = getCapturableList();
+        // if (color != null)
         // si tmp est pas vide le coup est invalide
         // lancer le floodfill depuis point? ou plutot appeler getCapturableList (private ArrayList<Point> getCapturableList(Point coord, Map map, int color, int advColor){)
         // if (isCapturable())
             // return false; //faut simuler les captures autour aussi T.T
-        if (gameStatus == Rules.GameMode.COUNTING)
-            return false;
-        boolean valid = checkEmptySqure(point.x, point.y, map.get(map.size() - 1));
+        int squareColor = map.get(map.size() - 1).get_map()[point.y][point.x];
+        boolean valid = (map.get(map.size() - 1).get_map()[point.y][point.x] == 0);
         // Utilisation de la méthode par défaut pour vérifier si la case est vide
-        System.out.println("coucou par ici equals in go");
         if (gameStatus == Rules.GameMode.PLAYING && checkForbidden(point, map, map.size() - 1, ((map.size() - 1) % 2) + 1)) {
+            Map tmp = new Map(map.get(map.size() - 1));
+            final int color = (map.size() - 1) % 2 + 1;
+            final int advColor = color == 1 ? 2 : 1;
+            if (checkSuicide(tmp, point, color, advColor) == true)
+                return false;
             if (valid)
                 pass = false;
             return valid;
         }
-        else if (gameStatus == Rules.GameMode.DEATH_MARKING){
-            return (valid == false);
+        else if (valid == false && gameStatus == Rules.GameMode.DEATH_MARKING){
+            ArrayList<Point> tmpArr = new ArrayList();
+            Map tmpMap = new Map(map.get(map.size() - 1));
+            floodFill(point, tmpMap.get_map(), squareColor, tmpArr, 7);
+            System.out.println("******************************************");
+            System.out.println("nb pierre selectionee == " + tmpArr.size());
+            System.out.println("******************************************");
+            deadStones = tmpArr;
+            return (true);
         }
         //check si le coup est ans la lsite des interdits
         //prisonners = getNewPrisonners();
@@ -120,12 +156,17 @@ public class GoRules implements Rules {
     @Override
     public ArrayList<Point> get_forbiden_moves(ArrayList<Map> map, int index, int color){//besoin de connaitre tout l'historique arraylist <Map>
         forbidden_moves.clear();
+        final int advColor = color == 1 ? 2 : 1;
         for (int i = 0; i < get_board_size(); i++){
             for (int j = 0; j < get_board_size(); j++){
+                Map tmp = new Map(map.get(map.size() - 1));
+
                 if (map.get(index).get_map()[i][j] == 0 && checkForbidden(new Point(j, i), map, index, color) == false)
                     forbidden_moves.add(new Point(j, i));
+                else if (map.get(index).get_map()[i][j] == 0 && checkSuicide(tmp, new Point(j, i), color, advColor))
+                    forbidden_moves.add(new Point(j, i));
             }
-        }        
+        }
         return forbidden_moves;
     }
 
@@ -213,12 +254,13 @@ public class GoRules implements Rules {
         ArrayList<Point> p = new ArrayList<Point>();
         if (coord.x < 0 || coord.y < 0 || coord.x >= get_board_size() || coord.y >= get_board_size())
             return p;
-        // System.out.println("color == " + color + " adv color == " + advColor + " cehcked case color == " + map.get_map()[coord.y][coord.x]);
+        System.out.println("color == " + color + " adv color == " + advColor + " cehcked case color == " + map.get_map()[coord.y][coord.x]);
         if (map.get_map()[coord.y][coord.x] == advColor)
             floodFill(coord, copyMap(map), advColor, p, 7);
-        // System.out.println("nb prisonners == " + p.size());
+        System.out.println("nb prisonners == " + p.size());
+
         checkCapturedStones(p, map);
-        // System.out.println("nb prisonners == " + p.size());
+        System.out.println("nb prisonners == " + p.size());
         return p;
     }
 
@@ -267,18 +309,16 @@ public class GoRules implements Rules {
         // prisonners = custom captures check floodfill? si rencontre un 0 pas de caprure sinon toutes pierres de couleur != coord du point capturees
     }
 
-
     @Override
     public ArrayList<Point> get_prisonners(){
         return prisonners;
     }
 
-
     @Override
     public int get_white_prisonners(){
         return (prisonners_nbr[1]);
     }
-    
+
     @Override
     public int get_black_prisonners(){
         return (prisonners_nbr[0]);
@@ -286,9 +326,17 @@ public class GoRules implements Rules {
 
     @Override
     public int  get_board_size(){
-        return 19;
+        return boardSize;
     }
     
+    @Override
+    public void  setBoardSize(int value){
+        if (value != -1)
+            boardSize = value;
+        else
+            boardSize = 19;
+    }
+
     @Override
     public void set_white_prisonners(int nb){
         prisonners_nbr[1] = nb;

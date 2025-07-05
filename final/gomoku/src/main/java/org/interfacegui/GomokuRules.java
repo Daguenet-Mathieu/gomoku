@@ -6,6 +6,7 @@ public class GomokuRules implements Rules {
 
     int winner;
     Rules.GameMode gameStatus = Rules.GameMode.PLAYING;
+    int boardSize = 19;
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
@@ -19,6 +20,15 @@ public class GomokuRules implements Rules {
         // Pour un modèle minimaliste, supposons que tout coup est valide si la case est vide.
         return true;
     }
+
+    @Override
+    public void  setBoardSize(int value){
+        if (value != -1)
+            boardSize = value;
+        else
+            boardSize = 19;
+    }
+
 
     @Override
     public boolean endGame(Map map, Point point) {
@@ -79,7 +89,7 @@ public class GomokuRules implements Rules {
 
     @Override
     public int  get_board_size(){
-        return 19;
+        return boardSize;
     }
 
     @Override

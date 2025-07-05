@@ -82,6 +82,18 @@ public class GameInfos{
         private Button _candidats;
         private Button _hint;
         private Button _forbidden = new Button("forbiddens");
+        // private int    board_size = 19;
+
+        // public void setBoardSize(int newValue)
+        // {
+        //     board_size = newValue;
+        // }
+
+        // public int getBoardSize()
+        // {
+        //     return board_size;
+        // }
+
 
         private HBox _button_prev_next = new HBox();
 

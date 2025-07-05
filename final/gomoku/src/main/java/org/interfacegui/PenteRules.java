@@ -11,7 +11,16 @@ public class PenteRules implements Rules {
     int [] prisonners_nbr = new int[2];
     public DoubleFree dbfree = new DoubleFree();
     int advWinning = 0;//0 1 2? need check first si 5 sur le plateau ou fqarder en memoire le point?
-    Rules.GameMode gameStatus = Rules.GameMode.PLAYING;;
+    Rules.GameMode gameStatus = Rules.GameMode.PLAYING;
+    int boardSize = 19;
+
+    @Override
+    public void  setBoardSize(int value){
+        if (value != -1)
+            boardSize = value;
+        else
+            boardSize = 19;
+    }
 
 
     @Override
@@ -203,7 +212,7 @@ public class PenteRules implements Rules {
 
     @Override
     public int  get_board_size(){
-        return 19;
+        return boardSize;
     }
 
     @Override

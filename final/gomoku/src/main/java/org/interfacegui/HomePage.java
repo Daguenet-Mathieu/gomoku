@@ -46,6 +46,12 @@ public class HomePage{
     private Button white_three_min = new Button("3 min");
     private Button black_five_min = new Button("5 min");
     private Button black_three_min = new Button("3 min");
+    private Label boardSizeLabel = new Label("board size");
+    private Button nineSize = new Button("9");
+    private Button thirteenSize = new Button("13");
+    private Button nineteenSize = new Button("19");
+    private VBox boardSizeBox = new VBox(10);
+    private HBox boardSizeButtonBox = new HBox(10);
     private Label fileName = new Label("");
     private HBox fileBox = new HBox(10);
     private Text reset = new Text("reset");
@@ -56,9 +62,12 @@ public class HomePage{
     private boolean sgfFile = false;
     private Label error_file = new Label();
     private StringProperty rule_type = new SimpleStringProperty("");
+    // private int boardSize = -1;
 
 
     HomePage(){
+        boardSizeBox.getChildren().addAll(boardSizeLabel, boardSizeButtonBox);
+        boardSizeButtonBox.getChildren().addAll(nineSize, thirteenSize, nineteenSize);
         LaunchButtons.getChildren().addAll(validation, learnOrView);
         fileBox.getChildren().addAll(fileName, reset);
         fileBox.setManaged(false);
@@ -110,7 +119,8 @@ public class HomePage{
         // Configuration joueur blanc
         white_human = new Button("white human");
         white_ia = new Button("white ia");
-        
+        boardSizeBox.setVisible(false);
+        boardSizeBox.setManaged(false);
         // Appliquer le style désélectionné aux boutons du joueur blanc
         white_human.setStyle(selectedColor);
         white_ia.setStyle(deselectedColor);
@@ -133,7 +143,7 @@ public class HomePage{
         page = new VBox(10);
         // ((VBox)page).setAlignment(Pos.CENTER);
         ((VBox) page).getChildren().addAll(
-            error_file, fileBox, load_sgf, game_button, black_player, white_player, komi_field, handicap_field, LaunchButtons);
+            error_file, fileBox, load_sgf, game_button, black_player, white_player, komi_field, boardSizeBox, handicap_field, LaunchButtons);
         pageContainer.getChildren().add(page);
         reset.setOnMouseClicked(e -> {
             deleteFile();
@@ -210,6 +220,22 @@ public class HomePage{
     }
     public TextField get_white_sec(){
         return white_sec;
+    }
+
+    public VBox getBoardSizeBox(){
+        return boardSizeBox;
+    }
+
+    public Button get9Button(){
+        return nineSize;
+    }
+
+    public Button get13Button(){
+        return thirteenSize;
+    }
+
+    public Button get19Button(){
+        return nineteenSize;
     }
 
     public void addFileBox(VBox scrollPane){

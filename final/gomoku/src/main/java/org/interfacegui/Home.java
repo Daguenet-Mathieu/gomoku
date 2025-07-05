@@ -29,16 +29,20 @@ public class Home {
     private float komi = -1;
     private int handicap = -1;
     private ArrayList<Map> sgf;
-    
+
     private HomePage home_page = new HomePage();
     private FileBox filebox = new FileBox(home_page);
+    int boardSize = -1;
+
+    public int get_board_size(){
+        return boardSize;
+    }
 
     private void changeVisibility(TextField komi, TextField handicap, boolean value){
         komi.setVisible(value);
         handicap.setVisible(value);
         komi.setManaged(value);
         handicap.setManaged(value);
-
     }
 
 
@@ -82,10 +86,6 @@ public class Home {
             black_time = 10 * 60 * 1000;
         if (white_time == 0)
             white_time = 10 * 60 * 1000;
-
-
-        
-
         // String str = home_page.get_black_time().getText();
         // List<String> time_parts = Arrays.asList(str.split(":"));
         // //System.out.println(time_parts.size());
@@ -186,6 +186,8 @@ public class Home {
         home_page.getGomokuButton().setOnAction(e -> {
             System.out.println("gomoku");
             changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+            home_page.getBoardSizeBox().setVisible(false);
+            home_page.getBoardSizeBox().setManaged(false);
             rule = "Gomoku";
             
             // Mettre à jour les couleurs
@@ -233,6 +235,8 @@ public class Home {
         home_page.getPenteButton().setOnAction(e -> {
             System.out.println("Pente");
             changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+            home_page.getBoardSizeBox().setVisible(false);
+            home_page.getBoardSizeBox().setManaged(false);
             rule = "Pente";
             
             // Mettre à jour les couleurs
@@ -242,11 +246,31 @@ public class Home {
             home_page.getGoButton().setStyle(deselectedColor);
         });
 
+        home_page.get9Button().setOnAction(e -> {
+            System.out.println("9");
+            boardSize = 9;
+            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+        });
+
+        home_page.get13Button().setOnAction(e -> {
+            System.out.println("13");
+            boardSize = 13;
+            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+        });
+
+        home_page.get19Button().setOnAction(e -> {
+            System.out.println("19");
+            boardSize = 19;
+            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+        });
         // Vous avez un doublon pour Pente que j'ai supprimé
 
         home_page.getRenjuButton().setOnAction(e -> {
             System.out.println("Renju");
             changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+            home_page.getBoardSizeBox().setVisible(false);
+            home_page.getBoardSizeBox().setManaged(false);
+
             rule = "Renju";
             
             // Mettre à jour les couleurs
@@ -259,6 +283,8 @@ public class Home {
         home_page.getGoButton().setOnAction(e -> {
             System.out.println("Go");
             changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), true);
+            home_page.getBoardSizeBox().setVisible(true);
+            home_page.getBoardSizeBox().setManaged(true);
             rule = "Go";
             
             // Mettre à jour les couleurs

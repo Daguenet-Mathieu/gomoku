@@ -205,7 +205,8 @@ public class Gomoku
         _map.add(new Map(_nb_line));
         saved.clear();
         map_index = 0;
-        init_rules(_game_infos.get_rules());
+        // init_rules(_game_infos.get_rules());
+        init_rules(_game_infos.get_rules(), _game_infos.get_board_size());
         goban.updateFromMap(_map.get(_map.size() - 1));
         gameInfos.clear();
         gameInfos.reset_infos(_game_infos);
@@ -315,7 +316,7 @@ public class Gomoku
         //return gameLoop;
     }   
 
-    private void init_rules(String rules_type){
+    private void init_rules(String rules_type, int boardSize){
         if (rules_type == "Gomoku")
             rule = new GomokuRules();
         if (rules_type == "Pente")
@@ -324,12 +325,38 @@ public class Gomoku
             rule = new RenjuRules();
         if (rules_type == "Go")
             rule = new GoRules();
+        rule.setBoardSize(boardSize);
     }
 
     private void playMove(Point point){
-        if (map_index < (_map.size() - 1) || !rule.isValidMove(point , _map))
+        if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map))
             return ;
         // if ()//!PLAYING
+        if (rule.getGameMode() == Rules.GameMode.DEATH_MARKING){
+            ArrayList<Point> deadStones = ((GoRules)rule).getDeadStones();
+            // String color;
+            Map currentMap = _map.get(_map.size() - 1);
+            int color = currentMap.get_map()[point.y][point.x];
+            int newColor = (color == 1 || color == 2) ? color + 2 : color - 2;
+            for (Point p : deadStones){
+                currentMap.get_map()[p.y][p.x] = newColor;
+            }
+            goban.updateFromMap(currentMap);
+            //update dans la Map a 2 == 4 1 == 3? et juste update from map et inverser 
+            // if (_map.get(_map.size() - 1).get_map()[point.y][point.x] == 1) {//ajouter dans l' array list chaque etape ?
+            //     deadStones = ((GoRules)rule).getBlackDeadStones();
+            //     color = "rgba(0,0,0,0.5)";
+            // }
+            // else {
+            //     deadStones = ((GoRules)rule).getWhiteDeadStones();
+            //     color = "rgba(255,255,255,0.5)";
+            // }
+            // System.out.println("color == " + color);
+            // for (Point p : deadStones){
+            //     goban.set_stone_status(true, color, p, null);
+            // }
+            return ;
+        }
         System.out.println("map index == " + map_index );
         changeCandidatVisibility(false);
         toggleCandidat = false;
@@ -469,10 +496,10 @@ public class Gomoku
         //     _game_infos.heightProperty()
         // );
         // SGF.createSgf(null, "gomoku");
-        init_rules(game_infos.get_rules());
+        _game_infos = game_infos;
+        init_rules(_game_infos.get_rules(), _game_infos.get_board_size());
         _nb_line = rule.get_board_size();
         game = new Game(game_infos.get_rules(), rule.get_board_size());
-        _game_infos = game_infos;
         System.out.println("constructeur gomoku rule type == " + rule.getGameType());
         map_index = 0;
         System.out.println("height == " + heigh + " width == " + width);

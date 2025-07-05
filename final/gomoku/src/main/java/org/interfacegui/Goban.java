@@ -356,6 +356,12 @@ public class Goban{
                         stone.setFill(Color.SNOW);
                         // _stones[i][j].setStroke(Color.SNOW);
                     }
+                    else if (board[i][j] == 3){
+                        stone.setFill(javafx.scene.paint.Color.web("rgba(0,0,0,0.5)"));
+                    }
+                    else{
+                        stone.setFill(javafx.scene.paint.Color.web("rgba(255,255,255,0.5)"));
+                    }
                 }
             }
         }

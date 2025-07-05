@@ -9,6 +9,16 @@ public class RenjuRules implements Rules {
     int [] prisonners_nbr = new int[2];
     int winner;
     Rules.GameMode gameStatus = Rules.GameMode.PLAYING;
+    int boardSize = 15;
+
+    @Override
+    public void  setBoardSize(int value){
+        if (value != -1)
+            boardSize = value;
+        else
+            boardSize = 15;
+    }
+
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
@@ -67,7 +77,7 @@ public class RenjuRules implements Rules {
 
     @Override
     public int  get_board_size(){
-        return 15;
+        return boardSize;
     }
     @Override
     public void set_white_prisonners(int nb){
