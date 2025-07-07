@@ -397,9 +397,9 @@ public class Pente extends MinMax {
     public int prisonpnt(int player)
     {
         if (player == 1)
-            return (prisoners[1] - prisoners[0]) * 2; //check sens
+            return (prisoners[1] - prisoners[0]) * 8; //check sens
         else
-            return (prisoners[0] - prisoners[1]) * 2;
+            return (prisoners[0] - prisoners[1]) * 8;
     }
 
 
@@ -407,9 +407,9 @@ public class Pente extends MinMax {
     {
        // System.out.printf("potentiel added %d %d\n", MinMax.scsimul.capt[0], MinMax.scsimul.capt[1]);
         if (player == 1)
-            return (MinMax.scsimul.capt[0] - MinMax.scsimul.capt[1] ) * 8;
+            return (MinMax.scsimul.capt[0] - MinMax.scsimul.capt[1] ) * 6;
         else
-            return (MinMax.scsimul.capt[1] - MinMax.scsimul.capt[0] ) * 8;
+            return (MinMax.scsimul.capt[1] - MinMax.scsimul.capt[0] ) * 6;
     }
 
     public int blockedpnt(int player)

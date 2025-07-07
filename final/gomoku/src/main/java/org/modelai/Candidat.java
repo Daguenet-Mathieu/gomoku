@@ -21,7 +21,7 @@ public class Candidat
     // List<Double> order = Arrays.asList(24.0, 23.0, 22.0, 21.0, 20.0, 19.0, 18.0, 17.0, 16.0, 15.0, 14.0, 13.0
     //                                 ,12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.5, 1.0, 0.0);
     //List<Double> order = Arrays.asList(0.0, 1.0, 2.0, 3.0, 4.0);
-    List<Double> order = Arrays.asList(5.0, 4.0, 3.0, 2.5, 2.4, 2.0, 1.0, 0.0);
+    List<Double> order = Arrays.asList(6.0, 5.0, 4.0, 3.5, 3.4, 3.0, 2.5, 2.4, 2.0, 1.0, 0.0);
     static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
 
     static coord limax = new coord(1, 1);
@@ -233,7 +233,7 @@ public class Candidat
 
         if (val == 0 && tot_case1 == 0 && tot_case2 == 0) 
             return;
-        if (doubleFreethree.check_double_free(x, y, turn, MinMax.map) == false)
+        if (doubleFreethree.check_double_free(x, y, turn, MinMax.map) == false) //change place ?
         {
             // if (this.dp == Game.max_depth)
             // {
@@ -323,6 +323,38 @@ public class Candidat
         return this.lst.size();
     }
 
+    public int adding_probable_candidate(int turn)
+    {
+        int res;
+        int x = this.lst.get(0).x;
+        int y = this.lst.get(0).y;
+
+        for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+        //for (int i = 0 ; i < 19 ; i++)
+        {
+           for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+            //for (int j = 0 ; j < 19 ; j++)
+            {
+                if (x == i && y == j)
+                    continue;
+
+                res = near_num(i, j);
+                if (MinMax.map[i][j] == 0 && res !=0 && doubleFreethree.check_double_free(i, j, turn, MinMax.map))
+                {
+                    this.lst.add(new Candidat.coord(i, j, res));
+                    //return 1;
+                }
+            }
+        }
+        Collections.sort(this.lst, Comparator.comparing(item -> 
+        this.order.indexOf(item.st())));
+        if (this.lst.size() >= 7)
+        {
+            this.lst = new ArrayList<>(this.lst.subList(0, 6));
+        }
+        return this.lst.size();
+    }
+
     public int all_probable_candidate(int turn)
     {
         int res;
@@ -356,6 +388,14 @@ public class Candidat
             this.lst.add(flst.get(i));
         }
         return lst.size();
+    }
+
+    private int nb_candidates(int depth)
+    {
+        if (depth == Game.max_depth)
+            return 8;
+        else
+            return 6;
     }
 
     public int old_load(int depth, int turn) // only used
@@ -399,8 +439,11 @@ public class Candidat
         if (true)
         {
             ret = interesting_candidate(MinMax.map); // only for the 1st maybe
+
+
+
             //System.out.printf("is it interessant ? %d\n", ret);
-            if (ret != 0)
+            if (ret > 1)
             {
                 Candidat.coord can;
                 if (depth == Game.max_depth)
@@ -429,10 +472,14 @@ public class Candidat
                 // if (this.lst.size() == 6)
                 //     Collections.reverse(this.lst);
                 }
-                if (ret >= 8)
+                if (ret >= nb_candidates(depth) + 1)
                 {
                     //this.lst = new ArrayList<>(this.lst.subList(this.lst.size() - 6, this.lst.size()));
-                    this.lst = new ArrayList<>(this.lst.subList(0, 7));
+                    this.lst = new ArrayList<>(this.lst.subList(0, nb_candidates(depth)));
+                    // while (this.lst.size() != 7)
+                    // {
+                    //     this.lst.remove(this.lst.size() - 1);
+                    // }
                     if (depth == Game.max_depth)
                     {
                     System.out.println("Candidat selected");
@@ -449,72 +496,19 @@ public class Candidat
                 return this.lst.size();
             }
             else
+            {
+                if (ret == 1)
                 {
-                //System.out.println("NEAR candidate");
-                ret = all_probable_candidate(MinMax.scsimul.cur_turn);
-
-                //     max_near = 4;
-                //     while(ret != 0)
-                //     {
-                //         ret = probable_candidate(max_near);
-                //         max_near--;
-                //     }
-                //     // System.out.println("zeroooo for interesting");
+                    if (depth == Game.max_depth)
+                        System.out.println("adding candidate !");
+                    ret = adding_probable_candidate(turn);
                 }
+                else
+                    ret = all_probable_candidate(turn);
+            }
         }
 
         return ret;
-
-        // for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
-        // //for (int i = 0 ; i < 19 ; i++)
-        // {
-        //    for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
-        //     //for (int j = 0 ; j < 19 ; j++)
-        //     {
-        //         if (MinMax.map[i][j] == 0 && near(i, j))
-        //             this.lst.add(new Candidat.coord(i, j));
-        //     }
-        // }
-
-
-
-
-
-        // // if (depth <= 2)
-        // // {
-        // //     for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
-        // //     {
-        // //         for (int j = limin.y -1 ; j < limax.y + 1 ; j++)
-        // //         {
-        // //             if (map[i][j] == 0 && is_case(i, j))
-        // //                 this.lst.add(new Candidat.coord(i, j)); 
-        // //         }
-        // //     }
-        // //     if (this.lst.size() != 0)
-        // //         return this.lst.size();
-        // // }
-
-        // //System.out.printf("limitation %d %d %d %d\n", limin.x - 1, limax.x + 1 , limin.y - 1, limax.y + 1);
-
-        // for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
-        // //for (int i = 0 ; i < 19 ; i++)
-        // {
-        //    for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
-        //     //for (int j = 0 ; j < 19 ; j++)
-        //     {
-        //         if (MinMax.map[i][j] == 0 && near(i, j))
-        //             this.lst.add(new Candidat.coord(i, j));
-        //     }
-        // }
-        //     // if (map[9][10] == 2 && depth == 3)
-        //     // {
-        //     //     display_map(map);
-        //     //     display_candidat(map);
-        //     //     System.exit(0);
-        //     // }
-        // //System.out.printf("Size of candidates %d\n", this.lst.size());
-        // return this.lst.size();
-
     }
 
     // public int old_load(int depth, int turn)
