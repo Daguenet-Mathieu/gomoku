@@ -127,7 +127,7 @@ public class MinMax
     {
         // map = new int[19][19];
         // mapc = new int[19][19];
-        this.ev = new Eval();
+        //this.ev = new Eval();
         //this.candidat = new Candidat();
         this.len = len;
         this.move = new Candidat.coord(-1, -1);
@@ -147,7 +147,7 @@ public class MinMax
         //this.candidat = new Candidat();
         this.len = m.len + 1;
         this.move = new Candidat.coord(-1, -1);
-        this.candidat = new Candidat();
+        this.candidat = new Candidat(false);
         //this.simu = new ArrayList<Candidat.coord>(m.simu);
         // if (depth != 0)
         //     this.candidat = new Candidat(m.candidat);
@@ -511,24 +511,24 @@ public class MinMax
         return false;
     }
 
-    private boolean check_dir(int x, int y, int dx, int dy)
-    {
-        int player;
-        int count;
+    // private boolean check_dir(int x, int y, int dx, int dy)
+    // {
+    //     int player;
+    //     int count;
 
-        player = map[x][y];
-        count = 0;
+    //     player = map[x][y];
+    //     count = 0;
 
-        for (int i=0 , j = 0; in_goban(x+i, y+j) && map[x + i][y + j] == player ; i+=dx, j+=dy)
-            count +=1;
+    //     for (int i=0 , j = 0; in_goban(x+i, y+j) && map[x + i][y + j] == player ; i+=dx, j+=dy)
+    //         count +=1;
 
-        for (int i = -dx, j = -dy ; in_goban(x + i, y + j) && map[x + i][y + j] == player ; i-=dx, j-=dy)
-            count+=1;
+    //     for (int i = -dx, j = -dy ; in_goban(x + i, y + j) && map[x + i][y + j] == player ; i-=dx, j-=dy)
+    //         count+=1;
 
-        if (count == 5)
-            return true;
-        return false;
-    }
+    //     if (count == 5)
+    //         return true;
+    //     return false;
+    // }
 
     protected boolean check_dir(int x, int y, int dx, int dy, int player)
     {
@@ -650,19 +650,6 @@ public class MinMax
         return false;
     }
 
-    protected boolean check_win_4_dir(int x, int y)
-    {
-        if (check_dir(x,y, 0, 1))
-            return true;
-        if (check_dir(x, y, 1, 0))
-            return true;
-        if (check_dir(x, y, 1, 1))
-            return true;
-        if (check_dir(x, y, 1, -1))
-            return true;
-        return false;
-    }
-
     protected boolean check_win_4_dir(int x, int y, int player)
     {
         if (check_dir(x,y, 0, 1, player))
@@ -690,7 +677,7 @@ public class MinMax
         //this.scsimul.analyse_move(c.x, player, player);
         //System.out.printf("move %d %d\n", c.x, c.y);
         //return is_victory();
-        return check_win_4_dir(c.x, c.y);
+        return check_win_4_dir(c.x, c.y, player);
         
     }
 
@@ -763,21 +750,9 @@ public class MinMax
     {
         pos_counter++;
         if (player == turn)
-        {
-            if (len == 0)
-                return 12000;
-            else if (len == 1)
-                return 11000;
-            return 10000;
-        }
+            return 10000 - len * 100;
         else
-        {
-            if (len == 0)
-                return -12000;
-            else if (len == 1)
-                return -11000;
-            return 10000;
-        }
+            return -10000 + len * 100;
     }
 
 
@@ -787,37 +762,18 @@ public class MinMax
         pos_counter++;
         if (player == turn)
         {
-            //return 10000 - len * 100;
             if (len == 0)
                 return 12000;
             return 10000;
         }
         else
         {
-            //return -10000 + len *100;
             if (len == 0)
-                return -12000; //11000
+                return -12000;
         }
-       return -10000; // 9200
+       return -10000;
     }
 
-    // void update_val(float val, int turn, int player)
-    // {
-    //     if (turn !=player)
-    //         vmin = Math.min(vmin, val);
-    //     else
-    //         vmax = Math.max(vmax, val);
-    // }
-
-    // void update_alpha_beta(float val, int turn, int player)
-    // {
-    //     if (turn != player)
-    //     {
-    //         beta = Math.min(beta, val);
-    //     }
-    //     else
-    //         alpha = Math.max(alpha, val);
-    // }
     public void info()
     {
         display_map();
@@ -828,91 +784,25 @@ public class MinMax
 
     public float minmax(int depth, int turn, int player)
     {   
-        //this.depth = depth;
+
         int nb_candidates;
         float reteval;
 
         nb_candidates = candidat.old_load(depth, turn);
-        // if (depth != 0)
-        //     System.out.printf("nb candidates %d", nb_candidates);
-        //can = new ArrayList<Candidat.coord>(candidat.lst);
-        // if (depth == 2)
-        // {
-        //     System.out.printf("move is %d %d size %d\n", move.x, move.y, nb_candidates);
-        //     candidat.display_candidat(map);
-        // }
 
-        // if (pos_counter > 200)
-        //     System.exit(0);
-        // if (pos_counter %10 == 0)
-        //     info();
 
         if (depth == 0)
         {
-                        // candidat.display_candidat(map);
-            // if (!scsimul.no_free())
-            // {
-            // display_map();
-            // scsimul.display_free();
-            // System.out.println();
-            // //display_simu();
-            // }
+
             pos_counter++;
             reteval = eval(player, len, turn);
 
-            //display_map();
-            //scsimul.display_miniscore();
-            // if (scsimul.sc.one > 100 || scsimul.sc.two > 100)
-            // {
-            //     display_map();
-            //     scsimul.display();
-            // }
-            // if (nbmove == 3)
-            // {
-            //     System.out.printf("position %d\n", pos_counter);
-            //     scsimul.display_miniscore();
-            //     scsimul.display_free();
-            // }
-            // if (pos_counter >= 81140 && pos_counter <= 81150 && nbmove == 3)
-            // {
-            //     System.out.printf("position %d\n", pos_counter);
-            //     display_map();
-            //     scsimul.display();
-            // }
-            // if (scsimul.test_free3(scsimul.free3[0], scsimul.free3[1]) == false)
-            // {
-            //     System.out.printf("position %d\n", pos_counter);
-            //     display_map();
-            //     scsimul.display();
-            // }
-
-            // if (pos_counter %1000 == 0)
-            // {
-            //     System.out.printf("position %d\n", pos_counter);
-            //     display_map();
-            //     scsimul.display();
-            // }
-
-            // if (scsimul.free3[0] > 2 || scsimul.simp4[0] > 2 || scsimul.free4[0] > 2
-            // || scsimul.free3[1] > 2 || scsimul.simp4[1] > 2 || scsimul.free4[1] > 2)
-            // {
-            //     System.out.printf("position %d\n", pos_counter);
-            //     display_map();
-            //     scsimul.display();
-            // }
-
-            // if (reteval > 2000)
-            // {
-            //     System.out.printf("position %d\n", pos_counter);
-            //     display_map();
-            //     scsimul.display();
-            // }
             return reteval;
         }
 
 
         values = new float[nb_candidates];
-        //for (int i = nb_candidates - 1 ; i != -1 ; i--)
+
         for (int i = 0 ; i < nb_candidates ; i++)
         {
             MinMax m = new MinMax(this, depth);
@@ -921,29 +811,8 @@ public class MinMax
             else
                 values[i] = m.minmax(depth - 1, change(turn), player);
             
-
-            // update_val(values[i], turn, player);
-            // if (turn != player && alpha >= vmin)
-
-            // {
-            //     best = candidat.lst.get(i);
-            //     return vmin;
-            // }
-            // else if (turn == player && vmax >= beta)
-            // {
-            //     best = candidat.lst.get(i);
-            //     return vmax;
-            // }
-            // update_alpha_beta(values[i], turn, player);
             m.unplay(m.move, depth);
         }
-
-        // if (depth == 2)
-        // {
-        //     for (int i = 0 ; i < values.length ; i++)
-        //         System.out.printf("%f ", values[i]);
-        //     System.out.println();
-        // }
 
         if (depth == Game.max_depth)//max_dep
         {
@@ -951,13 +820,8 @@ public class MinMax
             ev.display();
             ev.clear_stones();
 
-            //scsimul.display();
-        
-            //display_map();
-            //candidat.clear();
-            //candidat.display_candidat(map);
-            //display_values(values, candidat.lst);
         }
+    
         if (turn == player)
             return max(values);
         else
@@ -965,37 +829,83 @@ public class MinMax
     }
 
     public float minmaxab(int depth, int turn, int player, float alpha, float beta)
-    {
-        return 0;
+    {   
+        int nb_candidates;
+        float cur_alpha;
+        float cur_beta;
+        float res;
+
+        scsimul.cur_turn = turn;
+
+
+        nb_candidates = candidat.old_load(depth, turn);
+
+
+        if (depth == 0)
+        {
+            pos_counter++;
+            res = eval(player, len, turn);
+            return res;
+        }
+
+        values = new float[nb_candidates];
+
+    
+        cur_alpha = Float.NEGATIVE_INFINITY;
+        cur_beta = Float.POSITIVE_INFINITY;
+
+        for (int i = 0 ; i < nb_candidates ; i++)
+        {
+            MinMax m = new MinMax(this.len);
+
+            if (turn == player)
+            {
+                if (m.play(candidat.lst.get(i), turn))
+                {
+                    res = value_victory_intermediate(player, turn, len);
+                }
+                else
+                {
+                    res = m.minmaxab(depth - 1, change(turn), player, Math.max(alpha, cur_alpha), beta);
+                    m.unplay(m.move, depth);
+                }
+
+                values[i] = res;
+                cur_alpha = Math.max(cur_alpha, res);
+
+
+                if (cur_alpha >= beta) // beta cut
+                {
+                    return cur_alpha;
+                }
+
+            }
+            else
+            {
+                if (m.play(candidat.lst.get(i),turn))
+                {
+                    res = value_victory_intermediate(player, turn, len);
+                }
+
+                else
+                {
+                    res = m.minmaxab(depth - 1, change(turn), player, alpha, Math.min(beta, cur_beta));
+                    m.unplay(m.move, depth);
+                }
+                values[i] = res;
+                cur_beta = Math.min(cur_beta, res);
+
+
+                if (alpha >= cur_beta) // alpha cut
+                {
+                    return cur_beta;
+                }
+            }
+        }
+
+        if (turn == player)
+            return max(values);
+        else
+            return min(values);
     }
-    // public static void main(String[] args)
-    // {
-
-    //     MinMax m = new MinMax();
-
-    //     m.map[10][10] = 2;
-    //     m.map[9][11] = 1;
-    //     m.map[10][11] = 2;
-    //     m.map[10][12] = 2;
-    //     m.map[8][12] = 1;
-        
-    //     //m.play(new Candidat.coord(3, 4), 2);
-    //     m.display_map();
-
-    //     m.minmax(3, 1);
-
-    //     System.out.printf("The best move is %d %d\n", m.best.x, m.best.y);
-    //     m.play(m.best, 1);
-
-    //     m.display_map();
-
-    //     m.play(new Candidat.coord(9, 10), 2);
-
-    //     m.display_map();
-    //     m.minmax(3, 1);
-    //     System.out.printf("The best move is %d %d\n", m.best.x, m.best.y);
-    //     m.play(m.best, 1);
-    //     m.display_map();
-    // }
-
 }

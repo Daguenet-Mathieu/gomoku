@@ -76,7 +76,6 @@ public class Game {
         else if (str == "Pente")
         {
             this.rules = "Pente";
-            //max_depth+=2;
             System.out.println("ruleset " + rules);
             return new Pente();
         }
@@ -191,7 +190,7 @@ public class Game {
     {
         //Candidat.coord c;
         //m.display_map();
-        System.out.printf("best move %d %d\n", turn, player);
+        System.out.printf("best move turn %d player %d\n", turn, player);
         //System.exit(0);
         time = System.currentTimeMillis();
         if (nb_move == 0)
@@ -210,7 +209,7 @@ public class Game {
             MinMax.scsimul.display();
             System.out.printf("\n\tminmax launch turn %d player %d\n", turn, player);
     
-            if (this.rules.equals("Pente"))
+            if (this.rules.equals("Pente") || this.rules.equals("Gomoku"))
             {
                 // m.display_map();
                 // val = m.minmax(max_depth, turn, player);

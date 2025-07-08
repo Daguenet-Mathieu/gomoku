@@ -17,6 +17,7 @@ public class Candidat
     public ArrayList<Candidat.coord> histo = new ArrayList<Candidat.coord>();
     //public ArrayList<Candidat.coord> forced_capture = new ArrayList<Candidat.coord>();
     public DoubleFree doubleFreethree;
+    public boolean capture_possible;
 
     // List<Double> order = Arrays.asList(24.0, 23.0, 22.0, 21.0, 20.0, 19.0, 18.0, 17.0, 16.0, 15.0, 14.0, 13.0
     //                                 ,12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.5, 1.0, 0.0);
@@ -41,9 +42,11 @@ public class Candidat
         public double st(){return this.st;}
     }
 
-    public Candidat()
+    public Candidat(boolean cap)
     {
-        this.doubleFreethree = new DoubleFree();
+        if (cap)
+            this.doubleFreethree = new DoubleFree();
+        this.capture_possible = cap;
         //this.lst =  new ArrayList<Candidat.coord>();
         //cmap = new int[19][19];
     }
@@ -233,7 +236,7 @@ public class Candidat
 
         if (val == 0 && tot_case1 == 0 && tot_case2 == 0) 
             return;
-        if (doubleFreethree.check_double_free(x, y, turn, MinMax.map) == false) //change place ?
+        if (capture_possible && doubleFreethree.check_double_free(x, y, turn, MinMax.map) == false) //change place ?
         {
             // if (this.dp == Game.max_depth)
             // {
@@ -339,7 +342,7 @@ public class Candidat
                     continue;
 
                 res = near_num(i, j);
-                if (MinMax.map[i][j] == 0 && res !=0 && doubleFreethree.check_double_free(i, j, turn, MinMax.map))
+                if (MinMax.map[i][j] == 0 && res !=0 && (capture_possible == false || doubleFreethree.check_double_free(i, j, turn, MinMax.map)))
                 {
                     this.lst.add(new Candidat.coord(i, j, res));
                     //return 1;
@@ -365,7 +368,7 @@ public class Candidat
             //for (int j = 0 ; j < 19 ; j++)
             {
                 res = near_num(i, j);
-                if (MinMax.map[i][j] == 0 && res !=0 && doubleFreethree.check_double_free(i, j, turn, MinMax.map))
+                if (MinMax.map[i][j] == 0 && res !=0 && (capture_possible == false || doubleFreethree.check_double_free(i, j, turn, MinMax.map)))
                 {
                     this.lst.add(new Candidat.coord(i, j, res));
                     //return 1;
@@ -425,7 +428,7 @@ public class Candidat
         if (depth == Game.max_depth)
         {
             load_lim(MinMax.map);
-            if (MinMax.forced_capture.size() !=0 )
+            if (MinMax.forced_capture.size() !=0)
                 return forced_candidate(MinMax.forced_capture);
         }
 
@@ -439,7 +442,6 @@ public class Candidat
         if (true)
         {
             ret = interesting_candidate(MinMax.map); // only for the 1st maybe
-
 
 
             //System.out.printf("is it interessant ? %d\n", ret);
@@ -499,8 +501,6 @@ public class Candidat
             {
                 if (ret == 1)
                 {
-                    if (depth == Game.max_depth)
-                        System.out.println("adding candidate !");
                     ret = adding_probable_candidate(turn);
                 }
                 else

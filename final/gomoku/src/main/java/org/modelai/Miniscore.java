@@ -29,7 +29,7 @@ public class Miniscore {
     ArrayList<Blocker> blocklist = new ArrayList<Blocker>();
 
     //static int [] factor = {0, 0, 2, 5, 10, 10};
-    static int [] factor = {0, 0, 2, 10, 25, 0, 0};
+    static int [] factor = {0, 0, 2, 10, 25, 0, 0, 0, 0, 0};
     //static int [] factor = {0, 0, 2, 3, 4};
     static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
 

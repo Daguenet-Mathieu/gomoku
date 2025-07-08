@@ -4,8 +4,8 @@ import java.util.ArrayList;
 public class Pente extends MinMax {
 
     // public Candidat.coord [] removed;
-    static public int [] prisoners;
-    static ArrayList <Pente.Prison> prisonlst;
+    static public int [] prisoners = new int[2];
+    static ArrayList <Pente.Prison> prisonlst = new ArrayList<Pente.Prison>();
     public static boolean cut = true;
     public static int stop = 0;
     public static int [] prisonersfactor = {0, 2, 2, 4, 4, 8, 8, 16, 16, 32, 32};
@@ -42,10 +42,17 @@ public class Pente extends MinMax {
         this.move = new Candidat.coord(-1, -1);
         prisoners = new int[2];
         scsimul = new Miniscore();
-        candidat = new Candidat();
+        candidat = new Candidat(true);
         prisonlst = new ArrayList<Pente.Prison>();
         pos_counter = 0;
         nbmove = 0;
+    }
+
+    public Pente (int len)
+    {
+        this.len = len + 1;
+        this.move = new Candidat.coord(-1, -1);
+        this.candidat = new Candidat(true);
     }
 
     private void remove(int x, int y, int warx, int wary)
@@ -278,13 +285,6 @@ public class Pente extends MinMax {
         // }
     }
 
-    public Pente (int len)
-    {
-        this.len = len + 1;
-        this.move = new Candidat.coord(-1, -1);
-        this.candidat = new Candidat();
-    }
-
     private void print_values(float [] values)
     {
         Candidat.coord c;
@@ -487,8 +487,6 @@ public class Pente extends MinMax {
         //     display_map();
         //     scsimul.display();
         // }
-
-
 
 
         if (depth == 0)
