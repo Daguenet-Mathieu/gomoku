@@ -14,6 +14,8 @@ public class GoRules implements Rules {
     boolean pass = false;
     Rules.GameMode gameStatus = Rules.GameMode.PLAYING;
     int boardSize = 19;
+    ArrayList<Point> whitePrisonnerList = new ArrayList<Point>();
+    ArrayList<Point> blackPrisonnerList = new ArrayList<Point>();
 
     public ArrayList<Point> getDeadStones(){
         return deadStones;
@@ -27,21 +29,116 @@ public class GoRules implements Rules {
     //     return whiteDeadStones;
     // }
 
+    public ArrayList<Point> getWhitePrisonnersList(){
+        return whitePrisonnerList;
+    }
+
+    public ArrayList<Point> getBlackPrisonnersList(){
+        return blackPrisonnerList;
+    }
+
+    public void removeMapPrisnners(Map map){
+        // remettre les tmp prisniers a 0
+        for (int i = 0; i < get_board_size(); i++){
+            for (int j = 0; j < get_board_size(); j++){
+                if (map.get_map()[i][j] == 3){
+                    //set dans les prisonniers noir
+                    map.get_map()[i][j] = 0;
+                }
+                else if (map.get_map()[i][j] == 4){
+                    //set dans les prisonniers blanc
+                    map.get_map()[i][j] = 0;
+                }
+
+            }
+        }
+    }
+
+    private void addPrisonnersToList(ArrayList<Point> list, Map map){
+        int currentColor = -1;
+        int left = -1;
+        int right = -1;
+        int top = -1;
+        int down = -1;
+        System.out.println("ma list == " + list);
+        for (Point p : list){
+            if (p.x - 1 >= 0 && p.x - 1 < get_board_size() && p.y >= 0 && p.y < get_board_size())
+               left = map.get_map()[p.y][p.x - 1];
+            if (p.x + 1 >= 0 && p.x + 1 < get_board_size() && p.y >= 0 && p.y < get_board_size())
+               right = map.get_map()[p.y][p.x + 1];
+            if (p.x >= 0 && p.x < get_board_size() && p.y - 1 >= 0 && p.y - 1 < get_board_size())
+               top = map.get_map()[p.y - 1][p.x];
+            if (p.x - 1 >= 0 && p.x < get_board_size() && p.y + 1 >= 0 && p.y + 1 < get_board_size())
+               down = map.get_map()[p.y + 1][p.x];
+            System.out.println("left == " + left + " right " + right + " top " + top + " down " + down + " curret color " + currentColor);
+            if (left == 1 || left == 2)
+            {
+                if (currentColor != -1 && currentColor != left)
+                    return ;
+                currentColor = left;
+            }
+            else if (right == 1 || right == 2)
+            {
+                if (currentColor != -1 && currentColor != right)
+                    return ;
+                currentColor = right;
+            }
+            else if (top == 1 || top == 2)
+            {
+                if (currentColor != -1 && currentColor != top)
+                    return ;
+                currentColor = top;
+            }
+            else if (down == 1 || down == 2)
+            {
+                if (currentColor != -1 && currentColor != down)
+                    return ;
+                currentColor = down;
+            }
+        }
+        System.out.println("current color == " + currentColor);
+        if (currentColor == 2)
+            whitePrisonnerList.addAll(list);
+        else if (currentColor == 1)
+            blackPrisonnerList.addAll(list);
+    }
+
+    public void init_prisonners(Map map){
+        Map tmp = new Map(map);
+        ArrayList<Point> tmpList = new ArrayList();
+        removeMapPrisnners(tmp);
+        whitePrisonnerList.clear();
+        blackPrisonnerList.clear();
+        for (int i = 0; i < get_board_size(); i++){
+            for (int j = 0; j < get_board_size(); j++){
+                if (tmp.get_map()[i][j] == 0){
+                    floodFill(new Point(i, j), tmp.get_map(), 0, tmpList, 7);
+                    addPrisonnersToList(tmpList, tmp);
+                    tmpList.clear();
+                }
+            }
+        }
+    }
+
     public boolean pass(){
         switch (gameStatus) {
             case PLAYING:
-                if (pass == false)
+                if (pass == false){
+                    System.out.println("Mode : en cours de jeu");
                     pass = true;
-                else
+                }
+                else{
                     gameStatus = Rules.GameMode.DEATH_MARKING;
-                System.out.println("Mode : en cours de jeu");
+                    System.out.println("Mode : sélection des pierres mortes");
+                }
                 return true;
             case DEATH_MARKING:
                 gameStatus = Rules.GameMode.COUNTING;
-                System.out.println("Mode : sélection des pierres mortes");
+                // init_prisonners(); appeler dans handler pass
+                System.out.println("Mode : décompte des points");
                 return false;
             case COUNTING:
-                System.out.println("Mode : décompte des points");
+                System.out.println("Mode : partie fnie");
                 return false;
             default:
                 return true;
@@ -154,7 +251,7 @@ public class GoRules implements Rules {
     }
 
     @Override
-    public ArrayList<Point> get_forbiden_moves(ArrayList<Map> map, int index, int color){//besoin de connaitre tout l'historique arraylist <Map>
+    public ArrayList<Point> get_forbiden_moves(ArrayList<Map> map, int index, int color){
         forbidden_moves.clear();
         final int advColor = color == 1 ? 2 : 1;
         for (int i = 0; i < get_board_size(); i++){

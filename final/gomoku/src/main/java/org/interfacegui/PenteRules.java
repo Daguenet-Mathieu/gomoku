@@ -42,7 +42,7 @@ public class PenteRules implements Rules {
         //     }
         //         System.out.println();
         // }
-
+        // System.out.println("size map " + map.size() + " color " + (((map.size() + 1)%2)+1));
         if (this.dbfree.check_double_free(point.y, point.x, ((map.size() + 1)%2)+1, map.get(map.size() - 1).get_map()) == false)
             return false;
         //check les doubles free three
@@ -151,7 +151,8 @@ public class PenteRules implements Rules {
         Map map = maps.get(index);
         int[][] m = map.get_map();
         forbidden_moves.clear();
-        map.printMap();
+        // map.printMap();
+        // System.out.println("index == " + index + " size map " + maps.size() + " color " + color);
         // System.out.println("pour x == 8 et y == 10 " + m[10][8] + " et pour x == 10 et y == 8 " + m[8][10]);
         // for (Point point : forbidden_moves)
             // System.out.println("apres cleat forbidden moves == " + forbidden_moves);
@@ -163,7 +164,7 @@ public class PenteRules implements Rules {
                 if (m[y][x] != 0)
                     continue ;
                 boolean res = this.dbfree.check_double_free(y, x, color, m);
-                if (y == 10 && x == 8)
+                // if (y == 10 && x == 8)
                     // System.out.println("puor la coordonnee qui nous interesse res : " + res);
                 // if (res == false)
                 // {
@@ -263,6 +264,10 @@ public class PenteRules implements Rules {
     private boolean checkNeighborhood(Point p1, Point p2, Map map, int incrY, int incrX, boolean before, int color){
         int advColor = color == 1? 2 : 1;
         if (before == false){
+            if (p1.y - incrY < 0 || p1.y - incrY >= get_board_size()|| p2.y + incrY < 0 || p2.y + incrY >= get_board_size())
+                return false;
+            if (p1.x - incrX < 0 || p1.x - incrX >= get_board_size()|| p2.x + incrX < 0 || p2.x + incrX >= get_board_size())
+                return false;
             // System.out.println("j'ai trouve un before");
             // System.out.println("je test : y == " + (p1.y - incrY) + " x == " + (p1.x - incrX) + " et y == " + (p2.y + incrY) + " et x == " + (p2.x + incrX));
             if (map.get_map()[p1.y - incrY][p1.x - incrX] == 0 && map.get_map()[p2.y + incrY][p2.x + incrX] == advColor)
@@ -273,6 +278,11 @@ public class PenteRules implements Rules {
             // System.out.println("pas le 2em test");
         }
         else{
+            if (p2.y - incrY < 0 || p2.y - incrY >= get_board_size()|| p1.y + incrY < 0 || p1.y + incrY >= get_board_size())
+                return false;
+            if (p2.x - incrX < 0 || p2.x - incrX >= get_board_size()|| p1.x + incrX < 0 || p1.x + incrX >= get_board_size())
+                return false;
+
             // System.out.println("j'ai trouve un after");
             // System.out.println("je test : y == " + (p2.y - incrY) + " x == " + (p2.x - incrX) + " et y == " + (p1.y + incrY) + " et x == " + (p1.x + incrX));
             if (map.get_map()[p2.y - incrY][p2.x - incrX] == 0 && map.get_map()[p1.y + incrY][p1.x + incrX] == advColor)

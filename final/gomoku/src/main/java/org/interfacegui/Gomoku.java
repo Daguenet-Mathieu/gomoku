@@ -28,6 +28,8 @@ import org.modelai.Candidat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import javafx.scene.paint.Color;
+
 //import java.util.concurrent.ExecutionException;
 
 //coder les free 3et reccup list coup interdits + prisonnier et liste prisonniers et fin de parties sur 10 prisioniers //pente et renju faire des emthodes defaut dans rules
@@ -611,13 +613,13 @@ public class Gomoku
         gameInfos.getForbiddeButton().setOnAction(event -> {
             if (ia_playing /*|| game_end || map_index < _map.size() - 1*/)
                 return ;
-            int color = _map.get(map_index).get_color() ^ 1;
+            // int color = _map.get(map_index).get_color() ^ 1;
             System.out.println("map index == " + map_index + " player turn == " + player_turn + " player turn d'apres map == " + _map.get(map_index).get_color());
-            ArrayList<Point> points = rule.get_forbiden_moves(_map, map_index, color + 1);
+            ArrayList<Point> points = rule.get_forbiden_moves(_map, map_index, player_turn + 1);
             for (Point point : points){
                 changeForbiddenVisibility(forbiddenVisibility, point);
             }
-            forbiddenVisibility = forbiddenVisibility == true?false:true;
+            forbiddenVisibility = forbiddenVisibility == false;
         });
         
         gameInfos.getPassButton().setOnAction(event -> {
@@ -628,6 +630,17 @@ public class Gomoku
             _map.add(newMap);
             map_index++;
             System.out.println("player tur == " + player_turn);
+            if (rule.getGameMode() == Rules.GameMode.COUNTING){
+                ((GoRules)rule).init_prisonners(_map.get(_map.size() - 1));
+                ArrayList<Point> tmp = ((GoRules)rule).getWhitePrisonnersList();
+                System.out.println("white prisonners == " + tmp);
+                for (Point p : tmp)
+                    goban.modify_score(p, Color.WHITE);
+                tmp = ((GoRules)rule).getBlackPrisonnersList();
+                System.out.println("black prisonners == " + tmp);
+                for (Point p : tmp)
+                    goban.modify_score(p, Color.BLACK);
+            }
         });
 
 

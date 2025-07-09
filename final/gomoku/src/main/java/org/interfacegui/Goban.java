@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 public class Goban{
     private Pane _goban;
     private Circle _stones[][];
+    private Rectangle _score[][];
     private ArrayList<Circle> _hoshis;
     private ArrayList<Line> _lines;
     private int _size;
@@ -89,6 +90,8 @@ public class Goban{
         //_current_move = 0;
         // _game_states.add(new Map(_size));
         _stones = new Circle[_nb_line][_nb_line];
+        _score = new Rectangle[_nb_line][_nb_line];
+
 
         _hoshis = new ArrayList<Circle>();
         _lines = new ArrayList<Line>();
@@ -97,6 +100,7 @@ public class Goban{
         init_lines();
         init_hoshi();
         init_stones();
+        init_score();
         build_goban();
     }
     
@@ -134,6 +138,7 @@ public class Goban{
         init_margin_size(new_y, new_x);
         update_lines();
         stones_responsivity();
+        score_responsivity();
     }
 
     private void stones_responsivity(){
@@ -144,8 +149,62 @@ public class Goban{
                 _stones[i][j].setCenterY((_square_size * i) + _heigh_margin_size);
             }
         }
-
     }
+
+    private void score_responsivity(){
+    double size = _square_size / 5.0;
+
+    for (int i = 0; i < _score.length; i++) {
+        for (int j = 0; j < _score[i].length; j++) {
+            Rectangle r = _score[i][j];
+            
+            r.setWidth(size);
+            r.setHeight(size);
+
+            // Position sur l'intersection
+            double centerX = (_square_size * j) + _width_margin_size;
+            double centerY = (_square_size * i) + _heigh_margin_size;
+
+            r.setX(centerX - size / 2.0);
+            r.setY(centerY - size / 2.0);
+        }
+    }
+}
+
+
+    // private void score_responsivity(){
+    //     double size = _square_size;
+
+    //     for (int i = 0; i < _score.length; i++) {
+    //         for (int j = 0; j < _score[i].length; j++) {
+    //             Rectangle r = new Rectangle();
+
+    //             r.setWidth(size);
+    //             r.setHeight(size);
+
+    //             double centerX = (_square_size * j) + _width_margin_size + (_square_size / 2.0);
+    //             double centerY = (_square_size * i) + _heigh_margin_size + (_square_size / 2.0);
+
+    //             r.setX(centerX - size / 2.0);
+    //             r.setY(centerY - size / 2.0);
+
+    //             r.setStroke(Color.TRANSPARENT);
+    //             r.setFill(Color.BLUE);
+    //             r.setStrokeWidth(1);
+    //             r.setVisible(false);
+
+    //             _score[i][j] = r;
+    //         }
+    //     }
+    //         Rectangle rect = _score[0][0];
+    //         System.out.println(
+    //         "score respnsivity on Rectangle at (x=" + rect.getX() +
+    //         ", y=" + rect.getY() +
+    //         "), size (w=" + rect.getWidth() +
+    //         ", h=" + rect.getHeight() + ")");
+
+
+    // }
 
     public void init_stones(){
 
@@ -165,11 +224,131 @@ public class Goban{
         }
     }
 
+    public void init_score() {
+        double size = _square_size / 5.0;
+
+        for (int i = 0; i < _score.length; i++) {
+            for (int j = 0; j < _score[i].length; j++) {
+                Rectangle r = new Rectangle();
+                r.setWidth(size);
+                r.setHeight(size);
+
+                // Position centrée sur l'intersection des lignes (pas décalée)
+                double centerX = (_square_size * j) + _width_margin_size;
+                double centerY = (_square_size * i) + _heigh_margin_size;
+
+                r.setX(centerX - size / 2.0);
+                r.setY(centerY - size / 2.0);
+
+                r.setStroke(Color.BLACK); // Contour pour visibilité
+                r.setFill(Color.BLUE);
+                r.setStrokeWidth(1);
+                r.setVisible(false);
+
+                _score[i][j] = r;
+            }
+        }
+        
+        System.out.println("Rectangles initialisés avec positions corrigées");
+    }
+
+    // public void init_score() {
+    //     double size = _square_size / 5.0;
+
+    //     for (int i = 0; i < _score.length; i++) {
+    //         for (int j = 0; j < _score[i].length; j++) {
+    //             Rectangle r = new Rectangle();
+
+    //             r.setWidth(size);
+    //             r.setHeight(size);
+
+    //             double centerX = (_square_size * j) + _width_margin_size + (_square_size / 2.0);
+    //             double centerY = (_square_size * i) + _heigh_margin_size + (_square_size / 2.0);
+
+    //             r.setX(centerX - size / 2.0);
+    //             r.setY(centerY - size / 2.0);
+
+    //             r.setStroke(Color.TRANSPARENT);
+    //             r.setFill(Color.BLUE);
+    //             r.setStrokeWidth(1);
+    //             r.setVisible(false);
+
+    //             _score[i][j] = r;
+    //         }
+    //     }
+
+        // Affichage debug
+    //     Rectangle rect = _score[0][0];
+    //     System.out.println(
+    //         "score init on Rectangle at (x=" + rect.getX() +
+    //         ", y=" + rect.getY() +
+    //         "), size (w=" + rect.getWidth() +
+    //         ", h=" + rect.getHeight() + ")"
+    //     );
+    // }
+
+
+
+    // public void init_score(){
+
+    //     // System.out.println("_stones.length == " + _stones.length + " _stones[0].length == " + _stones[0].length);
+    //     for (int i = 0; i < _score.length; i++){
+    //         for (int j = 0; j < _score[i].length; j++){
+    //             // System.out.println("set stone i == " + i + " j == " + j + " width == " + ((_square_size * j) + _width_margin_size + (_square_size/2)) + " heght == " + ((_square_size * j) + _heigh_margin_size + (_square_size/2)));
+    //             _score[i][j] = new Rectangle();
+    //             _score[i][j].setX(_square_size/5);
+    //             _score[i][j].setY(_square_size/5);
+    //             // _score[i][j].setRadius(_square_size/2);
+    //             _score[i][j].setX((_square_size * j) + _width_margin_size / 5);
+    //             _score[i][j].setY((_square_size * i) + _heigh_margin_size / 5);
+    //             _score[i][j].setStroke(Color.TRANSPARENT);
+    //             _score[i][j].setFill(Color.BLUE); 
+    //             _score[i][j].setStrokeWidth(1);
+    //             _score[i][j].setVisible(false);
+    //         }
+    //         Rectangle rect = _score[0][0];
+    //         System.out.println(
+    //         "score init on Rectangle at (x=" + rect.getX() +
+    //         ", y=" + rect.getY() +
+    //         "), size (w=" + rect.getWidth() +
+    //         ", h=" + rect.getHeight() + ")"
+    //     );
+
+    //     }
+    // }
+
+    public void remove_score(ArrayList<Point> score){
+        for (Point coordinates : score) {
+            _score[coordinates.y][coordinates.x].setVisible(false);
+        }
+    }
+
+    // public void modify_score(Point coordinates, Color color) {
+    //     _score[coordinates.y][coordinates.x].setVisible(true);
+    //     _score[coordinates.y][coordinates.x].setFill(color);
+    // }
+
+    public void modify_score(Point coordinates, Color color) {
+        Rectangle rect = _score[coordinates.y][coordinates.x];
+        System.out.println(
+            "modify_score on Rectangle at (x=" + rect.getX() +
+            ", y=" + rect.getY() +
+            "), size (w=" + rect.getWidth() +
+            ", h=" + rect.getHeight() + ")"
+        );
+        
+        rect.setVisible(true);
+        rect.setFill(color);
+        rect.toFront();
+    }
+
+
+
     public void remove_stones(ArrayList<Point> stones){
         for (Point coordinates : stones) {
             _stones[coordinates.y][coordinates.x].setVisible(false);
         }
-    };
+    }
     
     public void remove_stone(Point coordinates) {
         _stones[coordinates.y][coordinates.x].setVisible(false);
@@ -188,6 +367,12 @@ public class Goban{
         for (int i = 0; i < _stones.length; i++){
             for (int j = 0; j < _stones[i].length; j++){
                 _goban.getChildren().add(_stones[i][j]);
+            }
+        }
+        // System.out.println("score len " + _score.length + " score len 2 " + _score[0].length);
+        for (int i = 0; i < _score.length; i++){
+            for (int j = 0; j < _score[i].length; j++){
+                _goban.getChildren().add(_score[i][j]);
             }
         }
 
