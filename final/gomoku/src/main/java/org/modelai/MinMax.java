@@ -14,7 +14,7 @@ public class MinMax
     public Candidat.coord best;
     public Candidat.coord move;
     public float [] values;
-    public int len;
+    public int len = 0;
     static public Miniscore scsimul;
     static int pos_counter;
     static int nbmove;
@@ -66,6 +66,7 @@ public class MinMax
         scsimul.sc.two = score.sc.two;
         scsimul.capt[0] = score.capt[0];
         scsimul.capt[1] = score.capt[1];
+        scsimul.lastcap = false;
 
         // for (int i = 0 ; i < 2 ; i++)
         // {

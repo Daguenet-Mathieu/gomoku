@@ -23,7 +23,7 @@ public class Moku extends MinMax {
         this.move = c;
         map[c.x][c.y] = player;
 
-        this.candidat.save(c);
+        candidat.save(c);
         scsimul.analyse_move(c.x, c.y, player);
 
         return false;
