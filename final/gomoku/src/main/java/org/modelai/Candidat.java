@@ -12,23 +12,23 @@ import org.utils.DoubleFree;
 public class Candidat
 {
     public ArrayList<Candidat.coord> lst =  new ArrayList<Candidat.coord>();
-    public ArrayList<Candidat.coord> mandatory = new ArrayList<Candidat.coord>();
-    public ArrayList<Integer> vanish_lst = new ArrayList<Integer>();
-    public ArrayList<Candidat.coord> histo = new ArrayList<Candidat.coord>();
+    //public ArrayList<Candidat.coord> mandatory = new ArrayList<Candidat.coord>();
+    // ArrayList<Integer> vanish_lst = new ArrayList<Integer>();
+    //public ArrayList<Candidat.coord> histo = new ArrayList<Candidat.coord>();
     //public ArrayList<Candidat.coord> forced_capture = new ArrayList<Candidat.coord>();
-    public DoubleFree doubleFreethree;
+    static public DoubleFree doubleFreethree = new DoubleFree();
     public boolean capture_possible;
 
     // List<Double> order = Arrays.asList(24.0, 23.0, 22.0, 21.0, 20.0, 19.0, 18.0, 17.0, 16.0, 15.0, 14.0, 13.0
     //                                 ,12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.5, 1.0, 0.0);
     //List<Double> order = Arrays.asList(0.0, 1.0, 2.0, 3.0, 4.0);
-    List<Double> order = Arrays.asList(6.0, 5.0, 4.0, 3.5, 3.4, 3.0, 2.5, 2.4, 2.0, 1.0, 0.0);
-    static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
+    private List<Double> order = Arrays.asList(6.0, 5.0, 4.0, 3.5, 3.4, 3.0, 2.5, 2.4, 2.0, 1.0, 0.0);
+    private static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
 
-    static coord limax = new coord(1, 1);
-    static coord limin = new coord(18, 18);
-    int dp;
-    int turn;
+    private static coord limax = new coord(1, 1);
+    private static coord limin = new coord(18, 18);
+    //private int dp;
+    private int turn;
     //static public int [][] cmap;
     
     public static class coord
@@ -42,10 +42,14 @@ public class Candidat
         public double st(){return this.st;}
     }
 
+    // public void init_limcoord()
+    // {
+    //     limax = new coord(1, 1);
+    //     limin = new coord(18, 18);
+    // }
+
     public Candidat(boolean cap)
     {
-        if (cap)
-            this.doubleFreethree = new DoubleFree();
         this.capture_possible = cap;
         //this.lst =  new ArrayList<Candidat.coord>();
         //cmap = new int[19][19];
@@ -159,10 +163,6 @@ public class Candidat
         return false;
     }
 
-    public void clear()
-    {
-        this.lst.clear();
-    }
 
     private void load_lim(int [][] map)
     {
@@ -393,10 +393,24 @@ public class Candidat
         return lst.size();
     }
 
+    // private int nb_candidates(int depth)
+    // {
+    //     if (depth == Game.max_depth)
+    //         return 7;
+    //         //return 8;
+    //     else if (depth == Game.max_depth - 1)
+    //         return 6;
+    //     else
+    //         return 6;
+    // }
+
     private int nb_candidates(int depth)
     {
         if (depth == Game.max_depth)
             return 8;
+            //return 8;
+        else if (depth == Game.max_depth - 1)
+            return 6;
         else
             return 6;
     }
@@ -405,7 +419,7 @@ public class Candidat
     {
         int ret;
         //int max_near;
-        this.dp = depth;
+        //this.dp = depth;
         this.turn = turn;
         // System.out.println("==================");
         // display_map(map);
@@ -656,57 +670,57 @@ public class Candidat
         //cmap[x][y] = 0;
     }
 
-    private void vanish_vanish_lst()
-    {
-        int len;
-        int idx;
+    // private void vanish_vanish_lst()
+    // {
+    //     int len;
+    //     int idx;
 
-        len = vanish_lst.size();
-        if (len != 0)
-        {
-            for (int i = len-1 ; i != -1 ; i--)
-            {
-                idx = vanish_lst.get(i);
-                this.lst.remove(idx);
-            }
-        }
-        vanish_lst.clear();
-    }
+    //     len = vanish_lst.size();
+    //     if (len != 0)
+    //     {
+    //         for (int i = len-1 ; i != -1 ; i--)
+    //         {
+    //             idx = vanish_lst.get(i);
+    //             this.lst.remove(idx);
+    //         }
+    //     }
+    //     vanish_lst.clear();
+    // }
 
-    public void remove(int [][] map, Candidat.coord move)
-    {
-        int len;
-        coord c;
+    // public void remove(int [][] map, Candidat.coord move)
+    // {
+    //     int len;
+    //     coord c;
 
-        len = lst.size();
-        // if (move.x == 11 && move.y == 11)
-        // {
-        //     System.out.println("HEEEEEEEEEEERE");
-        //     display_map(map);
-        //     display_candidat(map);
-        // }
-        for (int i = 0 ; i < len ; i++)
-        {
-            c = this.lst.get(i);
-            if (!near(c.x, c.y))
-            {
-                //System.out.printf("index %d removed\n", i);
-                //cmap[c.x][c.y]=0;
-                vanish_lst.add(i);
-            }
-        }
-        vanish_vanish_lst();
+    //     len = lst.size();
+    //     // if (move.x == 11 && move.y == 11)
+    //     // {
+    //     //     System.out.println("HEEEEEEEEEEERE");
+    //     //     display_map(map);
+    //     //     display_candidat(map);
+    //     // }
+    //     for (int i = 0 ; i < len ; i++)
+    //     {
+    //         c = this.lst.get(i);
+    //         if (!near(c.x, c.y))
+    //         {
+    //             //System.out.printf("index %d removed\n", i);
+    //             //cmap[c.x][c.y]=0;
+    //             vanish_lst.add(i);
+    //         }
+    //     }
+    //     vanish_vanish_lst();
 
-        this.lst.add(new coord(move.x, move.y));
-        //cmap[move.x][move.y]=3;
-        // System.out.printf("after remove %d %d\n", move.x,move.y);
-        // display_candidat(map);
-        // System.out.println();
-        // if (move.x == 11 && move.y ==11)
-        // {
-        //     System.exit(0);
-        // }
-    }
+    //     this.lst.add(new coord(move.x, move.y));
+    //     //cmap[move.x][move.y]=3;
+    //     // System.out.printf("after remove %d %d\n", move.x,move.y);
+    //     // display_candidat(map);
+    //     // System.out.println();
+    //     // if (move.x == 11 && move.y ==11)
+    //     // {
+    //     //     System.exit(0);
+    //     // }
+    // }
 
     public void display_candidat(int [][] map)
     {

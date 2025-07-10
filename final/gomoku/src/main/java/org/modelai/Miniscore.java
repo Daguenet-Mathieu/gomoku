@@ -25,6 +25,7 @@ public class Miniscore {
     int [] bpoint;
 
     boolean victory;
+    boolean lastcap;
 
     ArrayList<Blocker> blocklist = new ArrayList<Blocker>();
 
@@ -136,7 +137,7 @@ public class Miniscore {
         return false;
     }
 
-    private void remp_case(int x, int y, int val, int sig)
+    public void remp_case(int x, int y, int val, int sig)
     {
         //System.out.printf("removing case at %d %d val %d\n", x, y, val);
         if (x >=0 && x < 19 && y >=0 && y <19)
@@ -1713,6 +1714,25 @@ public class Miniscore {
     //             System.exit(0);
     //     }
     // }
+
+    void first_capt(int len, int x, int y)
+    {
+        //System.out.printf("Entering %d %d %d", len, x, y);
+        if (len == 1)
+        {
+            System.out.printf("Checking fist cap %d %d\n", x, y);
+            if (iscapt(x, y) != 0)
+            {   
+                System.out.println("it is");
+                lastcap = true;
+            }
+            else
+            {
+                System.out.println("it is not");
+                lastcap = false;
+            }
+        }
+    }
 
     private int iscapt(int x, int y)
     {

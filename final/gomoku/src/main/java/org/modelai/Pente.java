@@ -226,8 +226,10 @@ public class Pente extends MinMax {
 
         this.move = c;
         remove_captured(c.x, c.y, player);
-        this.candidat.save(c);
+        candidat.save(c);
+        scsimul.first_capt(this.len, c.x, c.y);
         scsimul.analyse_move(c.x, c.y, player);
+
 
         // if (nbmove == 2 && (pos_counter >=918 && pos_counter <= 920))
         // {
@@ -391,8 +393,6 @@ public class Pente extends MinMax {
     // }
 
 
-    
-
     // invert value
     public int prisonpnt(int player)
     {
@@ -406,10 +406,15 @@ public class Pente extends MinMax {
     public int potentialpnt(int player)
     {
        // System.out.printf("potentiel added %d %d\n", MinMax.scsimul.capt[0], MinMax.scsimul.capt[1]);
+       int sup = 0;
+
+        if (scsimul.lastcap)
+            sup = 0;
+        
         if (player == 1)
-            return (MinMax.scsimul.capt[0] - MinMax.scsimul.capt[1] ) * 6;
+            return (MinMax.scsimul.capt[0] - MinMax.scsimul.capt[1] ) * 6 + sup;
         else
-            return (MinMax.scsimul.capt[1] - MinMax.scsimul.capt[0] ) * 6;
+            return (MinMax.scsimul.capt[1] - MinMax.scsimul.capt[0] ) * 6 + sup;
     }
 
     public int blockedpnt(int player)
@@ -439,7 +444,7 @@ public class Pente extends MinMax {
         //nb_candidates = candidat.old_load(depth, turn);s
         scsimul.cur_turn = turn;
 
-
+        //MinMax.display_Map();
         
         // if (depth == Game.max_depth && forced_capture.size() != 0)
         // {
@@ -456,13 +461,9 @@ public class Pente extends MinMax {
         //     forced_capture.clear();
 
         //if (depth == Game.max_depth && forced_capture.size() !=0)
-        if (false)
-        {
-            nb_candidates = candidat.forced_candidate(forced_capture);
-            forced_capture.clear(); //maybe not useful
-        }
-        else
-            nb_candidates = candidat.old_load(depth, turn);
+        nb_candidates = candidat.old_load(depth, turn);
+
+
 
 
         //display_map();
@@ -505,6 +506,8 @@ public class Pente extends MinMax {
             //     display_map();
             //     scsimul.display();
             // }
+            //MinMax.display_Map();
+            //System.exit(0);
             res = eval(player, len, turn) + prisonpnt(player) + potentialpnt(player) + blockedpnt(player);
             //debugstr();
             // if (res > 1000)
