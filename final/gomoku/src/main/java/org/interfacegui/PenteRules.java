@@ -24,6 +24,12 @@ public class PenteRules implements Rules {
 
 
     @Override
+    public boolean hasPass(){
+        return false;
+    }
+
+
+    @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
         // Utilisation de la méthode par défaut pour vérifier si la case est vide
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1))) {
@@ -98,6 +104,7 @@ public class PenteRules implements Rules {
             {
                 // System.out.println("winner found!");
                 winner = (color == 1) ? 2 : 1;
+                gameStatus = Rules.GameMode.ENDGAME;
                 return true;
             }
             else

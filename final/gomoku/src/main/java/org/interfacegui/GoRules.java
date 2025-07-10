@@ -16,6 +16,30 @@ public class GoRules implements Rules {
     int boardSize = 19;
     ArrayList<Point> whitePrisonnerList = new ArrayList<Point>();
     ArrayList<Point> blackPrisonnerList = new ArrayList<Point>();
+    int whiteScore = 0;
+    int blackScore = 0;
+    int tmpBlackPrisonners = 0;
+    int tmpWhitePrisonners = 0;
+
+    public int getBlackScore(){
+        System.out.println(prisonners_nbr[0] + " " + tmpBlackPrisonners + " " + blackPrisonnerList.size());
+        blackScore = prisonners_nbr[0] + tmpBlackPrisonners + blackPrisonnerList.size();
+        System.out.println("black score == " + blackScore);
+        return blackScore;
+    }
+
+    public int getWhiteScore(){
+        System.out.println(prisonners_nbr[1] + " " + tmpWhitePrisonners + " " + whitePrisonnerList.size());
+        whiteScore = prisonners_nbr[1] + tmpWhitePrisonners + whitePrisonnerList.size();
+        System.out.println("white score == " + whiteScore);
+        return whiteScore;
+    }
+
+
+    @Override
+    public boolean hasPass(){
+        return true;
+    }
 
     public ArrayList<Point> getDeadStones(){
         return deadStones;
@@ -39,14 +63,17 @@ public class GoRules implements Rules {
 
     public void removeMapPrisnners(Map map){
         // remettre les tmp prisniers a 0
+        tmpBlackPrisonners = 0;
+        tmpWhitePrisonners = 0;
+        map.printMap();
         for (int i = 0; i < get_board_size(); i++){
             for (int j = 0; j < get_board_size(); j++){
                 if (map.get_map()[i][j] == 3){
-                    //set dans les prisonniers noir
+                    tmpWhitePrisonners += 1;
                     map.get_map()[i][j] = 0;
                 }
                 else if (map.get_map()[i][j] == 4){
-                    //set dans les prisonniers blanc
+                    tmpBlackPrisonners += 1;
                     map.get_map()[i][j] = 0;
                 }
 
@@ -60,6 +87,7 @@ public class GoRules implements Rules {
         int right = -1;
         int top = -1;
         int down = -1;
+        boolean err = false;
         System.out.println("ma list == " + list);
         for (Point p : list){
             if (p.x - 1 >= 0 && p.x - 1 < get_board_size() && p.y >= 0 && p.y < get_board_size())
@@ -71,29 +99,34 @@ public class GoRules implements Rules {
             if (p.x - 1 >= 0 && p.x < get_board_size() && p.y + 1 >= 0 && p.y + 1 < get_board_size())
                down = map.get_map()[p.y + 1][p.x];
             System.out.println("left == " + left + " right " + right + " top " + top + " down " + down + " curret color " + currentColor);
-            if (left == 1 || left == 2)
+            if (left == 1 || left == 2)//tab[4] + loop
             {
                 if (currentColor != -1 && currentColor != left)
-                    return ;
+                    err = true;
                 currentColor = left;
             }
-            else if (right == 1 || right == 2)
+            if (right == 1 || right == 2)
             {
                 if (currentColor != -1 && currentColor != right)
-                    return ;
+                    err = true;
                 currentColor = right;
             }
-            else if (top == 1 || top == 2)
+            if (top == 1 || top == 2)
             {
                 if (currentColor != -1 && currentColor != top)
-                    return ;
+                    err = true;
                 currentColor = top;
             }
-            else if (down == 1 || down == 2)
+            if (down == 1 || down == 2)
             {
                 if (currentColor != -1 && currentColor != down)
-                    return ;
+                    err = true;
                 currentColor = down;
+            }
+            if (err == true)
+            {
+                list.clear();
+                return ;
             }
         }
         System.out.println("current color == " + currentColor);
@@ -109,15 +142,20 @@ public class GoRules implements Rules {
         removeMapPrisnners(tmp);
         whitePrisonnerList.clear();
         blackPrisonnerList.clear();
+        tmp.printMap();
         for (int i = 0; i < get_board_size(); i++){
             for (int j = 0; j < get_board_size(); j++){
+                tmpList.clear();
+                System.out.println("y == " + i + " x == " + j + "val == " + tmp.get_map()[i][j]);
                 if (tmp.get_map()[i][j] == 0){
-                    floodFill(new Point(i, j), tmp.get_map(), 0, tmpList, 7);
+                    floodFill(new Point(j, i), tmp.get_map(), 0, tmpList, 7);
                     addPrisonnersToList(tmpList, tmp);
                     tmpList.clear();
                 }
             }
         }
+        System.out.println();
+        tmp.printMap();
     }
 
     public boolean pass(){
@@ -139,6 +177,7 @@ public class GoRules implements Rules {
                 return false;
             case COUNTING:
                 System.out.println("Mode : partie fnie");
+                gameStatus = Rules.GameMode.ENDGAME;
                 return false;
             default:
                 return true;
@@ -331,16 +370,21 @@ public class GoRules implements Rules {
 
     private void floodFill(Point p, int[][] map, int color, ArrayList<Point> list, int value){//tableau de couleur pour le comptage?
         // printMap(map);
-        // System.out.println("dans floodfill color == " + color + " case checked color == " + map[p.y][p.x]);
+        // System.out.println("p.x == " + p.x + " p.y == " + p.y + " color == " + color + " test 1 " + (p.x < 0) + " test2 " + (p.y < 0) + " test3 " + (p.x >= get_board_size()) + " test4 " + (p.x >= get_board_size()));
         if (p.x < 0 || p.y < 0 || p.x >= get_board_size() || p.y >= get_board_size() || map[p.y][p.x] != color)
         {
             return ;
         }
+        // System.out.println("dans floodfill color == " + color + " case checked color == " + map[p.y][p.x] + " egal? " + (color == map[p.y][p.x]) + " value == " + value);
         if (map[p.y][p.x] == color)
         {
+            // System.out.println("on dans le floodfill assignement");
             list.add(new Point(p.x, p.y));
             map[p.y][p.x] = value;
+            // System.out.println("dans floodfill color == " + color + " case checked color == " + map[p.y][p.x] + " value == " + value);
         }
+        else
+            return;
         floodFill(new Point(p.x + 1, p.y), map, color, list, value);
         floodFill(new Point(p.x - 1, p.y), map, color, list, value);
         floodFill(new Point(p.x, p.y + 1), map, color, list, value);

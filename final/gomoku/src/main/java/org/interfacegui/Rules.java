@@ -27,6 +27,7 @@ public interface Rules {
     int getWinner();
     void setWinner(int w);
     boolean hasIa();
+    boolean hasPass();
     int get_board_size();
     GameMode getGameMode();
     ArrayList<Point> verticalWin = new ArrayList<Point>();
@@ -120,7 +121,6 @@ public interface Rules {
         //check avant
         checkCaptures(coord, map, 0, -1, captured);
         checkCaptures(coord, map, 0, 1, captured);
-
         //chack apres
     }
     default void diagonalLeftCaptures(Point coord, Map map, ArrayList<Point> captured){

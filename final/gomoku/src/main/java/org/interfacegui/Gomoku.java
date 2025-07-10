@@ -170,15 +170,15 @@ public class Gomoku
     }
 
     void setCandidats(ArrayList<Candidat.coord> candidats, float[] values) {
-        System.err.println("ici on set les candidats!!!!!!!!????????????!!!!!!!!!!!!!");
+        // System.err.println("ici on set les candidats!!!!!!!!????????????!!!!!!!!!!!!!");
         if (rule.hasIa() == false || candidats == null || values == null || game.val == null) return;
 
         candidatsList = new ArrayList<>();
         bestMoveScore = game.val;
-        System.err.println("candidats = " + candidats.size());
-        System.err.println("values = " + values.length);
-        System.err.println("best == " + game.m.best.y + " " + game.m.best.y );
-        System.err.println("move == " + game.m.move.y + " " + game.m.move.y );
+        // System.err.println("candidats = " + candidats.size());
+        // System.err.println("values = " + values.length);
+        // System.err.println("best == " + game.m.best.y + " " + game.m.best.y );
+        // System.err.println("move == " + game.m.move.y + " " + game.m.move.y );
         for (int i = 0; i < candidats.size(); i++){
             System.err.println("candidat[" + i + "] = " + candidats.get(i).y + " " + candidats.get(i).x);
         }
@@ -192,7 +192,6 @@ public class Gomoku
         }
         _map.get(map_index).setCandidatsList(candidatsList);
     }
-
 
     void showCandidats() {
         if (candidatsList == null)
@@ -209,6 +208,10 @@ public class Gomoku
         map_index = 0;
         // init_rules(_game_infos.get_rules());
         init_rules(_game_infos.get_rules(), _game_infos.get_board_size());
+        if (rule.hasPass() == false){
+            gameInfos.getPassButton().setVisible(false);
+            gameInfos.getPassButton().setManaged(false);
+        }
         goban.updateFromMap(_map.get(_map.size() - 1));
         gameInfos.clear();
         gameInfos.reset_infos(_game_infos);
@@ -223,7 +226,6 @@ public class Gomoku
         gameInfos.set_black_prisonners("0");
         gameInfos.set_white_prisonners("0");
         ia_playing = false;
-
     }
 
     public void createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
@@ -233,7 +235,6 @@ public class Gomoku
         if (rule.hasIa() == true)
         {
             try {
-            //System.out.println("coucou curent turn == " + player_turn + " current decrement == " + current_decrement );
                 if (player_turn == 0 && _game_infos.get_black_player_type() == 1){//faire une fct
                     if (ia_playing == false){
                             executor = Executors.newSingleThreadExecutor();
@@ -307,7 +308,6 @@ public class Gomoku
         // }
         // count_time();
         });
-
         gameLoop.getKeyFrames().add(keyFrame);
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
@@ -316,7 +316,7 @@ public class Gomoku
         // delay.play();
         gameLoop.play();
         //return gameLoop;
-    }   
+    }
 
     private void init_rules(String rules_type, int boardSize){
         if (rules_type == "Gomoku")
@@ -331,7 +331,8 @@ public class Gomoku
     }
 
     private void playMove(Point point){
-        if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map))
+        // System.out.println("dans print move coord : x == " + point.x + " y == " + point.y);
+        if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map) || rule.getGameMode() == Rules.GameMode.ENDGAME)
             return ;
         // if ()//!PLAYING
         if (rule.getGameMode() == Rules.GameMode.DEATH_MARKING){
@@ -407,7 +408,6 @@ public class Gomoku
         if (points != null && points.size() > 0){
             display_nb_prisonners();
         }
-
         _map.get((_map.size()-1)).set_prisonners(points);
         _map.get((_map.size()-1)).set_color(player_turn);
 
@@ -622,24 +622,58 @@ public class Gomoku
             forbiddenVisibility = forbiddenVisibility == false;
         });
         
+            // _end_popin.setVisible(true);
+            // _end_popin.setManaged(true);
+            // game_end = true;
+            // ia_playing = false;
+            // gameLoop.stop();
+            // System.out.println("winner == " + winner);
+            // _winner = winner - 1;
+            // String res = _winner == 0 ? "black" : "white";
+            // _end_text.setText(res + " win");
+
+
         gameInfos.getPassButton().setOnAction(event -> {
-            System.out.println("player tur == " + player_turn);
-            if (((GoRules)rule).pass())
+            //System.out.println("player tur == " + player_turn);
+            GoRules r = (GoRules)rule;
+            String res;
+            if (r.pass())
                 updatePlayerTurn();
+            if (r.getGameMode() == Rules.GameMode.ENDGAME){
+                int blackScore = r.getBlackScore();
+                int whiteScore = r.getWhiteScore();
+                if (whiteScore > blackScore)
+                    res = "white win";
+                else if (whiteScore < blackScore)
+                    res = "black win";
+                else
+                    res = "jigo";
+                _end_text.setText(res);
+                game_end = true;
+                gameLoop.stop();
+                _end_popin.setVisible(true);
+                _end_popin.setManaged(true);
+                return ;
+            }
             Map newMap = new Map(_map.get(_map.size() - 1));
             _map.add(newMap);
             map_index++;
-            System.out.println("player tur == " + player_turn);
+            // System.out.p//rintln("player tur == " + player_turn);
             if (rule.getGameMode() == Rules.GameMode.COUNTING){
                 ((GoRules)rule).init_prisonners(_map.get(_map.size() - 1));
                 ArrayList<Point> tmp = ((GoRules)rule).getWhitePrisonnersList();
-                System.out.println("white prisonners == " + tmp);
+                //System.out//.println("white prisonners == " + tmp);
                 for (Point p : tmp)
                     goban.modify_score(p, Color.WHITE);
                 tmp = ((GoRules)rule).getBlackPrisonnersList();
-                System.out.println("black prisonners == " + tmp);
+                // System.out.println("black prisonners == " + tmp);
                 for (Point p : tmp)
                     goban.modify_score(p, Color.BLACK);
+                gameInfos.setBlackResults("black res: " + r.getBlackScore());
+                gameInfos.setWhiteResults("white res: " + r.getWhiteScore());
+                gameInfos.getResultsBox().setVisible(true);
+                gameInfos.getResultsBox().setManaged(true);
+                return ;
             }
         });
 

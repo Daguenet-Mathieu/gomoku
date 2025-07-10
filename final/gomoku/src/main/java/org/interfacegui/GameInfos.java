@@ -82,6 +82,10 @@ public class GameInfos{
         private Button _candidats;
         private Button _hint;
         private Button _forbidden = new Button("forbiddens");
+        private Label _whiteResults = new Label();
+        private Label _blackResults = new Label();
+        private VBox _results = new VBox();
+
         // private int    board_size = 19;
 
         // public void setBoardSize(int newValue)
@@ -94,6 +98,17 @@ public class GameInfos{
         //     return board_size;
         // }
 
+        public void setWhiteResults(String res){
+            _whiteResults.setText(res);
+        }
+
+        public void setBlackResults(String res){
+            _blackResults.setText(res);
+        }
+
+        public VBox getResultsBox(){
+            return _results;
+        }
 
         private HBox _button_prev_next = new HBox();
 
@@ -313,9 +328,12 @@ public class GameInfos{
 
             // Ajouter le bouton au Pane
             // _prev.setPadding(new Insets(0,0,0,0));
+            _results.getChildren().addAll(_whiteResults, _blackResults);
+            _results.setVisible(false);
+            _results.setManaged(false);
             _button_prev_next.getChildren().addAll(_prev, _next);
             _game_infos.getChildren().addAll(_last_move_label, _current_move_label, _candidats, _hint, _forbidden, _resign, _undo);
-            _game_infos.getChildren().addAll(_button_prev_next, _pass, _export);
+            _game_infos.getChildren().addAll(_button_prev_next, _pass, _results, _export);
 
         }
 

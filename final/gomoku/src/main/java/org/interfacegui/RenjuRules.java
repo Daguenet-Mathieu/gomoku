@@ -19,6 +19,11 @@ public class RenjuRules implements Rules {
             boardSize = 15;
     }
 
+    @Override
+    public boolean hasPass(){
+        return false;
+    }
+
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
@@ -37,6 +42,7 @@ public class RenjuRules implements Rules {
     public boolean endGame(Map map, Point point) {
         // Implémentation d'une logique de fin de partie pour le Gomoku.
         // On pourrait par exemple vérifier si un joueur a aligné 5 pierres consécutives.
+                // gameStatus = Rules.GameMode.ENDGAME;
         
         // Pour ce modèle minimaliste, on renvoie simplement false (pas de fin de jeu).
         return false;

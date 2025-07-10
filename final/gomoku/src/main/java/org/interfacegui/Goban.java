@@ -47,6 +47,7 @@ public class Goban{
     }
 
     private void init_hoshi(){}
+
     private void init_lines(){
         for (int i = 0; i < _nb_line; i++)
         {
@@ -248,7 +249,6 @@ public class Goban{
                 _score[i][j] = r;
             }
         }
-        
         System.out.println("Rectangles initialisés avec positions corrigées");
     }
 

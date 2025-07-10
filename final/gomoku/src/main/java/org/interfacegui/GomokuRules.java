@@ -9,9 +9,15 @@ public class GomokuRules implements Rules {
     int boardSize = 19;
 
     @Override
+    public boolean hasPass(){
+        return false;
+    }
+
+    @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
         // Utilisation de la méthode par défaut pour vérifier si la case est vide
-        if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1))) {
+        if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1)))
+        {
             return false;
         }
         
@@ -32,8 +38,10 @@ public class GomokuRules implements Rules {
 
     @Override
     public boolean endGame(Map map, Point point) {
-        if (check_five(map, point))
+        if (check_five(map, point)){
+            gameStatus = Rules.GameMode.ENDGAME;
             return true;
+        }
         return false;
     }
     
