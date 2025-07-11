@@ -20,6 +20,8 @@ public class MinMax
     static int nbmove;
     static int [] [] ddir = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};
     static public ArrayList<Candidat.coord> forced_capture =  new ArrayList<Candidat.coord>();
+    static public ArrayList<Candidat.coord> capwin =  new ArrayList<Candidat.coord>();
+
 
     //public int [] [] imap = new int[19][19];
 
@@ -548,6 +550,27 @@ public class MinMax
         return false;
     }
 
+    private void adding_capwinsim(int x, int y, int val)
+    {
+        Candidat.coord c;
+
+        for (int i = 0 ; i < capwin.size() ; i++) //know about iterator
+        {
+            c = capwin.get(i);
+
+            if (c.x == x && c.y == y)
+            {
+                MinMax.map[x][y] = val;
+                //System.out.printf("Reriting %d %d %d\n", x, y, val);
+                return ;
+            } 
+        }
+        capwin.add(new Candidat.coord(x, y, MinMax.map[x][y]));
+
+        //System.out.printf("Writing %d %d %d (%d)\n", x, y, val, MinMax.map[x][y]);
+        MinMax.map[x][y] = val;
+    }
+
     protected boolean capture_add_forced(int x, int y, int dx, int dy, int p, int o)
     {
         // System.out.printf("Checking [%d %d] is %d : %b\n", x-dx, y-dy, o, MinMax.map[x-dx][y-dy] == o);
@@ -562,12 +585,22 @@ public class MinMax
                 if (MinMax.map[x-2*dx][y-2*dy] == o && MinMax.map[x + dx][y + dy] == 0)
                 {
                     forced_capture.add(new Candidat.coord(x +dx, y+dy));
+
+                    adding_capwinsim(x-dx, y-dy, 0);
+                    adding_capwinsim(x+dx, y+dy, o);
+                    return  true;
+    
                     // if (x == 11 && y == 11)
                     //     System.out.printf("adding focing move : %d %d\n", x+ dx, y+dy); 
                 }
                 else if (MinMax.map[x-2*dx][y-2*dy] == 0 && MinMax.map[x + dx][y + dy] == o)
                 {
                     forced_capture.add(new Candidat.coord(x-2*dx, y-2*dy));
+
+                    adding_capwinsim(x-dx, y-dy, 0);
+                    adding_capwinsim(x-2*dx, y-2*dy, o);
+                    return true;
+
                     // if (x == 11 && y == 11)
                     //     System.out.printf("adding focing move : %d %d\n", x-2*dx, y-2*dy);
                 }
@@ -577,68 +610,110 @@ public class MinMax
                 if (MinMax.map[x+2*dx][y+2*dy] == o && MinMax.map[x - dx][y - dy] == 0)
                 {
                     forced_capture.add(new Candidat.coord(x-dx, y-dy));
+
+                    adding_capwinsim(x+dx, y+dy, 0);
+                    adding_capwinsim(x-dx, y-dy, o);
+                    return true;
+        
                     // if (x == 11 && y == 11)
                     //     System.out.printf("adding focing move : %d %d\n", x-dx, y-dy); 
                 }
                 else if (MinMax.map[x+2*dx][y+2*dy] == 0 && MinMax.map[x - dx][y - dy] == o)
                 {
                     forced_capture.add(new Candidat.coord(x+2*dx, y+2*dy));
+
+                    adding_capwinsim(x+dx, y+dy, 0);
+                    adding_capwinsim(x+2*dx, y+2*dy, o);
+                    return true;
+
                     // if (x == 11 && y == 11)
                     //     System.out.printf("adding focing move : %d %d\n", x+2*dx, y+2*dy);
                 }
-
             }
         }
 
         // if (x == 11 && y == 11)
         //     System.out.printf("Capture add forced on %d %d found %d\n ", x, y, candidat.forced_capture.size());
 
-        return true;
+        return false;
 
     }
 
     private boolean complete_check_dir(int x, int y, int dx, int dy, int player)
     {
-        int count;
+        int countmax = 0;
+        int countmin = 0;
         int opponant = player == 1 ? 2 : 1;
 
-        count = 0;
+        //count = 0;
+
         if (forced_capture.size() !=0)
             forced_capture.clear();
 
         for (int i=dx , j = dy; in_goban(x+i, y+j) && map[x + i][y + j] == player ; i+=dx, j+=dy)
-            count +=1;
+            countmax +=1;
 
         for (int i = -dx, j = -dy ; in_goban(x + i, y + j) && map[x + i][y + j] == player ; i-=dx, j-=dy)
-            count +=1;
+            countmin +=1;
 
 
 
-        if (count >= 4)
+        if (countmax + countmin >= 4)
         {
             MinMax.map[x][y] = player;
 
-            for (int i=0 , j = 0; in_goban(x+i, y+j) && map[x + i][y + j] == player ; i+=dx, j+=dy)
+            for (int i = -countmin ; i <= countmax ; i++)
             {
-                //System.out.printf("Checking if %d %d is capturable(+)\n", x+i, y+j);
+                for (int k = 0 ; k < 4 ; k++)
+                {
+                    if (capture_add_forced(x + i*dx, y + i*dy, ddir[k][0], ddir[k][1], player, opponant))
+                    {
+                        k = 0; i = -countmin;
+                    }
+                }
 
-                for (int k = 0 ; k < 4 ; k++)
-                {
-                    capture_add_forced(x + i, y + j, ddir[k][0], ddir[k][1], player, opponant);
-                }
             }
-            for (int i = -dx, j = -dy ; in_goban(x + i, y + j) && map[x + i][y + j] == player ; i-=dx, j-=dy)
-            {
-                //System.out.printf("Checking if %d %d is capturable(-)\n", x+i, y+j);
-                for (int k = 0 ; k < 4 ; k++)
-                {
-                    capture_add_forced(x + i, y + j, ddir[k][0], ddir[k][1], player, opponant);
-                }
-            }
+
+            // for (int i=0 , j = 0; in_goban(x+i, y+j) && map[x + i][y + j] == player ; i+=dx, j+=dy)
+            // {
+            //     //System.out.printf("Checking if %d %d is capturable(+)\n", x+i, y+j);
+
+            //     for (int k = 0 ; k < 4 ; k++)
+            //     {
+            //         if (capture_add_forced(x + i, y + j, ddir[k][0], ddir[k][1], player, opponant))
+            //         {
+            //             k = 0; i = 0; j = 0;
+            //         }
+            //     }
+            // }
+            // for (int i = -dx, j = -dy ; in_goban(x + i, y + j) && map[x + i][y + j] == player ; i-=dx, j-=dy)
+            // {
+            //     //System.out.printf("Checking if %d %d is capturable(-)\n", x+i, y+j);
+            //     for (int k = 0 ; k < 4 ; k++)
+            //     {
+            //         if (capture_add_forced(x + i, y + j, ddir[k][0], ddir[k][1], player, opponant))
+            //         {
+            //             k = 0; i = 0; j = 0;
+            //         }
+            //     }
+            // }
             MinMax.map[x][y] = 0;
+            restore_capwinsim();
             return true;
         }
         return false;
+    }
+
+    private void restore_capwinsim()
+    {
+        Candidat.coord c;
+        for (int i = 0 ; i < capwin.size() ; i++)
+        {
+            c = capwin.get(i);
+            MinMax.map[c.x][c.y] = (int)c.st;
+            //System.out.printf("restore %d %d of %f\n", c.x, c.y, c.st);
+        }
+        capwin.clear();
     }
 
     protected boolean complete_check_win(int x, int y, int player)

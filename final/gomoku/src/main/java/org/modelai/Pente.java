@@ -149,7 +149,7 @@ public class Pente extends MinMax {
     public float value_victory_smarter(int player, int turn, int len, int nb, boolean print) //not so smart
     {
         pos_counter++;
-        int res;
+        float res;
 
         // if (pos_counter % 1000 == 7)
         // {        
@@ -166,12 +166,16 @@ public class Pente extends MinMax {
                 victory_capture = false;
                 return 10000 - len * 100;
             }
+
             if (prisoners[(turn + 1) %2] + (nb * 2) >= 10)
             {
                 res =  -10000 + ((len + nb) * 100);
+
                 //return -10000 + ((len + nb) * 100);
             }
-            res = 10000 - ((len + nb) * 100);
+            else
+                res = 10000 - ((len + nb) * 100);
+
             //return 10000 - ((len + nb) * 100);
 
         }
@@ -187,13 +191,14 @@ public class Pente extends MinMax {
                 res = 10000 - ((len + nb) * 100);
                 //return 10000 - ((len + nb) * 100);
             }
-            res = -10000 + ((len + nb) * 100);
+            else
+                res = -10000 + ((len + nb) * 100);
             //return -10000 + ((len + nb) * 100);
         }
 
         if (print)
         {
-            System.out.printf("Victory ! nb forced capture %d, vicotry capture ? %b, val %d\n", nb, victory_capture, res);
+            System.out.printf("Victory ! nb forced capture %d, vicotry capture ? %b, val %f\n", nb, victory_capture, res);
             System.out.printf("prisoners %d %d\n", prisoners[0], prisoners[1]);
         }
 
@@ -537,10 +542,10 @@ public class Pente extends MinMax {
                 {
 
                     //System.out.printf("after play %d\n", m.nb_forced_capture());
-                    // if (candidat.lst.get(i).x == 5 && candidat.lst.get(i).y == 9)
+                    //  if (candidat.lst.get(i).x == 9 && candidat.lst.get(i).y == 6)
                     //     res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), true) + supeval(player, len, turn);
                     // else
-                        res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), false) + supeval(player, len, turn);
+                    res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), false) + supeval(player, len, turn);
                     //debugstr();
                     // if (res == 12000 || res == -12000)
                     // {
@@ -575,10 +580,10 @@ public class Pente extends MinMax {
             {
                 if (m.play(candidat.lst.get(i),turn))
                 {
-                    // if (candidat.lst.get(i).x == 5 && candidat.lst.get(i).y == 9)
+                    // if (candidat.lst.get(i).x == 9 && candidat.lst.get(i).y == 6)
                     //     res = value_victory_smarter(player, turn, len, forced_capture.size(), true) + supeval(player, len, turn);
                     // else
-                        res = value_victory_smarter(player, turn, len, forced_capture.size(), false) + supeval(player, len, turn);
+                    res = value_victory_smarter(player, turn, len, forced_capture.size(), false) + supeval(player, len, turn);
                     //debugstr();
                     // if (res == 12000 || res == -12000)
                     // {

@@ -20,7 +20,9 @@ public class Game {
     public long time;
     public String rules;
     public ArrayList<Double> timelst;
-    static public int max_depth;
+    static public int max_depth = 10;
+    static public int max_can = 7;
+    static public int min_can = 6;
 
     public SquareState[][] map;
     //public int [][] mmap;
@@ -34,8 +36,6 @@ public class Game {
             }
         }
         nb_move = 0;
-        max_depth = 9;
-        //max_depth = 3;
         m = minmax_tree(rules); // gomoku.rules
         m.len = 0;
         candidate = new ArrayList<Group>();

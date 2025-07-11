@@ -407,12 +407,11 @@ public class Candidat
     private int nb_candidates(int depth)
     {
         if (depth == Game.max_depth)
-            return 8;
-            //return 8;
+            return Game.max_can;
         else if (depth == Game.max_depth - 1)
-            return 6;
+            return Game.min_can;
         else
-            return 6;
+            return Game.min_can;
     }
 
     public int old_load(int depth, int turn) // only used
