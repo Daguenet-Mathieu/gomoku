@@ -216,6 +216,7 @@ public class Gomoku
         gameInfos.clear();
         gameInfos.reset_infos(_game_infos);
         createDelayedGameLoop();
+        goban.remove_score();
         _end_popin.setVisible(false);
         _end_popin.setManaged(false);
         player_turn = 0;
@@ -331,7 +332,7 @@ public class Gomoku
     }
 
     private void playMove(Point point){
-        // System.out.println("dans print move coord : x == " + point.x + " y == " + point.y);
+        System.out.println("dans print move coord : x == " + point.x + " y == " + point.y);
         if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map) || rule.getGameMode() == Rules.GameMode.ENDGAME)
             return ;
         // if ()//!PLAYING
@@ -385,30 +386,33 @@ public class Gomoku
         
         //add 0 si y a des prisonniers
         _map.get(_map.size() -1); //no printmap
-        rule.check_capture(point, _map.get(_map.size() - 1));
+            rule.check_capture(point, _map.get(_map.size() - 1));
 
-        //for point in rules.capturedPoint
-        //    game.remove(point);
-        ArrayList<Point> points = rule.GetCapturedStones(point, _map.get(_map.size() - 1));
-        for (Point p : points) {
-            System.out.println("capture 1 er affichage : " + p);  // Appel automatique à toString()
-            if (rule.hasIa() == true)
-                game.remove(p); // To uppdate Minmax.map
+            //for point in rules.capturedPoint
+            //    game.remove(point);
+        if ((rule instanceof Gomoku) == false)
+        {
+            ArrayList<Point> points = rule.GetCapturedStones(point, _map.get(_map.size() - 1));
+            for (Point p : points) {
+                System.out.println("capture 1 er affichage : " + p);  // Appel automatique à toString()
+                if (rule.hasIa() == true)
+                    game.remove(p); // To uppdate Minmax.map
+            }
+            points = rule.get_prisonners();
+            System.out.println("nbr prisonners : " + points.size());
+            for (Point p : points) {
+                System.out.println("capture 2 em affichage : " + p);  // Appel automatique à toString()
+            }
+            _map.get((_map.size()-1)).remove_prisonners(points);
+            if (player_turn == 0)
+                _map.get((_map.size()-1)).addBlackPrisonners(points.size());
+            else
+                _map.get((_map.size()-1)).addWhitePrisonners(points.size());
+            if (points != null && points.size() > 0){
+                display_nb_prisonners();
+            }
+            _map.get((_map.size()-1)).set_prisonners(points);
         }
-        points = rule.get_prisonners();
-        System.out.println("nbr prisonners : " + points.size());
-        for (Point p : points) {
-            System.out.println("capture 2 em affichage : " + p);  // Appel automatique à toString()
-        }
-        _map.get((_map.size()-1)).remove_prisonners(points);
-        if (player_turn == 0)
-            _map.get((_map.size()-1)).addBlackPrisonners(points.size());
-        else
-            _map.get((_map.size()-1)).addWhitePrisonners(points.size());
-        if (points != null && points.size() > 0){
-            display_nb_prisonners();
-        }
-        _map.get((_map.size()-1)).set_prisonners(points);
         _map.get((_map.size()-1)).set_color(player_turn);
 
         if (rule.endGame(_map.get(_map.size() - 1), point)){
@@ -446,7 +450,9 @@ public class Gomoku
     // }
 
     private void updatePlayerTurn(){
+        System.out.println("update player turn fct : " + player_turn);
         player_turn ^= 1;
+        System.out.println("update player turn fct : " + player_turn);
     }
 
     private void display_nb_prisonners(){
@@ -458,7 +464,10 @@ public class Gomoku
     private void undoMove(){
         System.out.println("map sie == " + _map.size() + " map index == " + map_index);
         if (_map.size() <= 1 || map_index < _map.size() - 1)
+        {
+            System.out.println("undo move aucune action");
             return ;
+        }
         if (_map.get(_map.size() - 1).get_prisonners() != null){
             for (Point p : _map.get(_map.size() - 1).get_prisonners()){
                 System.out.println("les prisonniers qui vont etre anules sont : ");
@@ -473,8 +482,11 @@ public class Gomoku
         _map.remove(_map.size() - 1);
         goban.updateFromMap(_map.get(_map.size() - 1));
         // if (player_turn)//CHANGER LE NB PROSONNIERS pour la bonne couleur
-
         player_turn ^= 1;// le get de la regle 
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("update player turn" + player_turn);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        
         rule.set_black_prisonners(_map.get((_map.size()-1)).getBlackPrisonners());
         rule.set_white_prisonners(_map.get((_map.size()-1)).getWhitePrisonners());
         display_nb_prisonners();
@@ -563,6 +575,11 @@ public class Gomoku
         });
 
         gameInfos.getUndoButton().setOnAction(event -> {
+            if (rule instanceof GoRules){
+                if (((GoRules)rule).undo() == false)
+                    return ;
+                goban.remove_score();
+            }
             undoMove();
             if (_game_infos.get_black_player_type() == 1 || _game_infos.get_white_player_type() == 1)
                 undoMove();
@@ -611,6 +628,9 @@ public class Gomoku
             changeHintVisibility(toggleHint);
         });
         gameInfos.getForbiddeButton().setOnAction(event -> {
+            System.out.println("\n\n\n-----------------------------------------------------------------------------------------------");
+            System.out.println("Forbidden button");
+            System.out.println("-----------------------------------------------------------------------------------------------\n\n\n");
             if (ia_playing /*|| game_end || map_index < _map.size() - 1*/)
                 return ;
             // int color = _map.get(map_index).get_color() ^ 1;
@@ -637,8 +657,6 @@ public class Gomoku
             //System.out.println("player tur == " + player_turn);
             GoRules r = (GoRules)rule;
             String res;
-            if (r.pass())
-                updatePlayerTurn();
             if (r.getGameMode() == Rules.GameMode.ENDGAME){
                 int blackScore = r.getBlackScore();
                 int whiteScore = r.getWhiteScore();
@@ -655,10 +673,12 @@ public class Gomoku
                 _end_popin.setManaged(true);
                 return ;
             }
+            if (r.pass())
+                updatePlayerTurn();
             Map newMap = new Map(_map.get(_map.size() - 1));
             _map.add(newMap);
             map_index++;
-            // System.out.p//rintln("player tur == " + player_turn);
+            System.out.println("player tur == " + player_turn);
             if (rule.getGameMode() == Rules.GameMode.COUNTING){
                 ((GoRules)rule).init_prisonners(_map.get(_map.size() - 1));
                 ArrayList<Point> tmp = ((GoRules)rule).getWhitePrisonnersList();
