@@ -241,9 +241,14 @@ public class Game {
         System.out.printf("IA move %d (Turn %d) at %d %d played in %f seconds (%d pos, %d depth) mean : %f\n", nb_move + 1,(nb_move + 1) / 2 + 1, m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter, max_depth + 1,return_mean_time());
         if ((double)time/1000 > 0.6 && return_mean_time() > 0.46)
         {
-            max_depth = 9;
+            Game.max_depth = 9;
+            Game.max_can = 8;
+            Game.min_can = 6;
             System.out.printf("max depth decreesed to %d\n", max_depth + 1);
         }
+        
+        // if ((nb_move + 1) / 2 + 1 == 4)
+        //     System.exit(0);
 
 
         return new Point(m.best.y, m.best.x);
