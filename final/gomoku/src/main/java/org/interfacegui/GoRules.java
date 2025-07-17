@@ -65,7 +65,7 @@ public class GoRules implements Rules {
         // remettre les tmp prisniers a 0
         tmpBlackPrisonners = 0;
         tmpWhitePrisonners = 0;
-        map.printMap();
+        // map.printMap();
         for (int i = 0; i < get_board_size(); i++){
             for (int j = 0; j < get_board_size(); j++){
                 if (map.get_map()[i][j] == 3){
@@ -142,11 +142,11 @@ public class GoRules implements Rules {
         removeMapPrisnners(tmp);
         whitePrisonnerList.clear();
         blackPrisonnerList.clear();
-        tmp.printMap();
+        // tmp.printMap();
         for (int i = 0; i < get_board_size(); i++){
             for (int j = 0; j < get_board_size(); j++){
                 tmpList.clear();
-                System.out.println("y == " + i + " x == " + j + "val == " + tmp.get_map()[i][j]);
+                // System.out.println("y == " + i + " x == " + j + "val == " + tmp.get_map()[i][j]);
                 if (tmp.get_map()[i][j] == 0){
                     floodFill(new Point(j, i), tmp.get_map(), 0, tmpList, 7);
                     addPrisonnersToList(tmpList, tmp);
@@ -154,8 +154,8 @@ public class GoRules implements Rules {
                 }
             }
         }
-        System.out.println();
-        tmp.printMap();
+        // System.out.println();
+        // tmp.printMap();
     }
 
     public boolean pass(){
@@ -174,7 +174,7 @@ public class GoRules implements Rules {
                 gameStatus = Rules.GameMode.COUNTING;
                 // init_prisonners(); appeler dans handler pass
                 System.out.println("Mode : décompte des points");
-                return false;
+                return true;
             case COUNTING:
                 System.out.println("Mode : partie fnie");
                 gameStatus = Rules.GameMode.ENDGAME;
@@ -186,13 +186,33 @@ public class GoRules implements Rules {
         // false le mettre a true si a true changer le mode de jeu is valid changera sa facon de verifier si le coup est valid
     }
 
-    public void undo(){
-        pass = false;
-        if (gameStatus == Rules.GameMode.DEATH_MARKING)
-            gameStatus = Rules.GameMode.PLAYING;
-        else if (gameStatus == Rules.GameMode.COUNTING)
-            gameStatus = Rules.GameMode.DEATH_MARKING;
-        // else if (Rules.game)
+    public boolean undo(){
+        System.out.println("undo : " + gameStatus.toString());
+            switch (gameStatus) {
+            case PLAYING:
+                if (pass == true){
+                    System.out.println("Mode : en cours de jeu");
+                    pass = false;
+                }
+                return true;
+            case DEATH_MARKING:
+                gameStatus = Rules.GameMode.PLAYING;
+                // init_prisonners(); appeler dans handler pass
+                System.out.println("Mode : décompte des points");
+                return true;
+            case COUNTING:
+                System.out.println("Mode : partie fnie");
+                gameStatus = Rules.GameMode.DEATH_MARKING;
+                return true;
+            default:
+                return false;
+        }
+        // pass = false;
+        // if (gameStatus == Rules.GameMode.DEATH_MARKING)
+        //     gameStatus = Rules.GameMode.PLAYING;
+        // else if (gameStatus == Rules.GameMode.COUNTING)
+        //     gameStatus = Rules.GameMode.DEATH_MARKING;
+        // // else if (Rules.game)
     }
 
     @Override
@@ -201,22 +221,24 @@ public class GoRules implements Rules {
     }
 
     private boolean checkForbidden(Point point, ArrayList<Map> map, int index, int color){
+        // System.out.println(" dans check forbidden size == " + map.size());
         Map newMove = new Map(map.get(index));
         newMove.addMove(point, color);
         ArrayList<Point> prisonners = GetCapturedStones(point, newMove);
         newMove.remove_prisonners(prisonners);
+        // System.out.println("move to test : " + point);
+
         for (int i = 0; i <= index; i++) {
             Map m = map.get(i);
-                // System.out.println("ci dessous nouvelle map a test");
-            // newMove.printMap();
+            // System.out.println("ci dessous nouvelle map a test");
+            // // newMove.printMap();
             // System.out.println("ci dessous map a test");
-            // m.printMap();
-            System.out.println("deep equals == " + Arrays.deepEquals(m.get_map(), newMove.get_map()));
+            // // m.printMap();
+            // System.out.println("deep equals == " + Arrays.deepEquals(m.get_map(), newMove.get_map()));
             if (Arrays.deepEquals(m.get_map(), newMove.get_map()) == true)
                 return false;
         }
         return true;
-
     }
 
     boolean checkSuicide(Map map, Point point, int color, int advColor){
@@ -237,6 +259,7 @@ public class GoRules implements Rules {
         if (gameStatus == Rules.GameMode.COUNTING)
             return false;
         System.out.println(gameStatus.name());
+        System.out.println(" dans is valid move size == " + map.size());
         // if (color != null)
         // si tmp est pas vide le coup est invalide
         // lancer le floodfill depuis point? ou plutot appeler getCapturableList (private ArrayList<Point> getCapturableList(Point coord, Map map, int color, int advColor){)
@@ -292,6 +315,7 @@ public class GoRules implements Rules {
     @Override
     public ArrayList<Point> get_forbiden_moves(ArrayList<Map> map, int index, int color){
         forbidden_moves.clear();
+        System.out.println("coucou check forbidden");
         final int advColor = color == 1 ? 2 : 1;
         for (int i = 0; i < get_board_size(); i++){
             for (int j = 0; j < get_board_size(); j++){

@@ -317,9 +317,11 @@ public class Goban{
     //     }
     // }
 
-    public void remove_score(ArrayList<Point> score){
-        for (Point coordinates : score) {
-            _score[coordinates.y][coordinates.x].setVisible(false);
+    public void remove_score(){
+        for (int i = 0; i < _score.length; i++) {
+            for (int j = 0; j < _score[i].length; j++) {
+                _score[i][j].setVisible(false);
+            }
         }
     }
 
