@@ -21,7 +21,7 @@ public class Game {
     public String rules;
     public ArrayList<Double> timelst;
     static public int max_depth = 10;
-    static public int max_can = 7;
+    static public int max_can = 8;
     static public int min_can = 6;
 
     public SquareState[][] map;
@@ -191,6 +191,11 @@ public class Game {
     {
         //Candidat.coord c;
         //m.display_map();
+        // if (nb_move >= 11)
+        // {
+        //     System.out.printf("\n\nNOOOOOOOOW\nNOOOOOOOW\n\n");
+        //     Game.max_depth = 9;
+        // }
         System.out.printf("best move turn %d player %d\n", turn, player);
         //System.exit(0);
         time = System.currentTimeMillis();
@@ -246,7 +251,7 @@ public class Game {
             Game.min_can = 6;
             System.out.printf("max depth decreesed to %d\n", max_depth + 1);
         }
-        
+
         // if ((nb_move + 1) / 2 + 1 == 4)
         //     System.exit(0);
 

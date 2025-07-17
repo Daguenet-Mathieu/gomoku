@@ -185,6 +185,19 @@ public class MinMax
         System.out.println("");
     }
 
+    static public void display_Map(int [][] arg_map)
+    {
+        for (int i = 0 ; i < 19 ; i ++)
+        {
+            for (int j = 0 ; j < 19 ; j++)
+            {
+                System.out.printf("%2d", arg_map[i][j]);
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+    }
+
     private void savemapc()
     {
         for (int i = 0 ; i < 19 ; i++)
@@ -586,9 +599,9 @@ public class MinMax
                 {
                     forced_capture.add(new Candidat.coord(x +dx, y+dy));
 
-                    adding_capwinsim(x-dx, y-dy, 0);
-                    adding_capwinsim(x+dx, y+dy, o);
-                    return  true;
+                    // adding_capwinsim(x-dx, y-dy, 0);
+                    // adding_capwinsim(x+dx, y+dy, o);
+                    // return  true;
     
                     // if (x == 11 && y == 11)
                     //     System.out.printf("adding focing move : %d %d\n", x+ dx, y+dy); 
@@ -597,9 +610,9 @@ public class MinMax
                 {
                     forced_capture.add(new Candidat.coord(x-2*dx, y-2*dy));
 
-                    adding_capwinsim(x-dx, y-dy, 0);
-                    adding_capwinsim(x-2*dx, y-2*dy, o);
-                    return true;
+                    // adding_capwinsim(x-dx, y-dy, 0);
+                    // adding_capwinsim(x-2*dx, y-2*dy, o);
+                    // return true;
 
                     // if (x == 11 && y == 11)
                     //     System.out.printf("adding focing move : %d %d\n", x-2*dx, y-2*dy);
@@ -611,9 +624,9 @@ public class MinMax
                 {
                     forced_capture.add(new Candidat.coord(x-dx, y-dy));
 
-                    adding_capwinsim(x+dx, y+dy, 0);
-                    adding_capwinsim(x-dx, y-dy, o);
-                    return true;
+                    // adding_capwinsim(x+dx, y+dy, 0);
+                    // adding_capwinsim(x-dx, y-dy, o);
+                    // return true;
         
                     // if (x == 11 && y == 11)
                     //     System.out.printf("adding focing move : %d %d\n", x-dx, y-dy); 
@@ -622,9 +635,9 @@ public class MinMax
                 {
                     forced_capture.add(new Candidat.coord(x+2*dx, y+2*dy));
 
-                    adding_capwinsim(x+dx, y+dy, 0);
-                    adding_capwinsim(x+2*dx, y+2*dy, o);
-                    return true;
+                    // adding_capwinsim(x+dx, y+dy, 0);
+                    // adding_capwinsim(x+2*dx, y+2*dy, o);
+                    // return true;
 
                     // if (x == 11 && y == 11)
                     //     System.out.printf("adding focing move : %d %d\n", x+2*dx, y+2*dy);
