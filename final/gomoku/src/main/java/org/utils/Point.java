@@ -21,7 +21,7 @@ public class Point {
 
     @Override
     public String toString() {
-        return "( x: " + x + ", y: " + y + ")";
+        return "( x: " + x + ", y: " + y + ")" + ", val: " + val;
     }
 
     public String colormove() {
@@ -33,6 +33,10 @@ public class Point {
 
     public void set_val(float v){
         val = v;
+    }
+
+    public float get_val(){
+        return val;
     }
 
     public Point()

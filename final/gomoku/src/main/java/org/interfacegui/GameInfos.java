@@ -71,8 +71,8 @@ public class GameInfos{
         private Label white_time_label;
         private Label black_time_label = new Label();
         private Label _last_move_label = new Label("last move time : ");
-        private Label _current_move_label = new Label("move time : ");
-
+        private Label _average_white_label = new Label("move time : ");
+        private Label _average_black_label = new Label("move time : ");
         private Button _resign;
         private Button _undo = new Button("undo");
         private Button _export = new Button("export");
@@ -176,9 +176,14 @@ public class GameInfos{
             _last_move_label.setText("last time : " + formatTime(val));
         }
 
-        public void set_current_move_time(int val){
-            _current_move_label.setText("curr time : " + formatTime(val));
+        public void set_average_white_time(int val){
+            _average_white_label.setText("white avr : " + formatTime(val));
         }
+
+        public void set_average_black_time(int val){
+            _average_black_label.setText("black avr : " + formatTime(val));
+        }
+
 
         public void set_white_prisonners(String str){
             _white_label_prisonners.setText("prisonners : " + str);
@@ -211,7 +216,12 @@ public class GameInfos{
                 fontSizeBinding
             ));
 
-            _current_move_label.fontProperty().bind(Bindings.createObjectBinding(
+            _average_white_label.fontProperty().bind(Bindings.createObjectBinding(
+                () -> new Font("Arial", fontSizeBinding.get()),
+                fontSizeBinding
+            ));
+
+            _average_black_label.fontProperty().bind(Bindings.createObjectBinding(
                 () -> new Font("Arial", fontSizeBinding.get()),
                 fontSizeBinding
             ));
@@ -332,7 +342,7 @@ public class GameInfos{
             _results.setVisible(false);
             _results.setManaged(false);
             _button_prev_next.getChildren().addAll(_prev, _next);
-            _game_infos.getChildren().addAll(_last_move_label, _current_move_label, _candidats, _hint, _forbidden, _resign, _undo);
+            _game_infos.getChildren().addAll(_last_move_label, _average_white_label, _average_black_label,_candidats, _hint, _forbidden, _resign, _undo);
             _game_infos.getChildren().addAll(_button_prev_next, _pass, _results, _export);
 
         }
