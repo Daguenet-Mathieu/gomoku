@@ -21,12 +21,10 @@ public class Pente extends MinMax {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    private class Prison
+    public static class Prison
     {
         public Candidat.coord pos;
         public Candidat.coord warder;
-
-
 
         public Prison(int x, int y, int warx, int wary)
         {
@@ -55,7 +53,7 @@ public class Pente extends MinMax {
         this.candidat = new Candidat(true);
     }
 
-    private void remove(int x, int y, int warx, int wary)
+    static public void remove(int x, int y, int warx, int wary)
     {
         int val = map[x][y];
         int tmp = map[warx][wary];
@@ -86,16 +84,16 @@ public class Pente extends MinMax {
 
     }
 
-    private boolean remove_capture(int x, int y, int dx, int dy, int p, int o)
+    static public boolean remove_capture(int x, int y, int dx, int dy, int p, int o)
     {
-        if (in_goban(x+3*dx, y+3*dy) && map[x + dx][y + dy] == o && map[x + 2 * dx][y + 2 * dy] == o && map[x + 3 * dx][y + 3 * dy] == p)
+        if (IN_goban(x+3*dx, y+3*dy) && map[x + dx][y + dy] == o && map[x + 2 * dx][y + 2 * dy] == o && map[x + 3 * dx][y + 3 * dy] == p)
         {
             remove(x+dx, y+dy, x, y);
             remove(x+2*dx, y+2*dy, x, y);
             return true;
         }
 
-        if (in_goban(x-3*dx, y - 3*dy) && map[x - dx][y - dy] == o && map[x - 2 * dx][y - 2 * dy] == o && map[x - 3 * dx][y - 3 * dy] == p)
+        if (IN_goban(x-3*dx, y - 3*dy) && map[x - dx][y - dy] == o && map[x - 2 * dx][y - 2 * dy] == o && map[x - 3 * dx][y - 3 * dy] == p)
         {
             remove(x-dx, y-dy, x, y);
             remove(x-2*dx, y-2* dy, x, y);
@@ -134,7 +132,7 @@ public class Pente extends MinMax {
     }
 
 
-    private void remove_captured(int x, int y, int turn)
+    static public void remove_captured(int x, int y, int turn)
     {  
         final int op = turn == 1 ? 2 : 1;
 
@@ -232,7 +230,7 @@ public class Pente extends MinMax {
         this.move = c;
         remove_captured(c.x, c.y, player);
         candidat.save(c);
-        scsimul.first_capt(this.len, c.x, c.y);
+        //scsimul.first_capt(this.len, c.x, c.y); first cap on not
         scsimul.analyse_move(c.x, c.y, player);
 
 
@@ -248,7 +246,7 @@ public class Pente extends MinMax {
 
     }
 
-    public void play_prisoners(int val, int warx, int wary)
+    static public void play_prisoners(int val, int warx, int wary)
     {
         int o = val == 1 ? 2 : 1;
         Pente.Prison p;
@@ -616,12 +614,11 @@ public class Pente extends MinMax {
 
         if (depth == Game.max_depth)
         {
+            System.out.println("At the end !!!!!!!!!!!!!!!!!!!!!!!!!");
             //candidat.display_candidat(map);
             System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
             display_map();
             scsimul.display();
-            System.out.println("At the end !!!!!!!!!!!!!!!!!!!!!!!!!");
-
         }
 
         if (turn == player)

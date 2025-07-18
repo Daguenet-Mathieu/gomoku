@@ -459,7 +459,7 @@ public class Gomoku
             for (Point p : points) {
                 System.out.println("capture 1 er affichage : " + p);  // Appel automatique à toString()
                 if (rule.hasIa() == true)
-                    game.remove(p); // To uppdate Minmax.map
+                    game.remove(p, _map.get(_map.size() - 1).get_prisonners(), false); // To uppdate Minmax.map
             }
             points = rule.get_prisonners();
             System.out.println("nbr prisonners : " + points.size());
@@ -541,7 +541,7 @@ public class Gomoku
         Point coord = _map.get(_map.size() - 1).getLastMove();
         map_index -= 1;
         if (rule.hasIa() == true)
-            game.remove(coord);
+            game.remove(coord, _map.get(_map.size() - 1).get_prisonners(), true);
         _map.remove(_map.size() - 1);
         goban.updateFromMap(_map.get(_map.size() - 1));
         // if (player_turn)//CHANGER LE NB PROSONNIERS pour la bonne couleur

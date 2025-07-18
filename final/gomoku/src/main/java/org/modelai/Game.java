@@ -88,7 +88,7 @@ public class Game {
         }
     }
 
-    public void move(Point point, int turn)
+    public void move(Point point, int turn) // first one
     {
         //int res;
         MinMax.map[point.y][point.x] = turn;
@@ -105,6 +105,23 @@ public class Game {
         }
         nb_move++;
     }
+
+    // public void move(Point point, int turn)
+    // {
+    //     //int res;
+    //     MinMax.map[point.y][point.x] = turn;
+
+    //     if (this.rules == "Pente")
+    //     {
+    //         Pente.remove_captured(point.y, point.x, turn);
+    //     }
+
+    //     scbord.analyse_move(point.y, point.x, turn);
+    //     System.out.println("after move");
+    //     scbord.display();
+
+    //     nb_move++;
+    // }
 
     public void victory_str(Point p, int dir, int turn)
     {
@@ -131,17 +148,37 @@ public class Game {
         }
     }
 
-
-
-    public void remove(Point point)
+    public void remove(Point point, ArrayList<Point> capt, boolean undo)
     {
         int val = MinMax.map[point.y][point.x];
+        //System.exit(0);
 
-        //System.out.printf("Point %d %d val %d removed !!!!!??????!!!!!\n", point.y, point.x, val);
+        System.out.printf("\nPoint %d %d val %d removed !!!!!??????!!!!!\n", point.y, point.x, val);
 
         MinMax.map[point.y][point.x] = 0;
         scbord.analyse_unmove(point.y, point.x, val);
+
+        if (undo && capt.size() != 0)
+        {
+            int op = val == 1 ? 2 : 1;
+            Point p;
+            for (int i = 0 ; i < capt.size() ; i++)
+            {
+                p = capt.get(i);
+                System.out.printf("removed %d %d\n", p.y, p.x);
+                MinMax.map[p.y][p.x] = op;
+                scbord.analyse_move(p.y, p.x, op);
+            }
+        }
+
+        // if (this.rules == "Pente")
+        // {
+        //     System.out.println("REMOVING PENTE UNDO");
+        //     Pente.play_prisoners(val, point.y, point.x);
+        // }
         //MinMax.display_Map();
+        
+        nb_move--;
     }
 
     public boolean first_move()
@@ -212,7 +249,11 @@ public class Game {
             m.load_cur_score(scbord, turn);
             //MinMax.display_Map();
             //scbord.display();
-            MinMax.scsimul.display();
+
+            System.out.println("At the begening");
+            MinMax.display_Map();
+            scbord.display();
+            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
             System.out.printf("\n\tminmax launch turn %d player %d\n", turn, player);
     
             if (this.rules.equals("Pente") || this.rules.equals("Gomoku"))

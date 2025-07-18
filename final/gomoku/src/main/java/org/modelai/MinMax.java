@@ -775,6 +775,12 @@ public class MinMax
             //MinMax.simu.remove(simu.size() - 1);
         //    candidat.remove(map, c);
         //simu.add(new Candidat.coord(-c.x, -c.y));
+
+        if (c == null)
+        {
+            System.out.println("it is null");
+            System.exit(0);
+        }
         int val = map[c.x][c.y];
         map[c.x][c.y] = 0;
         scsimul.analyse_unmove(c.x, c.y, val);
