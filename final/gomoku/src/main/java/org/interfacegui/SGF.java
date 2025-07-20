@@ -69,7 +69,7 @@ public class SGF{
     private static final String[] listCmdSet = new String[] {"AB", "AW", "AE"};
     private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "SZ", "RU", "AP", "CA", "FF", "ST"};
     private static final String[] PointCmdSet = new String[] {"B", "W"};
-    private static final String[] NumCmdSet = new String[] {"SZ", "HA", "KM"};
+    private static final String[] NumCmdSet = new String[] {"SZ", "HA", "KM", "GM"};
 
 // "KM"//komi
 // "HA"//handicap??
@@ -229,6 +229,7 @@ public class SGF{
     }
 
     private  static Union getNode (CommandType type, String name){
+        System.out.println("type == " + type.toString()+  "name : " + name);
         switch (type)
         {
             case BRANCH:
@@ -309,10 +310,16 @@ public class SGF{
 
     private  static ArrayList<Point> getValueArray(String val, StringBuilder file) throws ParseException{
         ArrayList<Point> value = new ArrayList<Point>();
-        System.out.println("----------------------------------------------------------------------------------------");
-        System.out.println("val ==  " + val);
-        System.out.println("file ==  " + file);
-        System.out.println("----------------------------------------------------------------------------------------");
+        // System.out.println("----------------------------------------------------------------------------------------");
+        // System.out.println("val ==  " + val);
+        // System.out.println("file ==  " + file);
+        // System.out.println("----------------------------------------------------------------------------------------");
+        value.add(getValueCoord(val));
+        while (file.charAt(0) == '['){
+            val = getValueString(file);
+            value.add(getValueCoord(val));
+        }
+
 //tant que getValueString retourne pas null ajouter a value
         return value;
     }
@@ -467,36 +474,6 @@ public class SGF{
     } 
 
 
-    private static void printTree(Node tree, int depth) {
-        if (tree == null)
-            return;
-
-        String indent = "  ".repeat(depth);
-        System.out.println(indent + "Node type: " + tree.getType());
-        if (tree.getType() == CommandType.MOVE) {
-            Node list = (Node)tree.DataType;
-            while (list != null){
-                Union str = list.DataType;
-                if (str.getType() == CommandType.NUM_VALUE)
-                    System.out.println(indent + " NUM Command: " + ((NumValue)str).getCommand() + " -> " + ((NumValue)str).getVal());
-                else if (str.getType() == CommandType.ARRAY_VALUE)
-                    ;
-                    // System.out.println(indent + " list Command: " + ((ArrayValue)str).getCommand() + " -> " + str.getVal());
-                else if (str.getType() == CommandType.COORD_VALUE)
-                    System.out.println(indent + " coord Command: " + ((CoordValue)str).getCommand() + " -> " + "y == " + ((CoordValue)str).getVal().y + " x " + ((CoordValue)str).getVal().x);
-                else
-                    System.out.println(indent + " str Command: " + ((StringValue)str).getCommand() + " -> " + ((StringValue)str).getVal());
-
-                list = list.next;
-            }
-        }
-
-        if (tree.getType() == CommandType.BRANCH && tree.DataType instanceof Node) {
-            System.out.println(indent + "Entering branch:");
-            printTree((Node) tree.DataType, depth + 1);
-        }
-        printTree(tree.next, depth);
-    }
 
     //boolean set header()  si false throw dire multiple definition of name si != de val deja set? ou tjs quitter? 
 
@@ -515,6 +492,7 @@ public class SGF{
 
     private static void handleGameType(Union node) throws ParseException{
         // NumValue gameType =  (NumValue) node;
+        // System.out.println("gametype : " + ((StringValue)node).getVal());
         if (ruleType != 0) 
             throw new ParseException("error, unexpected GM : multiples definition" + ((NumValue)node).getVal(), 0);
         ruleType = ((NumValue)node).getVal().intValue();
@@ -557,7 +535,30 @@ public class SGF{
     }
 
     private static void    setCommand(Map map, Union node) throws ParseException{
-        System.out.println("set command : " + node.getCommand());
+        System.out.println("set command : " + node.getCommand() + " command type == " + node.getType());
+       // if (indexOf(commandName, PointCmdSet) != -1)
+        if (node instanceof CoordValue)
+        {
+            System.out.println("y == " + ((CoordValue)node).getVal().y + " x == " + ((CoordValue)node).getVal().x);
+            if (map.tryAddToMap(node.getValue(), ((CoordValue)node).getVal()) == false)
+                throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate", 0);
+        }
+        else if (node instanceof StringValue){
+            System.out.println("comment : " + ((StringValue)node).getVal());
+            map.setComment(((StringValue)node).getVal());
+        }
+        else if (node instanceof ArrayValue){
+            System.out.println("size == " + ((ArrayValue)node).getVal().size());
+            for (Point p : ((ArrayValue)node).getVal()){
+                System.out.println("x = " + p.x + " y = " + p.y);
+                if (map.tryAddToMap(node.getValue(), p) == false)
+                    throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate", 0);
+
+            }
+        }
+
+        //si list
+        //si str
     }
 
     private static void checkHeader(){
@@ -571,29 +572,30 @@ public class SGF{
             handicap = 0;
     }
 
-    private static void executeTree(Node tree, int depth) throws ParseException{
-        if (tree == null)
+    private static void executeTree(Node tree, int depth, int index) throws ParseException{
+        if (tree == null || index != 1)
             return;
-        // String indent = "  ".repeat(depth);
-        // System.out.println(indent + "Node type: " + tree.getType());
+        // System.out.println("index = " + index);
+
         if (tree.getType() == CommandType.MOVE) {
             Node list = (Node)tree.DataType;
             Map map = null;
-            if (header == false)
-                map = new Map(size);
+            // if (header == false)
+            map = new Map(size);
             while (list != null){
                 int isHeader = indexOf(list.DataType.getCommand(), rootCmdSet);
-                System.out.println("header " + header + " is header == " + isHeader + " cmd == " + list.DataType.getCommand());
+                // System.out.println("header " + header + " is header == " + isHeader + " cmd == " + list.DataType.getCommand());
                 // if (header == false && isHeader != -1)
                 //     throw new ParseException("error, unexpected : " + list.DataType.getCommand(), 0);
                 if (header == true && isHeader != -1)
                     setheader(list.DataType);
-                else if (isHeader != -1){
-                    header = false;
-                    checkHeader();
-                }
-                if (header == true)
+                // else if (isHeader != -1){
+                //     header = false;
+                //     checkHeader();
+                // }
+                else
                     setCommand(map, list.DataType);
+                // if (header == true)
                 //si cmd header add a la bonne var
                 //
                 // if ()
@@ -606,13 +608,67 @@ public class SGF{
             }
             game_moves.add(map);
         }
+        if (tree.getType() == CommandType.BRANCH && tree.DataType instanceof Node) {
+            executeTree((Node) tree.DataType, depth + 1, index);
+        }
+        if (tree.next != null) {
+            if (tree.next.getType() == CommandType.BRANCH && tree.getType() == CommandType.BRANCH) {
+                executeTree(tree.next, depth, index + 1);
+            }
+            else{
+                executeTree(tree.next, depth, index);
+            }
+        }
+    }
+
+    private static void printTree(Node tree, int depth, int index) {
+        if (tree == null)
+            return;
+
+        String indent = "  ".repeat(depth);
+        System.out.println(indent + "Dans printTree, index = " + index);
+
+        if (tree.getType() == CommandType.MOVE) {
+            Node list = (Node) tree.DataType;
+            while (list != null) {
+                Union str = list.DataType;
+                if (str.getType() == CommandType.NUM_VALUE)
+                    System.out.println(indent + "NUM: " + ((NumValue) str).getCommand() + " -> " + ((NumValue) str).getVal());
+                else if (str.getType() == CommandType.COORD_VALUE)
+                    System.out.println(indent + "COORD: " + ((CoordValue) str).getCommand() + " -> y=" + ((CoordValue) str).getVal().y + ", x=" + ((CoordValue) str).getVal().x);
+                else if (str.getType() == CommandType.STRING_VALUE)
+                    System.out.println(indent + "STR: " + ((StringValue) str).getCommand() + " -> " + ((StringValue) str).getVal());
+                list = list.next;
+            }
+        }
 
         if (tree.getType() == CommandType.BRANCH && tree.DataType instanceof Node) {
-            // System.out.println(indent + "Entering branch:");
-            executeTree((Node) tree.DataType, depth + 1);
+            System.out.println(indent + "→ Entering sub-branch (index = 0)");
+            printTree((Node) tree.DataType, depth + 1, index);  // nouvelle branche = index 0
         }
-        executeTree(tree.next, depth);
+        // int newIndex = index;
+        if (tree.next != null) {
+            if (tree.next.getType() == CommandType.BRANCH && tree.getType() == CommandType.BRANCH) {
+                System.out.println(indent + "→ Sibling branch detected, new index = " + (index + 1));
+                printTree(tree.next, depth, index + 1);
+            }
+            else{
+                System.out.println(indent + "→ main branch detected, index = " + (index));
+                printTree(tree.next, depth, index); // on reste dans la même branche
+
+            }
+        }
     }
+
+    public static String incrementLast(String input) {
+        String[] parts = input.split("\\.");
+        int lastIndex = parts.length - 1;
+        int lastNumber = Integer.parseInt(parts[lastIndex]);
+        parts[lastIndex] = String.valueOf(lastNumber + 1);
+        return String.join(".", parts);
+    }
+
+
 
     public static boolean parseFile(){
         if ("sgf".equals(getExtension(file)) == false)
@@ -642,7 +698,7 @@ public class SGF{
         try{
             tree = buildTree(file_content, 0);
             System.out.println("tree == " + tree);
-            printTree(tree, 0);
+            // printTree(tree.next, 0, 1);
             game_moves = new ArrayList<Map>();
             rules = null;
             ruleType = 0;
@@ -650,7 +706,7 @@ public class SGF{
             komi = -1;
             handicap = -1;
             header = true;
-            executeTree(tree, 0);
+            executeTree(tree.next, 0, 1);
         }
         catch (ParseException e){
             System.out.println("Parse error: " + e.getMessage());

@@ -120,8 +120,12 @@ public class Map{
             color = 1;
         else if ("W".equals(cmd) || "AW".equals(cmd))
             color = 2;
-        if ((color == 0 && _map[coord.y][coord.x] == 0) || (color != 0 && _map[coord.y][coord.x] != 0))
+        else if ("AE".equals(cmd))
+            color = 0;
+        else
             return false;
+        // if ((color == 0 && _map[coord.y][coord.x] == 0) || (color != 0 && _map[coord.y][coord.x] != 0))
+        //     return false;
         _map[coord.y][coord.x] = color;
         return true;
     }
