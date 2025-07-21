@@ -466,9 +466,6 @@ public class Pente extends MinMax {
         //if (depth == Game.max_depth && forced_capture.size() !=0)
         nb_candidates = candidat.old_load(depth, turn);
 
-
-
-
         //display_map();
         // if(pos_counter >= 5820 && pos_counter <= 5824)
         //     showdebug();
@@ -570,6 +567,15 @@ public class Pente extends MinMax {
                     //m.unplay(m.move, depth);
                     // m.best = candidat.lst.get(i);
                     // System.out.printf("best %d %d\n", m.best.x, m.best.y);
+                    // if (depth == Game.max_depth - 1)
+                    // {
+                    //     for (int j = 0 ; j < nb_candidates ; j++)
+                    //     {
+                    //         System.out.printf("\tCandidat %d %d %f\n", candidat.lst.get(j).x, candidat.lst.get(j).y, values[j]);
+                    //     }
+                    //     System.out.println();
+                    // }
+                    
                     return cur_alpha;
                 }
 
@@ -607,6 +613,14 @@ public class Pente extends MinMax {
                     //m.unplay(m.move, depth);
                     // m.best = candidat.lst.get(i);
                     // System.out.printf("best %d %d", m.best.x, m.best.y);
+                    // if (depth == Game.max_depth - 1)
+                    // {
+                    //     for (int j = 0 ; j < nb_candidates ; j++)
+                    //     {
+                    //         System.out.printf("\tCandidat %d %d %f\n", candidat.lst.get(j).x, candidat.lst.get(j).y, values[j]);
+                    //     }
+                    //     System.out.println();
+                    // }
                     return cur_beta;
                 }
             }
@@ -619,7 +633,26 @@ public class Pente extends MinMax {
             System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
             display_map();
             scsimul.display();
+
         }
+
+        // if (depth == Game.max_depth)
+        // {
+        //     for (int i = 0 ; i < nb_candidates ; i++)
+        //         {
+        //             System.out.printf("Candidat %d %d %f\n", candidat.lst.get(i).x, candidat.lst.get(i).y, values[i]);
+        //         }
+        //         System.out.println();
+        // }
+
+        // if (depth == Game.max_depth - 1)
+        // {
+        //     for (int i = 0 ; i < nb_candidates ; i++)
+        //         {
+        //             System.out.printf("\tCandidat %d %d %f\n", candidat.lst.get(i).x, candidat.lst.get(i).y, values[i]);
+        //         }
+        //         System.out.println();
+        // }
 
         if (turn == player)
             return max(values);

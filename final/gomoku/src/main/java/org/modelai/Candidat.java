@@ -17,6 +17,7 @@ public class Candidat
     private static coord limax = new coord(1, 1);
     private static coord limin = new coord(18, 18);
     private int turn;
+    private int seuil;
     public boolean capture_possible;
     
     public static class coord
@@ -157,6 +158,14 @@ public class Candidat
         }
     }
 
+    private void adding_can(int x, int y, double val)
+    {
+        if (val >= 3)
+            this.seuil+=1;
+
+        this.lst.add(new Candidat.coord(x,y, val));
+    }
+
     private void load_case(int x, int y)
     {
         double tot_case1 = 0;
@@ -207,16 +216,17 @@ public class Candidat
 
 
         if (val == 0 && (tot_case1 != 0 || tot_case2 != 0))
-            this.lst.add(new Candidat.coord(x,y, Math.max(tot_case1, tot_case2)));
+            adding_can(x, y,  Math.max(tot_case1, tot_case2));
         else if (val == 1)
-            this.lst.add(new Candidat.coord(x,y, Math.max(tot_case1 + 1, tot_case2)));
+            adding_can(x, y, Math.max(tot_case1 + 1, tot_case2));
         else if (val == 2)
-            this.lst.add(new Candidat.coord(x,y, Math.max(tot_case1, tot_case2 + 1)));
+            adding_can(x, y, Math.max(tot_case1, tot_case2 + 1));
         return;
     }
 
     public int interesting_candidate(int [][] map)
     {
+        this.seuil = 0;
         for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
         {
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
@@ -301,6 +311,8 @@ public class Candidat
 
     private int nb_candidates(int depth)
     {
+        if (this.seuil > Game.min_can)
+            return Math.min(this.seuil, 10);
         if (depth == Game.max_depth)
             return Game.max_can;
         else if (depth == Game.max_depth - 1)
@@ -331,30 +343,30 @@ public class Candidat
         {
             Candidat.coord can;
 
-            if (depth == Game.max_depth) // Print candidat before sort
-            {
+            // if (depth == Game.max_depth) // Print candidat before sort
+            // {
 
-                System.out.println("Candidat before sort");
-                for (int i = 0 ; i < this.lst.size() ; i++)
-                {
-                    can = this.lst.get(i);
-                    System.out.printf("%d %d %f\n", can.x, can.y, can.st);
-                }
-            }
+            //     System.out.println("Candidat before sort");
+            //     for (int i = 0 ; i < this.lst.size() ; i++)
+            //     {
+            //         can = this.lst.get(i);
+            //         System.out.printf("%d %d %f\n", can.x, can.y, can.st);
+            //     }
+            // }
 
             Collections.sort(this.lst, Comparator.comparing(item -> 
             this.order.indexOf(item.st())));
 
-            if (depth == Game.max_depth) // Print candidat after sort
-            {
-                System.out.println("Candidat after sort");
-                for (int i = 0 ; i < this.lst.size() ; i++)
-                {
-                    can = this.lst.get(i);
-                    System.out.printf("%d %d %f\n", can.x, can.y, can.st);
-                }
+            // if (depth == Game.max_depth ) // Print candidat after sort
+            // {
+            //     System.out.println("Candidat after sort");
+            //     for (int i = 0 ; i < this.lst.size() ; i++)
+            //     {
+            //         can = this.lst.get(i);
+            //         System.out.printf("%d %d %f\n", can.x, can.y, can.st);
+            //     }
 
-            }
+            // }
 
             if (ret >= nb_candidates(depth) + 1)
             {

@@ -21,6 +21,7 @@ public class MinMax
     static int [] [] ddir = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};
     static public ArrayList<Candidat.coord> forced_capture =  new ArrayList<Candidat.coord>();
     static public ArrayList<Candidat.coord> capwin =  new ArrayList<Candidat.coord>();
+    static public boolean after_capwinsim = true;
 
 
     //public int [] [] imap = new int[19][19];
@@ -598,24 +599,22 @@ public class MinMax
                 if (MinMax.map[x-2*dx][y-2*dy] == o && MinMax.map[x + dx][y + dy] == 0)
                 {
                     forced_capture.add(new Candidat.coord(x +dx, y+dy));
-
-                    // adding_capwinsim(x-dx, y-dy, 0);
-                    // adding_capwinsim(x+dx, y+dy, o);
-                    // return  true;
-    
-                    // if (x == 11 && y == 11)
-                    //     System.out.printf("adding focing move : %d %d\n", x+ dx, y+dy); 
+                    if (after_capwinsim)
+                    {
+                        adding_capwinsim(x-dx, y-dy, 0);
+                        adding_capwinsim(x+dx, y+dy, o);
+                        return  true;
+                    }
                 }
                 else if (MinMax.map[x-2*dx][y-2*dy] == 0 && MinMax.map[x + dx][y + dy] == o)
                 {
                     forced_capture.add(new Candidat.coord(x-2*dx, y-2*dy));
-
-                    // adding_capwinsim(x-dx, y-dy, 0);
-                    // adding_capwinsim(x-2*dx, y-2*dy, o);
-                    // return true;
-
-                    // if (x == 11 && y == 11)
-                    //     System.out.printf("adding focing move : %d %d\n", x-2*dx, y-2*dy);
+                    if (after_capwinsim)
+                    {
+                        adding_capwinsim(x-dx, y-dy, 0);
+                        adding_capwinsim(x-2*dx, y-2*dy, o);
+                        return true;
+                    }
                 }
             }
             else if (MinMax.map[x+dx][y+dy] == p)
@@ -623,10 +622,12 @@ public class MinMax
                 if (MinMax.map[x+2*dx][y+2*dy] == o && MinMax.map[x - dx][y - dy] == 0)
                 {
                     forced_capture.add(new Candidat.coord(x-dx, y-dy));
-
-                    // adding_capwinsim(x+dx, y+dy, 0);
-                    // adding_capwinsim(x-dx, y-dy, o);
-                    // return true;
+                    if (after_capwinsim)
+                    {
+                        adding_capwinsim(x+dx, y+dy, 0);
+                        adding_capwinsim(x-dx, y-dy, o);
+                        return true;
+                    }
         
                     // if (x == 11 && y == 11)
                     //     System.out.printf("adding focing move : %d %d\n", x-dx, y-dy); 
@@ -634,13 +635,12 @@ public class MinMax
                 else if (MinMax.map[x+2*dx][y+2*dy] == 0 && MinMax.map[x - dx][y - dy] == o)
                 {
                     forced_capture.add(new Candidat.coord(x+2*dx, y+2*dy));
-
-                    // adding_capwinsim(x+dx, y+dy, 0);
-                    // adding_capwinsim(x+2*dx, y+2*dy, o);
-                    // return true;
-
-                    // if (x == 11 && y == 11)
-                    //     System.out.printf("adding focing move : %d %d\n", x+2*dx, y+2*dy);
+                    if (after_capwinsim)
+                    {
+                        adding_capwinsim(x+dx, y+dy, 0);
+                        adding_capwinsim(x+2*dx, y+2*dy, o);
+                        return true;
+                    }
                 }
             }
         }
@@ -934,7 +934,6 @@ public class MinMax
 
 
         nb_candidates = candidat.old_load(depth, turn);
-
 
         if (depth == 0)
         {
