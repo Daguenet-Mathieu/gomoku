@@ -233,6 +233,11 @@ public class Game {
         //     System.out.printf("\n\nNOOOOOOOOW\nNOOOOOOOW\n\n");
         //     Game.max_depth = 9;
         // }
+        if (player == 1)
+            Game.max_depth = 9;
+        else
+            Game.max_depth = 10;
+
         System.out.printf("best move turn %d player %d\n", turn, player);
         //System.exit(0);
         time = System.currentTimeMillis();
