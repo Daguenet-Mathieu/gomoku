@@ -314,6 +314,8 @@ public class GoRules implements Rules {
 
     @Override
     public ArrayList<Point> get_forbiden_moves(ArrayList<Map> map, int index, int color){
+        if (index == 0)
+            return (new ArrayList());
         forbidden_moves.clear();
         System.out.println("coucou check forbidden");
         final int advColor = color == 1 ? 2 : 1;

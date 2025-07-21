@@ -383,14 +383,21 @@ public class Gomoku
     }
 
     private void init_rules(String rules_type, int boardSize){
-        if (rules_type == "Gomoku")
-            rule = new GomokuRules();
-        if (rules_type == "Pente")
-            rule = new PenteRules();
-        if (rules_type == "Renju")
-            rule = new RenjuRules();
-        if (rules_type == "Go")
-            rule = new GoRules();
+        rules_type = rules_type.toLowerCase();
+        switch (rules_type){
+            case "pente" :
+                rule = new PenteRules();
+                break;
+            case "renju" :
+                rule = new RenjuRules();
+                break;
+            case "go":
+                rule = new GoRules();
+                break;
+            default:
+                rule = new GomokuRules();
+        }
+        System.out.println("bs == " + boardSize);
         rule.setBoardSize(boardSize);
     }
 
@@ -581,6 +588,8 @@ public class Gomoku
         map_index = 0;
         System.out.println("height == " + heigh + " width == " + width);
         _map = new ArrayList<Map>();
+        if (game_infos.getSgfMap() != null)
+            _map = game_infos.getSgfMap();
         saved = new ArrayList<Point>();
         _map.add(new Map(_nb_line));
         game_display = new Pane();
@@ -669,6 +678,8 @@ public class Gomoku
             System.out.println("Le bouton prev a été cliqué !");
         });
         gameInfos.getNextButton().setOnAction(event -> {
+            System.out.println("index == " + map_index);
+            _map.get(_map.size()-1).printMap();
             if (map_index < _map.size() - 1){
                 changeCandidatVisibility(false);
                 changeHintVisibility(false);

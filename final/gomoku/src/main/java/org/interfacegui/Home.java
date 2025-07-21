@@ -198,6 +198,7 @@ public class Home {
         });
 
         home_page.getStringRule().addListener((observable, oldValue, newValue) -> {
+            boardSize = SGF.getSize();
             String[] rules_type = new String[] {"gomoku", "pente", "renju", "go"};
             Button[] rules_button = new Button[] {
                 home_page.getGomokuButton(),
@@ -205,17 +206,21 @@ public class Home {
                 home_page.getRenjuButton(),
                 home_page.getGoButton()
             };
+            newValue = newValue.toLowerCase();
             int i = 0;
             boolean matched = false;
             while (i < rules_type.length){
+                System.out.println("newValue == " + newValue + " tested rules " + rules_type[i]);
                 if (rules_type[i].equals(newValue)){
                     rules_button[i].setStyle(selectedColor);
                     matched = true;
+                    break;
                 }
                 else
                     rules_button[i].setStyle(deselectedColor);
                 i++;
             }
+            System.out.println("i == " + i + "matchd == " + matched);
             if (matched == false){
                 System.out.println("default rules reset sur string event");
                 rule = "Gomoku";
@@ -364,4 +369,10 @@ public class Home {
     public void remove_file(){
         
     }
+
+    public ArrayList<Map> getSgfMap(){
+        return home_page.getSgfMap();
+    }
+
+
 }

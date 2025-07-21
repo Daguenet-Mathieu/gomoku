@@ -2,7 +2,6 @@ package org.interfacegui;
 import org.utils.*;
 import org.ast.*;
 import java.util.ArrayList;
-// import java.io.*;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.io.Reader;
@@ -10,31 +9,7 @@ import java.io.FileReader;
 import java.time.LocalTime;
 import java.time.LocalDate;
 import java.io.File;
-// import java.util.LinkedHashMap;
-// import java.util.Set;
-// import java.io.IOException;
 import java.text.ParseException;
-
-// public enum NodeType{ DATA, OTHER_DATA_TYPE, ...., BRANCH_NODE }
-
-// public abstract class Union //public interface Union{ 
-// IMPOSER DE definir set get value
-// 
-// }
-
-// public class UnionBranch extends Union{
-//   Node node;
-// }
-
-// public class UnionData extends Union{
-//   String Data;
-// }
-
-// public class Node{
-//    NodeType typeInfo;
-//    Union Data;
-//    Node next;
-// }
 
 public class SGF{
 
@@ -136,8 +111,8 @@ public class SGF{
     }
 
     public static void createSgf(ArrayList<Map> map, String rule){
-        final int rule_type = "go".equals(rule) ? 1 : 4;
-        String fileContent = "(;FF[4] " + "GM[" + rule_type + "4]" + " RU[" + rule + "] SZ[19] CA[UTF-8] AP[Gomoku:1]\n";
+        final int rule_type = "go".equals(rule) || "Go".equals(rule)? 1 : 4;
+        String fileContent = "(;FF[4] " + "GM[" + rule_type + "] +  RU[" + rule + "] SZ[" + map.get(0).getSize() + "] CA[UTF-8] AP[Gomoku:1]\n";
         LocalDate localDate = LocalDate.now();
         LocalTime localTime = LocalTime.now();
         String fileName = localDate.toString() + "_" + localTime.toString();
@@ -344,6 +319,7 @@ public class SGF{
     private static int indexOf(String value, String[] array){
         for (int i = 0; i < array.length; i++)
         {
+            System.out.println("tested val : |" + value + "| et array val |" + array[i] + "|");
             if (array[i].equals(value))
                 return i;
         }
@@ -492,7 +468,7 @@ public class SGF{
 
     private static void handleGameType(Union node) throws ParseException{
         // NumValue gameType =  (NumValue) node;
-        // System.out.println("gametype : " + ((StringValue)node).getVal());
+        System.out.println("gametype : " + ((NumValue)node).getVal());
         if (ruleType != 0) 
             throw new ParseException("error, unexpected GM : multiples definition" + ((NumValue)node).getVal(), 0);
         ruleType = ((NumValue)node).getVal().intValue();
@@ -510,10 +486,11 @@ public class SGF{
         if (rules != null)
             throw new ParseException("error, unexpected RU : multiples definition" + ((StringValue)node).getVal(), 0);
         rules = ((StringValue)node).getVal();
+        System.out.println("Rules == " + rules);
     }
 
     private static void    setheader(Union node) throws ParseException{
-        // System.out.println(node.getCommand());
+        System.out.println("header : " + node.getCommand());
         String command = node.getCommand();
         switch (command) {
             case "KM":
@@ -537,6 +514,7 @@ public class SGF{
     private static void    setCommand(Map map, Union node) throws ParseException{
         System.out.println("set command : " + node.getCommand() + " command type == " + node.getType());
        // if (indexOf(commandName, PointCmdSet) != -1)
+       map.printMap();
         if (node instanceof CoordValue)
         {
             System.out.println("y == " + ((CoordValue)node).getVal().y + " x == " + ((CoordValue)node).getVal().x);
@@ -564,8 +542,8 @@ public class SGF{
     private static void checkHeader(){
         if (size == 0)
             size = 19;
-        if (rules == null)
-            rules = "Gomoku";
+        if (rules == null && ruleType != 4)
+            rules = "gomoku";
         if (komi == -1)
             komi = 0;
         if (handicap == -1)
@@ -575,38 +553,34 @@ public class SGF{
     private static void executeTree(Node tree, int depth, int index) throws ParseException{
         if (tree == null || index != 1)
             return;
-        // System.out.println("index = " + index);
-
         if (tree.getType() == CommandType.MOVE) {
+            System.out.println("jep asse fdans l'exec d'un move : ?");
             Node list = (Node)tree.DataType;
             Map map = null;
-            // if (header == false)
-            map = new Map(size);
+            if (game_moves.size() != 0) 
+                map = new Map(game_moves.get(game_moves.size()-1));
+            int isHeader = 0;
             while (list != null){
-                int isHeader = indexOf(list.DataType.getCommand(), rootCmdSet);
-                // System.out.println("header " + header + " is header == " + isHeader + " cmd == " + list.DataType.getCommand());
-                // if (header == false && isHeader != -1)
-                //     throw new ParseException("error, unexpected : " + list.DataType.getCommand(), 0);
-                if (header == true && isHeader != -1)
+                if (header == true)
+                    isHeader = indexOf(list.DataType.getCommand(), rootCmdSet);
+                System.out.println("is header : " + isHeader + " cmd : " + list.DataType.getCommand());
+                if (isHeader == -1 && header == true){
+                    header = false;
+                    isHeader = 0;
+                    checkHeader();
+                    map = new Map(size);
+                }
+                if (header == true)//&& isHeader != -1)
                     setheader(list.DataType);
-                // else if (isHeader != -1){
-                //     header = false;
-                //     checkHeader();
-                // }
                 else
                     setCommand(map, list.DataType);
-                // if (header == true)
-                //si cmd header add a la bonne var
-                //
-                // if ()
-                //else()
-                //si c'est dans list point try add
-                //si c'est dans list
-                // StringValue str = (StringValue) list.DataType;
-                // System.out.println(indent + "  Command: " + str.getCommand() + " -> " + str.getVal());
                 list = list.next;
             }
-            game_moves.add(map);
+            if (map != null){
+                System.out.println("jadd a map");
+                game_moves.add(map);
+            }
+
         }
         if (tree.getType() == CommandType.BRANCH && tree.DataType instanceof Node) {
             executeTree((Node) tree.DataType, depth + 1, index);
@@ -644,7 +618,7 @@ public class SGF{
 
         if (tree.getType() == CommandType.BRANCH && tree.DataType instanceof Node) {
             System.out.println(indent + "→ Entering sub-branch (index = 0)");
-            printTree((Node) tree.DataType, depth + 1, index);  // nouvelle branche = index 0
+            printTree((Node) tree.DataType, depth + 1, index);
         }
         // int newIndex = index;
         if (tree.next != null) {
@@ -668,6 +642,18 @@ public class SGF{
         return String.join(".", parts);
     }
 
+    private static void checkRules()
+    {
+        System.out.println("rule check " + ruleType);
+        if (ruleType == 1)
+            rules = "go";
+        // switch (ruleType){
+        // case 1:
+        //     rules = "Go";
+        // case 4:
+        //     rules = "Gomoku";
+        // }
+    }
 
 
     public static boolean parseFile(){
@@ -692,13 +678,10 @@ public class SGF{
             errorMsg = "error while reading file";
             e.printStackTrace();
         }
-
-        System.out.println("file content == " + file_content);
         Node tree;
         try{
             tree = buildTree(file_content, 0);
             System.out.println("tree == " + tree);
-            // printTree(tree.next, 0, 1);
             game_moves = new ArrayList<Map>();
             rules = null;
             ruleType = 0;
@@ -707,6 +690,13 @@ public class SGF{
             handicap = -1;
             header = true;
             executeTree(tree.next, 0, 1);
+            checkRules();
+            System.out.println("sgf rules == " + rules);
+            for (int i = 0; i < game_moves.size(); i++){
+                game_moves.get(i).printMap();
+                System.out.println("\n\n\n");
+            }
+
         }
         catch (ParseException e){
             System.out.println("Parse error: " + e.getMessage());
@@ -721,6 +711,11 @@ public class SGF{
     public static String get_game_rule(){
         return rules;
     }
+
+    public static int getSize(){
+        return size;
+    }
+
 
     public static ArrayList<Map> get_game_moves(){
         return game_moves;

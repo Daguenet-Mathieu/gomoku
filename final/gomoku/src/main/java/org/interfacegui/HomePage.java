@@ -64,7 +64,6 @@ public class HomePage{
     private StringProperty rule_type = new SimpleStringProperty("");
     // private int boardSize = -1;
 
-
     HomePage(){
         boardSizeBox.getChildren().addAll(boardSizeLabel, boardSizeButtonBox);
         boardSizeButtonBox.getChildren().addAll(nineSize, thirteenSize, nineteenSize);
@@ -257,6 +256,7 @@ public class HomePage{
             error_file.setManaged(false);
             error_file.setVisible(false);
         }
+        sgfMap = SGF.get_game_moves();
         load_sgf.setManaged(false);
         load_sgf.setVisible(false);
         fileName.setText(SGF.get_file_name());
@@ -284,5 +284,9 @@ public class HomePage{
 
     public boolean is_sgf(){
         return sgfFile;
+    }
+
+    public ArrayList<Map> getSgfMap(){
+        return sgfMap;
     }
 }
