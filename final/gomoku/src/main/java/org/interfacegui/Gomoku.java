@@ -257,10 +257,6 @@ public class Gomoku
         map_index = 0;
         // init_rules(_game_infos.get_rules());
         init_rules(_game_infos.get_rules(), _game_infos.get_board_size());
-        if (rule.hasPass() == false){
-            gameInfos.getPassButton().setVisible(false);
-            gameInfos.getPassButton().setManaged(false);
-        }
         goban.updateFromMap(_map.get(_map.size() - 1));
         gameInfos.clear();
         gameInfos.reset_infos(_game_infos);
@@ -276,6 +272,10 @@ public class Gomoku
         gameInfos.set_black_prisonners("0");
         gameInfos.set_white_prisonners("0");
         ia_playing = false;
+        if (rule.hasPass() == false){
+            gameInfos.getPassButton().setVisible(false);
+            gameInfos.getPassButton().setManaged(false);
+        }
     }
 
 
@@ -403,8 +403,12 @@ public class Gomoku
 
     private void playMove(Point point){
         System.out.println("dans print move coord : x == " + point.x + " y == " + point.y);
-        if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map) || rule.getGameMode() == Rules.GameMode.ENDGAME)
+        if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map) || rule.getGameMode() == Rules.GameMode.ENDGAME){
+            System.out.println("???????????????????????????????????????????????????????????");
+            System.out.println("COUP INTEDIT : : x == " + point.x + " y == " + point.y);
+            System.out.println("???????????????????????????????????????????????????????????");
             return ;
+        }
         // if ()//!PLAYING
         if (rule.getGameMode() == Rules.GameMode.DEATH_MARKING){
             ArrayList<Point> deadStones = ((GoRules)rule).getDeadStones();
@@ -460,9 +464,10 @@ public class Gomoku
 
             //for point in rules.capturedPoint
             //    game.remove(point);
-        if ((rule instanceof Gomoku) == false)
+        if ((rule instanceof GomokuRules) == false)
         {
             ArrayList<Point> points = rule.GetCapturedStones(point, _map.get(_map.size() - 1));
+            System.out.println("Rule est une instance de : " + rule.getClass().getName());
             for (Point p : points) {
                 System.out.println("capture 1 er affichage : " + p);  // Appel automatique à toString()
                 if (rule.hasIa() == true)
@@ -590,8 +595,9 @@ public class Gomoku
         _map = new ArrayList<Map>();
         if (game_infos.getSgfMap() != null)
             _map = game_infos.getSgfMap();
+        else
+            _map.add(new Map(_nb_line));
         saved = new ArrayList<Point>();
-        _map.add(new Map(_nb_line));
         game_display = new Pane();
         _end_popin.setVisible(false);
         _end_popin.setManaged(false);
@@ -632,6 +638,10 @@ public class Gomoku
         _goban_pane.setLayoutX(_game_infos_size_x);
         game_display.getChildren().addAll(_game_infos_pane, _goban_pane);
         createDelayedGameLoop();
+        if (rule.hasPass() == false){
+            gameInfos.getPassButton().setVisible(false);
+            gameInfos.getPassButton().setManaged(false);
+        }
 
         gameInfos.getResignButton().setOnAction(event -> {
                 gameLoop.stop();

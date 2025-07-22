@@ -265,6 +265,11 @@ public class HomePage{
         learnOrView.setText("view SGF");
         sgfFile = true;
         rule_type.set(SGF.get_game_rule());
+        //creer une instance de rules et jouer la map, ici?
+        //  check coups invalide + capture 
+        //  end game sera check dans gomoku? + dans gomoku play l'ia si pas lecture seule?
+        //selon le bouton set le game state
+        //afficher le num tour de jeu + a qui le tour + 
     }
 
     private void deleteFile(){

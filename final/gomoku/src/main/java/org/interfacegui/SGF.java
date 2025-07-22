@@ -112,7 +112,7 @@ public class SGF{
 
     public static void createSgf(ArrayList<Map> map, String rule){
         final int rule_type = "go".equals(rule) || "Go".equals(rule)? 1 : 4;
-        String fileContent = "(;FF[4] " + "GM[" + rule_type + "] +  RU[" + rule + "] SZ[" + map.get(0).getSize() + "] CA[UTF-8] AP[Gomoku:1]\n";
+        String fileContent = "(;FF[4] " + "GM[" + rule_type + "] RU[" + rule + "] SZ[" + map.get(0).getSize() + "] CA[UTF-8] AP[Gomoku:1]\n";
         LocalDate localDate = LocalDate.now();
         LocalTime localTime = LocalTime.now();
         String fileName = localDate.toString() + "_" + localTime.toString();
@@ -268,15 +268,15 @@ public class SGF{
             throw new ParseException("invalid syntaxe " + val, 0);
         if (Character.isAlphabetic(val.charAt(0))) {
             int index = Character.toLowerCase(val.charAt(0)) - 'a';
-            System.out.println("index y == " + index);
-            value.y = index;
+            System.out.println("index x == " + index);
+            value.x = index;
         }
         else
             throw new ParseException("invalid syntaxe " + val, 0);
         if (Character.isAlphabetic(val.charAt(1))) {
             int index = Character.toLowerCase(val.charAt(1)) - 'a';
-            System.out.println("index x == " + index);
-            value.x = index;
+            System.out.println("index y == " + index);
+            value.y = index;
         }
         else
             throw new ParseException("invalid syntaxe " + val, 0);
@@ -542,7 +542,7 @@ public class SGF{
     private static void checkHeader(){
         if (size == 0)
             size = 19;
-        if (rules == null && ruleType != 4)
+        if (rules == null)
             rules = "gomoku";
         if (komi == -1)
             komi = 0;
@@ -702,7 +702,6 @@ public class SGF{
             System.out.println("Parse error: " + e.getMessage());
             errorMsg = e.getMessage();
             e.printStackTrace();
-            System.out.println("coucou");
             return false;
         }
         return true;
