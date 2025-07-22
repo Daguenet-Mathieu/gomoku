@@ -561,7 +561,7 @@ public class Pente extends MinMax {
 
                 //m.unplay(m.move, depth);
 
-                if (cut && cur_alpha >= beta) // beta cut
+                if (cut && cur_alpha > beta) // beta cut
                 {
                     //System.out.println("betacut");
                     //m.unplay(m.move, depth);
@@ -607,7 +607,7 @@ public class Pente extends MinMax {
 
                 //m.unplay(m.move, depth);
 
-                if (cut && alpha >= cur_beta) // alpha cut
+                if (cut && alpha > cur_beta) // alpha cut
                 {
                     //System.out.println("alphacut");
                     //m.unplay(m.move, depth);

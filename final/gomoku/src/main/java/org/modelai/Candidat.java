@@ -10,7 +10,6 @@ public class Candidat
 {
     public ArrayList<Candidat.coord> lst =  new ArrayList<Candidat.coord>();
     static public DoubleFree doubleFreethree = new DoubleFree();
-    //private List<Double> order = Arrays.asList(6.0, 5.0, 4.5, 4.4, 4.0, 3.5, 3.4, 3.0, 2.5, 2.4, 2.0, 1.0, 0.0);
     private List<Double> order = Arrays.asList(6.0, 5.0, 4.0, 3.5, 3.4, 3.0, 2.5, 2.4, 2.0, 1.0, 0.0);
     private static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
 
@@ -341,7 +340,7 @@ public class Candidat
 
         if (ret > 1)
         {
-            Candidat.coord can;
+            //Candidat.coord can;
 
             // if (depth == Game.max_depth) // Print candidat before sort
             // {
@@ -371,15 +370,15 @@ public class Candidat
             if (ret >= nb_candidates(depth) + 1)
             {
                 this.lst = new ArrayList<>(this.lst.subList(0, nb_candidates(depth)));
-                if (depth == Game.max_depth) // Print candidat selected
-                {
-                    System.out.println("Candidat selected");
-                    for (int i = 0 ; i < this.lst.size() ; i++)
-                    {
-                        can = this.lst.get(i);
-                        System.out.printf("%d %d %f\n", can.x, can.y, can.st);
-                    }
-                }
+                // if (depth == Game.max_depth) // Print candidat selected
+                // {
+                //     System.out.println("Candidat selected");
+                //     for (int i = 0 ; i < this.lst.size() ; i++)
+                //     {
+                //         can = this.lst.get(i);
+                //         System.out.printf("%d %d %f\n", can.x, can.y, can.st);
+                //     }
+                // }
             }
 
             return this.lst.size();
