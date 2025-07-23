@@ -4,11 +4,7 @@ import org.utils.*;
 import java.util.ArrayList;
 
 public class Game {
-    static public enum SquareState {
-        NONE, 
-        BLACK,
-        WHITE
-    }
+
     public MinMax m;
     public Miniscore scbord =  new Miniscore();
     public int nb_move;
@@ -73,19 +69,34 @@ public class Game {
         MinMax.map[point.y][point.x] = 0;
         scbord.analyse_unmove(point.y, point.x, val);
 
-        if (undo && capt.size() != 0)
+        //System.out.println("undo remove called");
+        if (undo)
         {
-            int op = val == 1 ? 2 : 1;
-            Point p;
-            for (int i = 0 ; i < capt.size() ; i++)
+            System.out.printf("UNDO REMOVE CALLED on %d %d\n", point.x, point.y);
+            if (capt.size() != 0)
             {
-                p = capt.get(i);
-                MinMax.map[p.y][p.x] = op;
-                Pente.prisoners[op - 1]--;
-                scbord.analyse_move(p.y, p.x, op);
+                int op = val == 1 ? 2 : 1;
+                Point p;
+                for (int i = 0 ; i < capt.size() ; i++)
+                {
+                    p = capt.get(i);
+                    System.out.printf("UNDO readed captured stone %d %d\n", p.x, p.y);
+                    MinMax.map[p.y][p.x] = op;
+                    Pente.prisoners[op - 1]--;
+                    scbord.analyse_move(p.y, p.x, op);
+                }
             }
+            System.out.printf("nb_move decremented to %d\n", nb_move);
+            nb_move --;
         }
-        nb_move--;
+    }
+
+    public void reset_minmax()
+    {
+        for (int i = 0 ; i < 19 ; i++)
+            for (int j = 0 ; j < 19 ; j++)
+                MinMax.map[i][j] = 0;
+        scbord.reset_str();
     }
 
     private double return_mean_time()
@@ -102,7 +113,7 @@ public class Game {
     public Point best_move(int turn, int player)
     {
         if (player == 1)
-            Game.max_depth = 9;
+            Game.max_depth = 10;
         else
             Game.max_depth = 10;
 

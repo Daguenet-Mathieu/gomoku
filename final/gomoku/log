@@ -22,15 +22,14 @@ mvn package -Dmaven.test.skip=true
 [[1;34mINFO[m] Tests are skipped.
 [[1;34mINFO[m] 
 [[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:2.4:jar[m [1m(default-jar)[m @ [36mgomoku[0;1m ---[m
-[[1;34mINFO[m] Building jar: /home/xsaulnie/Documents/compgomoku/final/gomoku/target/gomoku-1.0.0.jar
 [[1;34mINFO[m] 
 [[1;34mINFO[m] [1m--- [0;32mmaven-assembly-plugin:2.4.1:single[m [1m(make-assembly)[m @ [36mgomoku[0;1m ---[m
 [[1;34mINFO[m] Building jar: /home/xsaulnie/Documents/compgomoku/final/gomoku/target/gomoku-1.0.0-jar-with-dependencies.jar
 [[1;34mINFO[m] [1m------------------------------------------------------------------------[m
 [[1;34mINFO[m] [1;32mBUILD SUCCESS[m
 [[1;34mINFO[m] [1m------------------------------------------------------------------------[m
-[[1;34mINFO[m] Total time:  1.212 s
-[[1;34mINFO[m] Finished at: 2025-07-22T16:42:40+02:00
+[[1;34mINFO[m] Total time:  1.281 s
+[[1;34mINFO[m] Finished at: 2025-07-23T12:16:18+02:00
 [[1;34mINFO[m] [1m------------------------------------------------------------------------[m
 cp target/gomoku-1.0.0-jar-with-dependencies.jar gomoku.jar
 java -jar gomoku.jar
@@ -42,16 +41,18 @@ redimentionnement de home!!!!!!!!!!!!!!!!!1
 redimentionnement de home!!!!!!!!!!!!!!!!!1
 redimentionnement de home!!!!!!!!!!!!!!!!!1
 Pente
-gomoku
+black is bot
 white is bot
+white is human
 Validation clicked
 erreur parsing black time mettre message d'erreur et ne pas valider
 erreur parsing white time mettre message d'erreur et ne pas valider
 black time == 600000 white time ==  600000
  goban width == 262.0 heigh 299.0
 on passe par ici constructeur home page
-ruleset Gomoku
-constructeur gomoku rule type == Gomoku
+bs == -1
+ruleset Pente
+constructeur gomoku rule type == Pente
 height == 299 width == 262
 _stones.length == 19 _stones[0].length == 19
 Rectangles initialisés avec positions corrigées
@@ -61,88 +62,8 @@ size x == 262 size y == 262
 			game info size 65
 size x == 262 size y == 299
 			game info size 65
-size x == 262 size y == 299
-			game info size 65
-size x == 262 size y == 300
-			game info size 65
-size x == 262 size y == 301
-			game info size 65
-size x == 262 size y == 304
-			game info size 65
-size x == 262 size y == 304
-			game info size 65
-size x == 262 size y == 306
-			game info size 65
-size x == 262 size y == 321
-			game info size 65
-size x == 262 size y == 321
-			game info size 72
-size x == 262 size y == 380
-			game info size 72
-size x == 262 size y == 380
-			game info size 87
-size x == 262 size y == 460
-			game info size 87
-size x == 262 size y == 460
-			game info size 102
-size x == 262 size y == 530
-			game info size 102
-size x == 262 size y == 530
-			game info size 120
-size x == 262 size y == 604
-			game info size 120
-size x == 262 size y == 604
-			game info size 131
-size x == 262 size y == 652
-			game info size 131
-size x == 262 size y == 652
-			game info size 133
-size x == 262 size y == 658
-			game info size 133
-size x == 262 size y == 659
-			game info size 133
-size x == 262 size y == 660
-			game info size 133
-size x == 262 size y == 661
-			game info size 133
-size x == 262 size y == 662
-			game info size 133
-size x == 262 size y == 663
-			game info size 133
-size x == 262 size y == 665
-			game info size 133
-size x == 262 size y == 665
-			game info size 133
-size x == 262 size y == 668
-			game info size 133
-size x == 262 size y == 671
-			game info size 133
-size x == 262 size y == 671
-			game info size 133
-size x == 262 size y == 679
-			game info size 133
-size x == 262 size y == 679
-			game info size 134
-size x == 262 size y == 683
-			game info size 134
-size x == 262 size y == 683
-			game info size 134
-size x == 262 size y == 684
-			game info size 134
-size x == 262 size y == 684
-			game info size 134
-size x == 262 size y == 685
-			game info size 134
-size x == 262 size y == 685
-			game info size 135
-size x == 262 size y == 686
-			game info size 135
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (202.0, 341.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (189.0, 187.0)
-x- margin == 9.0 y - margin == 8.904761904761905
-x- margin == 9.0 y - margin == 9.0
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (0 pos, 10 depth) mean : 0.000000
 dans print move coord : x == 9 y == 9
 map index == 0
 map inde == 0 curent candidats == null
@@ -150,55 +71,111 @@ size map == 1
 
 size map == 2
 map_index apres update dans play move1
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 9 9 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
 nbr prisonners : 0
 player color set in map == 0
 non!
 update player turn fct : 0
 update player turn fct : 1
-best move turn 2 player 2
+size x == 262 size y == 299
+			game info size 65
+size x == 262 size y == 300
+			game info size 65
+size x == 262 size y == 300
+			game info size 66
+size x == 262 size y == 304
+			game info size 66
+size x == 262 size y == 304
+			game info size 67
+size x == 262 size y == 306
+			game info size 67
+size x == 262 size y == 306
+			game info size 68
+size x == 262 size y == 310
+			game info size 68
+size x == 262 size y == 310
+			game info size 70
+size x == 262 size y == 321
+			game info size 70
+size x == 262 size y == 321
+			game info size 75
+size x == 262 size y == 344
+			game info size 75
+size x == 262 size y == 344
+			game info size 81
+size x == 262 size y == 368
+			game info size 81
+size x == 262 size y == 368
+			game info size 95
+size x == 262 size y == 424
+			game info size 95
+size x == 262 size y == 424
+			game info size 110
+size x == 262 size y == 475
+			game info size 110
+size x == 262 size y == 475
+			game info size 128
+size x == 262 size y == 529
+			game info size 128
+size x == 262 size y == 529
+			game info size 141
+size x == 262 size y == 569
+			game info size 141
+size x == 262 size y == 569
+			game info size 158
+size x == 262 size y == 619
+			game info size 158
+size x == 262 size y == 619
+			game info size 169
+size x == 262 size y == 655
+			game info size 169
+size x == 262 size y == 655
+			game info size 182
+size x == 262 size y == 700
+			game info size 182
+size x == 262 size y == 700
+			game info size 193
+size x == 262 size y == 742
+			game info size 193
+size x == 262 size y == 742
+			game info size 200
+size x == 262 size y == 757
+			game info size 200
+size x == 262 size y == 757
+			game info size 200
+size x == 262 size y == 757
+			game info size 200
+size x == 262 size y == 757
+			game info size 199
+size x == 262 size y == 757
+			game info size 199
+size x == 262 size y == 757
+			game info size 199
+size x == 262 size y == 757
+			game info size 199
+size x == 262 size y == 757
+			game info size 198
+size x == 262 size y == 755
+			game info size 198
+size squre == 31 goba size == 589
+Pane cliqué aux coordonnées : (273.0, 416.0)
+width allowed margon == 15 height allowed margin == 15
+apres ajustemeent marge : (254.0, 318.0)
+x- margin == 8.193548387096774 y - margin == 10.258064516129032
+x- margin == 8.0 y - margin == 10.0
+dans print move coord : x == 8 y == 10
+map index == 1
+map inde == 1 curent candidats == null
+size map == 2
+
+size map == 3
+map_index apres update dans play move2
+nbr prisonners : 0
+player color set in map == 1
+non!
+update player turn fct : 1
+update player turn fct : 0
+Call best_move turn 1 player 1
 After load
-At the begening
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -209,7 +186,7 @@ At the begening
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -223,17 +200,8 @@ no blockers
 score 0 0 diff 0 (0 0) [0]
 bpoint 0 0
 prisoners[0] : 0, prisoners[1] : 0
-
-	minmax launch turn 2 player 2
-minmaxab best move 10 8
-IA move 2 (Turn 2) at 10 8 played in 0.140000 seconds (40032 pos, 11 depth) mean : 0.140000
-dans print move coord : x == 10 y == 8
-map index == 1
-map inde == 1 curent candidats == null
-size map == 2
-
-size map == 3
-map_index apres update dans play move2
+At the end !!!!!!!!!!!!!!!!!!!!!!!!!
+prisoners[0] : 0, prisoners[1] : 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -244,28 +212,7 @@ map_index apres update dans play move2
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 8 10 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -275,405 +222,168 @@ move 8 10 rule Gomoku
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 
-nbr prisonners : 0
-player color set in map == 1
-non!
-update player turn fct : 1
-update player turn fct : 0
-map inde == 2 curent candidats == null
-candidat list dans map == [( x: 8, y: 8), val: -20.0, ( x: 9, y: 8), val: -20.0, ( x: 10, y: 8), val: -18.0, ( x: 8, y: 9), val: -18.0, ( x: 10, y: 9), val: -18.0, ( x: 8, y: 10), val: -18.0]
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (184.0, 327.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (171.0, 173.0)
-x- margin == 8.142857142857142 y - margin == 8.238095238095237
-x- margin == 8.0 y - margin == 8.0
-dans print move coord : x == 8 y == 8
+no blockers
+score 0 0 diff 0 (0 0) [0]
+bpoint 0 0
+IA move 3 (Turn 2) at 7 9 played in 0.105000 seconds (14308 pos, 10 depth) mean : 0.052500
+dans print move coord : x == 7 y == 9
 map index == 2
-map inde == 2 curent candidats == [( x: 8, y: 8), val: -20.0, ( x: 9, y: 8), val: -20.0, ( x: 10, y: 8), val: -18.0, ( x: 8, y: 9), val: -18.0, ( x: 10, y: 9), val: -18.0, ( x: 8, y: 10), val: -18.0]
+map inde == 2 curent candidats == null
 size map == 3
 
 size map == 4
 map_index apres update dans play move3
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 8 8 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
 nbr prisonners : 0
 player color set in map == 0
 non!
 update player turn fct : 0
 update player turn fct : 1
-best move turn 2 player 2
-After load
-At the begening
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-no blockers
-score 4 0 diff 4 (0 0) [4]
-bpoint 0 0
-prisoners[0] : 0, prisoners[1] : 0
-
-	minmax launch turn 2 player 2
-minmaxab best move 10 10
-IA move 4 (Turn 3) at 10 10 played in 0.284000 seconds (114701 pos, 11 depth) mean : 0.212000
-dans print move coord : x == 10 y == 10
-map index == 3
 map inde == 3 curent candidats == null
+candidat list dans map == [( x: 8, y: 9), val: 12.0, ( x: 9, y: 10), val: 12.0, ( x: 8, y: 8), val: 10.0, ( x: 9, y: 8), val: 10.0, ( x: 10, y: 8), val: 10.0, ( x: 7, y: 9), val: 16.0]
+size squre == 31 goba size == 589
+Pane cliqué aux coordonnées : (266.0, 383.0)
+width allowed margon == 15 height allowed margin == 15
+apres ajustemeent marge : (247.0, 285.0)
+x- margin == 7.967741935483871 y - margin == 9.193548387096774
+x- margin == 8.0 y - margin == 9.0
+dans print move coord : x == 8 y == 9
+map index == 3
+map inde == 3 curent candidats == [( x: 8, y: 9), val: 12.0, ( x: 9, y: 10), val: 12.0, ( x: 8, y: 8), val: 10.0, ( x: 9, y: 8), val: 10.0, ( x: 10, y: 8), val: 10.0, ( x: 7, y: 9), val: 16.0]
 size map == 4
 
 size map == 5
 map_index apres update dans play move4
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 10 10 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
 nbr prisonners : 0
 player color set in map == 1
 non!
 update player turn fct : 1
 update player turn fct : 0
-map inde == 4 curent candidats == null
-candidat list dans map == [( x: 7, y: 7), val: -24.0, ( x: 10, y: 10), val: -18.0]
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (160.0, 303.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (147.0, 149.0)
-x- margin == 7.0 y - margin == 7.095238095238095
-x- margin == 7.0 y - margin == 7.0
-dans print move coord : x == 7 y == 7
+Call best_move turn 1 player 1
+After load
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 1 2 1 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+player 2, direction VERTICAL
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+no blockers
+score 0 4 diff -4 (0 0) [-4]
+bpoint 0 0
+prisoners[0] : 0, prisoners[1] : 0
+At the end !!!!!!!!!!!!!!!!!!!!!!!!!
+prisoners[0] : 0, prisoners[1] : 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 1 2 1 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+player 2, direction VERTICAL
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+no blockers
+score 0 4 diff -4 (0 0) [-4]
+bpoint 0 0
+IA move 5 (Turn 3) at 8 11 played in 0.084000 seconds (17180 pos, 10 depth) mean : 0.063000
+dans print move coord : x == 8 y == 11
 map index == 4
-map inde == 4 curent candidats == [( x: 7, y: 7), val: -24.0, ( x: 10, y: 10), val: -18.0]
+map inde == 4 curent candidats == null
 size map == 5
 
 size map == 6
 map_index apres update dans play move5
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 7 7 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
 nbr prisonners : 0
 player color set in map == 0
 non!
 update player turn fct : 0
 update player turn fct : 1
-best move turn 2 player 2
-After load
-At the begening
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-no blockers
-score 10 0 diff 10 (0 0) [10]
-bpoint 0 0
-prisoners[0] : 0, prisoners[1] : 0
-
-	minmax launch turn 2 player 2
-minmaxab best move 10 9
-IA move 6 (Turn 4) at 10 9 played in 0.207000 seconds (77507 pos, 11 depth) mean : 0.210333
-dans print move coord : x == 10 y == 9
-map index == 5
 map inde == 5 curent candidats == null
+candidat list dans map == [( x: 8, y: 8), val: 15.0, ( x: 8, y: 11), val: 20.0]
+size squre == 31 goba size == 589
+Pane cliqué aux coordonnées : (301.0, 443.0)
+width allowed margon == 15 height allowed margin == 15
+apres ajustemeent marge : (282.0, 345.0)
+x- margin == 9.096774193548388 y - margin == 11.129032258064516
+x- margin == 9.0 y - margin == 11.0
+dans print move coord : x == 9 y == 11
+map index == 5
+map inde == 5 curent candidats == [( x: 8, y: 8), val: 15.0, ( x: 8, y: 11), val: 20.0]
 size map == 6
 
 size map == 7
 map_index apres update dans play move6
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 9 10 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
 nbr prisonners : 0
 player color set in map == 1
 non!
 update player turn fct : 1
 update player turn fct : 0
-map inde == 6 curent candidats == null
-candidat list dans map == [( x: 6, y: 6), val: -32.0, ( x: 10, y: 9), val: -15.0]
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (222.0, 305.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (209.0, 151.0)
-x- margin == 9.952380952380953 y - margin == 7.190476190476191
-x- margin == 10.0 y - margin == 7.0
-dans print move coord : x == 10 y == 7
-map index == 6
-map inde == 6 curent candidats == [( x: 6, y: 6), val: -32.0, ( x: 10, y: 9), val: -15.0]
-size map == 7
-
-size map == 8
-map_index apres update dans play move7
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 7 10 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 0
-non!
-update player turn fct : 0
-update player turn fct : 1
-best move turn 2 player 2
+Call best_move turn 1 player 1
 After load
-At the begening
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -681,11 +391,11 @@ At the begening
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 1 2 1 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -694,26 +404,6 @@ At the begening
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 player 2, direction VERTICAL
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -723,11 +413,31 @@ player 2, direction VERTICAL
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+player 2, direction DIAGPOS
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -735,20 +445,32 @@ player 2, direction VERTICAL
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 no blockers
-score 10 10 diff 0 (0 0) [0]
+score 0 4 diff -4 (2 0) [16]
 bpoint 0 0
 prisoners[0] : 0, prisoners[1] : 0
+At the end !!!!!!!!!!!!!!!!!!!!!!!!!
+prisoners[0] : 0, prisoners[1] : 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 1 2 1 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 
-	minmax launch turn 2 player 2
-minmaxab best move 10 11
-IA move 8 (Turn 5) at 10 11 played in 0.136000 seconds (45658 pos, 11 depth) mean : 0.191750
-dans print move coord : x == 10 y == 11
-map index == 7
-map inde == 7 curent candidats == null
-size map == 8
-
-size map == 9
-map_index apres update dans play move8
+player 2, direction VERTICAL
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -756,9 +478,31 @@ map_index apres update dans play move8
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+player 2, direction DIAGPOS
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -766,215 +510,60 @@ map_index apres update dans play move8
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 11 10 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 1
-non!
-update player turn fct : 1
-update player turn fct : 0
-map inde == 8 curent candidats == null
-candidat list dans map == [( x: 6, y: 6), val: -41.0, ( x: 10, y: 11), val: -6.0]
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (221.0, 399.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (208.0, 245.0)
-x- margin == 9.904761904761905 y - margin == 11.666666666666666
-x- margin == 10.0 y - margin == 12.0
+no blockers
+score 0 4 diff -4 (2 0) [16]
+bpoint 0 0
+IA move 7 (Turn 4) at 10 12 played in 0.049000 seconds (7684 pos, 10 depth) mean : 0.059500
 dans print move coord : x == 10 y == 12
-map index == 8
-map inde == 8 curent candidats == [( x: 6, y: 6), val: -41.0, ( x: 10, y: 11), val: -6.0]
-size map == 9
+map index == 6
+map inde == 6 curent candidats == null
+size map == 7
 
-size map == 10
-map_index apres update dans play move9
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 12 10 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
+size map == 8
+map_index apres update dans play move7
+capture 1 er affichage : ( x: 9, y: 11), val: 0.0
+capture 1 er affichage : ( x: 8, y: 10), val: 0.0
+nbr prisonners : 2
+capture 2 em affichage : ( x: 9, y: 11), val: 0.0
+capture 2 em affichage : ( x: 8, y: 10), val: 0.0
 player color set in map == 0
 non!
 update player turn fct : 0
 update player turn fct : 1
-best move turn 2 player 2
-After load
-At the begening
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+map inde == 7 curent candidats == null
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+map sie == 8 map index == 7
+les prisonniers qui vont etre anules sont : 
+( x: 9, y: 11), val: 0.0les prisonniers qui vont etre anules sont : 
+( x: 8, y: 10), val: 0.0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+update player turn0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+map sie == 7 map index == 6
 
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-blockers [12 10]  [7 10] 
-score 10 0 diff 10 (0 0) [10]
-bpoint 0 0
-prisoners[0] : 0, prisoners[1] : 0
-
-	minmax launch turn 2 player 2
-minmaxab best move 9 10
-IA move 10 (Turn 6) at 9 10 played in 0.311000 seconds (110710 pos, 11 depth) mean : 0.215600
-dans print move coord : x == 9 y == 10
-map index == 9
-map inde == 9 curent candidats == null
-size map == 10
-
-size map == 11
-map_index apres update dans play move10
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 10 9 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 2 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 1
-non!
-update player turn fct : 1
-update player turn fct : 0
-map inde == 10 curent candidats == null
-candidat list dans map == [( x: 9, y: 8), val: -46.0, ( x: 9, y: 10), val: -18.0, ( x: 6, y: 6), val: -18.0, ( x: 9, y: 7), val: -18.0, ( x: 11, y: 8), val: -18.0, ( x: 11, y: 9), val: -23.0]
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (207.0, 385.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (194.0, 231.0)
-x- margin == 9.238095238095237 y - margin == 11.0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+update player turn1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+size squre == 31 goba size == 589
+Pane cliqué aux coordonnées : (300.0, 440.0)
+width allowed margon == 15 height allowed margin == 15
+apres ajustemeent marge : (281.0, 342.0)
+x- margin == 9.064516129032258 y - margin == 11.03225806451613
 x- margin == 9.0 y - margin == 11.0
 dans print move coord : x == 9 y == 11
-map index == 10
-map inde == 10 curent candidats == [( x: 9, y: 8), val: -46.0, ( x: 9, y: 10), val: -18.0, ( x: 6, y: 6), val: -18.0, ( x: 9, y: 7), val: -18.0, ( x: 11, y: 8), val: -18.0, ( x: 11, y: 9), val: -23.0]
-size map == 11
+map index == 5
+map inde == 5 curent candidats == [( x: 8, y: 8), val: 15.0, ( x: 8, y: 11), val: 20.0]
+size map == 6
 
-size map == 12
-map_index apres update dans play move11
+size map == 7
+map_index apres update dans play move6
+nbr prisonners : 0
+player color set in map == 1
+non!
+update player turn fct : 1
+update player turn fct : 0
+Call best_move turn 1 player 1
+After load
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -982,388 +571,65 @@ map_index apres update dans play move11
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 2 2 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 1 2 1 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+player 2, direction VERTICAL
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+player 2, direction DIAGPOS
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 11 9 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 2 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 0
-non!
-update player turn fct : 0
-update player turn fct : 1
-best move turn 2 player 2
-After load
-At the begening
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 2 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction HORIZONTAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGNEG
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-blockers [12 10]  [7 10] 
-score 14 12 diff 2 (0 0) [2]
+no blockers
+score 0 4 diff -4 (2 0) [16]
 bpoint 0 0
 prisoners[0] : 0, prisoners[1] : 0
-
-	minmax launch turn 2 player 2
-minmaxab best move 8 10
-IA move 12 (Turn 7) at 8 10 played in 0.336000 seconds (85145 pos, 11 depth) mean : 0.235667
-dans print move coord : x == 8 y == 10
-map index == 11
-map inde == 11 curent candidats == null
-size map == 12
-
-size map == 13
-map_index apres update dans play move12
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 2 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 10 8 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 2 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 1
-non!
-update player turn fct : 1
-update player turn fct : 0
-map inde == 12 curent candidats == null
-candidat list dans map == [( x: 6, y: 6), val: -33.0, ( x: 11, y: 8), val: 0.0, ( x: 8, y: 9), val: 0.0, ( x: 8, y: 10), val: 4.0, ( x: 11, y: 10), val: 4.0, ( x: 8, y: 11), val: 4.0, ( x: 11, y: 12), val: 4.0, ( x: 11, y: 13), val: 4.0]
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (238.0, 366.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (225.0, 212.0)
-x- margin == 10.714285714285714 y - margin == 10.095238095238095
-x- margin == 11.0 y - margin == 10.0
-dans print move coord : x == 11 y == 10
-map index == 12
-map inde == 12 curent candidats == [( x: 6, y: 6), val: -33.0, ( x: 11, y: 8), val: 0.0, ( x: 8, y: 9), val: 0.0, ( x: 8, y: 10), val: 4.0, ( x: 11, y: 10), val: 4.0, ( x: 8, y: 11), val: 4.0, ( x: 11, y: 12), val: 4.0, ( x: 11, y: 13), val: 4.0]
-size map == 13
-
-size map == 14
-map_index apres update dans play move13
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 2 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 10 11 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 0
-non!
-update player turn fct : 0
-update player turn fct : 1
-best move turn 2 player 2
-After load
-At the begening
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction HORIZONTAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGNEG
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-blockers [12 10]  [7 10] 
-score 12 18 diff -6 (0 1) [-16]
-bpoint 0 0
+At the end !!!!!!!!!!!!!!!!!!!!!!!!!
 prisoners[0] : 0, prisoners[1] : 0
-
-	minmax launch turn 2 player 2
-minmaxab best move 7 10
-IA move 14 (Turn 8) at 7 10 played in 0.246000 seconds (51672 pos, 11 depth) mean : 0.237143
-dans print move coord : x == 7 y == 10
-map index == 13
-map inde == 13 curent candidats == null
-size map == 14
-
-size map == 15
-map_index apres update dans play move14
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -1371,218 +637,12 @@ map_index apres update dans play move14
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 10 7 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 1
-non!
-update player turn fct : 1
-update player turn fct : 0
-map inde == 14 curent candidats == null
-candidat list dans map == [( x: 6, y: 6), val: -8.0, ( x: 7, y: 10), val: 2.0, ( x: 11, y: 13), val: 2.0, ( x: 11, y: 8), val: 2.0, ( x: 8, y: 9), val: 2.0, ( x: 8, y: 11), val: 2.0, ( x: 11, y: 12), val: 2.0]
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (143.0, 366.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (130.0, 212.0)
-x- margin == 6.190476190476191 y - margin == 10.095238095238095
-x- margin == 6.0 y - margin == 10.0
-dans print move coord : x == 6 y == 10
-map index == 14
-map inde == 14 curent candidats == [( x: 6, y: 6), val: -8.0, ( x: 7, y: 10), val: 2.0, ( x: 11, y: 13), val: 2.0, ( x: 11, y: 8), val: 2.0, ( x: 8, y: 9), val: 2.0, ( x: 8, y: 11), val: 2.0, ( x: 11, y: 12), val: 2.0]
-size map == 15
-
-size map == 16
-map_index apres update dans play move15
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 10 6 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 0
-non!
-update player turn fct : 0
-update player turn fct : 1
-best move turn 2 player 2
-After load
-At the begening
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 1 2 1 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGNEG
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-blockers [12 10]  [7 10] 
-blockers [10 6]  [10 11] 
-score 12 8 diff 4 (0 1) [-6]
-bpoint 0 0
-prisoners[0] : 0, prisoners[1] : 0
-
-	minmax launch turn 2 player 2
-minmaxab best move 11 8
-IA move 16 (Turn 9) at 11 8 played in 0.693000 seconds (179799 pos, 11 depth) mean : 0.294125
-dans print move coord : x == 11 y == 8
-map index == 15
-map inde == 15 curent candidats == null
-size map == 16
-
-size map == 17
-map_index apres update dans play move16
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -1590,372 +650,6 @@ map_index apres update dans play move16
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 
-move 8 11 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 1
-non!
-update player turn fct : 1
-update player turn fct : 0
-map inde == 16 curent candidats == null
-candidat list dans map == [( x: 6, y: 6), val: -16.0, ( x: 11, y: 13), val: -16.0, ( x: 11, y: 8), val: -4.0, ( x: 8, y: 9), val: -4.0, ( x: 8, y: 11), val: -4.0, ( x: 11, y: 12), val: -4.0, ( x: 7, y: 9), val: -4.0]
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (262.0, 304.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (249.0, 150.0)
-x- margin == 11.857142857142858 y - margin == 7.142857142857143
-x- margin == 12.0 y - margin == 7.0
-dans print move coord : x == 12 y == 7
-map index == 16
-map inde == 16 curent candidats == [( x: 6, y: 6), val: -16.0, ( x: 11, y: 13), val: -16.0, ( x: 11, y: 8), val: -4.0, ( x: 8, y: 9), val: -4.0, ( x: 8, y: 11), val: -4.0, ( x: 11, y: 12), val: -4.0, ( x: 7, y: 9), val: -4.0]
-size map == 17
-
-size map == 18
-map_index apres update dans play move17
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 7 12 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 0
-non!
-update player turn fct : 0
-update player turn fct : 1
-best move turn 2 player 2
-After load
-At the begening
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction HORIZONTAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 2 0 0 2 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGNEG
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-blockers [12 10]  [7 10] 
-blockers [10 6]  [10 11] 
-blockers [7 12]  [7 7] |7 11||7 9||7 8|
-score 12 18 diff -6 (0 1) [-16]
-bpoint 0 0
-prisoners[0] : 0, prisoners[1] : 0
-
-	minmax launch turn 2 player 2
-Candidat selected
-6 6 3.000000
-11 8 3.000000
-13 11 2.500000
-8 9 2.000000
-8 12 2.000000
-9 8 2.000000
-12 11 2.000000
-7 11 1.000000
-minmaxab best move 8 11
-IA move 18 (Turn 10) at 8 11 played in 0.387000 seconds (93176 pos, 11 depth) mean : 0.304444
-dans print move coord : x == 8 y == 11
-map index == 17
-map inde == 17 curent candidats == null
-size map == 18
-
-size map == 19
-map_index apres update dans play move18
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 11 8 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 1
-non!
-update player turn fct : 1
-update player turn fct : 0
-map inde == 18 curent candidats == null
-candidat list dans map == [( x: 6, y: 6), val: -13.0, ( x: 8, y: 11), val: -4.0, ( x: 11, y: 13), val: -4.0, ( x: 9, y: 8), val: -4.0, ( x: 12, y: 8), val: -4.0, ( x: 8, y: 9), val: -4.0, ( x: 11, y: 12), val: -4.0, ( x: 11, y: 7), val: -4.0]
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (163.0, 408.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (150.0, 254.0)
-x- margin == 7.142857142857143 y - margin == 12.095238095238095
-x- margin == 7.0 y - margin == 12.0
-dans print move coord : x == 7 y == 12
-map index == 18
-map inde == 18 curent candidats == [( x: 6, y: 6), val: -13.0, ( x: 8, y: 11), val: -4.0, ( x: 11, y: 13), val: -4.0, ( x: 9, y: 8), val: -4.0, ( x: 12, y: 8), val: -4.0, ( x: 8, y: 9), val: -4.0, ( x: 11, y: 12), val: -4.0, ( x: 11, y: 7), val: -4.0]
-size map == 19
-
-size map == 20
-map_index apres update dans play move19
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 12 7 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 0
-non!
-update player turn fct : 0
-update player turn fct : 1
-best move turn 2 player 2
-After load
-At the begening
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 player 2, direction VERTICAL
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -1965,27 +659,7 @@ player 2, direction VERTICAL
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction HORIZONTAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 2 0 0 2 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -2006,44 +680,136 @@ player 2, direction DIAGPOS
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 2 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 2 0 2 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-blockers [12 10]  [7 10] 
-blockers [10 6]  [10 11] 
-blockers [7 12]  [7 7] |7 11||7 9||7 8|
-blockers [12 7]  [7 7] |11 7||9 7||8 7|
-blockers [12 7]  [7 12] 
-score 12 16 diff -4 (0 1) [-14]
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+no blockers
+score 0 4 diff -4 (2 0) [16]
+bpoint 0 0
+IA move 5 (Turn 3) at 10 12 played in 0.049000 seconds (7684 pos, 10 depth) mean : 0.057400
+dans print move coord : x == 10 y == 12
+map index == 6
+map inde == 6 curent candidats == null
+size map == 7
+
+size map == 8
+map_index apres update dans play move7
+capture 1 er affichage : ( x: 9, y: 11), val: 0.0
+capture 1 er affichage : ( x: 8, y: 10), val: 0.0
+nbr prisonners : 2
+capture 2 em affichage : ( x: 9, y: 11), val: 0.0
+capture 2 em affichage : ( x: 8, y: 10), val: 0.0
+player color set in map == 0
+non!
+update player turn fct : 0
+update player turn fct : 1
+map inde == 7 curent candidats == null
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+map sie == 8 map index == 7
+les prisonniers qui vont etre anules sont : 
+( x: 9, y: 11), val: 0.0les prisonniers qui vont etre anules sont : 
+( x: 8, y: 10), val: 0.0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+update player turn0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+map sie == 7 map index == 6
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+update player turn1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+size squre == 31 goba size == 589
+Pane cliqué aux coordonnées : (301.0, 438.0)
+width allowed margon == 15 height allowed margin == 15
+apres ajustemeent marge : (282.0, 340.0)
+x- margin == 9.096774193548388 y - margin == 10.96774193548387
+x- margin == 9.0 y - margin == 11.0
+dans print move coord : x == 9 y == 11
+map index == 5
+map inde == 5 curent candidats == [( x: 8, y: 8), val: 15.0, ( x: 8, y: 11), val: 20.0]
+size map == 6
+
+size map == 7
+map_index apres update dans play move6
+nbr prisonners : 0
+player color set in map == 1
+non!
+update player turn fct : 1
+update player turn fct : 0
+Call best_move turn 1 player 1
+After load
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 1 2 1 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+player 2, direction VERTICAL
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+player 2, direction DIAGPOS
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+no blockers
+score 0 4 diff -4 (2 0) [16]
 bpoint 0 0
 prisoners[0] : 0, prisoners[1] : 0
-
-	minmax launch turn 2 player 2
-Candidat selected
-6 6 3.000000
-13 11 2.500000
-8 9 2.000000
-8 12 2.000000
-9 6 2.000000
-9 8 2.000000
-12 8 2.000000
-12 9 2.000000
-minmaxab best move 9 12
-IA move 20 (Turn 11) at 9 12 played in 0.624000 seconds (143287 pos, 11 depth) mean : 0.336400
-dans print move coord : x == 9 y == 12
-map index == 19
-map inde == 19 curent candidats == null
-size map == 20
-
-size map == 21
-map_index apres update dans play move20
+At the end !!!!!!!!!!!!!!!!!!!!!!!!!
+prisoners[0] : 0, prisoners[1] : 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -2051,12 +817,12 @@ map_index apres update dans play move20
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 1 2 1 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -2064,161 +830,6 @@ map_index apres update dans play move20
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 
-move 12 9 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 1
-non!
-update player turn fct : 1
-update player turn fct : 0
-map inde == 20 curent candidats == null
-candidat list dans map == [( x: 6, y: 6), val: -15.0, ( x: 11, y: 13), val: -15.0, ( x: 9, y: 8), val: -15.0, ( x: 12, y: 8), val: -10.0, ( x: 6, y: 9), val: -10.0, ( x: 8, y: 9), val: -10.0, ( x: 8, y: 12), val: -10.0, ( x: 9, y: 12), val: -8.0]
-map inde == 20 curent candidats == [( x: 6, y: 6), val: -15.0, ( x: 11, y: 13), val: -15.0, ( x: 9, y: 8), val: -15.0, ( x: 12, y: 8), val: -10.0, ( x: 6, y: 9), val: -10.0, ( x: 8, y: 9), val: -10.0, ( x: 8, y: 12), val: -10.0, ( x: 9, y: 12), val: -8.0]
-Le bouton prev a été cliqué !
-map inde == 19 curent candidats == null
-Le bouton next a été cliqué !
-Le bouton next a été cliqué !
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (134.0, 347.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (121.0, 193.0)
-x- margin == 5.761904761904762 y - margin == 9.19047619047619
-x- margin == 6.0 y - margin == 9.0
-dans print move coord : x == 6 y == 9
-map index == 20
-map inde == 20 curent candidats == [( x: 6, y: 6), val: -15.0, ( x: 11, y: 13), val: -15.0, ( x: 9, y: 8), val: -15.0, ( x: 12, y: 8), val: -10.0, ( x: 6, y: 9), val: -10.0, ( x: 8, y: 9), val: -10.0, ( x: 8, y: 12), val: -10.0, ( x: 9, y: 12), val: -8.0]
-size map == 21
-
-size map == 22
-map_index apres update dans play move21
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 9 6 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 0
-non!
-update player turn fct : 0
-update player turn fct : 1
-best move turn 2 player 2
-After load
-At the begening
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-player 1, direction VERTICAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 player 2, direction VERTICAL
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -2228,27 +839,7 @@ player 2, direction VERTICAL
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction HORIZONTAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 2 0 0 2 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -2269,700 +860,392 @@ player 2, direction DIAGPOS
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGNEG
+ 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-blockers [12 10]  [7 10] 
-blockers [10 6]  [10 11] 
-blockers [7 12]  [7 7] |7 11||7 9||7 8|
-blockers [12 7]  [7 7] |11 7||9 7||8 7|
-blockers [12 7]  [7 12] 
-score 16 24 diff -8 (1 1) [-8]
+no blockers
+score 0 4 diff -4 (2 0) [16]
 bpoint 0 0
-prisoners[0] : 0, prisoners[1] : 0
+IA move 3 (Turn 2) at 10 12 played in 0.041000 seconds (7684 pos, 10 depth) mean : 0.054667
+dans print move coord : x == 10 y == 12
+map index == 6
+map inde == 6 curent candidats == null
+size map == 7
 
-	minmax launch turn 2 player 2
-Candidat selected
-6 6 3.000000
-13 10 3.000000
-13 11 2.500000
-13 8 2.400000
-8 6 2.000000
-8 9 2.000000
-8 12 2.000000
-9 8 2.000000
-minmaxab best move 12 8
-IA move 22 (Turn 12) at 12 8 played in 0.464000 seconds (93435 pos, 11 depth) mean : 0.348000
-dans print move coord : x == 12 y == 8
-map index == 21
-map inde == 21 curent candidats == null
-size map == 22
+size map == 8
+map_index apres update dans play move7
+capture 1 er affichage : ( x: 9, y: 11), val: 0.0
+capture 1 er affichage : ( x: 8, y: 10), val: 0.0
+nbr prisonners : 2
+capture 2 em affichage : ( x: 9, y: 11), val: 0.0
+capture 2 em affichage : ( x: 8, y: 10), val: 0.0
+player color set in map == 0
+non!
+update player turn fct : 0
+update player turn fct : 1
+map inde == 7 curent candidats == null
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+map sie == 8 map index == 7
+les prisonniers qui vont etre anules sont : 
+( x: 9, y: 11), val: 0.0les prisonniers qui vont etre anules sont : 
+( x: 8, y: 10), val: 0.0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+update player turn0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+map sie == 7 map index == 6
 
-size map == 23
-map_index apres update dans play move22
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+update player turn1
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+size squre == 31 goba size == 589
+Pane cliqué aux coordonnées : (264.0, 349.0)
+width allowed margon == 15 height allowed margin == 15
+apres ajustemeent marge : (245.0, 251.0)
+x- margin == 7.903225806451613 y - margin == 8.096774193548388
+x- margin == 8.0 y - margin == 8.0
+dans print move coord : x == 8 y == 8
+map index == 5
+map inde == 5 curent candidats == [( x: 8, y: 8), val: 15.0, ( x: 8, y: 11), val: 20.0]
+size map == 6
 
-move 8 12 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 2 0 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
+size map == 7
+map_index apres update dans play move6
 nbr prisonners : 0
 player color set in map == 1
 non!
 update player turn fct : 1
 update player turn fct : 0
-map inde == 22 curent candidats == null
-candidat list dans map == [( x: 6, y: 6), val: -14.0, ( x: 10, y: 13), val: -14.0, ( x: 11, y: 13), val: -16.0, ( x: 8, y: 13), val: -14.0, ( x: 6, y: 8), val: -14.0, ( x: 9, y: 8), val: -14.0, ( x: 12, y: 8), val: -12.0, ( x: 8, y: 9), val: -12.0]
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (287.0, 322.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (274.0, 168.0)
-x- margin == 13.047619047619047 y - margin == 8.0
-x- margin == 13.0 y - margin == 8.0
-dans print move coord : x == 13 y == 8
-map index == 22
-map inde == 22 curent candidats == [( x: 6, y: 6), val: -14.0, ( x: 10, y: 13), val: -14.0, ( x: 11, y: 13), val: -16.0, ( x: 8, y: 13), val: -14.0, ( x: 6, y: 8), val: -14.0, ( x: 9, y: 8), val: -14.0, ( x: 12, y: 8), val: -12.0, ( x: 8, y: 9), val: -12.0]
-size map == 23
-
-size map == 24
-map_index apres update dans play move23
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 2 0 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 8 13 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 2 1 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 0
-non!
-update player turn fct : 0
-update player turn fct : 1
-best move turn 2 player 2
-After load
-At the begening
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 2 1 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-player 1, direction VERTICAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 3 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction VERTICAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction HORIZONTAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGNEG
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-blockers [12 10]  [7 10] 
-blockers [10 6]  [10 11] 
-blockers [7 12]  [7 7] |7 11||7 9||7 8|
-blockers [12 7]  [7 7] |11 7||9 7||8 7|
-blockers [12 7]  [7 12] 
-blockers [8 13]  [8 8] |8 9|
-score 20 30 diff -10 (1 1) [-10]
-bpoint 0 10
-prisoners[0] : 0, prisoners[1] : 0
-
-	minmax launch turn 2 player 2
-Candidat selected
-6 6 3.000000
-8 9 3.000000
-13 10 3.000000
-13 11 2.500000
-13 8 2.400000
-6 11 2.000000
-8 6 2.000000
-9 8 2.000000
-minmaxab best move 8 13
-IA move 24 (Turn 13) at 8 13 played in 0.485000 seconds (102338 pos, 11 depth) mean : 0.359417
-dans print move coord : x == 8 y == 13
-map index == 23
-map inde == 23 curent candidats == null
-size map == 24
-
-size map == 25
-map_index apres update dans play move24
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 2 1 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 13 8 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 2 1 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 1
-non!
-update player turn fct : 1
-update player turn fct : 0
-map inde == 24 curent candidats == null
-candidat list dans map == [( x: 6, y: 6), val: -31.0, ( x: 9, y: 8), val: -32.0, ( x: 10, y: 13), val: -22.0, ( x: 11, y: 13), val: -34.0, ( x: 8, y: 13), val: -18.0, ( x: 11, y: 6), val: -18.0, ( x: 6, y: 8), val: -18.0, ( x: 8, y: 9), val: -18.0]
-size squre == 21 goba size == 399
-Pane cliqué aux coordonnées : (180.0, 403.0)
-width allowed margon == 10 height allowed margin == 10
-apres ajustemeent marge : (167.0, 249.0)
-x- margin == 7.9523809523809526 y - margin == 11.857142857142858
-x- margin == 8.0 y - margin == 12.0
-dans print move coord : x == 8 y == 12
-map index == 24
-map inde == 24 curent candidats == [( x: 6, y: 6), val: -31.0, ( x: 9, y: 8), val: -32.0, ( x: 10, y: 13), val: -22.0, ( x: 11, y: 13), val: -34.0, ( x: 8, y: 13), val: -18.0, ( x: 11, y: 6), val: -18.0, ( x: 6, y: 8), val: -18.0, ( x: 8, y: 9), val: -18.0]
-size map == 25
-
-size map == 26
-map_index apres update dans play move25
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 2 1 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 12 8 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 2 1 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 1 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-nbr prisonners : 0
-player color set in map == 0
-non!
-update player turn fct : 0
-update player turn fct : 1
-best move turn 2 player 2
-After load
-At the begening
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 2 1 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 1 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-player 1, direction VERTICAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 1, direction HORIZONTAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 1, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 3 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 1, direction DIAGNEG
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction VERTICAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction HORIZONTAL
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGPOS
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-player 2, direction DIAGNEG
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-blockers [12 10]  [7 10] 
-blockers [10 6]  [10 11] 
-blockers [7 12]  [7 7] |7 11||7 9||7 8|
-blockers [12 7]  [7 7] |11 7||9 7||8 7|
-blockers [12 7]  [7 12] 
-blockers [8 13]  [8 8] |8 9|
-score 24 36 diff -12 (1 3) [-32]
-bpoint 0 10
-prisoners[0] : 0, prisoners[1] : 0
-
-	minmax launch turn 2 player 2
-Candidat selected
-6 6 3.000000
-8 9 3.000000
-13 10 3.000000
-14 7 3.000000
-12 6 2.500000
-13 7 2.500000
-13 11 2.500000
-9 8 2.400000
-minmaxab best move 7 13
-IA move 26 (Turn 14) at 7 13 played in 0.451000 seconds (89303 pos, 11 depth) mean : 0.366462
-dans print move coord : x == 7 y == 13
-map index == 25
-map inde == 25 curent candidats == null
-size map == 26
-
-size map == 27
-map_index apres update dans play move26
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 2 1 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 1 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-move 13 7 rule Gomoku
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 1 0 2 2 2 1 0 0 0 0 0
- 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 1 2 2 2 2 1 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 2 1 2 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 1 1 2 1 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 2 2 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.046857
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == null
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.041000
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.036444
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.032800
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.029818
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.027333
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.025231
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.023429
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.021867
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.020500
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.019294
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.018222
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.017263
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.016400
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.015619
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.014909
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.014261
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.013667
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.013120
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.012615
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.012148
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.011714
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.011310
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.010933
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.010581
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.010250
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.009939
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.009647
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.009371
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.009111
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.008865
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.008632
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.008410
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.008200
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.008000
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.007810
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.007628
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.007455
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.007289
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.007130
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.006979
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.006833
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.006694
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.006560
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.006431
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.006308
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.006189
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.006074
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.005964
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.005857
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.005754
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.005655
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.005559
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.005467
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.005377
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.005290
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.005206
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.005125
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.005046
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.004970
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.004896
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.004824
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.004754
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.004686
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.004620
+dans print move coord : x == 9 y == 9
+map inde == 6 curent candidats == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+candidat list dans map == [( x: 8, y: 8), val: 32.0, ( x: 10, y: 12), val: 34.0]
+Call best_move turn 1 player 1
+IA move 1 (Turn 1) at 9 9 played in 0.000000 seconds (7684 pos, 10 depth) mean : 0.004556

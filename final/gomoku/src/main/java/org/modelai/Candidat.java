@@ -6,11 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 import org.utils.DoubleFree;
 
+//load case for gomoku
+
 public class Candidat
 {
     public ArrayList<Candidat.coord> lst =  new ArrayList<Candidat.coord>();
     static public DoubleFree doubleFreethree = new DoubleFree();
-    private List<Double> order = Arrays.asList(6.0, 5.0, 4.0, 3.5, 3.4, 3.0, 2.5, 2.4, 2.0, 1.0, 0.0);
+    private List<Double> order = Arrays.asList(6.0, 5.0, 4.0, 4.7, 3.7, 3.5, 3.4, 3.0, 2.5, 2.4, 2.0, 1.0, 0.0);
     private static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
 
     private static coord limax = new coord(1, 1);
@@ -144,6 +146,26 @@ public class Candidat
         return false;
     }
 
+    private boolean nearv(int i, int j, int val)
+    {
+        if (j+1 != 19 && MinMax.map[i][j + 1] == val)
+            return true;
+        if (j-1 != -1 && MinMax.map[i][j - 1] == val)
+            return true;
+        if (i+1 != 19 && MinMax.map[i + 1][j] == val)
+            return true;
+        if (i-1 != -1 && MinMax.map[i - 1][j] == val)
+            return true;
+        if (i+1 != 19 && j-1 != -1 && MinMax.map[i+1][j-1] == val)
+            return true;
+        if (i-1 != -1 && j-1 != -1 && MinMax.map[i-1][j-1] == val)
+            return true;
+        if (i+1 != 19 && j+1 != 19 && MinMax.map[i+1][j+1] == val)
+            return true;
+        if (i-1 != -1 && j+1 != 19 && MinMax.map[i-1][j+1] == val)
+            return true;
+        return false;
+    }
 
     private void load_lim(int [][] map)
     {
@@ -194,12 +216,29 @@ public class Candidat
                     {
 
                         if (Pente.prisoners[1] == 8)
-                            tot_case1 = 5;
+                            tot_case2 = 5;
                         else if (turn == 1)
-                            tot_case1 = Math.max(tot_case1, 2.5);
+                            tot_case2 = Math.max(tot_case2, 2.5);
                         else
-                            tot_case1= Math.max(tot_case1, 2.4);
+                            tot_case2= Math.max(tot_case2, 2.4);
                     }
+            }
+
+            if (MinMax.scsimul.str1[i][x][y] == 3)
+            {
+                if (in_goban(x+ddir[i][0], y + ddir[i][1]) && MinMax.map[x+ddir[i][0]][y+ddir[i][1]] == 0)
+                {
+                    if (nearv(x, y, 2))
+                        adding_can(x+ddir[i][0], y+ddir[i][1], 3);
+                }
+            }
+            else if (MinMax.scsimul.str2[i][x][y] == 3)
+            {
+                if (in_goban(x+ddir[i][0], y + ddir[i][1]) && MinMax.map[x+ddir[i][0]][y+ddir[i][1]] == 0)
+                {
+                    if (nearv(x, y, 1))
+                        adding_can(x+ddir[i][0], y+ddir[i][1], 3);
+                }
             }
 
             tot_case1 = Math.max(tot_case1, MinMax.scsimul.str1[i][x][y]);

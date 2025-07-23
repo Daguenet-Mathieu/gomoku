@@ -415,9 +415,9 @@ public class Pente extends MinMax {
             sup = 0;
         
         if (player == 1)
-            return (MinMax.scsimul.capt[0] - MinMax.scsimul.capt[1] ) * 6 + sup;
+            return (MinMax.scsimul.capt[0]*8 - MinMax.scsimul.capt[1]*5 ) + sup;
         else
-            return (MinMax.scsimul.capt[1] - MinMax.scsimul.capt[0] ) * 6 + sup;
+            return (MinMax.scsimul.capt[1]*8 - MinMax.scsimul.capt[0]*5 ) + sup;
     }
 
     public int blockedpnt(int player)
@@ -561,7 +561,7 @@ public class Pente extends MinMax {
 
                 //m.unplay(m.move, depth);
 
-                if (cut && cur_alpha > beta) // beta cut
+                if (cut && cur_alpha >= beta) // beta cut
                 {
                     //System.out.println("betacut");
                     //m.unplay(m.move, depth);
@@ -607,7 +607,7 @@ public class Pente extends MinMax {
 
                 //m.unplay(m.move, depth);
 
-                if (cut && alpha > cur_beta) // alpha cut
+                if (cut && alpha >= cur_beta) // alpha cut
                 {
                     //System.out.println("alphacut");
                     //m.unplay(m.move, depth);

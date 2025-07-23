@@ -61,4 +61,10 @@ public class Score {
             return two - one;
     }
 
+    public void reset()
+    {
+        one = 0;
+        two = 0;
+    }
+
 }

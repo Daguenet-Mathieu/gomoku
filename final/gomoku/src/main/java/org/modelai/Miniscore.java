@@ -123,6 +123,22 @@ public class Miniscore {
         }
     }
 
+    public void reset_str()
+    {
+        for (int d = 0 ; d < 4 ; d++)
+        {
+            for (int i  = 0 ; i < 19 ; i++)
+            {
+                for (int j = 0 ; j < 19 ; j++)
+                {
+                    this.str1[d][i][j] = 0;
+                    this.str2[d][i][j] = 0;
+                }
+            }
+        }
+        this.sc.reset();
+    }
+
     private boolean in_goban(int x, int y) //move utils
     {
         if (x >=0 && x < 19 && y >=0 && y < 19)
