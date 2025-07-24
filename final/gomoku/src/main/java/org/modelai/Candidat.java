@@ -7,6 +7,7 @@ import java.util.List;
 import org.utils.DoubleFree;
 
 //load case for gomoku
+//quand on a 8 capture prioritaire
 
 public class Candidat
 {

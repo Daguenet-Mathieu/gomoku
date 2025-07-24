@@ -113,7 +113,7 @@ public class Game {
     public Point best_move(int turn, int player)
     {
         if (player == 1)
-            Game.max_depth = 10;
+            Game.max_depth = 9;
         else
             Game.max_depth = 10;
 

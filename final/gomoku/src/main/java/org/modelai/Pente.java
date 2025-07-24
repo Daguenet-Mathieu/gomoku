@@ -147,7 +147,8 @@ public class Pente extends MinMax {
     public float value_victory_smarter(int player, int turn, int len, int nb, boolean print) //not so smart
     {
         pos_counter++;
-        float res;
+        float res = 0;
+        float win_cap = 0;
 
         // if (pos_counter % 1000 == 7)
         // {        
@@ -162,8 +163,13 @@ public class Pente extends MinMax {
             if (victory_capture)
             {
                 victory_capture = false;
-                return 10000 - len * 100;
+                win_cap = 10000 - len * 100;
+                //return win_cap;
+                //return win_cap;
+                //return 10000 - len * 100;
             }
+            else
+            {
 
             if (prisoners[(turn + 1) %2] + (nb * 2) >= 10)
             {
@@ -175,6 +181,7 @@ public class Pente extends MinMax {
                 res = 10000 - ((len + nb) * 100);
 
             //return 10000 - ((len + nb) * 100);
+            }
 
         }
         else
@@ -182,8 +189,12 @@ public class Pente extends MinMax {
             if (victory_capture)
             {
                 victory_capture = false;
-                return -10000 + len * 100;
+                win_cap = -10000 + len * 100;
+                //return win_cap;
+                //return -10000 + len * 100;
             }
+            else
+            {
             if (prisoners[(turn + 1) %2] + (nb * 2) >= 10)
             {
                 res = 10000 - ((len + nb) * 100);
@@ -191,12 +202,13 @@ public class Pente extends MinMax {
             }
             else
                 res = -10000 + ((len + nb) * 100);
+            }
             //return -10000 + ((len + nb) * 100);
         }
 
         if (print)
         {
-            System.out.printf("Victory ! nb forced capture %d, vicotry capture ? %b, val %f\n", nb, victory_capture, res);
+            System.out.printf("Victory ! len %d, nb forced capture %d, vicotry capture %b, res %f, win_cap %f\n", len,  nb, victory_capture, res, win_cap);
             System.out.printf("prisoners %d %d\n", prisoners[0], prisoners[1]);
         }
 
@@ -210,9 +222,20 @@ public class Pente extends MinMax {
         //     System.out.printf("Victory ! nb capture %d, val %d\n", nb, res);
         //     System.out.printf("prisoners %d %d\n", prisoners[0], prisoners[1]);
         // }
+        if (Math.abs(win_cap) > Math.abs(res))
+            return win_cap;
         return res;
     }
 
+    private boolean vicotry_detected(int x, int y, int player)
+    {
+        boolean res1;
+        boolean res2;
+
+        res1 = complete_check_win(x, y, player);
+        res2 = is_captured(x, y, player);
+        return (res1 || res2);
+    }
 
     public boolean play(Candidat.coord c, int player)
     {
@@ -221,9 +244,11 @@ public class Pente extends MinMax {
         //     return true;
 
 
-        if (complete_check_win(c.x, c.y, player) || is_captured(c.x, c.y, player))
-            return true;
+        // if (complete_check_win(c.x, c.y, player) || is_captured(c.x, c.y, player))
+        //     return true;
 
+        if (vicotry_detected(c.x, c.y, player))
+            return true;
         
         map[c.x][c.y] = player;
 
@@ -537,9 +562,10 @@ public class Pente extends MinMax {
                 {
 
                     //System.out.printf("after play %d\n", m.nb_forced_capture());
-                    //  if (candidat.lst.get(i).x == 9 && candidat.lst.get(i).y == 6)
+                    //  if (candidat.lst.get(i).x == 8 && candidat.lst.get(i).y == 14)
                     //     res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), true) + supeval(player, len, turn);
                     // else
+                    //System.out.printf("Victory on %d %d\n", candidat.lst.get(i).x, candidat.lst.get(i).y);
                     res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), false) + supeval(player, len, turn);
                     //debugstr();
                     // if (res == 12000 || res == -12000)
