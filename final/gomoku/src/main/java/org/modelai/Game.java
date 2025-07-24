@@ -69,10 +69,8 @@ public class Game {
         MinMax.map[point.y][point.x] = 0;
         scbord.analyse_unmove(point.y, point.x, val);
 
-        //System.out.println("undo remove called");
         if (undo)
         {
-            System.out.printf("UNDO REMOVE CALLED on %d %d\n", point.x, point.y);
             if (capt.size() != 0)
             {
                 int op = val == 1 ? 2 : 1;
@@ -80,13 +78,11 @@ public class Game {
                 for (int i = 0 ; i < capt.size() ; i++)
                 {
                     p = capt.get(i);
-                    System.out.printf("UNDO readed captured stone %d %d\n", p.x, p.y);
                     MinMax.map[p.y][p.x] = op;
                     Pente.prisoners[op - 1]--;
                     scbord.analyse_move(p.y, p.x, op);
                 }
             }
-            System.out.printf("nb_move decremented to %d\n", nb_move);
             nb_move --;
         }
     }
@@ -115,7 +111,7 @@ public class Game {
         if (player == 1)
             Game.max_depth = 9;
         else
-            Game.max_depth = 10;
+            Game.max_depth = 9;
 
         System.out.printf("Call best_move turn %d player %d\n", turn, player);
 

@@ -2,7 +2,7 @@ package org.utils;
 import org.modelai.*;
 import java.util.Scanner;
 
-public class NewTest
+public class NewTest //Main test
 {
     public Miniscore mscore;
     public Pente m;

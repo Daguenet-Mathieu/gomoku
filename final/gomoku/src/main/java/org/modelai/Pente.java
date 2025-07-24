@@ -3,23 +3,11 @@ import java.util.ArrayList;
 
 public class Pente extends MinMax {
 
-    // public Candidat.coord [] removed;
     static public int [] prisoners = new int[2];
     static ArrayList <Pente.Prison> prisonlst = new ArrayList<Pente.Prison>();
     public static boolean cut = true;
-    public static int stop = 0;
     public static int [] prisonersfactor = {0, 2, 2, 4, 4, 8, 8, 16, 16, 32, 32};
     public static boolean victory_capture = false;
-
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
 
     public static class Prison
     {
@@ -32,7 +20,6 @@ public class Pente extends MinMax {
             warder = new Candidat.coord(warx, wary);
         }
     }
-
 
     public Pente()
     {
@@ -59,7 +46,6 @@ public class Pente extends MinMax {
         int tmp = map[warx][wary];
         map[warx][wary]=0;
         prisoners[val - 1]++;
-        //System.out.printf("%d %d removed\n", x, y);
         map[x][y] = 0;
         scsimul.analyse_unmove(x, y, val);
         map[warx][wary]=tmp;

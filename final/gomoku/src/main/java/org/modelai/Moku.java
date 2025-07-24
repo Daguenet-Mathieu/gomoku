@@ -17,7 +17,6 @@ public class Moku extends MinMax {
 
     public boolean play(Candidat.coord c, int player)
     {
-        //System.out.printf("play %d %d\n", c.x, c.y);
         if (check_win_4_dir(c.x, c.y, player))
             return true;
         this.move = c;
@@ -31,7 +30,6 @@ public class Moku extends MinMax {
 
     public void unplay(Candidat.coord c, int depth)
     {
-        //System.out.printf("unplay %d %d\n", c.x, c.y);
         int val = map[c.x][c.y];
         map[c.x][c.y] = 0;
         scsimul.analyse_unmove(c.x, c.y, val);
@@ -52,8 +50,6 @@ public class Moku extends MinMax {
 
         if (depth == 0)
         {
-            //display_map();
-            // scsimul.display();
             pos_counter++;
             return eval(player, len, turn);
         }
@@ -67,8 +63,6 @@ public class Moku extends MinMax {
                 values[i] = value_victory(player, turn, len);
             else
                 values[i] = m.minmax(depth - 1, change(turn), player);
-            
-
             m.unplay(m.move, depth);
         }
 
@@ -89,10 +83,6 @@ public class Moku extends MinMax {
 
 
         nb_candidates = candidat.old_load(depth, turn);
-
-        //MinMax.display_Map();
-
-
         if (depth == 0)
         {
             pos_counter++;
@@ -113,9 +103,7 @@ public class Moku extends MinMax {
             if (turn == player)
             {
                 if (m.play(candidat.lst.get(i), turn))
-                {
                     res = value_victory_intermediate(player, turn, len);
-                }
                 else
                 {
                     res = m.minmaxab(depth - 1, change(turn), player, Math.max(alpha, cur_alpha), beta);
@@ -127,18 +115,13 @@ public class Moku extends MinMax {
 
 
                 if (cur_alpha >= beta) // beta cut
-                {
                     return cur_alpha;
-                }
 
             }
             else
             {
                 if (m.play(candidat.lst.get(i),turn))
-                {
                     res = value_victory_intermediate(player, turn, len);
-                }
-
                 else
                 {
                     res = m.minmaxab(depth - 1, change(turn), player, alpha, Math.min(beta, cur_beta));
@@ -149,9 +132,7 @@ public class Moku extends MinMax {
 
 
                 if (alpha >= cur_beta) // alpha cut
-                {
                     return cur_beta;
-                }
             }
         }
 

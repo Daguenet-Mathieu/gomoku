@@ -6,9 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import org.utils.DoubleFree;
 
-//load case for gomoku
-//quand on a 8 capture prioritaire
-
 public class Candidat
 {
     public ArrayList<Candidat.coord> lst =  new ArrayList<Candidat.coord>();
@@ -196,7 +193,7 @@ public class Candidat
     
         for (int i = 0 ; i < 4 ; i++)
         {
-            if (MinMax.scsimul.str1[i][x][y] == 2)
+            if (capture_possible && MinMax.scsimul.str1[i][x][y] == 2)
             {
                 if ((in_goban(x-3*ddir[i][0], y-3*ddir[i][1]) && MinMax.map[x-1*ddir[i][0]][y-1*ddir[i][1]] == 1 && MinMax.map[x-3*ddir[i][0]][y-3*ddir[i][1]] == 2) ||
                     (in_goban(x+3*ddir[i][0], y+3*ddir[i][1]) && MinMax.map[x+1*ddir[i][0]][y+1*ddir[i][1]] == 1 && MinMax.map[x+3*ddir[i][0]][y+3*ddir[i][1]] == 2))
@@ -210,7 +207,7 @@ public class Candidat
                         }
             }
 
-            if (MinMax.scsimul.str2[i][x][y] == 2)
+            if (capture_possible && MinMax.scsimul.str2[i][x][y] == 2)
             {
                 if ((in_goban(x-3*ddir[i][0], y-3*ddir[i][1]) && MinMax.map[x-1*ddir[i][0]][y-1*ddir[i][1]] == 2 && MinMax.map[x-3*ddir[i][0]][y-3*ddir[i][1]] == 1) ||
                     (in_goban(x+3*ddir[i][0], y+3*ddir[i][1]) && MinMax.map[x+1*ddir[i][0]][y+1*ddir[i][1]] == 2 && MinMax.map[x+3*ddir[i][0]][y+3*ddir[i][1]] == 1) )
@@ -225,7 +222,7 @@ public class Candidat
                     }
             }
 
-            if (MinMax.scsimul.str1[i][x][y] == 3)
+            if (capture_possible && MinMax.scsimul.str1[i][x][y] == 3)
             {
                 if (in_goban(x+ddir[i][0], y + ddir[i][1]) && MinMax.map[x+ddir[i][0]][y+ddir[i][1]] == 0)
                 {
@@ -233,7 +230,7 @@ public class Candidat
                         adding_can(x+ddir[i][0], y+ddir[i][1], 3);
                 }
             }
-            else if (MinMax.scsimul.str2[i][x][y] == 3)
+            else if (capture_possible && MinMax.scsimul.str2[i][x][y] == 3)
             {
                 if (in_goban(x+ddir[i][0], y + ddir[i][1]) && MinMax.map[x+ddir[i][0]][y+ddir[i][1]] == 0)
                 {
