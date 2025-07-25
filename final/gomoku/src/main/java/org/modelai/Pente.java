@@ -3,23 +3,11 @@ import java.util.ArrayList;
 
 public class Pente extends MinMax {
 
-    // public Candidat.coord [] removed;
     static public int [] prisoners = new int[2];
     static ArrayList <Pente.Prison> prisonlst = new ArrayList<Pente.Prison>();
     public static boolean cut = true;
-    public static int stop = 0;
     public static int [] prisonersfactor = {0, 2, 2, 4, 4, 8, 8, 16, 16, 32, 32};
     public static boolean victory_capture = false;
-
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
 
     public static class Prison
     {
@@ -32,7 +20,6 @@ public class Pente extends MinMax {
             warder = new Candidat.coord(warx, wary);
         }
     }
-
 
     public Pente()
     {
@@ -59,29 +46,52 @@ public class Pente extends MinMax {
         int tmp = map[warx][wary];
         map[warx][wary]=0;
         prisoners[val - 1]++;
-        //System.out.printf("%d %d removed\n", x, y);
         map[x][y] = 0;
         scsimul.analyse_unmove(x, y, val);
         map[warx][wary]=tmp;
         prisonlst.add(new Pente.Prison(x,y, warx, wary));
     }
 
-    static private int is_capture(int x, int y, int dx, int dy, int p, int o)
+    static private int is_capture(int x, int y, int dx, int dy, int p, int o, boolean pot)
     {
         int count = 0;
+        final int car = pot ? 0 : p;
 
-        if (MinMax.IN_goban(x+3*dx, y+3*dy) && map[x + dx][y + dy] == o && map[x + 2 * dx][y + 2 * dy] == o && map[x + 3 * dx][y + 3 * dy] == p)
+        if (MinMax.IN_goban(x+3*dx, y+3*dy) && map[x + dx][y + dy] == o && map[x + 2 * dx][y + 2 * dy] == o && map[x + 3 * dx][y + 3 * dy] == car)
         {
             count+=2;
         }
 
-        if (MinMax.IN_goban(x-3*dx, y - 3*dy) && map[x - dx][y - dy] == o && map[x - 2 * dx][y - 2 * dy] == o && map[x - 3 * dx][y - 3 * dy] == p)
+        if (MinMax.IN_goban(x-3*dx, y - 3*dy) && map[x - dx][y - dy] == o && map[x - 2 * dx][y - 2 * dy] == o && map[x - 3 * dx][y - 3 * dy] == car)
         {
             count+=2;
         }
 
         return count;
 
+    }
+
+    static private int is_double(int x, int y, int dx, int dy, int p, int o)
+    {
+        int count = 0;
+
+        if (MinMax.IN_goban(x+dx, y+dy) && map[x + dx][y + dy] == p && MinMax.IN_goban(x-dx, y-dy) && map[x - dx][y - dy] != p)
+            if (MinMax.IN_goban(x+2*dx, y+2*dy) && map[x + 2*dx][y + 2*dy] != p)
+                {
+                   if (map[x - dx][y - dy] == 0 && map[x+ 2*dx][y+2*dy] == o || map[x - dx][y - dy] == o && map[x+ 2*dx][y+2*dy] == 0)
+                        count +=2;
+                    else if ( map[x - dx][y - dy] == 0 || map[x+ 2*dx][y+2*dy] == 0 )
+                        count +=1;
+                }
+        if (MinMax.IN_goban(x+dx, y+dy) && map[x + dx][y + dy] != p && MinMax.IN_goban(x-dx, y-dy) && map[x - dx][y - dy] == p)
+            if (MinMax.IN_goban(x-2*dx, y-2*dy) && map[x - 2*dx][y - 2*dy] != p)
+                {
+                    if (map[x + dx][y + dy] == 0 && map[x- 2*dx][y-2*dy] == o || map[x + dx][y + dy] == o && map[x- 2*dx][y-2*dy] == 0)
+                        count +=2;
+                    else if ( map[x + dx][y + dy] == 0 || map[x- 2*dx][y-2*dy] == 0 )
+                        count +=1;
+                }
+        return count;
     }
 
     static public boolean remove_capture(int x, int y, int dx, int dy, int p, int o)
@@ -102,17 +112,29 @@ public class Pente extends MinMax {
         return false;
     }
 
-    static public int count_capture(int x, int y, int turn)
+    static public int count_capture(int x, int y, int turn, boolean pot)
     {
         final int op = turn == 1 ? 2 : 1;
         int count = 0;
 
         for (int i = 0 ; i < 4 ; i++)
         {
-            count += is_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
+            count += is_capture(x, y, ddir[i][0], ddir[i][1], turn, op, pot);
         }
         return count;
-    }   
+    }
+
+    static public int count_double(int x, int y, int turn)
+    {
+        final int op = turn == 1 ? 2 : 1;
+        int count = 0;
+
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            count += is_double(x, y, ddir[i][0], ddir[i][1], turn, op);
+        }
+        return count;
+    }
 
     private boolean is_captured(int x, int y, int turn)
     {  
@@ -121,7 +143,7 @@ public class Pente extends MinMax {
 
         for (int i = 0 ; i < 4 ; i++)
         {
-            count += is_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
+            count += is_capture(x, y, ddir[i][0], ddir[i][1], turn, op, false);
         }
         if (prisoners[(turn + 2) %2] + count >= 10)
         {
@@ -147,7 +169,8 @@ public class Pente extends MinMax {
     public float value_victory_smarter(int player, int turn, int len, int nb, boolean print) //not so smart
     {
         pos_counter++;
-        float res;
+        float res = 0;
+        float win_cap = 0;
 
         // if (pos_counter % 1000 == 7)
         // {        
@@ -162,8 +185,13 @@ public class Pente extends MinMax {
             if (victory_capture)
             {
                 victory_capture = false;
-                return 10000 - len * 100;
+                win_cap = 10000 - len * 100;
+                //return win_cap;
+                //return win_cap;
+                //return 10000 - len * 100;
             }
+            else
+            {
 
             if (prisoners[(turn + 1) %2] + (nb * 2) >= 10)
             {
@@ -175,6 +203,7 @@ public class Pente extends MinMax {
                 res = 10000 - ((len + nb) * 100);
 
             //return 10000 - ((len + nb) * 100);
+            }
 
         }
         else
@@ -182,8 +211,12 @@ public class Pente extends MinMax {
             if (victory_capture)
             {
                 victory_capture = false;
-                return -10000 + len * 100;
+                win_cap = -10000 + len * 100;
+                //return win_cap;
+                //return -10000 + len * 100;
             }
+            else
+            {
             if (prisoners[(turn + 1) %2] + (nb * 2) >= 10)
             {
                 res = 10000 - ((len + nb) * 100);
@@ -191,12 +224,13 @@ public class Pente extends MinMax {
             }
             else
                 res = -10000 + ((len + nb) * 100);
+            }
             //return -10000 + ((len + nb) * 100);
         }
 
         if (print)
         {
-            System.out.printf("Victory ! nb forced capture %d, vicotry capture ? %b, val %f\n", nb, victory_capture, res);
+            System.out.printf("Victory ! len %d, nb forced capture %d, vicotry capture %b, res %f, win_cap %f\n", len,  nb, victory_capture, res, win_cap);
             System.out.printf("prisoners %d %d\n", prisoners[0], prisoners[1]);
         }
 
@@ -210,9 +244,20 @@ public class Pente extends MinMax {
         //     System.out.printf("Victory ! nb capture %d, val %d\n", nb, res);
         //     System.out.printf("prisoners %d %d\n", prisoners[0], prisoners[1]);
         // }
+        if (Math.abs(win_cap) > Math.abs(res))
+            return win_cap;
         return res;
     }
 
+    private boolean vicotry_detected(int x, int y, int player)
+    {
+        boolean res1;
+        boolean res2;
+
+        res1 = complete_check_win(x, y, player);
+        res2 = is_captured(x, y, player);
+        return (res1 || res2);
+    }
 
     public boolean play(Candidat.coord c, int player)
     {
@@ -221,9 +266,11 @@ public class Pente extends MinMax {
         //     return true;
 
 
-        if (complete_check_win(c.x, c.y, player) || is_captured(c.x, c.y, player))
-            return true;
+        // if (complete_check_win(c.x, c.y, player) || is_captured(c.x, c.y, player))
+        //     return true;
 
+        if (vicotry_detected(c.x, c.y, player))
+            return true;
         
         map[c.x][c.y] = player;
 
@@ -537,9 +584,10 @@ public class Pente extends MinMax {
                 {
 
                     //System.out.printf("after play %d\n", m.nb_forced_capture());
-                    //  if (candidat.lst.get(i).x == 9 && candidat.lst.get(i).y == 6)
+                    //  if (candidat.lst.get(i).x == 8 && candidat.lst.get(i).y == 14)
                     //     res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), true) + supeval(player, len, turn);
                     // else
+                    //System.out.printf("Victory on %d %d\n", candidat.lst.get(i).x, candidat.lst.get(i).y);
                     res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), false) + supeval(player, len, turn);
                     //debugstr();
                     // if (res == 12000 || res == -12000)
@@ -654,9 +702,82 @@ public class Pente extends MinMax {
         //         System.out.println();
         // }
 
+        // if (depth == Game.max_depth)
+        //     return bonus_point(turn, player, values);
+
         if (turn == player)
             return max(values);
         else
             return min(values);
     }
+
+    private float bonus_point(int turn, int player, float values[])
+    {
+        Candidat.coord c;
+        float max = values[0];
+        float bonus;
+
+        best = candidat.lst.get(0);
+        for (int i = 0 ; i < values.length ; i++)
+            {
+                if (turn == player)
+                {
+                    if (max < values[i])
+                    {
+                        best = candidat.lst.get(i);
+                        max = values[i];
+                    }
+                }
+                else
+                {
+                    if (max > values[i])
+                    {
+                        best = candidat.lst.get(i);
+                        max = values[i];
+                    }
+                }
+            }
+
+        for (int i = 0 ; i < values.length ; i++)
+        {
+            if (values[i] == max)
+            {
+                c = candidat.lst.get(i);
+                bonus = adding_bonus_point(c.x, c.y, turn, player);
+                values[i] += adding_bonus_point(c.x, c.y, turn, player);
+                if (player == turn)
+                {
+                    if (max < max + bonus)
+                    {
+                        max = max + bonus;
+                        best = c;
+                    }
+                }
+                else
+                {
+                    if (max > max + bonus)
+                    {
+                        max = max + bonus;
+                        best = c;
+                    }
+                }
+            }
+        }
+        // for (int i = 0 ; i < values.length ; i++)
+        // {
+        //     System.out.printf(" %d %d %f", candidat.lst.get(i).x, candidat.lst.get(i).y ,values[i]);
+        // }
+        // System.out.printf("best %d %d", best.x, best.y);
+        // System.exit(0);
+        return max;
+    }
+
+    private float adding_bonus_point(int x, int y, int turn, int player)
+    {
+        if (player == turn)
+            return count_capture(x, y, turn, true) - count_double(x, y, turn);
+        else
+            return count_double(x, y, turn) - count_capture(x, y,turn, true); 
+    }
 }
+

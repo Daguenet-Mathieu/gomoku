@@ -6,8 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import org.utils.DoubleFree;
 
-//load case for gomoku
-
 public class Candidat
 {
     public ArrayList<Candidat.coord> lst =  new ArrayList<Candidat.coord>();
@@ -195,7 +193,7 @@ public class Candidat
     
         for (int i = 0 ; i < 4 ; i++)
         {
-            if (MinMax.scsimul.str1[i][x][y] == 2)
+            if (capture_possible && MinMax.scsimul.str1[i][x][y] == 2)
             {
                 if ((in_goban(x-3*ddir[i][0], y-3*ddir[i][1]) && MinMax.map[x-1*ddir[i][0]][y-1*ddir[i][1]] == 1 && MinMax.map[x-3*ddir[i][0]][y-3*ddir[i][1]] == 2) ||
                     (in_goban(x+3*ddir[i][0], y+3*ddir[i][1]) && MinMax.map[x+1*ddir[i][0]][y+1*ddir[i][1]] == 1 && MinMax.map[x+3*ddir[i][0]][y+3*ddir[i][1]] == 2))
@@ -209,7 +207,7 @@ public class Candidat
                         }
             }
 
-            if (MinMax.scsimul.str2[i][x][y] == 2)
+            if (capture_possible && MinMax.scsimul.str2[i][x][y] == 2)
             {
                 if ((in_goban(x-3*ddir[i][0], y-3*ddir[i][1]) && MinMax.map[x-1*ddir[i][0]][y-1*ddir[i][1]] == 2 && MinMax.map[x-3*ddir[i][0]][y-3*ddir[i][1]] == 1) ||
                     (in_goban(x+3*ddir[i][0], y+3*ddir[i][1]) && MinMax.map[x+1*ddir[i][0]][y+1*ddir[i][1]] == 2 && MinMax.map[x+3*ddir[i][0]][y+3*ddir[i][1]] == 1) )
@@ -224,7 +222,7 @@ public class Candidat
                     }
             }
 
-            if (MinMax.scsimul.str1[i][x][y] == 3)
+            if (capture_possible && MinMax.scsimul.str1[i][x][y] == 3)
             {
                 if (in_goban(x+ddir[i][0], y + ddir[i][1]) && MinMax.map[x+ddir[i][0]][y+ddir[i][1]] == 0)
                 {
@@ -232,7 +230,7 @@ public class Candidat
                         adding_can(x+ddir[i][0], y+ddir[i][1], 3);
                 }
             }
-            else if (MinMax.scsimul.str2[i][x][y] == 3)
+            else if (capture_possible && MinMax.scsimul.str2[i][x][y] == 3)
             {
                 if (in_goban(x+ddir[i][0], y + ddir[i][1]) && MinMax.map[x+ddir[i][0]][y+ddir[i][1]] == 0)
                 {
@@ -292,17 +290,25 @@ public class Candidat
         return this.lst.size();
     }
 
+    private boolean in_candidat_lst(int i, int j)
+    {
+        for (int k = 0 ; k < this.lst.size() ; k++)
+        {
+            if (this.lst.get(k).x==i && this.lst.get(k).y==j)
+                return true;
+        }
+        return false;
+    }
+
     public int adding_probable_candidate(int turn)
     {
         int res;
-        int x = this.lst.get(0).x;
-        int y = this.lst.get(0).y;
 
         for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
         {
             for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
             {
-                if (x == i && y == j)
+                if (in_candidat_lst(i, j))
                     continue;
 
                 res = near_num(i, j);
@@ -377,7 +383,7 @@ public class Candidat
 
         ret = interesting_candidate(MinMax.map);
 
-        if (ret > 1)
+        if (ret > 2)
         {
             //Candidat.coord can;
 
@@ -424,10 +430,10 @@ public class Candidat
         }
         else
         {
-            if (ret == 1)
-                ret = adding_probable_candidate(turn);
-            else
+            if (ret == 0)
                 ret = all_probable_candidate(turn);
+            else
+                ret = adding_probable_candidate(turn);
         }
         return ret;
     }

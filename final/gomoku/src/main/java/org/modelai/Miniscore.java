@@ -251,16 +251,6 @@ public class Miniscore {
             free3[player - 1] +=1;
     }
 
-
-
-    // private void inc_free(int st)
-    // {
-    //     if (st == 4)
-    //         free4[cur_turn - 1] +=1;
-    //     else if (st == 3)
-    //         free3[cur_turn - 1] +=1;
-    // }
-
     private void inc_simp(int st, int player)
     {
         if (st == 4)

@@ -14,7 +14,7 @@ public class Game {
     public ArrayList<Double> timelst;
     static public int max_depth = 10;
     static public int max_can = 8;
-    static public int min_can = 6;
+    static public int min_can = 7;
 
     public Game(String rules, int board_size)
     {
@@ -55,7 +55,7 @@ public class Game {
         scbord.analyse_move(point.y, point.x, turn);
         if (this.rules == "Pente")
         {
-            Pente.prisoners[turn %2] += Pente.count_capture(point.y, point.x, turn);
+            Pente.prisoners[turn %2] += Pente.count_capture(point.y, point.x, turn, false);
             m.complete_check_win(point.y, point.x, turn);
             MinMax.map[point.y][point.x] = turn;
         }
@@ -69,10 +69,8 @@ public class Game {
         MinMax.map[point.y][point.x] = 0;
         scbord.analyse_unmove(point.y, point.x, val);
 
-        //System.out.println("undo remove called");
         if (undo)
         {
-            System.out.printf("UNDO REMOVE CALLED on %d %d\n", point.x, point.y);
             if (capt.size() != 0)
             {
                 int op = val == 1 ? 2 : 1;
@@ -80,13 +78,11 @@ public class Game {
                 for (int i = 0 ; i < capt.size() ; i++)
                 {
                     p = capt.get(i);
-                    System.out.printf("UNDO readed captured stone %d %d\n", p.x, p.y);
                     MinMax.map[p.y][p.x] = op;
                     Pente.prisoners[op - 1]--;
                     scbord.analyse_move(p.y, p.x, op);
                 }
             }
-            System.out.printf("nb_move decremented to %d\n", nb_move);
             nb_move --;
         }
     }
@@ -113,9 +109,9 @@ public class Game {
     public Point best_move(int turn, int player)
     {
         if (player == 1)
-            Game.max_depth = 10;
+            Game.max_depth = 9;
         else
-            Game.max_depth = 10;
+            Game.max_depth = 9;
 
         System.out.printf("Call best_move turn %d player %d\n", turn, player);
 
