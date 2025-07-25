@@ -63,6 +63,7 @@ public class HomePage{
     private Label error_file = new Label();
     private StringProperty rule_type = new SimpleStringProperty("");
     // private int boardSize = -1;
+    private Rules rules_instance = null;
 
     HomePage(){
         boardSizeBox.getChildren().addAll(boardSizeLabel, boardSizeButtonBox);
@@ -265,6 +266,7 @@ public class HomePage{
         learnOrView.setText("view SGF");
         sgfFile = true;
         rule_type.set(SGF.get_game_rule());
+        rules_instance = SGF.getRuleInstance();
         //creer une instance de rules et jouer la map, ici?
         //  check coups invalide + capture 
         //  end game sera check dans gomoku? + dans gomoku play l'ia si pas lecture seule?
@@ -294,4 +296,9 @@ public class HomePage{
     public ArrayList<Map> getSgfMap(){
         return sgfMap;
     }
+
+    public Rules getRuleInstance(){
+        return rules_instance;
+    }
+
 }

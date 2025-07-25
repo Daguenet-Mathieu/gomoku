@@ -122,10 +122,10 @@ public class Gomoku
 
     private void eraseForbiddens(){
         ArrayList<Point> points = rule.get_forbiden_moves(_map, map_index, player_turn + 1);
+        forbiddenVisibility = false;
         for (Point point : points){
             changeForbiddenVisibility(forbiddenVisibility, point);
         }
-        forbiddenVisibility = false;
     }
 
     void changeForbiddenVisibility(boolean visible , Point p) {
@@ -453,7 +453,6 @@ public class Gomoku
         System.out.println("size map == " + _map.size());
         map_index = _map.size() - 1;
         System.out.println("map_index apres update dans play move" + map_index);
-
         if (rule.hasIa() == true)
             game.move(point, player_turn+1); // To update MinMax.map
         //MinMax.display_Map();
@@ -586,7 +585,10 @@ public class Gomoku
         // );
         // SGF.createSgf(null, "gomoku");
         _game_infos = game_infos;
-        init_rules(_game_infos.get_rules(), _game_infos.get_board_size());
+        if (_game_infos.getRuleInstance() != null)
+            rule = _game_infos.getRuleInstance();
+        else
+            init_rules(_game_infos.get_rules(), _game_infos.get_board_size());
         _nb_line = rule.get_board_size();
         game = new Game(game_infos.get_rules(), rule.get_board_size());
         System.out.println("constructeur gomoku rule type == " + rule.getGameType());
@@ -682,6 +684,8 @@ public class Gomoku
                 toggleHint = false;
                 map_index--;
                 goban.updateFromMap(_map.get(map_index));
+                gameInfos.set_black_prisonners(Integer.toString( _map.get(map_index).getBlackPrisonners()));
+                gameInfos.set_white_prisonners(Integer.toString( _map.get(map_index).getWhitePrisonners()));
             }
             // Action à réaliser lors du clic
             // stones[i][j].setVisible(true/false) et setFill(Color.BLACK/WHITE) parcourrir map et pierres
@@ -700,6 +704,8 @@ public class Gomoku
                 toggleHint = false;
                 map_index++;
                 goban.updateFromMap(_map.get(map_index));
+                gameInfos.set_black_prisonners(Integer.toString( _map.get(map_index).getBlackPrisonners()));
+                gameInfos.set_white_prisonners(Integer.toString( _map.get(map_index).getWhitePrisonners()));
             }
             // Action à réaliser lors du clic
             System.out.println("Le bouton next a été cliqué !");

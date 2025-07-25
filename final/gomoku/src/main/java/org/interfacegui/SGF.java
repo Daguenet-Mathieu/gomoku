@@ -22,6 +22,7 @@ public class SGF{
     private static String   errorMsg;
     private static boolean  header;
     private static ArrayList<Map> game_moves;
+    private static Rules ruleInstance;
     private static final String[] ignoreSet = new String[] {
         "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AR", "CR",
         "DD", "DM", "FG", "GB", "GW", "HO", "LB", "LN",
@@ -46,6 +47,7 @@ public class SGF{
     private static final String[] PointCmdSet = new String[] {"B", "W"};
     private static final String[] NumCmdSet = new String[] {"SZ", "HA", "KM", "GM"};
 
+
 // "KM"//komi
 // "HA"//handicap??
 // *AP  Application     root	      composed simpletext ':' number // je garde
@@ -66,6 +68,25 @@ public class SGF{
     // private static ArrayList<Map> build_sgf(){
     //     return null;
     // }
+
+    private static void init_rules(){
+        rules = rules.toLowerCase();
+        switch (rules){
+            case "pente" :
+                ruleInstance = new PenteRules();
+                break;
+            case "renju" :
+                ruleInstance = new RenjuRules();
+                break;
+            case "go":
+                ruleInstance = new GoRules();
+                break;
+            default:
+                ruleInstance = new GomokuRules();
+        }
+        System.out.println("bs == " + size);
+        ruleInstance.setBoardSize(size);
+    }
 
     public static File openSGFDir(){
         try {
@@ -518,7 +539,7 @@ public class SGF{
         if (node instanceof CoordValue)
         {
             System.out.println("y == " + ((CoordValue)node).getVal().y + " x == " + ((CoordValue)node).getVal().x);
-            if (map.tryAddToMap(node.getValue(), ((CoordValue)node).getVal()) == false)
+            if (PlayMove(((CoordValue)node).getVal(), game_moves, map, node.getValue()) == false)
                 throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate", 0);
         }
         else if (node instanceof StringValue){
@@ -529,14 +550,11 @@ public class SGF{
             System.out.println("size == " + ((ArrayValue)node).getVal().size());
             for (Point p : ((ArrayValue)node).getVal()){
                 System.out.println("x = " + p.x + " y = " + p.y);
-                if (map.tryAddToMap(node.getValue(), p) == false)
+                if (PlayMove(p, game_moves, map, node.getValue()) == false)
                     throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate", 0);
 
             }
         }
-
-        //si list
-        //si str
     }
 
     private static void checkHeader(){
@@ -548,6 +566,7 @@ public class SGF{
             komi = 0;
         if (handicap == -1)
             handicap = 0;
+        init_rules();
     }
 
     private static void executeTree(Node tree, int depth, int index) throws ParseException{
@@ -569,6 +588,11 @@ public class SGF{
                     isHeader = 0;
                     checkHeader();
                     map = new Map(size);
+                    System.out.println("size ==  + size");
+                    if (game_moves.size() == 0){
+                        game_moves.add(map);
+                        map = new Map(size);
+                    }
                 }
                 if (header == true)//&& isHeader != -1)
                     setheader(list.DataType);
@@ -727,7 +751,40 @@ public class SGF{
     public static void setFile(String absolute_path, String filename){
         file = new File(absolute_path, filename);
     }
+
     public static String getErrorMsg(){
         return errorMsg;
     }
+
+    public static Rules getRuleInstance(){
+        return ruleInstance;
+    }
+
+    private static boolean PlayMove(Point p, ArrayList<Map> mapList, Map map,String color){
+        if (map.tryAddToMap(color, p) == false) 
+            return false;
+        if ("AE".equals(color))
+            return true;
+        if (ruleInstance.isValidMove(p, mapList) == false)
+        {
+            // errorMsg 
+            return false;
+        }
+        int colorVal = color.contains("B") ? 1 : 2;
+        if ((ruleInstance instanceof GomokuRules) == false)
+        {
+            ArrayList<Point> points = ruleInstance.GetCapturedStones(p, map);
+            System.out.println("Rule est une instance de : " + ruleInstance.getClass().getName());
+            //la jouer avec l'ia plus tard
+            map.remove_prisonners(points);
+            if (colorVal == 1)
+                map.addBlackPrisonners(points.size());
+            else
+                map.addWhitePrisonners(points.size());
+            map.set_prisonners(points);
+        }
+
+        return true;
+    }
+
 }

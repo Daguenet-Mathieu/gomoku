@@ -258,6 +258,8 @@ public class GoRules implements Rules {
     public boolean isValidMove(Point point, ArrayList<Map> map) {
         if (gameStatus == Rules.GameMode.COUNTING)
             return false;
+        // if (map.size() == 0)
+        //     return true;
         System.out.println(gameStatus.name());
         System.out.println(" dans is valid move size == " + map.size());
         // if (color != null)

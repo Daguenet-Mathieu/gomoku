@@ -374,5 +374,10 @@ public class Home {
         return home_page.getSgfMap();
     }
 
+    public Rules getRuleInstance(){
+        return home_page.getRuleInstance();
+    }
+
+
 
 }
