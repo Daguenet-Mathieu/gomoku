@@ -290,17 +290,25 @@ public class Candidat
         return this.lst.size();
     }
 
+    private boolean in_candidat_lst(int i, int j)
+    {
+        for (int k = 0 ; k < this.lst.size() ; k++)
+        {
+            if (this.lst.get(k).x==i && this.lst.get(k).y==j)
+                return true;
+        }
+        return false;
+    }
+
     public int adding_probable_candidate(int turn)
     {
         int res;
-        int x = this.lst.get(0).x;
-        int y = this.lst.get(0).y;
 
         for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
         {
             for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
             {
-                if (x == i && y == j)
+                if (in_candidat_lst(i, j))
                     continue;
 
                 res = near_num(i, j);
@@ -375,7 +383,7 @@ public class Candidat
 
         ret = interesting_candidate(MinMax.map);
 
-        if (ret > 1)
+        if (ret > 2)
         {
             //Candidat.coord can;
 
@@ -422,10 +430,10 @@ public class Candidat
         }
         else
         {
-            if (ret == 1)
-                ret = adding_probable_candidate(turn);
-            else
+            if (ret == 0)
                 ret = all_probable_candidate(turn);
+            else
+                ret = adding_probable_candidate(turn);
         }
         return ret;
     }

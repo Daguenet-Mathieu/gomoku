@@ -52,22 +52,46 @@ public class Pente extends MinMax {
         prisonlst.add(new Pente.Prison(x,y, warx, wary));
     }
 
-    static private int is_capture(int x, int y, int dx, int dy, int p, int o)
+    static private int is_capture(int x, int y, int dx, int dy, int p, int o, boolean pot)
     {
         int count = 0;
+        final int car = pot ? 0 : p;
 
-        if (MinMax.IN_goban(x+3*dx, y+3*dy) && map[x + dx][y + dy] == o && map[x + 2 * dx][y + 2 * dy] == o && map[x + 3 * dx][y + 3 * dy] == p)
+        if (MinMax.IN_goban(x+3*dx, y+3*dy) && map[x + dx][y + dy] == o && map[x + 2 * dx][y + 2 * dy] == o && map[x + 3 * dx][y + 3 * dy] == car)
         {
             count+=2;
         }
 
-        if (MinMax.IN_goban(x-3*dx, y - 3*dy) && map[x - dx][y - dy] == o && map[x - 2 * dx][y - 2 * dy] == o && map[x - 3 * dx][y - 3 * dy] == p)
+        if (MinMax.IN_goban(x-3*dx, y - 3*dy) && map[x - dx][y - dy] == o && map[x - 2 * dx][y - 2 * dy] == o && map[x - 3 * dx][y - 3 * dy] == car)
         {
             count+=2;
         }
 
         return count;
 
+    }
+
+    static private int is_double(int x, int y, int dx, int dy, int p, int o)
+    {
+        int count = 0;
+
+        if (MinMax.IN_goban(x+dx, y+dy) && map[x + dx][y + dy] == p && MinMax.IN_goban(x-dx, y-dy) && map[x - dx][y - dy] != p)
+            if (MinMax.IN_goban(x+2*dx, y+2*dy) && map[x + 2*dx][y + 2*dy] != p)
+                {
+                   if (map[x - dx][y - dy] == 0 && map[x+ 2*dx][y+2*dy] == o || map[x - dx][y - dy] == o && map[x+ 2*dx][y+2*dy] == 0)
+                        count +=2;
+                    else if ( map[x - dx][y - dy] == 0 || map[x+ 2*dx][y+2*dy] == 0 )
+                        count +=1;
+                }
+        if (MinMax.IN_goban(x+dx, y+dy) && map[x + dx][y + dy] != p && MinMax.IN_goban(x-dx, y-dy) && map[x - dx][y - dy] == p)
+            if (MinMax.IN_goban(x-2*dx, y-2*dy) && map[x - 2*dx][y - 2*dy] != p)
+                {
+                    if (map[x + dx][y + dy] == 0 && map[x- 2*dx][y-2*dy] == o || map[x + dx][y + dy] == o && map[x- 2*dx][y-2*dy] == 0)
+                        count +=2;
+                    else if ( map[x + dx][y + dy] == 0 || map[x- 2*dx][y-2*dy] == 0 )
+                        count +=1;
+                }
+        return count;
     }
 
     static public boolean remove_capture(int x, int y, int dx, int dy, int p, int o)
@@ -88,17 +112,29 @@ public class Pente extends MinMax {
         return false;
     }
 
-    static public int count_capture(int x, int y, int turn)
+    static public int count_capture(int x, int y, int turn, boolean pot)
     {
         final int op = turn == 1 ? 2 : 1;
         int count = 0;
 
         for (int i = 0 ; i < 4 ; i++)
         {
-            count += is_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
+            count += is_capture(x, y, ddir[i][0], ddir[i][1], turn, op, pot);
         }
         return count;
-    }   
+    }
+
+    static public int count_double(int x, int y, int turn)
+    {
+        final int op = turn == 1 ? 2 : 1;
+        int count = 0;
+
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            count += is_double(x, y, ddir[i][0], ddir[i][1], turn, op);
+        }
+        return count;
+    }
 
     private boolean is_captured(int x, int y, int turn)
     {  
@@ -107,7 +143,7 @@ public class Pente extends MinMax {
 
         for (int i = 0 ; i < 4 ; i++)
         {
-            count += is_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
+            count += is_capture(x, y, ddir[i][0], ddir[i][1], turn, op, false);
         }
         if (prisoners[(turn + 2) %2] + count >= 10)
         {
@@ -666,9 +702,82 @@ public class Pente extends MinMax {
         //         System.out.println();
         // }
 
+        // if (depth == Game.max_depth)
+        //     return bonus_point(turn, player, values);
+
         if (turn == player)
             return max(values);
         else
             return min(values);
     }
+
+    private float bonus_point(int turn, int player, float values[])
+    {
+        Candidat.coord c;
+        float max = values[0];
+        float bonus;
+
+        best = candidat.lst.get(0);
+        for (int i = 0 ; i < values.length ; i++)
+            {
+                if (turn == player)
+                {
+                    if (max < values[i])
+                    {
+                        best = candidat.lst.get(i);
+                        max = values[i];
+                    }
+                }
+                else
+                {
+                    if (max > values[i])
+                    {
+                        best = candidat.lst.get(i);
+                        max = values[i];
+                    }
+                }
+            }
+
+        for (int i = 0 ; i < values.length ; i++)
+        {
+            if (values[i] == max)
+            {
+                c = candidat.lst.get(i);
+                bonus = adding_bonus_point(c.x, c.y, turn, player);
+                values[i] += adding_bonus_point(c.x, c.y, turn, player);
+                if (player == turn)
+                {
+                    if (max < max + bonus)
+                    {
+                        max = max + bonus;
+                        best = c;
+                    }
+                }
+                else
+                {
+                    if (max > max + bonus)
+                    {
+                        max = max + bonus;
+                        best = c;
+                    }
+                }
+            }
+        }
+        // for (int i = 0 ; i < values.length ; i++)
+        // {
+        //     System.out.printf(" %d %d %f", candidat.lst.get(i).x, candidat.lst.get(i).y ,values[i]);
+        // }
+        // System.out.printf("best %d %d", best.x, best.y);
+        // System.exit(0);
+        return max;
+    }
+
+    private float adding_bonus_point(int x, int y, int turn, int player)
+    {
+        if (player == turn)
+            return count_capture(x, y, turn, true) - count_double(x, y, turn);
+        else
+            return count_double(x, y, turn) - count_capture(x, y,turn, true); 
+    }
 }
+

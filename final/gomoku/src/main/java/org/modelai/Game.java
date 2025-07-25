@@ -14,7 +14,7 @@ public class Game {
     public ArrayList<Double> timelst;
     static public int max_depth = 10;
     static public int max_can = 8;
-    static public int min_can = 6;
+    static public int min_can = 7;
 
     public Game(String rules, int board_size)
     {
@@ -55,7 +55,7 @@ public class Game {
         scbord.analyse_move(point.y, point.x, turn);
         if (this.rules == "Pente")
         {
-            Pente.prisoners[turn %2] += Pente.count_capture(point.y, point.x, turn);
+            Pente.prisoners[turn %2] += Pente.count_capture(point.y, point.x, turn, false);
             m.complete_check_win(point.y, point.x, turn);
             MinMax.map[point.y][point.x] = turn;
         }
