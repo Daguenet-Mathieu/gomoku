@@ -11,7 +11,8 @@ public class Map{
     private int _white_prisonners;
     private int _black_prisonners;
     int player_color;
-    public Point _last_move ;
+    public ArrayList<Point> _last_move = new ArrayList<Point>();
+    public ArrayList<Integer> _last_move_color = new ArrayList<Integer>();
     private int _move_time;
     private ArrayList<Point> candidatsList;
     private ArrayList<Point> _prisonners = new ArrayList();
@@ -124,6 +125,8 @@ public class Map{
             color = 2;
         else if ("AE".equals(cmd)){
             _map[coord.y][coord.x] = 0;
+            _last_move.add(coord);
+            _last_move_color.add(0);
             return true;
         }
         else
@@ -131,11 +134,13 @@ public class Map{
         // if ((color == 0 && _map[coord.y][coord.x] == 0) || (color != 0 && _map[coord.y][coord.x] != 0))
         //     return false;
         _map[coord.y][coord.x] = color;
+        _last_move.add(coord);
+        _last_move_color.add(color);
         return true;
     }
 
     public void addMove(Point coord, int color){
-        _last_move = coord;
+        _last_move.add(coord);
         if (coord != null)
             _map[coord.y][coord.x] = color;
     }
@@ -166,8 +171,12 @@ public class Map{
     }
     }
 
-    public Point getLastMove(){
+    public ArrayList<Point> getLastMove(){
         return _last_move;
+    }
+
+    public ArrayList<Integer> getLastMoveColor(){
+        return _last_move_color;
     }
 
     public String getComment(){

@@ -119,6 +119,33 @@ public class Gomoku
     //     }
     // }
 
+    private void playIa(){
+        int i = 0;
+        if (rule.hasIa() == false)
+            return ;
+        for (Map m : _map){
+            ArrayList<Point> points = m.get_prisonners();
+            ArrayList<Point> lastMove = m.getLastMove();
+            ArrayList<Integer> lastMoveColor = m.getLastMoveColor();
+            // if ()
+            for (int j = 0; j < lastMove.size(); j++){
+                if (lastMoveColor.get(j) != 0)
+                    game.move(lastMove.get(j), (i%2)+1);
+                else{
+                    if (i == 0)
+                        game.remove(lastMove.get(i), m.get_prisonners(), false);
+                    else
+                        game.remove(lastMove.get(i), new ArrayList<Point>(), false);
+                }
+            }
+            for (Point p : points) {
+                    game.remove(p, m.get_prisonners(), false);
+            }
+            game.best_move(((i)%2)+1, ((i)%2)+1);
+            // setCandidats(game.m.candidat.lst, game.m.values);
+            i++;
+        }
+    }
 
     private void eraseForbiddens(){
         ArrayList<Point> points = rule.get_forbiden_moves(_map, map_index, player_turn + 1);
@@ -311,7 +338,7 @@ public class Gomoku
                         ia_playing = false;
                     }
                 }
-                else if (player_turn == 1 && _game_infos.get_white_player_type() == 1){//faire une fct
+                else if (player_turn == 1 && _game_infos.get_white_player_type() == 1){
                     if (ia_playing == false){
                         executor = Executors.newSingleThreadExecutor();
                         future = executor.submit(() -> {
@@ -549,10 +576,18 @@ public class Gomoku
                 }
                 System.out.println();
         }
-        Point coord = _map.get(_map.size() - 1).getLastMove();
         map_index -= 1;
-        if (rule.hasIa() == true)
-            game.remove(coord, _map.get(_map.size() - 1).get_prisonners(), true);
+        if (rule.hasIa() == true){
+            ArrayList<Point> coord = _map.get(_map.size() - 1).getLastMove();
+            for (int i = 0; i < coord.size(); i++){
+                ArrayList<Point> prisonners;
+                if (i == 0)
+                    prisonners = _map.get(_map.size() - 1).get_prisonners();
+                else
+                    prisonners = new ArrayList();
+                game.remove(coord.get(i), prisonners, true);
+            }
+        }
         _map.remove(_map.size() - 1);
         goban.updateFromMap(_map.get(_map.size() - 1));
         // if (player_turn)//CHANGER LE NB PROSONNIERS pour la bonne couleur
@@ -595,8 +630,10 @@ public class Gomoku
         map_index = 0;
         System.out.println("height == " + heigh + " width == " + width);
         _map = new ArrayList<Map>();
-        if (game_infos.getSgfMap() != null)
+        if (game_infos.getSgfMap() != null){
             _map = game_infos.getSgfMap();
+            // playIa();
+        }
         else
             _map.add(new Map(_nb_line));
         saved = new ArrayList<Point>();

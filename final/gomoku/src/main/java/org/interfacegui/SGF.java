@@ -111,25 +111,32 @@ public class SGF{
 
     private static String add_moves(String fileContent, ArrayList<Map> map){
             final String alpha = "abcdefghijklmnopqrstuvwxyz";
-            final String[] move = new String[] { "B", "W" };
+            // final String[] move = new String[] { "B", "W" };
+            final String[] move = new String[] {"AE", "AB", "AW"};
             int i = 0;
             for (Map m : map){
-                if (m.getLastMove() != null){
-                    fileContent += ";" + move[i];
-                    fileContent += "[" + alpha.charAt(m.getLastMove().x) + "" + alpha.charAt(m.getLastMove().y)  + "]";
-                    if (m.get_prisonners() != null && m.get_prisonners().size() > 0)
-                        fileContent += "\n;AE";
-                    for (Point p : m.get_prisonners()){
-                        fileContent += "[" + alpha.charAt(p.x) + "" + alpha.charAt(p.y) + "]";
+                ArrayList<Point> lastMove = m.getLastMove();
+                ArrayList<Integer> lastMoveColor = m.getLastMoveColor();
+                fileContent += ";";
+                for (int j = 0; j < lastMove.size(); j++){
+                    if (m.getLastMove() != null){
+                        fileContent += move[lastMoveColor.get(j)];
+                        fileContent += "[" + alpha.charAt(lastMove.get(j).x) + "" + alpha.charAt(lastMove.get(j).y)  + "]";
+                        if (m.get_prisonners() != null && m.get_prisonners().size() > 0)
+                            fileContent += " AE";
+                        for (Point p : m.get_prisonners()){
+                            fileContent += "[" + alpha.charAt(p.x) + "" + alpha.charAt(p.y) + "]";
+                        }
+                        fileContent += "\n";
+                        i^=1;//changer pour get_color de Map
                     }
-                    fileContent += "\n";
-                    i^=1;//changer pour get_color de Map
                 }
             }
             fileContent = fileContent.substring(0, fileContent.length() - 1);
             fileContent += ")";
             return fileContent;
     }
+
 
     public static void createSgf(ArrayList<Map> map, String rule){
         final int rule_type = "go".equals(rule) || "Go".equals(rule)? 1 : 4;
