@@ -26,14 +26,15 @@ public class Game {
 
     private MinMax minmax_tree(String str)
     {
-        if (str == "Gomoku")
+        str = Character.toUpperCase(str.charAt(0)) + str.substring(1);
+        if ("Gomoku".equals(str))
         {
             this.rules = "Gomoku";
             max_depth=10;
             System.out.println("ruleset " + rules);
             return new Moku();
         }
-        else if (str == "Pente")
+        else if ("Pente".equals(str))
         {
             this.rules = "Pente";
             System.out.println("ruleset " + rules);
@@ -49,7 +50,7 @@ public class Game {
 
     public void move(Point point, int turn)
     {
-
+        System.err.println("point : " + point + " turn " + turn);
         MinMax.map[point.y][point.x] = turn;
 
         scbord.analyse_move(point.y, point.x, turn);
@@ -113,7 +114,7 @@ public class Game {
         else
             Game.max_depth = 9;
 
-        System.out.printf("Call best_move turn %d player %d\n", turn, player);
+        System.err.printf("Call best_move turn %d player %d et nb move %d\n", turn, player, nb_move);
 
         time = System.currentTimeMillis();
         if (nb_move == 0)

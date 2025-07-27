@@ -84,6 +84,8 @@ public class GameInfos{
         private Button _forbidden = new Button("forbiddens");
         private Label _whiteResults = new Label();
         private Label _blackResults = new Label();
+        private Label playTurn = new Label("play turn : 0");
+        private Label playerTurn =  new Label("Black turn");
         private VBox _results = new VBox();
 
         // private int    board_size = 19;
@@ -104,6 +106,17 @@ public class GameInfos{
 
         public void setBlackResults(String res){
             _blackResults.setText(res);
+        }
+
+        public void setPLayTurn(Integer turn){
+            playTurn.setText(turn.toString());
+        }
+
+        public void setPLayerTurn(int play){
+            if (play == 0)
+                playerTurn.setText("Black turn");
+            else
+                playerTurn.setText("White turn");
         }
 
         public VBox getResultsBox(){
@@ -140,6 +153,8 @@ public class GameInfos{
             return white_time;
         }
         public void reset_infos(Home infos){
+            playTurn.setText("0");
+            playerTurn.setText("Black turn");
             black_time = infos.get_black_time();
             white_time = infos.get_white_time();
             set_white_time(white_time);
@@ -301,19 +316,9 @@ public class GameInfos{
         public GameInfos(int y, int x, Home infos){
             black_time = infos.get_black_time();
             white_time = infos.get_white_time();
-
             _size_x = x;
             _size_y = y;
-
             _game_infos = new VBox();
-            // _timers = new Pane();
-            // _player1_timer = new Pane();
-            // _player2_timer = new Pane();
-            // _scores = new Pane();
-            // _player_1_score = new Pane();
-            // _player_2_score = new Pane();
-            // _prev_next_button = new Pane();
-
             _game_infos.setPrefSize(x, y);
             _game_infos.setBackground(new Background(new BackgroundFill(Color.web("#ADBAC0"), null, null)));
             addText();
@@ -342,7 +347,7 @@ public class GameInfos{
             _results.setVisible(false);
             _results.setManaged(false);
             _button_prev_next.getChildren().addAll(_prev, _next);
-            _game_infos.getChildren().addAll(_last_move_label, _average_white_label, _average_black_label,_candidats, _hint, _forbidden, _resign, _undo);
+            _game_infos.getChildren().addAll(playTurn, playerTurn, _last_move_label, _average_white_label, _average_black_label,_candidats, _hint, _forbidden, _resign, _undo);
             _game_infos.getChildren().addAll(_button_prev_next, _pass, _results, _export);
 
         }

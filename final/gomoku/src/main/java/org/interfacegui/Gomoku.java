@@ -78,7 +78,7 @@ public class Gomoku
     private ArrayList<Integer> whiteTimeList = new ArrayList<Integer>();
     private ArrayList<Integer> blackTimeList = new ArrayList<Integer>(); 
     // private DoubleBinding fontSizeBinding;
-
+    private int turnNb = 0;
     private Game game;
     private ArrayList<Point> saved;
     private boolean toggleCandidat = false;
@@ -86,6 +86,8 @@ public class Gomoku
     private boolean ia_playing = false;
     private ExecutorService executor = null;
     private Future<Point> future = null;
+    private ExecutorService executor2 = null;
+    private Future<?> future2 = null;
     private boolean forbiddenVisibility = true;
     Rules.GameMode playingMode = Rules.GameMode.PLAYING;
     
@@ -120,29 +122,36 @@ public class Gomoku
     // }
 
     private void playIa(){
+        
+        int mapSize = _map.size();
         int i = 0;
         if (rule.hasIa() == false)
             return ;
-        for (Map m : _map){
+        for (int mIndex = 0; mIndex < mapSize; mIndex++){
+            System.err.println("i 1== " + i);
+            Map m = _map.get(mIndex);
             ArrayList<Point> points = m.get_prisonners();
             ArrayList<Point> lastMove = m.getLastMove();
             ArrayList<Integer> lastMoveColor = m.getLastMoveColor();
-            // if ()
+            System.err.println("i 2== " + i);
             for (int j = 0; j < lastMove.size(); j++){
+                System.err.println("i 3== " + i);
                 if (lastMoveColor.get(j) != 0)
+                {
+                    System.err.println("i 4== " + i + " i % 2 == "+ i%2 + "val envoyee ; " + (i%2)+1);
                     game.move(lastMove.get(j), (i%2)+1);
+                }
                 else{
-                    if (i == 0)
-                        game.remove(lastMove.get(i), m.get_prisonners(), false);
-                    else
-                        game.remove(lastMove.get(i), new ArrayList<Point>(), false);
+                    if (m.get_map()[lastMove.get(j).y][lastMove.get(j).x] != 0)
+                        game.remove(lastMove.get(j), new ArrayList<Point>(), false);
                 }
             }
             for (Point p : points) {
                     game.remove(p, m.get_prisonners(), false);
             }
+            System.err.println("i 5== " + i);
             game.best_move(((i)%2)+1, ((i)%2)+1);
-            // setCandidats(game.m.candidat.lst, game.m.values);
+            setCandidats(game.m.candidat.lst, game.m.values, i);
             i++;
         }
     }
@@ -232,12 +241,12 @@ public class Gomoku
         for (int i = 0; i < currentCandidats.size(); i++) {
             Point p = currentCandidats.get(i);
             if (p.val < 0)
-                goban.set_stone_status(visible, "#FF0000", p, String.format("%.2f", p.val));
+                goban.set_stone_status(visible, "#FF0000", p, String.format("%.0f", p.val));
             // if (p.val != bestMoveScore){
             //     goban.set_stone_status(visible, "#00FF00", p, String.format("%.2f", p.val));
             // }
             else{
-                goban.set_stone_status(visible, "#00FF00", p, String.format("%.2f", p.val));
+                goban.set_stone_status(visible, "#00FF00", p, String.format("%.0f", p.val));
             }
         }
         if (visible == false){
@@ -245,7 +254,7 @@ public class Gomoku
         }
     }
 
-    void setCandidats(ArrayList<Candidat.coord> candidats, float[] values) {
+    void setCandidats(ArrayList<Candidat.coord> candidats, float[] values, int index) {
         // System.err.println("ici on set les candidats!!!!!!!!????????????!!!!!!!!!!!!!");
         if (rule.hasIa() == false || candidats == null || values == null || game.val == null) return;
         candidatsList = new ArrayList<>();
@@ -266,7 +275,7 @@ public class Gomoku
             candidatsList.add(new Point(candidats.get(i).y, candidats.get(i).x));
             candidatsList.get(candidatsList.size() - 1).set_val(values[i]);
         }
-        _map.get(map_index).setCandidatsList(candidatsList);
+        _map.get(index).setCandidatsList(candidatsList);
     }
 
     void showCandidats() {
@@ -282,6 +291,7 @@ public class Gomoku
         _map.add(new Map(_nb_line));
         saved.clear();
         map_index = 0;
+        turnNb = 0;
         // init_rules(_game_infos.get_rules());
         init_rules(_game_infos.get_rules(), _game_infos.get_board_size());
         goban.updateFromMap(_map.get(_map.size() - 1));
@@ -331,7 +341,7 @@ public class Gomoku
                     else if (future.isDone()){
                         playMove(future.get());
                         executor.shutdown();
-                        setCandidats(game.m.candidat.lst, game.m.values);
+                        setCandidats(game.m.candidat.lst, game.m.values, map_index);
                         System.err.println("candidats pour le coup : " + (_map.size() - 1));
                         showCandidats();
                         System.err.println("\n\n\n");
@@ -349,7 +359,7 @@ public class Gomoku
                     else if (future.isDone()){
                         playMove(future.get());
                         executor.shutdown();
-                        setCandidats(game.m.candidat.lst, game.m.values);
+                        setCandidats(game.m.candidat.lst, game.m.values, map_index);
                         System.err.println("candidats pour le coup : " + (_map.size() - 1));
                         showCandidats();
                         System.err.println("\n\n\n");
@@ -363,6 +373,10 @@ public class Gomoku
                 e.printStackTrace();
                 System.exit(0);
             }
+        }
+        if (future2 != null&& future2.isDone()){
+            executor2.shutdown();
+            future2 = null;
         }
         if (player_turn != current_decrement){
             int t = end_move_time - start_move_time;
@@ -431,9 +445,9 @@ public class Gomoku
     private void playMove(Point point){
         System.out.println("dans print move coord : x == " + point.x + " y == " + point.y);
         if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map) || rule.getGameMode() == Rules.GameMode.ENDGAME){
-            System.out.println("???????????????????????????????????????????????????????????");
-            System.out.println("COUP INTEDIT : : x == " + point.x + " y == " + point.y);
-            System.out.println("???????????????????????????????????????????????????????????");
+            // System.out.println("???????????????????????????????????????????????????????????");
+            // System.out.println("COUP INTEDIT : : x == " + point.x + " y == " + point.y);
+            // System.out.println("???????????????????????????????????????????????????????????");
             return ;
         }
         // if ()//!PLAYING
@@ -630,9 +644,11 @@ public class Gomoku
         map_index = 0;
         System.out.println("height == " + heigh + " width == " + width);
         _map = new ArrayList<Map>();
+        goban = new Goban(heigh, width - _game_infos_size_x, rule.get_board_size());//nb ligne a definir plus tRD //donner 2/3 largeur
         if (game_infos.getSgfMap() != null){
             _map = game_infos.getSgfMap();
-            // playIa();
+            executor2 = Executors.newSingleThreadExecutor();
+            future2 = executor2.submit(() -> {playIa();});
         }
         else
             _map.add(new Map(_nb_line));
@@ -659,7 +675,6 @@ public class Gomoku
         game_name = new Label(game_infos.get_rules());
         //faire le new gamedisplay donner 1/3 largeur
         _game_infos_size_y = heigh;
-        goban = new Goban(heigh, width - _game_infos_size_x, rule.get_board_size());//nb ligne a definir plus tRD //donner 2/3 largeur
         _goban_pane = goban.get_goban();
         _game_infos_pane = gameInfos.getGameInfos();//donner les temps en parametres//donnerl e temps en parametre et des getteur pour cehck la fin del a game //ajouter les temps dans la map aussi
         _game_infos_pane.getChildren().add(0, game_name);
@@ -696,6 +711,8 @@ public class Gomoku
         });
 
         gameInfos.getUndoButton().setOnAction(event -> {
+            if (rule.getGameMode() == Rules.GameMode.ENDGAME)
+                return ;
             if (rule instanceof GoRules){
                 if (((GoRules)rule).undo() == false)
                     return ;

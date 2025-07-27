@@ -112,6 +112,7 @@ public class PenteRules implements Rules {
         }
         if (prisonners_nbr[0] >= 10 || prisonners_nbr[1] >= 10){
             winner = (prisonners_nbr[0] >= 10) ? 1 : 0;
+            gameStatus = Rules.GameMode.ENDGAME;
             return true;
         }
         if (check_five(map, point))

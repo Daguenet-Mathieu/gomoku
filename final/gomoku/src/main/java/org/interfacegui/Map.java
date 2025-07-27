@@ -141,6 +141,7 @@ public class Map{
 
     public void addMove(Point coord, int color){
         _last_move.add(coord);
+        _last_move_color.add(color);
         if (coord != null)
             _map[coord.y][coord.x] = color;
     }
