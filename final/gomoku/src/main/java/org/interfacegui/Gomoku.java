@@ -78,7 +78,7 @@ public class Gomoku
     private ArrayList<Integer> whiteTimeList = new ArrayList<Integer>();
     private ArrayList<Integer> blackTimeList = new ArrayList<Integer>(); 
     // private DoubleBinding fontSizeBinding;
-    private int turnNb = 0;
+    private int round = 0;
     private Game game;
     private ArrayList<Point> saved;
     private boolean toggleCandidat = false;
@@ -127,7 +127,7 @@ public class Gomoku
         int i = 0;
         if (rule.hasIa() == false)
             return ;
-        for (int mIndex = 0; mIndex < mapSize; mIndex++){
+        for (int mIndex = 1; mIndex < mapSize; mIndex++){
             System.err.println("i 1== " + i);
             Map m = _map.get(mIndex);
             ArrayList<Point> points = m.get_prisonners();
@@ -138,8 +138,8 @@ public class Gomoku
                 System.err.println("i 3== " + i);
                 if (lastMoveColor.get(j) != 0)
                 {
-                    System.err.println("i 4== " + i + " i % 2 == "+ i%2 + "val envoyee ; " + (i%2)+1);
-                    game.move(lastMove.get(j), (i%2)+1);
+                    System.err.println("i 4== " + i + " i % 2 == "+ i%2 + "val envoyee ; " + (i%2==0?2:1));
+                    game.move(lastMove.get(j), (i%2==0?1:2));
                 }
                 else{
                     if (m.get_map()[lastMove.get(j).y][lastMove.get(j).x] != 0)
@@ -150,8 +150,8 @@ public class Gomoku
                     game.remove(p, m.get_prisonners(), false);
             }
             System.err.println("i 5== " + i);
-            game.best_move(((i)%2)+1, ((i)%2)+1);
-            setCandidats(game.m.candidat.lst, game.m.values, i);
+            game.best_move((i%2==0?2:1), (i%2==0?2:1));
+            setCandidats(game.m.candidat.lst, game.m.values, mIndex);
             i++;
         }
     }
@@ -291,7 +291,8 @@ public class Gomoku
         _map.add(new Map(_nb_line));
         saved.clear();
         map_index = 0;
-        turnNb = 0;
+        round = 0;
+        gameInfos.setPLayTurn(round);
         // init_rules(_game_infos.get_rules());
         init_rules(_game_infos.get_rules(), _game_infos.get_board_size());
         goban.updateFromMap(_map.get(_map.size() - 1));
@@ -550,6 +551,10 @@ public class Gomoku
         else
             System.out.println("non!");
         goban.updateFromMap(_map.get(_map.size() -1));
+        if (player_turn == 0){
+            round++;
+            gameInfos.setPLayTurn(round);
+        }
         updatePlayerTurn();//le get de la regle
     }
 
@@ -606,10 +611,6 @@ public class Gomoku
         goban.updateFromMap(_map.get(_map.size() - 1));
         // if (player_turn)//CHANGER LE NB PROSONNIERS pour la bonne couleur
         player_turn ^= 1;// le get de la regle 
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("update player turn" + player_turn);
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        
         rule.set_black_prisonners(_map.get((_map.size()-1)).getBlackPrisonners());
         rule.set_white_prisonners(_map.get((_map.size()-1)).getWhitePrisonners());
         display_nb_prisonners();
@@ -633,6 +634,7 @@ public class Gomoku
         //     _game_infos.heightProperty()
         // );
         // SGF.createSgf(null, "gomoku");
+        
         _game_infos = game_infos;
         if (_game_infos.getRuleInstance() != null)
             rule = _game_infos.getRuleInstance();
@@ -640,6 +642,7 @@ public class Gomoku
             init_rules(_game_infos.get_rules(), _game_infos.get_board_size());
         _nb_line = rule.get_board_size();
         game = new Game(game_infos.get_rules(), rule.get_board_size());
+        game.tree_config(game_infos.getLevel());
         System.out.println("constructeur gomoku rule type == " + rule.getGameType());
         map_index = 0;
         System.out.println("height == " + heigh + " width == " + width);

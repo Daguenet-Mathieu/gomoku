@@ -53,19 +53,22 @@ public class Game {
     {
         if (lvl == 1)
         {
+            System.err.println("HARD");
             max_depth = 9;
             max_can = 8;
             min_can = 7;
         }
         else if (lvl == 2)
         {
+            System.err.println("Medium");
             max_depth = 10;
             max_can = 7;
             min_can = 5;
         }
         else if (lvl == 3)
         {
-            max_depth = 5;
+            System.err.println("EASY");
+            max_depth = 4;
             max_can = 8;
             min_can = 8;
         }

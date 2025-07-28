@@ -29,13 +29,17 @@ public class Home {
     private float komi = -1;
     private int handicap = -1;
     private ArrayList<Map> sgf;
-
+    private int level = 3;
     private HomePage home_page = new HomePage();
     private FileBox filebox = new FileBox(home_page);
     int boardSize = -1;
 
     public int get_board_size(){
         return boardSize;
+    }
+
+    public int getLevel(){
+        return level;
     }
 
     private void changeVisibility(TextField komi, TextField handicap, boolean value){
@@ -135,7 +139,19 @@ public class Home {
         // }
     }
 
+    void resetButtonDifficulty(String deselectedColor){
+        home_page.getWhiteEasyButton().setStyle(deselectedColor);
+        home_page.getWhiteMediumButton().setStyle(deselectedColor);
+        home_page.getWhiteHardButton().setStyle(deselectedColor);
+        home_page.getBlackEasyButton().setStyle(deselectedColor);
+        home_page.getBlackMediumButton().setStyle(deselectedColor);
+        home_page.getBlackHardButton().setStyle(deselectedColor);
+    }
+
+
     public Home() {
+
+
         // Couleurs pour les boutons
         String selectedColor = "-fx-background-color: #FF0000;"; // Rouge pour sélectionné
         String deselectedColor = "-fx-background-color: #ADD8E6;"; // Bleu clair pour désélectionné
@@ -145,10 +161,13 @@ public class Home {
 
 
         // Groupe 1: Type de joueur noir
+        home_page.getWhiteEasyButton().setStyle(selectedColor);
+        home_page.getBlackEasyButton().setStyle(selectedColor);
         home_page.getBlackIaTypeButton().setOnAction(e -> {
             System.out.println("black is bot");
             black_player_type = 1;
-            
+            home_page.getBlackBox().setManaged(true);
+            home_page.getBlackBox().setVisible(true);
             // Mettre à jour les couleurs
             home_page.getBlackIaTypeButton().setStyle(selectedColor);
             home_page.getBlackHumanTypeButton().setStyle(deselectedColor);
@@ -157,7 +176,9 @@ public class Home {
         home_page.getBlackHumanTypeButton().setOnAction(e -> {
             System.out.println("black is human");
             black_player_type = 0;
-            
+            home_page.getBlackBox().setManaged(false);
+            home_page.getBlackBox().setVisible(false);
+
             // Mettre à jour les couleurs
             home_page.getBlackHumanTypeButton().setStyle(selectedColor);
             home_page.getBlackIaTypeButton().setStyle(deselectedColor);
@@ -167,7 +188,9 @@ public class Home {
         home_page.getWhiteIaTypeButton().setOnAction(e -> {
             System.out.println("white is bot");
             white_player_type = 1;
-            
+            home_page.getWhiteBox().setManaged(true);
+            home_page.getWhiteBox().setVisible(true);
+
             // Mettre à jour les couleurs
             home_page.getWhiteIaTypeButton().setStyle(selectedColor);
             home_page.getWhiteHumanTypeButton().setStyle(deselectedColor);
@@ -176,12 +199,49 @@ public class Home {
         home_page.getWhiteHumanTypeButton().setOnAction(e -> {
             System.out.println("white is human");
             white_player_type = 0;
-            
+            home_page.getWhiteBox().setManaged(false);
+            home_page.getWhiteBox().setVisible(false);
+
             // Mettre à jour les couleurs
             home_page.getWhiteHumanTypeButton().setStyle(selectedColor);
             home_page.getWhiteIaTypeButton().setStyle(deselectedColor);
         });
-
+        home_page.getWhiteEasyButton().setOnAction(e -> {
+            level = 3;
+            resetButtonDifficulty(deselectedColor);
+            home_page.getBlackEasyButton().setStyle(selectedColor);
+            home_page.getWhiteEasyButton().setStyle(selectedColor);
+        });
+        home_page.getWhiteMediumButton().setOnAction(e -> {
+            level = 2;
+            resetButtonDifficulty(deselectedColor);
+            home_page.getBlackMediumButton().setStyle(selectedColor);
+            home_page.getWhiteMediumButton().setStyle(selectedColor);
+        });
+        home_page.getWhiteHardButton().setOnAction(e -> {
+            level = 1;
+            resetButtonDifficulty(deselectedColor);
+            home_page.getBlackHardButton().setStyle(selectedColor);
+            home_page.getWhiteHardButton().setStyle(selectedColor);
+        });
+        home_page.getBlackEasyButton().setOnAction(e -> {
+            level = 3;
+            resetButtonDifficulty(deselectedColor);
+            home_page.getBlackEasyButton().setStyle(selectedColor);
+            home_page.getWhiteEasyButton().setStyle(selectedColor);
+        });
+        home_page.getBlackMediumButton().setOnAction(e -> {
+            level = 2;
+            resetButtonDifficulty(deselectedColor);
+            home_page.getBlackMediumButton().setStyle(selectedColor);
+            home_page.getWhiteMediumButton().setStyle(selectedColor);
+        });
+        home_page.getBlackHardButton().setOnAction(e -> {
+            level = 1;
+            resetButtonDifficulty(deselectedColor);
+            home_page.getBlackHardButton().setStyle(selectedColor);
+            home_page.getWhiteHardButton().setStyle(selectedColor);
+        });
         // Groupe 3: Règles du jeu
         home_page.getGomokuButton().setOnAction(e -> {
             System.out.println("gomoku");

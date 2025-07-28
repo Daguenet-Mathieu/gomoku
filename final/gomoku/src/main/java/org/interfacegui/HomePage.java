@@ -64,8 +64,53 @@ public class HomePage{
     private StringProperty rule_type = new SimpleStringProperty("");
     // private int boardSize = -1;
     private Rules rules_instance = null;
+    private HBox blackBox = new HBox();
+    private Button blackIaEasy = new Button("easy");
+    private Button blackIaMedium = new Button("medium");
+    private Button blackIaHard = new Button("hard");
+    private HBox whiteBox = new HBox();
+    private Button whiteIaEasy = new Button("easy");
+    private Button whiteIaMedium = new Button("medium");
+    private Button whiteIaHard = new Button("hard");
+
+
+    public Button getWhiteEasyButton(){
+        return whiteIaEasy;
+    }
+
+    public Button getWhiteMediumButton(){
+        return whiteIaMedium;
+    }
+    public Button getWhiteHardButton(){
+        return whiteIaHard;
+    }
+    public Button getBlackEasyButton(){
+        return blackIaEasy;
+    }
+    public Button getBlackMediumButton(){
+        return blackIaMedium;
+    }
+    public Button getBlackHardButton(){
+        return blackIaHard;
+    }
+
+
+    public HBox getWhiteBox(){
+        return whiteBox;
+    }
+
+    public HBox getBlackBox(){
+        return blackBox;
+    }
 
     HomePage(){
+        blackBox.getChildren().addAll(blackIaEasy, blackIaMedium, blackIaHard);
+        whiteBox.getChildren().addAll(whiteIaEasy, whiteIaMedium, whiteIaHard);
+        blackBox.setManaged(false);
+        blackBox.setVisible(false);
+        whiteBox.setManaged(false);
+        whiteBox.setVisible(false);
+
         boardSizeBox.getChildren().addAll(boardSizeLabel, boardSizeButtonBox);
         boardSizeButtonBox.getChildren().addAll(nineSize, thirteenSize, nineteenSize);
         LaunchButtons.getChildren().addAll(validation, learnOrView);
@@ -112,7 +157,7 @@ public class HomePage{
         black_five_min.setStyle(selectedColor);
         
         black_time = new TextField("10:00");
-        VBox black_info = new VBox(5, new Text("Set Black Info:"), new HBox(5, black_human, black_ia));
+        VBox black_info = new VBox(5, new Text("Set Black Info:"), new HBox(5, black_human, black_ia, blackBox));
         VBox black_time_info = new VBox(5, new HBox(5, new Text("time : "), white_five_min, white_three_min, black_hours, black_min, black_sec));
         black_player.getChildren().addAll(black_info, black_time_info);
         
@@ -126,7 +171,7 @@ public class HomePage{
         white_ia.setStyle(deselectedColor);
         
         white_time = new TextField("10:00");
-        VBox white_info = new VBox(5, new Text("Set white Info:"), new HBox(5, white_human, white_ia));
+        VBox white_info = new VBox(5, new Text("Set white Info:"), new HBox(5, white_human, white_ia, whiteBox));
         VBox white_time_info = new VBox(5, new HBox(5, new Text("time : "), black_five_min, black_three_min, white_hours, white_min, white_sec));
         white_player.getChildren().addAll(white_info, white_time_info);
         

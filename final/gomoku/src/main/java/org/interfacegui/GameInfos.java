@@ -84,7 +84,7 @@ public class GameInfos{
         private Button _forbidden = new Button("forbiddens");
         private Label _whiteResults = new Label();
         private Label _blackResults = new Label();
-        private Label playTurn = new Label("play turn : 0");
+        private Label playTurn = new Label("Round : 0");
         private Label playerTurn =  new Label("Black turn");
         private VBox _results = new VBox();
 
@@ -109,7 +109,7 @@ public class GameInfos{
         }
 
         public void setPLayTurn(Integer turn){
-            playTurn.setText(turn.toString());
+            playTurn.setText("Round : " + turn.toString());
         }
 
         public void setPLayerTurn(int play){
@@ -321,6 +321,7 @@ public class GameInfos{
             _game_infos = new VBox();
             _game_infos.setPrefSize(x, y);
             _game_infos.setBackground(new Background(new BackgroundFill(Color.web("#ADBAC0"), null, null)));
+            _game_infos.getChildren().addAll(playTurn, playerTurn);
             addText();
             _resign = new Button("resign");
             _prev = new Button("<");
@@ -347,7 +348,7 @@ public class GameInfos{
             _results.setVisible(false);
             _results.setManaged(false);
             _button_prev_next.getChildren().addAll(_prev, _next);
-            _game_infos.getChildren().addAll(playTurn, playerTurn, _last_move_label, _average_white_label, _average_black_label,_candidats, _hint, _forbidden, _resign, _undo);
+            _game_infos.getChildren().addAll(_last_move_label, _average_white_label, _average_black_label,_candidats, _hint, _forbidden, _resign, _undo);
             _game_infos.getChildren().addAll(_button_prev_next, _pass, _results, _export);
 
         }
