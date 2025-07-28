@@ -78,16 +78,16 @@ public class Pente extends MinMax {
         if (MinMax.IN_goban(x+dx, y+dy) && map[x + dx][y + dy] == p && MinMax.IN_goban(x-dx, y-dy) && map[x - dx][y - dy] != p)
             if (MinMax.IN_goban(x+2*dx, y+2*dy) && map[x + 2*dx][y + 2*dy] != p)
                 {
-                   if (map[x - dx][y - dy] == 0 && map[x+ 2*dx][y+2*dy] == o || map[x - dx][y - dy] == o && map[x+ 2*dx][y+2*dy] == 0)
-                        count +=2;
+                   if ((map[x - dx][y - dy] == 0 && map[x+ 2*dx][y+2*dy] == o ) || (map[x - dx][y - dy] == o && map[x+ 2*dx][y+2*dy] == 0))
+                        count +=3;
                     else if ( map[x - dx][y - dy] == 0 || map[x+ 2*dx][y+2*dy] == 0 )
                         count +=1;
                 }
         if (MinMax.IN_goban(x+dx, y+dy) && map[x + dx][y + dy] != p && MinMax.IN_goban(x-dx, y-dy) && map[x - dx][y - dy] == p)
             if (MinMax.IN_goban(x-2*dx, y-2*dy) && map[x - 2*dx][y - 2*dy] != p)
                 {
-                    if (map[x + dx][y + dy] == 0 && map[x- 2*dx][y-2*dy] == o || map[x + dx][y + dy] == o && map[x- 2*dx][y-2*dy] == 0)
-                        count +=2;
+                    if ((map[x + dx][y + dy] == 0 && map[x- 2*dx][y-2*dy] == o ) || (map[x + dx][y + dy] == o && map[x- 2*dx][y-2*dy] == 0))
+                        count +=3;
                     else if ( map[x + dx][y + dy] == 0 || map[x- 2*dx][y-2*dy] == 0 )
                         count +=1;
                 }
@@ -626,7 +626,6 @@ public class Pente extends MinMax {
                     
                     return cur_alpha;
                 }
-
             }
             else
             {
@@ -702,8 +701,8 @@ public class Pente extends MinMax {
         //         System.out.println();
         // }
 
-        // if (depth == Game.max_depth)
-        //     return bonus_point(turn, player, values);
+        if (depth == Game.max_depth)
+            return bonus_point(turn, player, values);
 
         if (turn == player)
             return max(values);
@@ -713,8 +712,10 @@ public class Pente extends MinMax {
 
     private float bonus_point(int turn, int player, float values[])
     {
-        Candidat.coord c;
+        Candidat.coord c = candidat.lst.get(0);
         float max = values[0];
+        int idx = 0;
+        float max2;
         float bonus;
 
         best = candidat.lst.get(0);
@@ -726,6 +727,7 @@ public class Pente extends MinMax {
                     {
                         best = candidat.lst.get(i);
                         max = values[i];
+                        idx = i;
                     }
                 }
                 else
@@ -734,30 +736,32 @@ public class Pente extends MinMax {
                     {
                         best = candidat.lst.get(i);
                         max = values[i];
+                        idx = i;
                     }
                 }
             }
 
+        max2 = values[idx] + adding_bonus_point(idx, player, turn, player);
         for (int i = 0 ; i < values.length ; i++)
         {
             if (values[i] == max)
             {
                 c = candidat.lst.get(i);
                 bonus = adding_bonus_point(c.x, c.y, turn, player);
-                values[i] += adding_bonus_point(c.x, c.y, turn, player);
+                values[i] += bonus;
                 if (player == turn)
                 {
-                    if (max < max + bonus)
+                    if (max2 < max + bonus)
                     {
-                        max = max + bonus;
+                        max2 = max + bonus;
                         best = c;
                     }
                 }
                 else
                 {
-                    if (max > max + bonus)
+                    if (max2 > max + bonus)
                     {
-                        max = max + bonus;
+                        max2 = max + bonus;
                         best = c;
                     }
                 }
@@ -769,7 +773,7 @@ public class Pente extends MinMax {
         // }
         // System.out.printf("best %d %d", best.x, best.y);
         // System.exit(0);
-        return max;
+        return max2;
     }
 
     private float adding_bonus_point(int x, int y, int turn, int player)

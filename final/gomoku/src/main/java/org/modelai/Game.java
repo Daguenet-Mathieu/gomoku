@@ -13,9 +13,8 @@ public class Game {
     public String rules;
     public ArrayList<Double> timelst;
     static public int max_depth = 10;
-    static public int max_can = 8;
-    static public int min_can = 7;
-
+    static public int max_can = 7;
+    static public int min_can = 5;
     public Game(String rules, int board_size)
     {
         nb_move = 0;
@@ -27,6 +26,7 @@ public class Game {
     private MinMax minmax_tree(String str)
     {
         str = Character.toUpperCase(str.charAt(0)) + str.substring(1);
+        //tree_config(3);
         if ("Gomoku".equals(str))
         {
             this.rules = "Gomoku";
@@ -46,7 +46,30 @@ public class Game {
             System.out.println("ruleset " + rules);
             return new MinMax();
         }
+
     }
+
+    public void tree_config(int lvl)
+    {
+        if (lvl == 1)
+        {
+            max_depth = 9;
+            max_can = 8;
+            min_can = 7;
+        }
+        else if (lvl == 2)
+        {
+            max_depth = 10;
+            max_can = 7;
+            min_can = 5;
+        }
+        else if (lvl == 3)
+        {
+            max_depth = 5;
+            max_can = 8;
+            min_can = 8;
+        }
+    }  
 
     public void move(Point point, int turn)
     {
@@ -109,10 +132,10 @@ public class Game {
 
     public Point best_move(int turn, int player)
     {
-        if (player == 1)
-            Game.max_depth = 9;
-        else
-            Game.max_depth = 9;
+        // if (player == 1)
+        //     Game.max_depth = 9;
+        // else
+        //     Game.max_depth = 9;
 
         System.err.printf("Call best_move turn %d player %d et nb move %d\n", turn, player, nb_move);
 
