@@ -326,8 +326,14 @@ public class Gomoku
 
     public void createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
         gameLoop = new Timeline();
-        System.out.println("-1 je passe la");
+
         KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
+            if (future2 == null && (_game_infos.get_black_player_type() == 0 || _game_infos.get_white_player_type() == 0)){
+                gameInfos.getUndoButton().setManaged(true);
+                gameInfos.getUndoButton().setVisible(true);
+
+            }
+
         if (rule.hasIa() == true)
         {
             try {
@@ -634,7 +640,6 @@ public class Gomoku
         //     _game_infos.heightProperty()
         // );
         // SGF.createSgf(null, "gomoku");
-        
         _game_infos = game_infos;
         if (_game_infos.getRuleInstance() != null)
             rule = _game_infos.getRuleInstance();
@@ -655,6 +660,7 @@ public class Gomoku
         }
         else
             _map.add(new Map(_nb_line));
+        System.err.println("**********************************************************************************************************************************");
         saved = new ArrayList<Point>();
         game_display = new Pane();
         _end_popin.setVisible(false);
@@ -678,6 +684,21 @@ public class Gomoku
         game_name = new Label(game_infos.get_rules());
         //faire le new gamedisplay donner 1/3 largeur
         _game_infos_size_y = heigh;
+        gameInfos.getUndoButton().setManaged(false);
+        gameInfos.getUndoButton().setVisible(false);
+        if (_game_infos.get_black_player_type() == 1 && _game_infos.get_white_player_type() == 1){
+            gameInfos.getUndoButton().setManaged(false);
+            gameInfos.getUndoButton().setVisible(false);
+            gameInfos.getHintButton().setManaged(false);
+            gameInfos.getHintButton().setVisible(false);
+            gameInfos.getCandidatsButton().setManaged(false);
+            gameInfos.getCandidatsButton().setVisible(false);
+            gameInfos.getResignButton().setManaged(false);
+            gameInfos.getResignButton().setVisible(false);
+            gameInfos.getForbiddeButton().setManaged(false);
+            gameInfos.getForbiddeButton().setVisible(false);
+
+        }
         _goban_pane = goban.get_goban();
         _game_infos_pane = gameInfos.getGameInfos();//donner les temps en parametres//donnerl e temps en parametre et des getteur pour cehck la fin del a game //ajouter les temps dans la map aussi
         _game_infos_pane.getChildren().add(0, game_name);

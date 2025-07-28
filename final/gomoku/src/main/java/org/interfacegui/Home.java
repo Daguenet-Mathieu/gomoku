@@ -23,8 +23,8 @@ import javafx.beans.property.StringProperty;
 public class Home {
     private int white_time = 0;
     private int black_time = 0;
-    private int white_player_type = 20;
-    private int black_player_type = 20;
+    private int white_player_type = 0;
+    private int black_player_type = 0;
     private String rule = "Gomoku";
     private float komi = -1;
     private int handicap = -1;
