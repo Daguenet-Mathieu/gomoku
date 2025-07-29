@@ -511,6 +511,8 @@ public class Pente extends MinMax {
         //     forced_capture.clear();
 
         //if (depth == Game.max_depth && forced_capture.size() !=0)
+        //display_Map();
+        //System.out.printf("depth %d\n",depth);
         nb_candidates = candidat.old_load(depth, turn);
 
         //display_map();
@@ -567,6 +569,9 @@ public class Pente extends MinMax {
             //     System.exit(0);
             return res;
         }
+
+        if (nb_candidates == 0)
+            return 0;
 
         values = new float[nb_candidates];
 
@@ -741,7 +746,7 @@ public class Pente extends MinMax {
                 }
             }
 
-        max2 = values[idx] + adding_bonus_point(idx, player, turn, player);
+        max2 = values[idx] + adding_bonus_point(candidat.lst.get(idx).x, candidat.lst.get(idx).y, turn, player);
         for (int i = 0 ; i < values.length ; i++)
         {
             if (values[i] == max)
@@ -767,21 +772,22 @@ public class Pente extends MinMax {
                 }
             }
         }
-        // for (int i = 0 ; i < values.length ; i++)
-        // {
-        //     System.out.printf(" %d %d %f", candidat.lst.get(i).x, candidat.lst.get(i).y ,values[i]);
-        // }
-        // System.out.printf("best %d %d", best.x, best.y);
-        // System.exit(0);
         return max2;
     }
 
     private float adding_bonus_point(int x, int y, int turn, int player)
     {
+        int pos = count_capture(x, y, turn, true);
+        int dou =  count_double(x, y, turn);
+        int cap = count_capture(x, y, turn, false) / 2;
+
         if (player == turn)
-            return count_capture(x, y, turn, true) - count_double(x, y, turn);
+        {
+            return pos - dou + cap * 6;
+            //return count_capture(x, y, turn, true) - count_double(x, y, turn);
+        }
         else
-            return count_double(x, y, turn) - count_capture(x, y,turn, true); 
+            return dou - pos - cap * 6; 
     }
 }
 

@@ -329,11 +329,14 @@ public class Candidat
     public int all_probable_candidate(int turn)
     {
         int res;
+        int nb_mv = 0;
         for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
         {
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
             {
                 res = near_num(i, j);
+                if (MinMax.map[i][j] == 1 || MinMax.map[i][j] == 2)
+                    nb_mv++;
                 if (MinMax.map[i][j] == 0 && res !=0 && (capture_possible == false || doubleFreethree.check_double_free(i, j, turn, MinMax.map)))
                     this.lst.add(new Candidat.coord(i, j, res));
             }
@@ -342,7 +345,12 @@ public class Candidat
         Collections.sort(this.lst, Comparator.comparing(item -> 
         this.order.indexOf(item.st())));
         if (this.lst.size() >= Game.min_can + 1)
-            this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
+        {
+            if (nb_mv >=4)
+                this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
+            else
+                this.lst = new ArrayList<>(this.lst.subList(0, Game.max_can));
+        }
         return this.lst.size();
     }
 
