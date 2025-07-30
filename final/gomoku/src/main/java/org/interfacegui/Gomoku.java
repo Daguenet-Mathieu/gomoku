@@ -306,6 +306,7 @@ public class Gomoku
         current_decrement = 0;
         game_end = false;
         game = new Game(_game_infos.get_rules(), rule.get_board_size());
+        game.reset_minmax();
         _winner = 0;
         gameInfos.set_black_prisonners("0");
         gameInfos.set_white_prisonners("0");
