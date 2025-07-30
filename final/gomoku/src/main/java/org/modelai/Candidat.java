@@ -349,7 +349,7 @@ public class Candidat
             if (nb_mv >=4)
                 this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
             else
-                this.lst = new ArrayList<>(this.lst.subList(0, Game.max_can));
+                this.lst = new ArrayList<>(this.lst.subList(0, Game.max_can - 1));
         }
         return this.lst.size();
     }

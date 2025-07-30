@@ -119,6 +119,11 @@ public class Game {
         for (int i = 0 ; i < 19 ; i++)
             for (int j = 0 ; j < 19 ; j++)
                 MinMax.map[i][j] = 0;
+        MinMax.pos_counter =0;
+        MinMax.nbmove = 0;
+        MinMax.after_capwinsim = true;
+        MinMax.forced_capture.clear();
+        MinMax.capwin.clear();
         scbord.reset_str();
     }
 

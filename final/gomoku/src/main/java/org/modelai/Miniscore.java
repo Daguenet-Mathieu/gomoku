@@ -25,7 +25,6 @@ public class Miniscore {
     int [] bpoint;
 
     boolean victory;
-    boolean lastcap;
 
     ArrayList<Blocker> blocklist = new ArrayList<Blocker>();
 
@@ -136,6 +135,8 @@ public class Miniscore {
                 }
             }
         }
+        this.victory=false;
+        this.blocklist.clear();
         this.sc.reset();
     }
 
@@ -1730,12 +1731,10 @@ public class Miniscore {
             if (iscapt(x, y) != 0)
             {   
                 System.out.println("it is");
-                lastcap = true;
             }
             else
             {
                 System.out.println("it is not");
-                lastcap = false;
             }
         }
     }
