@@ -456,7 +456,6 @@ public class Pente extends MinMax {
         if (depth == Game.max_depth)
         {
             System.out.println("At the end !!!!!!!!!!!!!!!!!!!!!!!!!");
-            //candidat.display_candidat(map);
             System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
             display_map();
             scsimul.display();
