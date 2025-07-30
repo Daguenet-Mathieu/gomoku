@@ -24,6 +24,10 @@ public class RenjuRules implements Rules {
         return false;
     }
 
+    @Override
+    public boolean undo(){
+        return true;
+    }
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {

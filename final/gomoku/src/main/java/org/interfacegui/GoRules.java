@@ -186,8 +186,8 @@ public class GoRules implements Rules {
         // false le mettre a true si a true changer le mode de jeu is valid changera sa facon de verifier si le coup est valid
     }
 
+    @Override
     public boolean undo(){
-        System.out.println("undo : " + gameStatus.toString());
             switch (gameStatus) {
             case PLAYING:
                 if (pass == true){

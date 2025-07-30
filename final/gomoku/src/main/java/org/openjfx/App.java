@@ -7,8 +7,15 @@ import javafx.application.Application;
 import javafx.scene.layout.Pane;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import java.io.File;
 import org.utils.Point;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 // import javafx.application.Platform;
 // import javafx.scene.text.Text;
 
@@ -25,18 +32,97 @@ public class App extends Application {
     private Pane home_body = new Pane();
     private Pane home_root = new Pane();
     private Home home_page = new Home();
+    private ImageView background; 
+    private ImageView title;
     //class settings pour connaitre les preference du joueur couleur des pierres goban etc et donner au gomoku
     //choix temps dans le home en meme temps que le choix des regles et des joueurs
 
+
+    // private void openBackground(){
+    //     String path1 = new File("./img/background.jpg").getAbsolutePath();
+    //     String path2 = new File("./img/title.webp").getAbsolutePath();
+    //     Image img = new Image(path1.toURI().toString(), false);
+    //     img.exceptionProperty().addListener((obs, oldEx, newEx) -> {
+    //     System.out.println("Image width: " + img.getWidth() + ", height: " + img.getHeight());
+    //         if (newEx != null) {
+    //             newEx.printStackTrace();
+    //             System.err.println("Erreur chargement image : " + newEx.getMessage());
+    //         }
+    //     });
+    //     background = new ImageView(img);
+    //     // background = new ImageView(new Image("file:" + path1));
+    //     title = new ImageView(new Image("file:" + path2));//trycatch
+    // }
+
+    // private void openBackground(){
+    //     System.out.println("open img background !");
+    //     System.out.println("Répertoire courant: " + System.getProperty("user.dir"));
+    //     File file1 = new File("./img/background.jpg");
+    //     File file2 = new File("./img/title.webp");
+
+    //     Image img = new Image(file1.toURI().toString(), false);
+    //     img.exceptionProperty().addListener((obs, oldEx, newEx) -> {
+    //         if (newEx != null) {
+    //             newEx.printStackTrace();
+    //             System.err.println("Erreur chargement image : " + newEx.getMessage());
+    //         }
+    //     });
+    //     System.out.println("Image width: " + img.getWidth() + ", height: " + img.getHeight());
+
+    //     background = new ImageView(img);
+    //     title = new ImageView(new Image(file2.toURI().toString()));
+
+    // }
+
+    private void openBackground(){
+        System.out.println("open img background !");
+        System.out.println("Répertoire courant: " + System.getProperty("user.dir"));
+
+        File file1 = new File("./img/test.png");
+        File file2 = new File("./img/title.webp");
+
+        // Chargement synchrone de background.jpg
+        Image img1 = new Image(file1.toURI().toString(), false);
+        img1.exceptionProperty().addListener((obs, oldEx, newEx) -> {
+            if (newEx != null) {
+                System.err.println("Erreur background.jpg : " + newEx.getMessage());
+                newEx.printStackTrace();
+            }
+        });
+
+        if (img1.getWidth() <= 0 || img1.getHeight() <= 0) {
+            System.err.println("Erreur : background.jpg non décodé");
+        } else {
+            System.out.println("✔ background.jpg OK : " + img1.getWidth() + "x" + img1.getHeight());
+        }
+
+        background = new ImageView(img1);
+
+        // Chargement synchrone de title.webp
+        Image img2 = new Image(file2.toURI().toString(), false);
+        img2.exceptionProperty().addListener((obs, oldEx, newEx) -> {
+            if (newEx != null) {
+                System.err.println("Erreur title.webp : " + newEx.getMessage());
+                newEx.printStackTrace();
+            }
+        });
+
+        if (img2.getWidth() <= 0 || img2.getHeight() <= 0) {
+            System.err.println("Erreur : title.webp non décodé");
+        } else {
+            System.out.println("✔ title.webp OK : " + img2.getWidth() + "x" + img2.getHeight());
+        }
+
+        title = new ImageView(img2);
+    }
+
+
+
     public void set_home_event(){
         home.widthProperty().addListener((observable, oldValue, newValue) -> {
-            // home.setPrefWidth(newValue.doubleValue());
             System.out.println("redimentionnement de home!!!!!!!!!!!!!!!!!1");
-            // home_body.setPrefHeight((int)newValue);
         });
         home.heightProperty().addListener((observable, oldValue, newValue) -> {
-            // home.setPrefHeight(newValue.doubleValue());
-            // home_body.setPrefHeight((int)newValue);
             System.out.println("redimentionnement de home!!!!!!!!!!!!!!!!!1");
 
         });
@@ -63,8 +149,17 @@ public class App extends Application {
             home_root = new Pane();
             home = new Scene(home_root, scenex, sceney);
             home_page = new Home();
-            home_root.setStyle("-fx-background-color:rgb(71, 157, 255);");
+            // home_root.setStyle("-fx-background-color:rgb(71, 157, 255);");
+            openBackground();
+            title.setFitWidth(home_root.getWidth());
+            title.setFitHeight(home_root.getHeight());
+            title.setPreserveRatio(false); // pour remplir exactement
+            // home_root.getChildren().add(0, background);
+            // home_root.getChildren().add(home_page.getHomePage());
+            home_root.getChildren().add(background);
             home_root.getChildren().add(home_page.getHomePage());
+
+
             set_home_event();
             switchScene(home);
             // Text homeText2 = new Text(100, 100, "Bienvenue sur la scène Home!");

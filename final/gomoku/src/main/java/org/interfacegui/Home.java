@@ -2,22 +2,8 @@ package org.interfacegui;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-//import javafx.scene.control.Button;
 import java.util.ArrayList;
-// import java.util.Arrays;
-// import java.io.File;
-// import javafx.scene.control.ScrollPane;
-// import javafx.geometry.Orientation;
-// import javafx.scene.layout.VBox;
-// import javafx.scene.layout.HBox;
-// import javafx.scene.control.Label;
-// import javafx.scene.text.Text;
-// import javafx.scene.Node;
 import javafx.beans.property.StringProperty;
-
-
-// import java.util.List;
-
 
 
 public class Home {
@@ -90,53 +76,6 @@ public class Home {
             black_time = 10 * 60 * 1000;
         if (white_time == 0)
             white_time = 10 * 60 * 1000;
-        // String str = home_page.get_black_time().getText();
-        // List<String> time_parts = Arrays.asList(str.split(":"));
-        // //System.out.println(time_parts.size());
-        // int size = time_parts.size();
-        // size = getTimeIndex(size);
-        // if (size == -1)
-        //     return ;
-        // System.out.println("split == " + time_parts); // [12, 34, 56, 789]
-        // System.out.println("black time : " + str);
-        // for (String part : time_parts) {
-        //     try {
-        //         int nombre = Integer.parseInt(part);
-        //         if (white_time == -1)
-        //             white_time = 0;
-        //         white_time += nombre * time_size[size];
-        //         System.out.println("Conversion réussie : " + nombre);
-        //     }
-        //     catch (NumberFormatException error) {
-        //         white_time = -1;
-        //         System.out.println("Erreur : la chaîne n'est pas un nombre valide.");
-        //     }
-        //     size +=1 ;
-        // }
-
-        // str = home_page.get_white_time().getText();
-        // time_parts = Arrays.asList(str.split(":"));
-        // size = time_parts.size();
-        // size = getTimeIndex(size);
-        // if (size == -1)
-        //     return ;
-        // System.out.println("split == " + time_parts); // [12, 34, 56, 789]
-
-        // System.out.println("white time : " + str);
-        // for (String part : time_parts) {
-        //     try {
-        //         int nombre = Integer.parseInt(part);
-        //         System.out.println("Conversion réussie : " + nombre);
-        //         if (black_time == -1)
-        //             black_time = 0;
-        //         black_time += nombre * time_size[size];
-        //     }
-        //     catch (NumberFormatException error) {
-        //         System.out.println("Erreur : la chaîne n'est pas un nombre valide.");
-        //         black_time = -1;
-        //     }
-        //     size += 1;
-        // }
     }
 
     void resetButtonDifficulty(String deselectedColor){
@@ -150,17 +89,13 @@ public class Home {
 
 
     public Home() {
-
-
-        // Couleurs pour les boutons
-        String selectedColor = "-fx-background-color: #FF0000;"; // Rouge pour sélectionné
-        String deselectedColor = "-fx-background-color: #ADD8E6;"; // Bleu clair pour désélectionné
+        String selectedColor = "-fx-background-color: #FF0000;";
+        String deselectedColor = "-fx-background-color: #ADD8E6;";
         home_page.getLoadSgf().setOnAction(e -> {
-            home_page.addFileBox(filebox.getFileBox());//sortir de la faut proteger le null
+            home_page.addFileBox(filebox.getFileBox());
         });
 
 
-        // Groupe 1: Type de joueur noir
         home_page.getWhiteEasyButton().setStyle(selectedColor);
         home_page.getBlackEasyButton().setStyle(selectedColor);
         home_page.getBlackIaTypeButton().setOnAction(e -> {
@@ -168,7 +103,6 @@ public class Home {
             black_player_type = 1;
             home_page.getBlackBox().setManaged(true);
             home_page.getBlackBox().setVisible(true);
-            // Mettre à jour les couleurs
             home_page.getBlackIaTypeButton().setStyle(selectedColor);
             home_page.getBlackHumanTypeButton().setStyle(deselectedColor);
         });
@@ -179,19 +113,16 @@ public class Home {
             home_page.getBlackBox().setManaged(false);
             home_page.getBlackBox().setVisible(false);
 
-            // Mettre à jour les couleurs
             home_page.getBlackHumanTypeButton().setStyle(selectedColor);
             home_page.getBlackIaTypeButton().setStyle(deselectedColor);
         });
 
-        // Groupe 2: Type de joueur blanc
         home_page.getWhiteIaTypeButton().setOnAction(e -> {
             System.out.println("white is bot");
             white_player_type = 1;
             home_page.getWhiteBox().setManaged(true);
             home_page.getWhiteBox().setVisible(true);
 
-            // Mettre à jour les couleurs
             home_page.getWhiteIaTypeButton().setStyle(selectedColor);
             home_page.getWhiteHumanTypeButton().setStyle(deselectedColor);
         });

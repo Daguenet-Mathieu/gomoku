@@ -1,62 +1,20 @@
 package org.interfacegui;
-// import javafx.scene.shape.*;
-// import java.util.ArrayList;
 import javafx.scene.paint.Color;
-// import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
-
-// import javafx.scene.paint.Color;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-// import javafx.scene.layout.CornerRadii;
-// import javafx.animation.Timeline;
-// import javafx.animation.KeyFrame;
-// import javafx.util.Duration;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.scene.control.Button;
 import javafx.geometry.Insets;
-// import javafx.scene.text.TextAlignment;
-// import javafx.geometry.Pos;
-// import javafx.geometry.Insets;
-
-// private double tempsRestant = 60.0;  // Temps en secondes
-// private double dernierAffichage = 0.0; // Temps du dernier affichage (en secondes)
-
-// Timeline timer = new Timeline(new KeyFrame(Duration.millis(10), e -> {
-//     tempsRestant -= 0.01; // Décrémenter de 10ms (0.01s)
-
-//     // Vérifier si 0.01s se sont écoulées depuis la dernière mise à jour
-//     if (tempsRestant - dernierAffichage >= 0.01) {
-//         dernierAffichage = tempsRestant;  // Mettre à jour la dernière valeur affichée
-//         mettreAJourAffichage();  // Mettre à jour l'affichage de l'UI
-//     }
-    
-//     // Si le temps est écoulé, arrêter le timer
-//     if (tempsRestant <= 0) {
-//         finDuTemps();  // Effectuer l'action quand le temps est écoulé
-//         timer.stop();   // Arrêter le timer
-//     }
-// }));
-
-// timer.setCycleCount(Timeline.INDEFINITE);  // Le timer continue indéfiniment
-// timer.play();  // Démarrer le timer
-
 
 public class GameInfos{
         private VBox _game_infos;
-
-        // private Pane _timers;
-        // private Pane _player1_timer;
-        // private Pane _player2_timer;
-        // private Pane _scores;
-        // private Pane _player_1_score;
-        // private Pane _player_2_score;
-        // private Pane _prev_next_button;//addd 2 bouttons
-        //private DoubleBinding fontSizeBinding;
+        private VBox _whiteBox = new VBox();
+        private VBox _blackBox = new VBox();
         private int _size_x;
         private int _size_y; 
         private Label _white;
@@ -87,19 +45,6 @@ public class GameInfos{
         private Label playTurn = new Label("Round : 0");
         private Label playerTurn =  new Label("Black turn");
         private VBox _results = new VBox();
-
-        // private int    board_size = 19;
-
-        // public void setBoardSize(int newValue)
-        // {
-        //     board_size = newValue;
-        // }
-
-        // public int getBoardSize()
-        // {
-        //     return board_size;
-        // }
-
         public void setWhiteResults(String res){
             _whiteResults.setText(res);
         }
@@ -159,14 +104,9 @@ public class GameInfos{
             white_time = infos.get_white_time();
             set_white_time(white_time);
             set_black_time(black_time);
-
-            //nb move
-            //player turn
-            //prisonners 
-            //autres infos? 
         }
 
-        private String formatTime(int milliseconds) {//faire une fct hh mm ss et un autre mm ss micro
+        private String formatTime(int milliseconds) {
             if (milliseconds <= 0) {
                 return "00:00";
             }
@@ -175,15 +115,14 @@ public class GameInfos{
             int hours = total_seconds / 3600;
             int minutes = (total_seconds % 3600) / 60;
             int seconds = total_seconds % 60;
-            // System.out.printlen("milisecnd total == " + milliseconds + " remaining miliseconds == " + remaining_milliseconds + " second == " + seconds + " minute == " + minutes + " hours == " + hours);
             if (hours > 0) {
-                return String.format("%02d:%02d", hours, minutes); // HH:MM
+                return String.format("%02d:%02d", hours, minutes);
             }
             else if (minutes > 0) {
-                return String.format("%02d:%02d", minutes, seconds); // MM:SS
+                return String.format("%02d:%02d", minutes, seconds);
             }
             else {
-                return String.format("%02d.%02d", seconds, remaining_milliseconds); // SS:MS (centièmes)
+                return String.format("%02d.%02d", seconds, remaining_milliseconds);
             }
         }
 
@@ -215,7 +154,6 @@ public class GameInfos{
             _white.setLayoutY(_size_y/10);
             _white.setFont(new Font("Arial", 8));
             
-            // Conversion explicite en DoubleBinding
             DoubleBinding fontSizeBinding = (DoubleBinding) Bindings.min(
                 _game_infos.widthProperty().multiply(0.1),
                 _game_infos.heightProperty().multiply(0.1)
@@ -241,7 +179,7 @@ public class GameInfos{
                 fontSizeBinding
             ));
 
-            _game_infos.getChildren().add(_white);
+            // _game_infos.getChildren().add(_white);
 
             _black_prisonners = "prisonners: 0";
             _white_prisonners = "prisonners: 0";
@@ -258,11 +196,11 @@ public class GameInfos{
             ));
             white_time_label = new Label(formatTime(white_time));
             black_time_label = new Label(formatTime(black_time));
-            _game_infos.getChildren().add(_white_label_prisonners);
-            _game_infos.getChildren().add(white_time_label);
-            _game_infos.getChildren().add(_black);
-            _game_infos.getChildren().add(_black_label_prisonners);
-            _game_infos.getChildren().add(black_time_label);
+            // _game_infos.getChildren().add(_white_label_prisonners);
+            // _game_infos.getChildren().add(white_time_label);
+            // _game_infos.getChildren().add(_black);
+            // _game_infos.getChildren().add(_black_label_prisonners);
+            // _game_infos.getChildren().add(black_time_label);
             white_time_label.setLayoutX(_size_x/2);
                         _black.fontProperty().bind(Bindings.createObjectBinding(
                 () -> new Font("Arial", fontSizeBinding.get()),
@@ -288,31 +226,6 @@ public class GameInfos{
             ));
         }
 
-    // private void update_text() {
-    //     _white.setLayoutX(_size_x/10);
-    //     _white.setLayoutY(_size_y/2);
-    //     _black.setLayoutX(_size_x/10);
-    //     _black.setLayoutY(_size_y/10);
-    //     white_time_label.setLayoutX(_size_x/10);
-    //     white_time_label.setLayoutY(_size_y/10 + 20);
-    //     black_time_label.setLayoutX(_size_x/10);
-    //     black_time_label.setLayoutY(_size_y/2 + 20);
-   // }
-        // private void update_text() {
-        // _white.setLayoutX(_size_x/10);
-        // _white.setLayoutY(_size_y/2);
-        // _black.setLayoutX(_size_x/10);
-        // _black.setLayoutY(_size_y/10);
-
-        // white_time_label.setLayoutX(_size_x/10);
-        // white_time_label.layoutYProperty().bind(_white.layoutYProperty().add(
-        //     _white.fontProperty().get().getSize() * 1.5)); // 1.5 = 1 + 0.5 marge
-        
-        // black_time_label.setLayoutX(_size_x/10);
-        // black_time_label.layoutYProperty().bind(_black.layoutYProperty().add(
-        //     _black.fontProperty().get().getSize() * 1.5)); // 1.5 = 1 + 0.5 marge
-        // }
-
         public GameInfos(int y, int x, Home infos){
             black_time = infos.get_black_time();
             white_time = infos.get_white_time();
@@ -321,8 +234,11 @@ public class GameInfos{
             _game_infos = new VBox();
             _game_infos.setPrefSize(x, y);
             _game_infos.setBackground(new Background(new BackgroundFill(Color.web("#ADBAC0"), null, null)));
-            _game_infos.getChildren().addAll(playTurn, playerTurn);
+            _game_infos.getChildren().addAll(playTurn);
             addText();
+            _whiteBox.getChildren().addAll(_white, _white_label_prisonners, white_time_label);
+            _blackBox.getChildren().addAll(_black, _black_label_prisonners, black_time_label);
+            _game_infos.getChildren().addAll(_blackBox, _whiteBox);
             _resign = new Button("resign");
             _prev = new Button("<");
             _next = new Button(">");
@@ -330,10 +246,6 @@ public class GameInfos{
             _hint = new Button("hint");
             _prev.setPadding(Insets.EMPTY);
             _next.setPadding(Insets.EMPTY);
-
-            // Définir la position du bouton dans le Pane
-            // _prev.setLayoutX(_size_x/10);
-            // _prev.setLayoutY(_size_y - _prev.getHeight() - 10);
             _prev.setPrefWidth(_size_x / 2 - (_size_x/10));
             _prev.setFont(javafx.scene.text.Font.font("Arial", 20));
             
@@ -341,9 +253,6 @@ public class GameInfos{
             _next.setLayoutY(_size_y - _next.getHeight() - 10);
             _next.setPrefWidth(_size_x / 2 - (_size_x/10));
             _next.setFont(javafx.scene.text.Font.font("Arial", 20));
-
-            // Ajouter le bouton au Pane
-            // _prev.setPadding(new Insets(0,0,0,0));
             _results.getChildren().addAll(_whiteResults, _blackResults);
             _results.setVisible(false);
             _results.setManaged(false);
@@ -357,25 +266,6 @@ public class GameInfos{
             _size_x = new_x;
             _size_y = new_y;
             _game_infos.setPrefSize(new_x, new_y);
-            // update_text();
-            // _prev.setLayoutX(_size_x/10);
-            // _prev.setLayoutY(_size_y - _prev.getHeight() - 10);
-            // _prev.setPrefWidth(_size_x / 2 - (_size_x/10));
-
-            // _next.setLayoutX(_size_x/10 + (_size_x / 2 - (_size_x/10)));
-            // _next.setLayoutY(_size_y - _next.getHeight() - 10);
-            // _next.setPrefWidth(_size_x / 2 - (_size_x/10));
-            // _next.setFont(javafx.scene.text.Font.font("Arial", 20));
-
-            // _prev.setTextAlignment(javafx.geometry.Pos.CENTER);
-            // _prev.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
-            // Centrer le texte horizontalement
-            // _prev.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-            // _prev.setAlignment(Pos.CENTER);
-
-// Centrer le contenu du bouton (texte et image) verticalement et horizontalement
-            // _prev.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
-            //modifier taille de tout les elements
         }
 
         public Button getForbiddeButton()
@@ -425,9 +315,16 @@ public class GameInfos{
             return _pass;
         }
 
+        public VBox getBlackBox()
+        {
+            return _blackBox;
+        }
+
+        public VBox getWhiteBox()
+        {
+            return _whiteBox;
+        }
 
         public void clear(){
-            // reinitialiser le texte du temps et les variables
-            //reinitioaliser l'affichage des prisonnier // peut etre a faire au niveau superieur?
         }
 }

@@ -13,6 +13,12 @@ public class GomokuRules implements Rules {
         return false;
     }
 
+
+    @Override
+    public boolean undo(){
+        return true;
+    }
+
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
         // Utilisation de la méthode par défaut pour vérifier si la case est vide

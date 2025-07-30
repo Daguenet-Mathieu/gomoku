@@ -1,24 +1,14 @@
 package org.interfacegui;
-//import javafx.scene.shape.*;
 import java.util.ArrayList;
-
 import org.modelai.Game;
 import org.modelai.MinMax;
-
-//import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
-//import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-//import javafx.scene.paint.Color;
-//import javafx.scene.layout.Background;
-//import javafx.scene.layout.BackgroundFill;
-//import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Label;
-//import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import org.utils.Point;
 import javafx.scene.text.Font;
@@ -30,25 +20,17 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import javafx.scene.paint.Color;
 import java.util.Comparator;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.Parent;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.geometry.Pos;
 
-//import java.util.concurrent.ExecutionException;
-
-//coder les free 3et reccup list coup interdits + prisonnier et liste prisonniers et fin de parties sur 10 prisioniers //pente et renju faire des emthodes defaut dans rules
-//mettre qulques boutons test dans home choix des regles + temps (faire ecoulement du temps)  + choix du type de joueur noir et blanc( humain ou machine?) +  
-
-//mettrre en place fct d'event pour les assigner a chaque creation
-//regler le probeleme responsvite et mettre un interval pour que l'ia joue et pour check l'ecoulement du temps //stocker dans map le temps qu'a pris le coup
 
 public class Gomoku
 {
-    // private SGF sgf = new SGF();
     private Pane game_display;
-    //plateau de jeu
-    //regles de jeu
-    //settings choisi
-    //info sur les joueurs la partie , temps tour de jeu actuel etc ...
-    //stocker arraylist de map
-    //minmax avec constructeur approprie
     private ArrayList<Map> _map;
     private Goban goban;
     private GameInfos gameInfos;
@@ -75,6 +57,7 @@ public class Gomoku
     private ArrayList<Point> candidatsList;
     private float bestMoveScore;
     private ArrayList<Point> hintList;
+    private ArrayList<Point> currentForbiddens = new ArrayList<Point>();
     private ArrayList<Integer> whiteTimeList = new ArrayList<Integer>();
     private ArrayList<Integer> blackTimeList = new ArrayList<Integer>(); 
     // private DoubleBinding fontSizeBinding;
@@ -88,39 +71,11 @@ public class Gomoku
     private Future<Point> future = null;
     private ExecutorService executor2 = null;
     private Future<?> future2 = null;
-    private boolean forbiddenVisibility = true;
-    Rules.GameMode playingMode = Rules.GameMode.PLAYING;
+    private boolean forbiddenVisibility = false;
+    private Label commentLabel = new Label();    
+    private Rules.GameMode playingMode = Rules.GameMode.PLAYING;
+
     
-    // void changeCandidatVisibility(boolean visible){
-    //     int count = 0;
-    //     for (Float score : candidatsMap.keySet()) {
-    //         if (count == 0) { 
-    //             count++; 
-    //             continue; // Ignore le premier coup
-    //         }
-    //         goban.set_stone_status(visible, "#00FF00", candidatsMap.get(score), String.format("%.2f", score));
-    //         count++;
-    //     }
-    // }
-
-    // void setCandidats(ArrayList<Candidat.coord> candidats, float[] values){
-    //     System.out.println("candidats = " + candidats.size());
-    //     System.out.println("values = " + values.length);
-    //     System.out.println("le coup choisi == " + game.val);
-    //     if (candidats == null || values == null)
-    //         return ;
-    //     candidatsMap = new HashMap();
-    //     System.out.println("llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll");
-    //     for (int i = 0; i < candidats.size(); i++) {
-    //         float score = values[i];
-    //         while (candidatsMap.containsKey(score)) {
-    //             System.out.println("cououc");
-    //            score += 0.00001f;  // Suffisamment petit pour ne pas affecter l'ordre réel
-    //         }
-    //         candidatsMap.put(score, new Point(candidats.get(i).y, candidats.get(i).x));
-    //     }
-    // }
-
     private void playIa(){
         
         int mapSize = _map.size();
@@ -145,6 +100,8 @@ public class Gomoku
                     if (m.get_map()[lastMove.get(j).y][lastMove.get(j).x] != 0)
                         game.remove(lastMove.get(j), new ArrayList<Point>(), false);
                 }
+                player_turn++;
+
             }
             for (Point p : points) {
                     game.remove(p, m.get_prisonners(), false);
@@ -157,11 +114,12 @@ public class Gomoku
     }
 
     private void eraseForbiddens(){
-        ArrayList<Point> points = rule.get_forbiden_moves(_map, map_index, player_turn + 1);
+        ArrayList<Point> points = currentForbiddens;
         forbiddenVisibility = false;
         for (Point point : points){
             changeForbiddenVisibility(forbiddenVisibility, point);
         }
+        currentForbiddens.clear();
     }
 
     void changeForbiddenVisibility(boolean visible , Point p) {
@@ -169,16 +127,13 @@ public class Gomoku
         goban.set_stone_status(visible, "#FF0000", p, null);
     }
 
-
     void changeHintVisibility(boolean visible) {
         if (hintList == null || hintList.isEmpty()) return;
-        // hintList.sort(null);
         int val = 0;
         for (int i = 0; i < hintList.size(); i++) {
             
             Point p = hintList.get(i);
             goban.set_stone_status(visible, "#00F0FF", p, String.format("%d", (int)p.val));
-            // if ()
         }
     }
 
@@ -186,19 +141,11 @@ public class Gomoku
         if (rule.hasIa() == true && (hint == null || values == null)) return;
 
         hintList = new ArrayList<>();
-        // bestMoveScore = game.val;
-        
-        // System.out.println("hint = " + hint.size());
-        // System.out.println("values = " + values.length);
-        // System.out.println("le coup choisi == " + game.val);
         for (int i = 0; i < hint.size(); i++) {
             hintList.add(new Point(hint.get(i).y, hint.get(i).x));
             hintList.get(hintList.size() - 1).set_val(values[i]);
-            // System.out.println("val == " + hintList.get(hintList.size() - 1).get_val());
         }
         System.out.println("avant sort list == " + hintList);
-        // hintList.sort((a, b) -> Integer.compare((int)a.get_val(), (int)b.get_val()));
-        // hintList.sort(Comparator.comparingDouble(Point::get_val));
         hintList.sort(Comparator.comparingDouble(Point::get_val));//.reversed());
 
         System.out.println("aapres sort list == " + hintList);
@@ -215,21 +162,6 @@ public class Gomoku
             System.out.println("val == " + val);
             hintList.get(i).set_val((float)val);
         }
-        // nb = 1;
-        // for (int i = 0; i < hintList.size(); i++){
-        //     val = (int)hintList.get(i).get_val();
-        //     hintList.get(i).set_val((float)nb);
-        //     for (int j = i + 1; j < hintList.size(); j++){
-        //         if ((int)hintList.get(j).get_val() == val)
-        //             hintList.get(j).set_val((float)nb);
-        //         else{
-        //             i = j;
-        //             break;
-        //         }
-        //     }
-        //     nb = i + 1;
-
-        // }
     }
 
 
@@ -242,9 +174,6 @@ public class Gomoku
             Point p = currentCandidats.get(i);
             if (p.val < 0)
                 goban.set_stone_status(visible, "#FF0000", p, String.format("%.0f", p.val));
-            // if (p.val != bestMoveScore){
-            //     goban.set_stone_status(visible, "#00FF00", p, String.format("%.2f", p.val));
-            // }
             else{
                 goban.set_stone_status(visible, "#00FF00", p, String.format("%.0f", p.val));
             }
@@ -255,15 +184,10 @@ public class Gomoku
     }
 
     void setCandidats(ArrayList<Candidat.coord> candidats, float[] values, int index) {
-        // System.err.println("ici on set les candidats!!!!!!!!????????????!!!!!!!!!!!!!");
         if (rule.hasIa() == false || candidats == null || values == null || game.val == null) return;
         candidatsList = new ArrayList<>();
         bestMoveScore = game.val;
         changeCandidatVisibility(false);
-        // System.err.println("candidats = " + candidats.size());
-        // System.err.println("values = " + values.length);
-        // System.err.println("best == " + game.m.best.y + " " + game.m.best.y );
-        // System.err.println("move == " + game.m.move.y + " " + game.m.move.y );
         for (int i = 0; i < candidats.size(); i++){
             System.err.println("candidat[" + i + "] = " + candidats.get(i).y + " " + candidats.get(i).x);
         }
@@ -293,7 +217,6 @@ public class Gomoku
         map_index = 0;
         round = 0;
         gameInfos.setPLayTurn(round);
-        // init_rules(_game_infos.get_rules());
         init_rules(_game_infos.get_rules(), _game_infos.get_board_size());
         goban.updateFromMap(_map.get(_map.size() - 1));
         gameInfos.clear();
@@ -306,6 +229,7 @@ public class Gomoku
         current_decrement = 0;
         game_end = false;
         game = new Game(_game_infos.get_rules(), rule.get_board_size());
+        game.reset_minmax();
         _winner = 0;
         gameInfos.set_black_prisonners("0");
         gameInfos.set_white_prisonners("0");
@@ -324,7 +248,7 @@ public class Gomoku
         return sum / list.size();
     }
 
-    public void createDelayedGameLoop() {//se lance au bout de 5s ? check si tour joueur ia si oui appelle fct pou jouer son coup puis ecoule le temps
+    public void createDelayedGameLoop() {
         gameLoop = new Timeline();
 
         KeyFrame keyFrame = new KeyFrame(Duration.millis(10), event -> {
@@ -349,7 +273,6 @@ public class Gomoku
                         playMove(future.get());
                         executor.shutdown();
                         setCandidats(game.m.candidat.lst, game.m.values, map_index);
-                        System.err.println("candidats pour le coup : " + (_map.size() - 1));
                         showCandidats();
                         System.err.println("\n\n\n");
                         ia_playing = false;
@@ -367,12 +290,9 @@ public class Gomoku
                         playMove(future.get());
                         executor.shutdown();
                         setCandidats(game.m.candidat.lst, game.m.values, map_index);
-                        System.err.println("candidats pour le coup : " + (_map.size() - 1));
                         showCandidats();
-                        System.err.println("\n\n\n");
                         ia_playing = false;
                     }
-
                 }
             }
             catch (Exception e)
@@ -414,20 +334,36 @@ public class Gomoku
             _end_popin.setVisible(true);
             _end_popin.setManaged(true);
         }
-        //check si 1 joueur a 0 ou < geme fini set le vainqueur arreter la loop
-        // if (ia_turn()) {
-            // do_ia_move();
-        // }
-        // count_time();
         });
         gameLoop.getKeyFrames().add(keyFrame);
         gameLoop.setCycleCount(Timeline.INDEFINITE);
-
-        // PauseTransition delay = new PauseTransition(Duration.seconds(5));
-        // delay.setOnFinished(e -> gameLoop.play());
-        // delay.play();
         gameLoop.play();
-        //return gameLoop;
+    }
+
+
+    public void setAllLabelsColor(Parent parent, Color color) {
+        for (Node node : parent.getChildrenUnmodifiable()) {
+            if (node instanceof Label) {
+                ((Label) node).setTextFill(color);
+            } else if (node instanceof Parent) {
+                setAllLabelsColor((Parent) node, color);
+            }
+        }
+    }
+
+    private void setPlayerColor(){
+        if (player_turn == 0){
+            gameInfos.getBlackBox().setBackground(new Background(new BackgroundFill(Color.web("#2F4F4F"), null, null)));
+            gameInfos.getWhiteBox().setBackground(new Background(new BackgroundFill(Color.web("#ADBAC0"), null, null)));
+            setAllLabelsColor(gameInfos.getBlackBox(), Color.WHITE);
+            setAllLabelsColor(gameInfos.getWhiteBox(), Color.BLACK);
+        }
+        else{
+            gameInfos.getBlackBox().setBackground(new Background(new BackgroundFill(Color.web("#ADBAC0"), null, null)));
+            gameInfos.getWhiteBox().setBackground(new Background(new BackgroundFill(Color.web("#2F4F4F"), null, null)));
+            setAllLabelsColor(gameInfos.getBlackBox(), Color.BLACK);
+            setAllLabelsColor(gameInfos.getWhiteBox(), Color.WHITE);
+        }
     }
 
     private void init_rules(String rules_type, int boardSize){
@@ -452,9 +388,6 @@ public class Gomoku
     private void playMove(Point point){
         System.out.println("dans print move coord : x == " + point.x + " y == " + point.y);
         if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map) || rule.getGameMode() == Rules.GameMode.ENDGAME){
-            // System.out.println("???????????????????????????????????????????????????????????");
-            // System.out.println("COUP INTEDIT : : x == " + point.x + " y == " + point.y);
-            // System.out.println("???????????????????????????????????????????????????????????");
             return ;
         }
         // if ()//!PLAYING
@@ -468,19 +401,6 @@ public class Gomoku
                 currentMap.get_map()[p.y][p.x] = newColor;
             }
             goban.updateFromMap(currentMap);
-            //update dans la Map a 2 == 4 1 == 3? et juste update from map et inverser 
-            // if (_map.get(_map.size() - 1).get_map()[point.y][point.x] == 1) {//ajouter dans l' array list chaque etape ?
-            //     deadStones = ((GoRules)rule).getBlackDeadStones();
-            //     color = "rgba(0,0,0,0.5)";
-            // }
-            // else {
-            //     deadStones = ((GoRules)rule).getWhiteDeadStones();
-            //     color = "rgba(255,255,255,0.5)";
-            // }
-            // System.out.println("color == " + color);
-            // for (Point p : deadStones){
-            //     goban.set_stone_status(true, color, p, null);
-            // }
             return ;
         }
         System.out.println("map index == " + map_index );
@@ -562,18 +482,8 @@ public class Gomoku
             gameInfos.setPLayTurn(round);
         }
         updatePlayerTurn();//le get de la regle
+        setPlayerColor();
     }
-
-    // private void undoMove(){
-    //     if (map_index < _map.size() - 1)
-    //         return ;
-    //     Point coord = _map.get(_map.size() - 1).getLastMove();
-    //     map_index -= 1;
-    //     goban.set_stone_status(false, null, coord, null);//faire un autre fct avec un boucle
-    //     game.remove(coord);
-    //     _map.remove(_map.size() - 1);
-    //     player_turn ^= 1;      
-    // }
 
     private void updatePlayerTurn(){
         System.out.println("update player turn fct : " + player_turn);
@@ -623,23 +533,6 @@ public class Gomoku
     }
 
     public Gomoku(int heigh, int width, Home game_infos)/*prendra les regles en paramettre vu que connu au clic*/{
-        // fontSizeBinding = (DoubleBinding) Bindings.min(
-        //         _game_infos	at org.interfacegui.PenteRules.endGame(PenteRules.java:27)
-// .widthProperty().multiply(0.1),
-        //         _game_infos.heightProperty().multiply(0.1)
-        //     );
-//         fontSizeBinding = Bindings.createDoubleBinding(
-//     () -> Math.min(heigh, width) * 0.025
-// );
-        // fontSizeBinding = Bindings.createDoubleBinding(
-        //     () -> Math.min(
-        //         _game_infos.widthProperty().multiply(0.1).get(),
-        //         _game_infos.heightProperty().multiply(0.1).get()
-        //     ),
-        //     _game_infos.widthProperty(),
-        //     _game_infos.heightProperty()
-        // );
-        // SGF.createSgf(null, "gomoku");
         _game_infos = game_infos;
         if (_game_infos.getRuleInstance() != null)
             rule = _game_infos.getRuleInstance();
@@ -660,29 +553,20 @@ public class Gomoku
         }
         else
             _map.add(new Map(_nb_line));
-        System.err.println("**********************************************************************************************************************************");
         saved = new ArrayList<Point>();
         game_display = new Pane();
         _end_popin.setVisible(false);
         _end_popin.setManaged(false);
-        //_end_popin.setStyle("-fx-background-color: orange;");
         _replay = new Button("Replay");
         _back_home = new Button("Back Home");
-
-        // _end_popin.setPrefSize(200, 40);
         _end_popin.setLayoutX(10);
         _end_popin.setLayoutY(10);
-        // _replay.setPrefWidth(_end_popin.getPrefWidth() / 2);
-        // _replay.setLayoutY(heigh * 0.8);
-        // _back_home.setPrefWidth(_end_popin.getPrefWidth() / 2);
-        // _back_home.setLayoutX(_end_popin.getPrefWidth() / 2);
         _back_home.setLayoutY(heigh * 0.8);
         _end_popin.setFillWidth(true);
         _end_popin.getChildren().addAll(_end_text, _replay, _back_home);
         _game_infos_size_x = width / 4;
         gameInfos = new GameInfos(heigh, _game_infos_size_x, game_infos);
         game_name = new Label(game_infos.get_rules());
-        //faire le new gamedisplay donner 1/3 largeur
         _game_infos_size_y = heigh;
         gameInfos.getUndoButton().setManaged(false);
         gameInfos.getUndoButton().setVisible(false);
@@ -691,18 +575,14 @@ public class Gomoku
             gameInfos.getUndoButton().setVisible(false);
             gameInfos.getHintButton().setManaged(false);
             gameInfos.getHintButton().setVisible(false);
-            gameInfos.getCandidatsButton().setManaged(false);
-            gameInfos.getCandidatsButton().setVisible(false);
             gameInfos.getResignButton().setManaged(false);
             gameInfos.getResignButton().setVisible(false);
-            gameInfos.getForbiddeButton().setManaged(false);
-            gameInfos.getForbiddeButton().setVisible(false);
-
         }
         _goban_pane = goban.get_goban();
-        _game_infos_pane = gameInfos.getGameInfos();//donner les temps en parametres//donnerl e temps en parametre et des getteur pour cehck la fin del a game //ajouter les temps dans la map aussi
+        _game_infos_pane = gameInfos.getGameInfos();
         _game_infos_pane.getChildren().add(0, game_name);
         _game_infos_pane.getChildren().add(0, _end_popin);
+        setPlayerColor();
 
             DoubleBinding fontSizeBinding = (DoubleBinding) Bindings.min(
                 _game_infos_pane.widthProperty().multiply(0.1),
@@ -714,7 +594,14 @@ public class Gomoku
                 fontSizeBinding
             ));
         _goban_pane.setLayoutX(_game_infos_size_x);
-        game_display.getChildren().addAll(_game_infos_pane, _goban_pane);
+        commentLabel.setManaged(false);
+        commentLabel.setVisible(false);
+        // game_display.getChildren().addAll(new VBox().getChildren().addAll(commentLabel, new HBox(),getChildren().addAll(_game_infos_pane, _goban_pane)));
+        VBox mainVBox = new VBox();
+        HBox hbox = new HBox();
+        hbox.getChildren().addAll(_game_infos_pane, _goban_pane);
+        mainVBox.getChildren().addAll(commentLabel, hbox);
+        game_display.getChildren().add(mainVBox);
         createDelayedGameLoop();
         if (rule.hasPass() == false){
             gameInfos.getPassButton().setVisible(false);
@@ -737,12 +624,11 @@ public class Gomoku
         gameInfos.getUndoButton().setOnAction(event -> {
             if (rule.getGameMode() == Rules.GameMode.ENDGAME)
                 return ;
-            if (rule instanceof GoRules){
-                if (((GoRules)rule).undo() == false)
-                    return ;
-                goban.remove_score();
-            }
-            undoMove();
+            if (rule.undo() == false)
+                return ;
+            goban.remove_score();
+            if (rule instanceof GoRules)
+                undoMove();
             if ((_game_infos.get_black_player_type() == 1 || _game_infos.get_white_player_type() == 1) && _map.size() > 1)
                 undoMove();
         });
@@ -756,17 +642,27 @@ public class Gomoku
                 changeCandidatVisibility(false);
                 changeHintVisibility(false);
                 eraseForbiddens();
-                // changeForbiddenVisibility(false, null);
                 forbiddenVisibility = false;
                 toggleCandidat = false;
                 toggleHint = false;
                 map_index--;
                 goban.updateFromMap(_map.get(map_index));
+                if (_map.get(map_index).getComment() != null && _map.get(map_index).getComment().isEmpty() == false)
+                {
+                    commentLabel.setManaged(true);
+                    commentLabel.setVisible(true);
+                    commentLabel.setText(_map.get(map_index).getComment());
+                    commentLabel.setMaxWidth(Double.MAX_VALUE);
+                    commentLabel.setAlignment(Pos.CENTER);
+                }
+                else
+                {
+                    commentLabel.setManaged(false);
+                    commentLabel.setVisible(false);
+                }
                 gameInfos.set_black_prisonners(Integer.toString( _map.get(map_index).getBlackPrisonners()));
                 gameInfos.set_white_prisonners(Integer.toString( _map.get(map_index).getWhitePrisonners()));
             }
-            // Action à réaliser lors du clic
-            // stones[i][j].setVisible(true/false) et setFill(Color.BLACK/WHITE) parcourrir map et pierres
             System.out.println("Le bouton prev a été cliqué !");
         });
         gameInfos.getNextButton().setOnAction(event -> {
@@ -776,7 +672,6 @@ public class Gomoku
                 changeCandidatVisibility(false);
                 changeHintVisibility(false);
                 eraseForbiddens();
-                // changeForbiddenVisibility(false, null);
                 forbiddenVisibility = false;
                 toggleCandidat = false;
                 toggleHint = false;
@@ -784,6 +679,20 @@ public class Gomoku
                 goban.updateFromMap(_map.get(map_index));
                 gameInfos.set_black_prisonners(Integer.toString( _map.get(map_index).getBlackPrisonners()));
                 gameInfos.set_white_prisonners(Integer.toString( _map.get(map_index).getWhitePrisonners()));
+                if (_map.get(map_index).getComment() != null && _map.get(map_index).getComment().isEmpty() == false)
+                {
+                    commentLabel.setManaged(true);
+                    commentLabel.setVisible(true);
+                    commentLabel.setText(_map.get(map_index).getComment());
+                    commentLabel.setMaxWidth(Double.MAX_VALUE);
+                    commentLabel.setAlignment(Pos.CENTER);
+                }
+                else
+                {
+                    commentLabel.setManaged(false);
+                    commentLabel.setVisible(false);
+                }
+
             }
             // Action à réaliser lors du clic
             System.out.println("Le bouton next a été cliqué !");
@@ -793,11 +702,13 @@ public class Gomoku
                 return ;
             toggleCandidat = toggleCandidat == true? false : true;
             changeCandidatVisibility(toggleCandidat);
-            changeHintVisibility(false);
-            eraseForbiddens();
-            // changeForbiddenVisibility(false, null);
+            // changeHintVisibility(false);
+            // eraseForbiddens();
             forbiddenVisibility = false;
             toggleHint = false;
+            if (toggleCandidat == false){
+                goban.updateFromMap(_map.get(map_index));
+            }
         });
 
         gameInfos.getHintButton().setOnAction(event -> {
@@ -808,42 +719,37 @@ public class Gomoku
                 game.best_move(player_turn+1, player_turn+1);
                 setHint(game.m.candidat.lst, game.m.values);
             }
-            changeCandidatVisibility(false);
+            // changeCandidatVisibility(false);
             changeHintVisibility(toggleHint);
-            eraseForbiddens();
-            // changeForbiddenVisibility(false, null);
+            // eraseForbiddens();
             forbiddenVisibility = false;
             toggleCandidat = false;
+            if (toggleHint == false){
+                goban.updateFromMap(_map.get(map_index));
+            }
+
         });
         gameInfos.getForbiddeButton().setOnAction(event -> {
-            if (ia_playing /*|| game_end || map_index < _map.size() - 1*/)
+            if (ia_playing)
                 return ;
             changeCandidatVisibility(false);
             changeHintVisibility(false);
+            forbiddenVisibility = forbiddenVisibility == false;
             toggleCandidat = false;
             toggleHint = false;
-            // int color = _map.get(map_index).get_color() ^ 1;
-            System.out.println("map index == " + map_index + " player turn == " + player_turn + " player turn d'apres map == " + _map.get(map_index).get_color());
             ArrayList<Point> points = rule.get_forbiden_moves(_map, map_index, player_turn + 1);
+            currentForbiddens = points;
             for (Point point : points){
                 changeForbiddenVisibility(forbiddenVisibility, point);
             }
-            forbiddenVisibility = forbiddenVisibility == false;
+            if (forbiddenVisibility == false)
+                currentForbiddens.clear();
+            if (forbiddenVisibility == false){
+                goban.updateFromMap(_map.get(map_index));
+            }
         });
-        
-            // _end_popin.setVisible(true);
-            // _end_popin.setManaged(true);
-            // game_end = true;
-            // ia_playing = false;
-            // gameLoop.stop();
-            // System.out.println("winner == " + winner);
-            // _winner = winner - 1;
-            // String res = _winner == 0 ? "black" : "white";
-            // _end_text.setText(res + " win");
-
 
         gameInfos.getPassButton().setOnAction(event -> {
-            //System.out.println("player tur == " + player_turn);
             GoRules r = (GoRules)rule;
             String res;
             if (r.getGameMode() == Rules.GameMode.ENDGAME){
@@ -871,11 +777,9 @@ public class Gomoku
             if (rule.getGameMode() == Rules.GameMode.COUNTING){
                 ((GoRules)rule).init_prisonners(_map.get(_map.size() - 1));
                 ArrayList<Point> tmp = ((GoRules)rule).getWhitePrisonnersList();
-                //System.out//.println("white prisonners == " + tmp);
                 for (Point p : tmp)
                     goban.modify_score(p, Color.WHITE);
                 tmp = ((GoRules)rule).getBlackPrisonnersList();
-                // System.out.println("black prisonners == " + tmp);
                 for (Point p : tmp)
                     goban.modify_score(p, Color.BLACK);
                 gameInfos.setBlackResults("black res: " + r.getBlackScore());

@@ -6,11 +6,10 @@ public class PenteRules implements Rules {
 
     int winner = 0;
     int waitingWinner = 0;
-    ArrayList<Point> prisonners;//prisonnier crees par le dernier coup
-    ArrayList<Point> forbidden_moves = new ArrayList<Point>();//coups interdit pour la position actuelle
+    ArrayList<Point> prisonners;
+    ArrayList<Point> forbidden_moves = new ArrayList<Point>();
     int [] prisonners_nbr = new int[2];
     public DoubleFree dbfree = new DoubleFree();
-    int advWinning = 0;//0 1 2? need check first si 5 sur le plateau ou fqarder en memoire le point?
     Rules.GameMode gameStatus = Rules.GameMode.PLAYING;
     int boardSize = 19;
 
@@ -31,41 +30,23 @@ public class PenteRules implements Rules {
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
-        // Utilisation de la méthode par défaut pour vérifier si la case est vide
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1))) {
             return false;
         }
-        // map.get(map.size() - 1).printMap();
-
-        // System.out.printf("on mat side point x %d y %d val %d\n", point.y, point.x, ((map.size() + 1)%2)+1);
-        // int[][] test = map.get(map.size() - 1).get_map();
-
-        // for (int i = 0  ; i < 19 ; i++)
-        // {
-        //     for (int j = 0 ; j < 19 ; j++)
-        //     {
-        //         System.out.printf("%d", test[i][j]);
-        //     }
-        //         System.out.println();
-        // }
-        // System.out.println("size map " + map.size() + " color " + (((map.size() + 1)%2)+1));
         if (this.dbfree.check_double_free(point.y, point.x, ((map.size() + 1)%2)+1, map.get(map.size() - 1).get_map()) == false)
             return false;
-        //check les doubles free three
-        // prisonners = GetCapturedStones(point, map.get(map.size() - 1));
-        // Ajouter d'autres vérifications spécifiques au jeu Gomoku, si nécessaire.
-        // Par exemple, vérifier si le coup respecte la taille du plateau ou les autres règles du Gomoku.
-        // Pour un modèle minimaliste, supposons que tout coup est valide si la case est vide.
+        return true;
+    }
+
+
+    @Override
+    public boolean undo(){
+        waitingWinner = 0;
         return true;
     }
 
     private void removeCaptured(ArrayList<Point> list, Map map){
-        // for (Point p:list){
-        //     System.out.println("pour point " + p + " res == " + map.get_map()[p.y][p.x]);
-        // }
-        // System.out.println("dans remove au debut : " + list);
         list.removeIf(p -> map.get_map()[p.y][p.x] == 0);
-        // System.out.println("dans remove apres : " + list);
     }
 
     @Override
@@ -75,21 +56,12 @@ public class PenteRules implements Rules {
         ArrayList<Point> horizontalWin = getHorizontalWin();
         ArrayList<Point> diagonalLeftWin = getDiagonalLeftWin();
         ArrayList<Point> diagonalRightWin = getDiagonalRightWin();
-        //si waitingWinner != 0 //check si tjs 5 a la suite dans une des arrays si oui set winner return true sinon remettre wating  0 et continuer
-        // System.out.println("vertical == " + verticalWin.size() + " horizontal == " + horizontalWin.size() + " diagonale left  == " + diagonalLeftWin.size()  + " dagonale right == " + diagonalRightWin.size());
-        // System.out.println("check end curretn nbr prisonner == " + prisonners_nbr[map.get_map()[point.y][point.x] - 1]);
         removeCaptured(verticalWin, map);
         removeCaptured(horizontalWin, map);
         removeCaptured(diagonalLeftWin, map);
         removeCaptured(diagonalRightWin, map);
-        // System.out.println("verticala == " + verticalWin);
-        // System.out.println("horizontal == " + horizontalWin);
-        // System.out.println("get diag left == " + diagonalLeftWin);
-        // System.out.println("get diag right == " + diagonalRightWin);
-
         if (waitingWinner != 0)
         {
-            // System.out.println("on check si y a une fibn de partie!");
             boolean winnerFound = false;
             if (checkFiveInRow(verticalWin))
                 winnerFound = true;
@@ -99,10 +71,8 @@ public class PenteRules implements Rules {
                 winnerFound = true;
             else if (checkFiveInRow(diagonalRightWin))
                 winnerFound = true;
-            // System.out.println("winnr found ?? " + winnerFound);
             if (winnerFound)
             {
-                // System.out.println("winner found!");
                 winner = (color == 1) ? 2 : 1;
                 gameStatus = Rules.GameMode.ENDGAME;
                 return true;
@@ -117,10 +87,6 @@ public class PenteRules implements Rules {
         }
         if (check_five(map, point))
         {
-            // System.out.println("2 verticala == " + verticalWin);
-            // System.out.println("2 horizontal == " + horizontalWin);
-            // System.out.println("2 get diag left == " + diagonalLeftWin);
-            // System.out.println("2 get diag right == " + diagonalRightWin);
             if (verticalWin.size() >= 5 && areCapturable(verticalWin, map, color, 0) == true)
                 waitingWinner = color;
             if (horizontalWin.size() >= 5 && areCapturable(horizontalWin, map, color, 1) == true)
@@ -159,33 +125,18 @@ public class PenteRules implements Rules {
         Map map = maps.get(index);
         int[][] m = map.get_map();
         forbidden_moves.clear();
-        // map.printMap();
-        // System.out.println("index == " + index + " size map " + maps.size() + " color " + color);
-        // System.out.println("pour x == 8 et y == 10 " + m[10][8] + " et pour x == 10 et y == 8 " + m[8][10]);
-        // for (Point point : forbidden_moves)
-            // System.out.println("apres cleat forbidden moves == " + forbidden_moves);
         for (int y = 0; y < get_board_size();y++)
         {
             for (int x = 0; x < get_board_size(); x++){
                 if (y == 10 && x == 8)
-                    // System.out.println("puor la coordonnee qui nous interesse avanr le continue");
                 if (m[y][x] != 0)
                     continue ;
                 boolean res = this.dbfree.check_double_free(y, x, color, m);
-                // if (y == 10 && x == 8)
-                    // System.out.println("puor la coordonnee qui nous interesse res : " + res);
-                // if (res == false)
-                // {
-                //     // System.out.println("chew moi x == " + y + " y == " + x);
-                // }
-                //System.out.println("on check la color : " + color + "x  == " + col + " y == " + y + " res fct double == " + this.dbfree.check_double_free(y, col, color,  m) + " res == " + res);
                 if (res == false){
                     forbidden_moves.add(new Point (x, y));
                 }
             }
         }
-        // for (Point point : forbidden_moves)
-        //     System.out.println("avant envoi forbidden moves == " + point);
         return forbidden_moves;
     }
 
@@ -305,18 +256,12 @@ public class PenteRules implements Rules {
 
 
     private boolean isCapturable(Point point, Map map, final int color){
-        // System.out.println("les coords sont : x == " + point.x + " y == " + point.y);
-        // System.out.println("color == " + map.get_map()[point.y][point.x]);
-        // System.out.println("\n\nHORIZONTAL\n\n");
         if (checkDir(point, map, 1, 0, color) == true)//horixontal
             return true;
-        // System.out.println("\n\nVERTICAL\n\n");
         if (checkDir(point, map, 0, 1, color) == true)//vertical
             return true;
-        // System.out.println("\n\nDIAGONAL TOP\n\n");
         if (checkDir(point, map, 1, 1, color) == true)//diagtop
             return true;
-        // System.out.println("\n\nDIAGONAL LOW\n\n");
         if (checkDir(point, map, 1, -1, color) == true)//diaglow
             return true;
         return false;
@@ -343,14 +288,11 @@ public class PenteRules implements Rules {
         {
             Point point1 = list.get(i);
             Point point2 = list.get(i + 1);
-        //    System.out.println("point 1 == " + point1 + " point2 " + point2);
-        //    System.out.println("1er == " + Math.abs(point1.x - point2.x) + " 2em " + Math.abs(point1.y - point2.y));
             if (Math.abs(point1.x - point2.x) > 1 || Math.abs(point1.y - point2.y) > 1)
                 five = 1;
             else
                 five++;
         }
-        // System.out.println("five == " + five);
         if (five >= 5)
             return true;
         return false;
