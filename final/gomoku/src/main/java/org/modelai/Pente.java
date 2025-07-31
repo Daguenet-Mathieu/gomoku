@@ -170,7 +170,6 @@ public class Pente extends MinMax {
             remove_capture(x, y, ddir[i][0], ddir[i][1], turn, op);
     }
 
-    //nb inside to test
     public float value_victory_smarter(int player, int turn, int len, int nb, boolean print) //not so smart
     {
         pos_counter++;
@@ -425,7 +424,7 @@ public class Pente extends MinMax {
                 values[i] = res;
                 cur_alpha = Math.max(cur_alpha, res);
 
-                if (cut && cur_alpha >= beta) // beta cut
+                if (cut && cur_alpha > beta) // beta cut
                 {
                     if (depth != Game.max_depth - 1 || ( depth == Game.max_depth -1 && cur_alpha > beta))
                         return cur_alpha;
@@ -445,7 +444,7 @@ public class Pente extends MinMax {
                 values[i] = res;
                 cur_beta = Math.min(cur_beta, res);
 
-                if (cut && alpha >= cur_beta) // alpha cut
+                if (cut && alpha > cur_beta) // alpha cut
                 {
                     if (depth != Game.max_depth - 1 || (depth == Game.max_depth - 1 && alpha > cur_beta))
                         return cur_beta;
@@ -456,10 +455,9 @@ public class Pente extends MinMax {
         if (depth == Game.max_depth)
         {
             System.out.println("At the end !!!!!!!!!!!!!!!!!!!!!!!!!");
-            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
             display_map();
             scsimul.display();
-
+            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
         }
 
         if (depth == Game.max_depth)

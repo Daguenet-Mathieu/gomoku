@@ -107,7 +107,7 @@ public class Gomoku
                     game.remove(p, m.get_prisonners(), false);
             }
             System.err.println("i 5== " + i);
-            game.best_move((i%2==0?2:1), (i%2==0?2:1));
+            game.best_move((i%2==0?2:1), (i%2==0?2:1), true);
             setCandidats(game.m.candidat.lst, game.m.values, mIndex);
             i++;
         }
@@ -265,7 +265,7 @@ public class Gomoku
                     if (ia_playing == false){
                             executor = Executors.newSingleThreadExecutor();
                             future = executor.submit(() -> {
-                                return game.best_move(player_turn+1, player_turn+1);
+                                return game.best_move(player_turn+1, player_turn+1, true);
                             });
                         ia_playing = true;
                     }
@@ -282,7 +282,7 @@ public class Gomoku
                     if (ia_playing == false){
                         executor = Executors.newSingleThreadExecutor();
                         future = executor.submit(() -> {
-                            return game.best_move(player_turn+1, player_turn+1);
+                            return game.best_move(player_turn+1, player_turn+1, true);
                         });
                         ia_playing = true;
                     }
@@ -716,7 +716,7 @@ public class Gomoku
                 return ;
             toggleHint = toggleHint == true? false : true;
             if (hintList == null){
-                game.best_move(player_turn+1, player_turn+1);
+                game.best_move(player_turn+1, player_turn+1, true);
                 setHint(game.m.candidat.lst, game.m.values);
             }
             // changeCandidatVisibility(false);

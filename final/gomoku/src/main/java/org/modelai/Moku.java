@@ -12,7 +12,6 @@ public class Moku extends MinMax {
         candidat = new Candidat(false);
         pos_counter = 0;
         nbmove = 0;
-
     }
 
     public boolean play(Candidat.coord c, int player)
@@ -114,7 +113,7 @@ public class Moku extends MinMax {
                 cur_alpha = Math.max(cur_alpha, res);
 
 
-                if (cur_alpha >= beta) // beta cut
+                if (cur_alpha > beta) // beta cut
                     return cur_alpha;
 
             }
@@ -131,7 +130,7 @@ public class Moku extends MinMax {
                 cur_beta = Math.min(cur_beta, res);
 
 
-                if (alpha >= cur_beta) // alpha cut
+                if (alpha > cur_beta) // alpha cut
                     return cur_beta;
             }
         }
