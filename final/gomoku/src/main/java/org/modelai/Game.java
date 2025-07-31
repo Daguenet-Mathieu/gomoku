@@ -15,6 +15,7 @@ public class Game {
     static public int max_depth = 10;
     static public int max_can = 7;
     static public int min_can = 5;
+
     public Game(String rules, int board_size)
     {
         nb_move = 0;
@@ -26,7 +27,6 @@ public class Game {
     private MinMax minmax_tree(String str)
     {
         str = Character.toUpperCase(str.charAt(0)) + str.substring(1);
-        //tree_config(3);
         if ("Gomoku".equals(str))
         {
             this.rules = "Gomoku";
@@ -54,15 +54,15 @@ public class Game {
         if (lvl == 1)
         {
             System.err.println("HARD");
-            max_depth = 9;
-            max_can = 8;
-            min_can = 7;
+            max_depth = 10;
+            max_can = 7;
+            min_can = 5;
         }
         else if (lvl == 2)
         {
-            System.err.println("Medium");
-            max_depth = 10;
-            max_can = 7;
+            System.err.println("MEDIUM");
+            max_depth = 9;
+            max_can = 6;
             min_can = 5;
         }
         else if (lvl == 3)
@@ -72,11 +72,17 @@ public class Game {
             max_can = 8;
             min_can = 8;
         }
+        else if (lvl == 4)
+        {
+            System.err.println("SUPER HARD");
+            max_depth = 9;
+            max_can = 8;
+            min_can = 8;
+        }
     }  
 
     public void move(Point point, int turn)
     {
-        System.err.println("point : " + point + " turn " + turn);
         MinMax.map[point.y][point.x] = turn;
 
         scbord.analyse_move(point.y, point.x, turn);
@@ -132,20 +138,14 @@ public class Game {
         double res = 0;
 
         for (int i = 0; i < timelst.size() ; i++)
-        {
             res += timelst.get(i);
-        }
         return res / timelst.size();
     }
 
-    public Point best_move(int turn, int player)
+    public Point best_move(int turn, int player, boolean display)
     {
-        // if (player == 1)
-        //     Game.max_depth = 9;
-        // else
-        //     Game.max_depth = 9;
-
-        System.err.printf("Call best_move turn %d player %d et nb move %d\n", turn, player, nb_move);
+        if (display)
+            System.out.printf("Call best_move turn %d player %d et nb move %d\n", turn, player, nb_move);
 
         time = System.currentTimeMillis();
         if (nb_move == 0)
@@ -153,9 +153,6 @@ public class Game {
         else
         {
             m.load_cur_score(scbord, turn);
-            MinMax.display_Map();
-            scbord.display();
-            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
 
             if (this.rules.equals("Pente") || this.rules.equals("Gomoku"))
                 val = m.minmaxab(max_depth, turn, player, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
@@ -163,24 +160,29 @@ public class Game {
                 val = m.minmax(max_depth, turn, player);
         }
 
+        if (display)
+            display_all_board_info();
+
         time = System.currentTimeMillis() - time;
         timelst.add((double)time / 1000);
 
-        best_move_stamp();
+        if (display)
+            best_move_stamp();
     
         return new Point(m.best.y, m.best.x);
-
     }
 
+    //display function
+    private void display_all_board_info()
+    {
+            MinMax.display_Map();
+            scbord.display();
+            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
+    }
+
+    //display function
     private void best_move_stamp()
     {
         System.out.printf("IA move %d (Turn %d) at %d %d played in %f seconds (%d pos, %d depth) mean : %f\n", nb_move + 1,(nb_move + 1) / 2 + 1, m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter, max_depth + 1,return_mean_time());
-        if ((double)time/1000 > 0.6 && return_mean_time() > 0.46)
-        {
-            Game.max_depth = 9;
-            Game.max_can = 8;
-            Game.min_can = 6;
-            System.out.printf("max depth decreesed to %d\n", max_depth + 1);
-        }
     }
 }

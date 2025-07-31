@@ -15,9 +15,11 @@ public class Candidat
 
     private static coord limax = new coord(1, 1);
     private static coord limin = new coord(18, 18);
+    static  public boolean display = false; 
     private int turn;
     private int seuil;
     public boolean capture_possible;
+
     
     public static class coord
     {
@@ -326,6 +328,28 @@ public class Candidat
         return this.lst.size();
     }
 
+    public int one_move_candidate()
+    {
+        for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+        {
+           for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+            {
+                if (MinMax.map[i][j] == 1 || MinMax.map[i][j] == 2)
+                {
+                    if (i !=0 && j !=0 && i != 18 && j != 18)
+                    {
+                        this.lst.clear();
+                        this.lst.add(new Candidat.coord(i+1, j-1, 1));
+                        this.lst.add(new Candidat.coord(i+1, j, 1));
+                        this.lst.add(new Candidat.coord(i, j-1, 1));
+                        return this.lst.size();
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
     public int all_probable_candidate(int turn)
     {
         int res;
@@ -340,6 +364,12 @@ public class Candidat
                 if (MinMax.map[i][j] == 0 && res !=0 && (capture_possible == false || doubleFreethree.check_double_free(i, j, turn, MinMax.map)))
                     this.lst.add(new Candidat.coord(i, j, res));
             }
+        }
+
+        if (nb_mv == 1)
+        {
+            if (one_move_candidate() != 0);
+                return 3;
         }
 
         Collections.sort(this.lst, Comparator.comparing(item -> 
@@ -364,7 +394,7 @@ public class Candidat
     private int nb_candidates(int depth)
     {
         if (this.seuil > Game.min_can)
-            return Math.min(this.seuil, 10);
+            return Math.min(this.seuil, 12);
         if (depth == Game.max_depth)
             return Game.max_can;
         else if (depth == Game.max_depth - 1)
@@ -393,45 +423,21 @@ public class Candidat
 
         if (ret > 2)
         {
-            //Candidat.coord can;
 
-            // if (depth == Game.max_depth) // Print candidat before sort
-            // {
-
-            //     System.out.println("Candidat before sort");
-            //     for (int i = 0 ; i < this.lst.size() ; i++)
-            //     {
-            //         can = this.lst.get(i);
-            //         System.out.printf("%d %d %f\n", can.x, can.y, can.st);
-            //     }
-            // }
+            if (depth == Game.max_depth && display)
+                display_candidat("Candidat before sort");
 
             Collections.sort(this.lst, Comparator.comparing(item -> 
             this.order.indexOf(item.st())));
 
-            // if (depth == Game.max_depth ) // Print candidat after sort
-            // {
-            //     System.out.println("Candidat after sort");
-            //     for (int i = 0 ; i < this.lst.size() ; i++)
-            //     {
-            //         can = this.lst.get(i);
-            //         System.out.printf("%d %d %f\n", can.x, can.y, can.st);
-            //     }
-
-            // }
+            if (depth == Game.max_depth && display)
+                display_candidat("Candidat after sort");
 
             if (ret >= nb_candidates(depth) + 1)
             {
                 this.lst = new ArrayList<>(this.lst.subList(0, nb_candidates(depth)));
-                // if (depth == Game.max_depth) // Print candidat selected
-                // {
-                //     System.out.println("Candidat selected");
-                //     for (int i = 0 ; i < this.lst.size() ; i++)
-                //     {
-                //         can = this.lst.get(i);
-                //         System.out.printf("%d %d %f\n", can.x, can.y, can.st);
-                //     }
-                // }
+                if (depth == Game.max_depth && display)
+                    display_candidat("Candidat selected");
             }
 
             return this.lst.size();
@@ -518,7 +524,7 @@ public class Candidat
     }
 
     //display function
-    public void display_candidat(int [][] map)
+    public void display_candidat_map(int [][] map)
     {
         System.out.printf("candidat number : %d\n", lst.size());
         int [] [] mapc = new int [19][19];
@@ -535,5 +541,17 @@ public class Candidat
             System.out.printf("%d %d\n", lst.get(i).x, lst.get(i).y);
         }
         MinMax.display_Map(mapc);
+    }
+
+    //display function
+    public void display_candidat(String msg)
+    {
+        Candidat.coord can;
+        System.out.println(msg);
+        for (int i = 0 ; i < this.lst.size() ; i++)
+        {
+             can = this.lst.get(i);
+             System.out.printf("%d %d %f\n", can.x, can.y, can.st);
+        }
     }
 }
