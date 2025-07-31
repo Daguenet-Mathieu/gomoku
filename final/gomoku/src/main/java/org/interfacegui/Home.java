@@ -176,7 +176,7 @@ public class Home {
         // Groupe 3: Règles du jeu
         home_page.getGomokuButton().setOnAction(e -> {
             System.out.println("gomoku");
-            changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
             home_page.getBoardSizeBox().setVisible(false);
             home_page.getBoardSizeBox().setManaged(false);
             rule = "Gomoku";
@@ -219,18 +219,18 @@ public class Home {
             }
             System.out.println("new rules set sur string event");
             // System.out.println("gomoku");
-            if ("go".equals(rules_type[i])){
-                changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), true);
-            }
-            else{
-                changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
-            }
+            // if ("go".equals(rules_type[i])){
+            //     changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), true);
+            // }
+            // else{
+            //     changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+            // }
             rule = rules_type[i];
         });
 
         home_page.getPenteButton().setOnAction(e -> {
             System.out.println("Pente");
-            changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
             home_page.getBoardSizeBox().setVisible(false);
             home_page.getBoardSizeBox().setManaged(false);
             rule = "Pente";
@@ -263,7 +263,7 @@ public class Home {
 
         home_page.getRenjuButton().setOnAction(e -> {
             System.out.println("Renju");
-            changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
             home_page.getBoardSizeBox().setVisible(false);
             home_page.getBoardSizeBox().setManaged(false);
 
@@ -278,7 +278,7 @@ public class Home {
 
         home_page.getGoButton().setOnAction(e -> {
             System.out.println("Go");
-            changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), true);
+            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), true);
             home_page.getBoardSizeBox().setVisible(true);
             home_page.getBoardSizeBox().setManaged(true);
             rule = "Go";

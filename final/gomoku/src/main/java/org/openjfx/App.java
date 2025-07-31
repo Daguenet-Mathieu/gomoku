@@ -15,6 +15,7 @@ import org.utils.Point;
 import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import javafx.geometry.Pos;
 
 // import javafx.application.Platform;
 // import javafx.scene.text.Text;
@@ -78,8 +79,8 @@ public class App extends Application {
         System.out.println("open img background !");
         System.out.println("Répertoire courant: " + System.getProperty("user.dir"));
 
-        File file1 = new File("./img/test.png");
-        File file2 = new File("./img/title.webp");
+        File file1 = new File("./img/background.png");
+        File file2 = new File("./img/title.png");
 
         // Chargement synchrone de background.jpg
         Image img1 = new Image(file1.toURI().toString(), false);
@@ -102,29 +103,33 @@ public class App extends Application {
         Image img2 = new Image(file2.toURI().toString(), false);
         img2.exceptionProperty().addListener((obs, oldEx, newEx) -> {
             if (newEx != null) {
-                System.err.println("Erreur title.webp : " + newEx.getMessage());
+                System.err.println("Erreur title.png : " + newEx.getMessage());
                 newEx.printStackTrace();
             }
         });
 
         if (img2.getWidth() <= 0 || img2.getHeight() <= 0) {
-            System.err.println("Erreur : title.webp non décodé");
+            System.err.println("Erreur : title.pgn non décodé");
         } else {
-            System.out.println("✔ title.webp OK : " + img2.getWidth() + "x" + img2.getHeight());
+            System.out.println("✔ title.png OK : " + img2.getWidth() + "x" + img2.getHeight());
         }
 
         title = new ImageView(img2);
+        background.setFitWidth(home_root.getWidth());
+        background.setFitHeight(home_root.getHeight());
+        background.setPreserveRatio(false);
+        title.setFitWidth(home_root.getWidth());
+        title.setFitHeight(home_root.getHeight());
+        title.setPreserveRatio(true);
+
     }
-
-
 
     public void set_home_event(){
         home.widthProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("redimentionnement de home!!!!!!!!!!!!!!!!!1");
+            System.out.println("redimensionnement de home ! largeur = " + newValue.doubleValue());
         });
         home.heightProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("redimentionnement de home!!!!!!!!!!!!!!!!!1");
-
+            System.out.println("redimensionnement de home ! hauteur = " + newValue.doubleValue());
         });
         home_page.getValidationButton().setOnMouseClicked(event -> {
             double scenex = stage.getWidth();
@@ -142,7 +147,6 @@ public class App extends Application {
 
     private void set_goban_event(){
         gomoku.get_home_button().setOnMouseClicked(event -> {
-            System.out.println("promis un jour ce bouton sera fonctionnel");
             double scenex = stage.getWidth();
             double sceney = stage.getHeight();
             System.out.println("hone width == " + scenex + " heigh " + sceney);
@@ -150,26 +154,41 @@ public class App extends Application {
             home = new Scene(home_root, scenex, sceney);
             home_page = new Home();
             // home_root.setStyle("-fx-background-color:rgb(71, 157, 255);");
+            // openBackground();
+            // background.setMouseTransparent(true);
+            // title.setMouseTransparent(true);
+            // // home_root.getChildren().add(0, background);
+            // // home_root.getChildren().add(home_page.getHomePage());
+            // // home_root.getChildren().add(background);
+            // // ((StackPane)home_root).getChildren().add(title);
+            // // home_root.setAlignment(title, Pos.TOP_CENTER);
+            // home_root.getChildren().add(home_page.getHomePage());
+
+
             openBackground();
-            title.setFitWidth(home_root.getWidth());
-            title.setFitHeight(home_root.getHeight());
-            title.setPreserveRatio(false); // pour remplir exactement
+            background.setMouseTransparent(true);
+            title.setMouseTransparent(true);
             // home_root.getChildren().add(0, background);
             // home_root.getChildren().add(home_page.getHomePage());
             home_root.getChildren().add(background);
-            home_root.getChildren().add(home_page.getHomePage());
-
+            home_root.getChildren().add(title);
+            // home_root.setAlignment(title, Pos.TOP_CENTER);
 
             set_home_event();
+            // Text homeText = new Text(100, 100, "Bienvenue sur la scène Home!");
+            // homeText.setFill(Color.BLACK);
+
+            home_root.getChildren().add(home_page.getHomePage()); // Ajout du texte à home_root
+
+            // set_home_event();
             switchScene(home);
             // Text homeText2 = new Text(100, 100, "Bienvenue sur la scène Home!");
             // homeText2.setFill(Color.BLACK);
             // home_root.getChildren().add(homeText2); // Ajout du texte à home_root
             // home_root.getChildren().add(home_body);
             // home.setFill(Color.web("#FF6347"));
-
             home_root.getChildren().add(home_body);
-
+            home_page.getHomePage().setTranslateY(90);
         });
 
         gomoku.get_replay_button().setOnMouseClicked(event -> {
@@ -198,9 +217,8 @@ public class App extends Application {
             gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
             // System.out.println("New height: " + newValue);
         });
-
-
     }
+
     private int get_size(int width, int heigh)
     {
         int size = Math.min(width, heigh);
@@ -225,14 +243,27 @@ public class App extends Application {
         // gomoku = new Gomoku(size, size);
         root = new Pane();
         // goban_root = new Pane();
-        scene = new Scene(root, size, size);
+        scene = new Scene(root, 606, 380);
         // goban = new Scene(goban_root, size, size);
         // set_goban_event();
-        home = new Scene(home_root, size, size);
+        home = new Scene(home_root, 606, 380);
+
+        openBackground();
+        background.setMouseTransparent(true);
+        title.setMouseTransparent(true);
+        // home_root.getChildren().add(0, background);
+        // home_root.getChildren().add(home_page.getHomePage());
+        home_root.getChildren().add(background);
+        home_root.getChildren().add(title);
+        // home_root.setAlignment(title, Pos.TOP_CENTER);
+
         set_home_event();
         // Text homeText = new Text(100, 100, "Bienvenue sur la scène Home!");
         // homeText.setFill(Color.BLACK);
+
         home_root.getChildren().add(home_page.getHomePage()); // Ajout du texte à home_root
+        home_page.getHomePage().setTranslateY(90);
+
         // home_root.getChildren().add(home_body);
         // home.setFill(Color.web("#FF6347"));
         home_root.setStyle("-fx-background-color: #FF6347;");
