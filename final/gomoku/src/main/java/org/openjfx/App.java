@@ -142,6 +142,7 @@ public class App extends Application {
             set_goban_event();
             goban_root.getChildren().add(gomoku.getGameDisplay()); // Ajout du texte à home_root
             switchScene(goban);
+            stage.setResizable(true);
         });
     }
 
@@ -182,6 +183,7 @@ public class App extends Application {
 
             // set_home_event();
             switchScene(home);
+            stage.setResizable(false);
             // Text homeText2 = new Text(100, 100, "Bienvenue sur la scène Home!");
             // homeText2.setFill(Color.BLACK);
             // home_root.getChildren().add(homeText2); // Ajout du texte à home_root
@@ -258,6 +260,7 @@ public class App extends Application {
         // home_root.setAlignment(title, Pos.TOP_CENTER);
 
         set_home_event();
+        stage.setResizable(false);
         // Text homeText = new Text(100, 100, "Bienvenue sur la scène Home!");
         // homeText.setFill(Color.BLACK);
 
