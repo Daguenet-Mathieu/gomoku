@@ -12,6 +12,7 @@ public class Candidat
     static public DoubleFree doubleFreethree = new DoubleFree();
     private List<Double> order = Arrays.asList(6.0, 5.0, 4.0, 4.7, 3.7, 3.5, 3.4, 3.0, 2.5, 2.4, 2.0, 1.0, 0.0);
     private static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
+    private static int [][][] opencan = {{{0, -1}, {1, -1}, {1, 0}}, {{-1, 0}, {-1, -1}, {0, -1}}, {{-1, 0}, {-1, 1}, {0, 1}}, {{0, 1}, {1, 1}, {1, 0}}};
 
     private static coord limax = new coord(1, 1);
     private static coord limin = new coord(18, 18);
@@ -328,8 +329,21 @@ public class Candidat
         return this.lst.size();
     }
 
+    private int numcan(int i, int j)
+    {
+        if (i <= 9 && j >= 9)
+            return 0;
+        else if (i > 9 && j >= 9)
+            return 1;
+        else if (i > 9 && j < 9)
+            return 2;
+        else
+            return 3;
+    }
+
     public int one_move_candidate()
     {
+        int num;
         for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
         {
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
@@ -338,14 +352,45 @@ public class Candidat
                 {
                     if (i !=0 && j !=0 && i != 18 && j != 18)
                     {
+                        num = numcan(i, j);
                         this.lst.clear();
-                        this.lst.add(new Candidat.coord(i+1, j-1, 1));
-                        this.lst.add(new Candidat.coord(i+1, j, 1));
-                        this.lst.add(new Candidat.coord(i, j-1, 1));
+
+                        for (int k = 0 ; k < 3 ; k++)
+                            this.lst.add(new Candidat.coord(i+opencan[num][k][0], j+opencan[num][k][1], 1));
                         return this.lst.size();
                     }
                 }
             }
+        }
+        return 0;
+    }
+
+    public int two_move_candidate()
+    {
+        Candidat.coord b = new Candidat.coord(0, 0);
+        Candidat.coord w = new Candidat.coord(0, 0);
+
+
+        for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
+        {
+           for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
+            {
+                if (MinMax.map[i][j] == 1)
+                {
+                    b.x = i; b.y=j;
+                }
+                else if (MinMax.map[i][j] == 2)
+                {
+                    w.x = i; w.y = j;
+                }
+            }
+        }
+
+        if (Math.abs(w.x - b.x) >1 && Math.abs(w.y - b.y) > 1)
+        {
+            this.lst.clear();
+            for (int k = 0 ; k < 3 ; k++)
+                this.lst.add(new Candidat.coord(8, 8+k, 1)); //depending on num
         }
         return 0;
     }
@@ -371,6 +416,10 @@ public class Candidat
             if (one_move_candidate() != 0);
                 return 3;
         }
+
+        if (nb_mv == 2)
+            if (two_move_candidate() != 0)
+                return 3;
 
         Collections.sort(this.lst, Comparator.comparing(item -> 
         this.order.indexOf(item.st())));

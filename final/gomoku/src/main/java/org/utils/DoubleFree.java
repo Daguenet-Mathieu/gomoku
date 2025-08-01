@@ -132,6 +132,7 @@ public class DoubleFree
         return true;
     }
 
+    //display function
     public void check_valid(int x, int y, int val, int[][] map)
     {
         if (map[x][y] != 0)

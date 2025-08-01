@@ -89,6 +89,9 @@ public class Moku extends MinMax {
             return res;
         }
 
+        if (nb_candidates == 0)
+            return 0;
+
         values = new float[nb_candidates];
 
     

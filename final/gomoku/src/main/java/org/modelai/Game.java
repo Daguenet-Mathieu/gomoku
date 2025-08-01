@@ -15,6 +15,7 @@ public class Game {
     static public int max_depth = 10;
     static public int max_can = 7;
     static public int min_can = 5;
+    static public boolean large_cut = false;
 
     public Game(String rules, int board_size)
     {
@@ -57,13 +58,15 @@ public class Game {
             max_depth = 10;
             max_can = 7;
             min_can = 5;
+            large_cut = false;
         }
         else if (lvl == 2)
         {
             System.err.println("MEDIUM");
-            max_depth = 9;
-            max_can = 6;
+            max_depth = 10;
+            max_can = 5;
             min_can = 5;
+            large_cut = false;
         }
         else if (lvl == 3)
         {
@@ -71,13 +74,15 @@ public class Game {
             max_depth = 4;
             max_can = 8;
             min_can = 8;
+            large_cut = false;
         }
         else if (lvl == 4)
         {
             System.err.println("SUPER HARD");
             max_depth = 9;
             max_can = 8;
-            min_can = 8;
+            min_can = 7;
+            large_cut = false;
         }
     }  
 
@@ -130,7 +135,16 @@ public class Game {
         MinMax.after_capwinsim = true;
         MinMax.forced_capture.clear();
         MinMax.capwin.clear();
+        Game.large_cut = false;
         scbord.reset_str();
+    }
+
+    public void manage_time()
+    {
+        if (nb_move >= 4 && return_mean_time() > 0.42)
+            large_cut = true;
+        if (nb_move >= 4 && return_mean_time() < 0.32)
+            large_cut = false;
     }
 
     private double return_mean_time()
@@ -165,6 +179,8 @@ public class Game {
 
         time = System.currentTimeMillis() - time;
         timelst.add((double)time / 1000);
+
+        manage_time();
 
         if (display)
             best_move_stamp();
