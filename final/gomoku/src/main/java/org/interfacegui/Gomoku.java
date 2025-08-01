@@ -461,6 +461,7 @@ public class Gomoku
         if (rule.endGame(_map.get(_map.size() - 1), point)){
             System.out.println("partie finie!");
             int winner = rule.getWinner();
+            System.out.println("Winner == " + winner);
             if (winner == 1)
                 System.out.println("noir gagne!");
             else
@@ -471,9 +472,16 @@ public class Gomoku
             ia_playing = false;
             gameLoop.stop();
             System.out.println("winner == " + winner);
-            _winner = winner - 1;
-            String res = _winner == 0 ? "black" : "white";
-            _end_text.setText(res + " win");
+            if (winner == 0)
+                _end_text.setText("Draw");
+            else if (winner == 1)
+                _end_text.setText("Black Win");
+            else
+                _end_text.setText("White Win");
+            // return ;
+            // _winner = winner - 1;
+            // String res = _winner == 0 ? "black" : "white";
+            // _end_text.setText(res + " win");
         }
         else
             System.out.println("non!");
