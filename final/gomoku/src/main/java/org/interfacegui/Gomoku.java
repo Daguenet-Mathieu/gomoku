@@ -234,7 +234,7 @@ public class Gomoku
         gameInfos.set_black_prisonners("0");
         gameInfos.set_white_prisonners("0");
         ia_playing = false;
-        game.tree_config(game_infos.getLevel());
+        game.tree_config(_game_infos.getLevel());
         if (rule.hasPass() == false){
             gameInfos.getPassButton().setVisible(false);
             gameInfos.getPassButton().setManaged(false);
