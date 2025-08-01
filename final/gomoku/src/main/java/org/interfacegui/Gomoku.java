@@ -505,6 +505,13 @@ public class Gomoku
             System.out.println("undo move aucune action");
             return ;
         }
+        changeCandidatVisibility(false);
+        changeHintVisibility(false);
+        eraseForbiddens();
+        forbiddenVisibility = false;
+        toggleCandidat = false;
+        toggleHint = false;
+
         if (_map.get(_map.size() - 1).get_prisonners() != null){
             for (Point p : _map.get(_map.size() - 1).get_prisonners()){
                 System.out.println("les prisonniers qui vont etre anules sont : ");
@@ -628,8 +635,8 @@ public class Gomoku
             if (rule.undo() == false)
                 return ;
             goban.remove_score();
-            if (rule instanceof GoRules)
-                undoMove();
+            // if (rule instanceof GoRules)
+            undoMove();
             if ((_game_infos.get_black_player_type() == 1 || _game_infos.get_white_player_type() == 1) && _map.size() > 1)
                 undoMove();
         });
