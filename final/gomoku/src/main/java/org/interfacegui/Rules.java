@@ -9,7 +9,8 @@ public interface Rules {
         DEATH_MARKING,
         COUNTING,
         ENDGAME,
-        VIEWING
+        VIEWING,
+        LEARNING
     }
 
     boolean isValidMove(Point point, ArrayList<Map> map);

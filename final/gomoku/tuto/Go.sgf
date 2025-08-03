@@ -1,0 +1,54 @@
+(;GM[1]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
+RU[Japanese]SZ[9]KM[0.00]
+C[Le jeu de Go se joue sur un plateau de 19 lignes et 19 colonnes.
+Les pions noirs et blancs, appelés "pierres", sont joués sur les intersections.]
+;AB[de]C[Noir joue le premier coup.
+Ensuite, les deux joueurs jouent à tour de rôle.]
+;AE[de]AW[fa][eb][gb][fc][fe][he][bf][gf][eg][fh]AB[cc][ge][cf][fg]
+C[Une pierre a 4 libertés.
+Lorsqu'elles sont toutes occupées, la pierre est capturée.]
+;AE[fa][eb][gb][cc][fc][fe][ge][he][bf][cf][gf][eg][fg][fh]AB[aa][af]
+C[Sur le bord, une pierre n’a que 3 libertés.
+Dans un coin, elle n’en a que 2.]
+;AE[aa][af]AW[dd][ce][ee][df]
+C[La pierre noire a été capturée.
+Blanc marque ainsi 1 point.
+Le suicide étant interdit, Noir a ici un coup illégal.]
+;AB[dc][cd][ed]
+C[La capture étant prioritaire sur le suicide,
+Noir peut ici capturer la pierre blanche.]
+;AE[dd]AB[de]
+C[Cette position mène à une répétition infinie, La règle interdit de rejouer exactement la même position. Blanc doit donc jouer ailleurs.
+
+Noir pourra ensuite soit connecter, soit répondre à Blanc, ce qui permettrait la reprise au coup suivant, puisque la position ne serait plus identique.
+
+On appelle cela un "ko". Si Blanc joue un coup menaçant et force Noir à répondre, on parle alors de "menace de ko".]
+;AE[dc][cd][ed][ce][de][ee][df]
+AW[fa][ha][fb][gb][hb][ib][if][hg][ah][bh][hh][ih][bi][hi]
+AB[ea][eb][ec][fc][gc][hc][ic][he][ie][hf][ag][bg][cg][gg][ch][gh][ci][gi]
+C[Une zone complètement fermée est appelée un "œil".
+Un groupe ayant un seul œil peut être capturé.
+Un groupe avec deux yeux est dit "vivant", car il ne peut jamais être capturé.
+Attention aux "faux yeux" :
+cela peut ressembler à un œil, mais si une pierre peut y être capturée, alors ce n’est pas un œil.]
+;AE[ea][fa][ha][eb][fb][gb][hb][ib][ec][fc][gc][hc][ic]
+[he][ie][hf][if][ag][bg][cg][gg][hg][ah][bh][ch][gh][hh][ih][bi][ci][gi][hi]
+AW[gd][hd][id][ge][gf][gg][gh][gi]
+C[Une autre façon de marquer des points est d’encercler une zone.
+Chaque intersection vide complètement entourée rapporte 1 point
+au joueur qui l’a contrôlée.
+
+Dans cet exemple, Blanc fait 10 points.]
+;AE[gd][hd][id][ge][gf][gg][gh][gi]
+AW[ea][eb][gb][hb][ib][ec][gc][ic][cd][dd][ed][fd]
+[ae][be][ce][fe][ef][eg][eh][fh][ei]
+AB[da][bb][db][cc][dc][hc][ad][bd][gd][hd][id]
+[ee][ge][ff][fg][gg][gh][fi][gi]
+C[Ceci est un exemple de partie terminée.
+
+Aucun joueur n’a de coup intéressant à jouer.
+Les deux passent, puis on procède au décompte des points.
+
+S’il reste des groupes sans deux yeux dans le territoire adverse,
+ils sont considérés comme morts et retirés par le propriétaire de la zone
+avant le comptage final.])

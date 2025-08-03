@@ -24,16 +24,13 @@ public class GomokuRules implements Rules {
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
-        // Utilisation de la méthode par défaut pour vérifier si la case est vide
+        map.get(map.size()-1).printMap();
+        System.out.println(map.get(map.size() - 1).get_map()[point.y][point.x]);
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1)))
         {
             return false;
         }
         nbMove++;
-        
-        // Ajouter d'autres vérifications spécifiques au jeu Gomoku, si nécessaire.
-        // Par exemple, vérifier si le coup respecte la taille du plateau ou les autres règles du Gomoku.
-        // Pour un modèle minimaliste, supposons que tout coup est valide si la case est vide.
         return true;
     }
 

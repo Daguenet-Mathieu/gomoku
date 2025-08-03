@@ -1,0 +1,20 @@
+(;GM[1]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
+RU[Japanese]SZ[9]KM[0.00]
+C[Le jeu de Gomoku se joue sur un plateau de 19 lignes et 19 colonnes.
+Les pions noirs et blancs, appelés "pierres", sont joués sur les intersections.]
+;AB[de]C[Noir joue le premier coup. Ensuite, les deux joueurs jouent à tour de rôle.]
+;AE[de]AW[fa][eb][gb][fc][fe][he][bf][gf][eg][fh]AB[cc][ge][cf][fg]C[Une pierre a 4 libertees, quand elles sont toutes occupee la pierres est capturees]
+;AE[fa][eb][gb][cc][fc][fe][ge][he][bf][cf][gf][eg][fg][fh]AB[aa][af]C[sur le bord une pierre commence avec 3 libertees
+et avec 2 dans le coin]
+;AE[aa][af]AW[dd][ce][ee][df]C[la pierre noir a ete capturee par blanc qui gagne 1 point
+le suicide etant interdit noir a dans cette position un coup interdit.]
+;AB[dc][cd][ed]C[la capture etant prioritaire sur le suicdie noir peut ici capturer la pierre blanche.]
+;AE[dd]AB[de]C[cette position menant a une repetiton infinie, la relge interdit de reproduire la meme position, blanc doit donc jouer un coup ailleurs, noir choisira alors de connecter et ainsi empecher la reprise ou de repondre a blanc lui permettant ainsi de reprendre la pierre au coup suivant, la position n'etant plus la meme.
+on apelle cette situation un ko et si blanc joue un coup menacant forcant noir a repondre, une menace de ko.]
+;AE[dc][cd][ed][ce][de][ee][df]AW[fa][ha][fb][gb][hb][ib][if][hg][ah][bh][hh][ih][bi][hi]AB[ea][eb][ec][fc][gc][hc][ic][he][ie][hf][ag][bg][cg][gg][ch][gh][ci][gi]C[une zone enfermee est appelee un oeil, un groupe ayant un seul oeil peut etre capture.
+un groupe ayant 2 yeux est appele vivant, car l'adversaire ne peut jamais arriver a la capture.
+attention au faux yeux ou une pierre est capturable, et mme si on peut visuellement penser qu'il y a un oeil ca n'en est pas un.]
+;AE[ea][fa][ha][eb][fb][gb][hb][ib][ec][fc][gc][hc][ic][he][ie][hf][if][ag][bg][cg][gg][hg][ah][bh][ch][gh][hh][ih][bi][ci][gi][hi]AW[gd][hd][id][ge][gf][gg][gh][gi]C[une autre maniere de faire des points est d'encercler une zone et chaque intersection entouree donnera 1 point  au joueur qui se l'est approriee.
+dans l'exemple ci dessous blanc fait 10 points]
+;AE[gd][hd][id][ge][gf][gg][gh][gi]AW[ea][eb][gb][hb][ib][ec][gc][ic][cd][dd][ed][fd][ae][be][ce][fe][ef][eg][eh][fh][ei]AB[da][bb][db][cc][dc][hc][ad][bd][gd][hd][id][ee][ge][ff][fg][gg][gh][fi][gi]C[ceci est un exemple de partie terminee, ni noir ni blanc n'a de coup interessant a jouer, les 2 joueurs n'ont plus qu'a passer et a assister au decompte des points.
+dans le cas ou il reste des pierres qui n'on pas fait 2 yeux et qui sont dans un territoire adversse sans pouvoir les faire elles sont ramssee par le proprietaire de la zone avant le comptage.])

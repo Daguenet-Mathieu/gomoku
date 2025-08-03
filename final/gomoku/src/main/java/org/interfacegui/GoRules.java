@@ -256,8 +256,13 @@ public class GoRules implements Rules {
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
+        System.out.println("1111111111111111111111111111111111111111111111111111111111111111111111111111111");
         if (gameStatus == Rules.GameMode.COUNTING)
             return false;
+        System.out.println("22222222222222222222222222222222222222222222222222222222222222222222222222222222");
+        if (map.size() < 2)
+            return true;
+        System.out.println("33333333333333333333333333333333333333333333333333333333333333333333333");
         // if (map.size() == 0)
         //     return true;
         System.out.println(gameStatus.name());
@@ -276,6 +281,7 @@ public class GoRules implements Rules {
             final int advColor = color == 1 ? 2 : 1;
             if (checkSuicide(tmp, point, color, advColor) == true)
                 return false;
+            System.out.println("4444444444444444444444444444444444444444444444444444444444444444444444444444444444");
             if (valid)
                 pass = false;
             return valid;
@@ -290,6 +296,7 @@ public class GoRules implements Rules {
             deadStones = tmpArr;
             return (true);
         }
+        System.out.println("5555555555555555555555555555555555555555555555555555555555555555555555555555555");        
         //check si le coup est ans la lsite des interdits
         //prisonners = getNewPrisonners();
         //generer les coups interdit danscette position forbidden_moves = get_forbiden_moves()

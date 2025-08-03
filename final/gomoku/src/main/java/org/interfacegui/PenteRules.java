@@ -31,6 +31,7 @@ public class PenteRules implements Rules {
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
+        System.out.println("rule prnt coor == " + point);
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1))) {
             return false;
         }
@@ -134,6 +135,8 @@ public class PenteRules implements Rules {
         Map map = maps.get(index);
         int[][] m = map.get_map();
         forbidden_moves.clear();
+        map.printMap();
+        System.out.println("color == " + color);
         for (int y = 0; y < get_board_size();y++)
         {
             for (int x = 0; x < get_board_size(); x++){

@@ -1,0 +1,8 @@
+(;GM[4]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
+RU[Gomoku]SZ[19]
+;C[Le jeu de Gomoku se joue sur un plateau de 19 lignes et 19 colonnes.
+Les pions noirs et blancs, appelés "pierres", sont joués sur les intersections.]
+;B[ii]C[Noir joue le premier coup. Ensuite, les deux joueurs jouent à tour de rôle.]
+;AB[gf][hf][if][jf][kf][ij][ik][il][dm][im][om][en][nn][fo][mo][gp][lp][hq][kq]C[Le but est d'aligner 5 pierres consécutives:
+    horizontalement, verticalement ou en diagonale.
+Le premier joueur à réaliser cet alignement gagne la partie.])

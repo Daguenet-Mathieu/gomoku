@@ -1,0 +1,13 @@
+(;GM[4]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
+RU[pente]SZ[19]KM[0.00]
+
+;C[le jeu de Pente se joue sur un plateau de 19 lignes et 19 colonnes, les pions noir et blanc, appeles pierres sont jouees sur les intersections]
+;B[ii]C[noir joue le 1er coup puis les 2 joueurs joueuront leurs coups tour a tour.]
+;W[ki]
+;AE[ki]AB[gf][hf][if][jf][kf][ij][ik][il][dm][im][om][en][nn][fo][mo][gp][lp][hq][kq]C[le but est d'aligner 5 pierres a la suite de facon horizontale digaonale ou verticale.
+Le premier joueur arrivant a cette configuration gagne la partie.]
+;AE[gf][hf][if][jf][kf][ii][ij][ik][il][dm][im][om][en][nn][fo][mo][gp][lp][hq][kq]AW[mh][nh]AB[lh]C[Si une paire de pierre est entouree par ses extremites, la paire est capturee.]
+;B[oh]
+;W[gg]AE[lh][mh][nh][oh]AW[gk][gl][kp]AB[ee][ff][gm][mn][lo]C[autres exemples de positions permettant une capture]
+;AE[gg][gk][gl][kp][ee][ff][gm][mn][lo]AW[ii][ij][ik]C[Ceci est une position appelee "free three". Si l'adversaire ne reagit pas ce la permet de gagner a coup sur en 2 coups]
+;AE[ii]AW[ji][ki]C[il est interdir de creer 2 "free three" en 1 seul coup. cette postion contient donc un coup interdit])
