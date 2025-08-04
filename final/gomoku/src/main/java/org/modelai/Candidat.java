@@ -126,27 +126,6 @@ public class Candidat
         return cmp;
     }
 
-    private boolean near(int i, int j)
-    {
-        if (j+1 != 19 && isplay(MinMax.map[i][j + 1]))
-            return true;
-        if (j-1 != -1 && isplay(MinMax.map[i][j - 1]))
-            return true;
-        if (i+1 != 19 && isplay(MinMax.map[i + 1][j]))
-            return true;
-        if (i-1 != -1 && isplay(MinMax.map[i - 1][j]))
-            return true;
-        if (i+1 != 19 && j-1 != -1 && isplay(MinMax.map[i+1][j-1]))
-            return true;
-        if (i-1 != -1 && j-1 != -1 && isplay(MinMax.map[i-1][j-1]))
-            return true;
-        if (i+1 != 19 && j+1 != 19 && isplay(MinMax.map[i+1][j+1]))
-            return true;
-        if (i-1 != -1 && j+1 != 19 && isplay(MinMax.map[i-1][j+1]))
-            return true;
-        return false;
-    }
-
     private boolean nearv(int i, int j, int val)
     {
         if (j+1 != 19 && MinMax.map[i][j + 1] == val)
@@ -316,9 +295,7 @@ public class Candidat
 
                 res = near_num(i, j);
                 if (MinMax.map[i][j] == 0 && res !=0 && (capture_possible == false || doubleFreethree.check_double_free(i, j, turn, MinMax.map)))
-                {
                     this.lst.add(new Candidat.coord(i, j, res));
-                }
             }
         }
 
@@ -348,7 +325,7 @@ public class Candidat
         {
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
             {
-                if (MinMax.map[i][j] == 1 || MinMax.map[i][j] == 2)
+                if (MinMax.map[i][j] == 1)
                 {
                     if (i !=0 && j !=0 && i != 18 && j != 18)
                     {
@@ -390,7 +367,7 @@ public class Candidat
         {
             this.lst.clear();
             for (int k = 0 ; k < 3 ; k++)
-                this.lst.add(new Candidat.coord(8, 8+k, 1)); //depending on num
+                this.lst.add(new Candidat.coord(8, 8+k, 1));
         }
         return 0;
     }
@@ -436,18 +413,28 @@ public class Candidat
     public int forced_candidate(ArrayList<Candidat.coord> flst)
     {
         for (int i = 0 ; i < flst.size() ; i++)
-            this.lst.add(flst.get(i));
-        return lst.size();
+        {
+            System.out.printf("\n\nforced capture %d %d\n\n", flst.get(i).x, flst.get(i).y);
+            //this.lst.add(flst.get(i));
+        }
+        this.lst.add(flst.get(0));
+        MinMax.forced_capture.remove(0);
+        return 1;
     }
 
     private int nb_candidates(int depth)
     {
         if (this.seuil > Game.min_can)
-            return Math.min(this.seuil, 12);
+        {
+            if (depth == Game.max_depth || depth == Game.max_depth - 1)
+                return Game.max_depth;
+            else
+                return Math.min(this.seuil, 10);
+        }
         if (depth == Game.max_depth)
             return Game.max_can;
         else if (depth == Game.max_depth - 1)
-            return Game.min_can;
+            return Game.min_can + 1;
         else
             return Game.min_can;
     }
@@ -511,65 +498,6 @@ public class Candidat
             limax.x = Math.min(17, c.x);
         if (c.y > limax.y )
             limax.y = Math.min(17, c.y);
-    }
-
-    //unused
-    public int load(int [][] map, coord move, int depth)
-    {
-        if (depth == 3)
-        {
-            this.lst.clear();
-            for (int i = 0 ; i < 19 ; i++)
-            {
-                for (int j = 0 ; j < 19 ; j++)
-                {
-                    if (map[i][j] == 0 && near(i, j))
-                    {
-                        this.lst.add(new Candidat.coord(i, j));
-                    }
-                }
-            }
-            return this.lst.size();
-        }
-
-        if (depth !=0)
-            this.add(map, move);
-        return this.lst.size();
-    }
-
-
-    //unused
-    private void add(int [][] map, Candidat.coord c)
-    {
-        int temp = map[c.x][c.y];
-        map[c.x][c.y]=0;
-        for (int dx = -1 ; dx != 2 ; dx++)
-        {
-            for (int dy = -1 ; dy != 2 ; dy++)
-            {
-                if (in_goban(c.x+dx, c.y+dy) && map[c.x+dx][c.y+dy] == 0 && !near(c.x+dx, c.y+dy))
-                {
-                    this.lst.add(new Candidat.coord(c.x+dx, c.y+dy));
-                }
-            }
-        }
-        this.vanish_one(c.x, c.y);
-        map[c.x][c.y]=temp;
-    }
-
-    //unused
-    public void vanish_one(int x, int y)
-    {
-        int len;
-        len = lst.size();
-        for (int i = 0 ; i < len ; i++)
-        {
-            if (this.lst.get(i).eq(x, y))
-            {
-                this.lst.remove(i);
-                return ;
-            }
-        }
     }
 
     //display function

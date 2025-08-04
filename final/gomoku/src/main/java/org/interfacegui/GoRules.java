@@ -138,7 +138,7 @@ public class GoRules implements Rules {
 
     public void init_prisonners(Map map){
         Map tmp = new Map(map);
-        ArrayList<Point> tmpList = new ArrayList();
+        ArrayList<Point> tmpList = new ArrayList<Point>();
         removeMapPrisnners(tmp);
         whitePrisonnerList.clear();
         blackPrisonnerList.clear();
@@ -287,7 +287,7 @@ public class GoRules implements Rules {
             return valid;
         }
         else if (valid == false && gameStatus == Rules.GameMode.DEATH_MARKING){
-            ArrayList<Point> tmpArr = new ArrayList();
+            ArrayList<Point> tmpArr = new ArrayList<Point>();
             Map tmpMap = new Map(map.get(map.size() - 1));
             floodFill(point, tmpMap.get_map(), squareColor, tmpArr, 7);
             System.out.println("******************************************");
@@ -324,7 +324,7 @@ public class GoRules implements Rules {
     @Override
     public ArrayList<Point> get_forbiden_moves(ArrayList<Map> map, int index, int color){
         if (index == 0)
-            return (new ArrayList());
+            return (new ArrayList<Point>());
         forbidden_moves.clear();
         System.out.println("coucou check forbidden");
         final int advColor = color == 1 ? 2 : 1;
@@ -365,7 +365,7 @@ public class GoRules implements Rules {
     }
 
     private boolean isCapturable(Point point, Map map){
-        final int color = map.get_map()[point.y][point.x];
+        // final int color = map.get_map()[point.y][point.x];
         // final int advColor = color == 1? 2: 1;
         if (point.x + 1 < get_board_size() && map.get_map()[point.y][point.x+1] == 0)
             return false;
@@ -392,15 +392,15 @@ public class GoRules implements Rules {
         //check si pierre au contact d'un 0 vider la liste et quitter
     }
 
-    private void printMap(int[][] map) {
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                System.out.print(map[i][j] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("\n");
-    }
+    // public void printMap(int[][] map) {
+    //     for (int i = 0; i < map.length; i++) {
+    //         for (int j = 0; j < map[i].length; j++) {
+    //             System.out.print(map[i][j] + " ");
+    //         }
+    //         System.out.println();
+    //     }
+    //     System.out.println("\n");
+    // }
 
 
     private void floodFill(Point p, int[][] map, int color, ArrayList<Point> list, int value){//tableau de couleur pour le comptage?

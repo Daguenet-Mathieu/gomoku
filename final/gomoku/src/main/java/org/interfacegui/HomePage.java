@@ -13,8 +13,8 @@ import javafx.scene.control.Label;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.paint.Color;
-import javafx.geometry.Pos;
-import javafx.scene.control.Labeled;
+// import javafx.geometry.Pos;
+// import javafx.scene.control.Labeled;
 
 
 public class HomePage{
@@ -196,17 +196,17 @@ public class HomePage{
         // applyWhiteTextColor(pageContainer);
     }
 
-    private void applyWhiteTextColor(Pane pane) {
-        for (Node node : pane.getChildren()) {
-            if (node instanceof Labeled) {
-                ((Labeled) node).setStyle("-fx-text-fill: white;");
-            } else if (node instanceof Text) {
-                ((Text) node).setFill(Color.WHITE);
-            } else if (node instanceof Pane) {
-                applyWhiteTextColor((Pane) node); // récursif
-            }
-        }
-    }
+    // private void applyWhiteTextColor(Pane pane) {
+    //     for (Node node : pane.getChildren()) {
+    //         if (node instanceof Labeled) {
+    //             ((Labeled) node).setStyle("-fx-text-fill: white;");
+    //         } else if (node instanceof Text) {
+    //             ((Text) node).setFill(Color.WHITE);
+    //         } else if (node instanceof Pane) {
+    //             applyWhiteTextColor((Pane) node); // récursif
+    //         }
+    //     }
+    // }
 
 
     Pane getHomePage(){

@@ -23,14 +23,14 @@ public class SGF{
     private static boolean  header;
     private static ArrayList<Map> game_moves;
     private static Rules ruleInstance;
-    private static final String[] ignoreSet = new String[] {
-        "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AR", "CR",
-        "DD", "DM", "FG", "GB", "GW", "HO", "LB", "LN",
-        "MA", "N", "PM", "SL", "SQ", "TR", "UC", "V", "VW", "ST",
-        "AN", "BR", "BT", "CP", "DT", "EV", "GC", "GN", "ON", "OT",
-        "PB", "PW", "RE", "RO", "SO", "TM", "US", "WR", "WT", "TB",
-        "TW", "AS", "IP", "IY", "SE", "SU", "FF", "BL", "WL", "CA", "AP"
-    };
+    // private static final String[] ignoreSet = new String[] {
+    //     "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AR", "CR",
+    //     "DD", "DM", "FG", "GB", "GW", "HO", "LB", "LN",
+    //     "MA", "N", "PM", "SL", "SQ", "TR", "UC", "V", "VW", "ST",
+    //     "AN", "BR", "BT", "CP", "DT", "EV", "GC", "GN", "ON", "OT",
+    //     "PB", "PW", "RE", "RO", "SO", "TM", "US", "WR", "WT", "TB",
+    //     "TW", "AS", "IP", "IY", "SE", "SU", "FF", "BL", "WL", "CA", "AP"
+    // };
     // private static final Set<String> ignoreSet = new String[] {
     //     "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AB", "AW",
     //     "AR", "CR", "DD", "DM", "FG", "GB", "GW", "HO", "LB", "LN",
@@ -41,7 +41,7 @@ public class SGF{
     // };
     // private static final Set<String> supportedSet = Set.of("KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL");
 
-    private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "SZ", "C", "AE", "PL", "B", "W", "AB", "AW"};
+    // private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "SZ", "C", "AE", "PL", "B", "W", "AB", "AW"};
     private static final String[] listCmdSet = new String[] {"AB", "AW", "AE"};
     private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "SZ", "RU", "AP", "CA", "FF", "ST"};
     private static final String[] PointCmdSet = new String[] {"B", "W"};
@@ -114,7 +114,7 @@ public class SGF{
             final String alpha = "abcdefghijklmnopqrstuvwxyz";
             // final String[] move = new String[] { "B", "W" };
             final String[] move = new String[] {"AE", "AB", "AW"};
-            int i = 0;
+            //int i = 0;
             for (Map m : map){
                 ArrayList<Point> lastMove = m.getLastMove();
                 ArrayList<Integer> lastMoveColor = m.getLastMoveColor();
@@ -129,7 +129,7 @@ public class SGF{
                             fileContent += "[" + alpha.charAt(p.x) + "" + alpha.charAt(p.y) + "]";
                         }
                         fileContent += "\n";
-                        i^=1;//changer pour get_color de Map
+                        //i^=1;//changer pour get_color de Map
                     }
                 }
             }
@@ -630,7 +630,7 @@ public class SGF{
         }
     }
 
-    private static void printTree(Node tree, int depth, int index) {
+    public static void printTree(Node tree, int depth, int index) {
         if (tree == null)
             return;
 

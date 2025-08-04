@@ -3,13 +3,11 @@ import org.interfacegui.*;
 import javafx.stage.Screen;
 import javafx.geometry.Rectangle2D;
 import javafx.application.Application;
-// import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import java.io.File;
 import org.utils.Point;
 import java.io.InputStream;
@@ -17,9 +15,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javafx.geometry.Pos;
 import java.util.ArrayList;
-
-// import javafx.application.Platform;
-// import javafx.scene.text.Text;
 
 public class App extends Application {
     private Gomoku gomoku;
@@ -30,12 +25,13 @@ public class App extends Application {
     private int size_y;
     private int size_x;
     Pane goban_root;
-    private Scene goban, home;//les mettre dans les classes correspondantes
+    private Scene goban, home;
     private Pane home_body = new Pane();
     private Pane home_root = new Pane();
     private Home home_page = new Home();
     private ImageView background; 
     private ImageView title;
+    
     //class settings pour connaitre les preference du joueur couleur des pierres goban etc et donner au gomoku
     //choix temps dans le home en meme temps que le choix des regles et des joueurs
 

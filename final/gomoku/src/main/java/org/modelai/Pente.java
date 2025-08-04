@@ -40,6 +40,17 @@ public class Pente extends MinMax {
         this.candidat = new Candidat(true);
     }
 
+    //display function
+    private void print_values(float [] values)
+    {
+        Candidat.coord c;
+        for (int i = 0 ; i < values.length ; i++)
+        {
+            c = candidat.lst.get(i);
+            System.out.printf("%f, %d %d\n", values[i], c.y, c.x);
+        }
+    }
+
     static private void remove(int x, int y, int warx, int wary)
     {
         int val = map[x][y];
@@ -272,15 +283,27 @@ public class Pente extends MinMax {
         play_prisoners(val, c.x, c.y);
     }
 
-    //display function
-    private void print_values(float [] values)
+    private int decdepth(int dep, float alpha, float beta)
     {
-        Candidat.coord c;
-        for (int i = 0 ; i < values.length ; i++)
-        {
-            c = candidat.lst.get(i);
-            System.out.printf("%f, %d %d\n", values[i], c.y, c.x);
-        }
+        float lim;
+        float l1;
+        float l2;
+
+        if (alpha == Float.NEGATIVE_INFINITY)
+            l1 = 0;
+        else
+            l1 = Math.abs(alpha);
+
+        if (beta == Float.POSITIVE_INFINITY)
+            l2 = 0;
+        else
+            l2 = Math.abs(beta);
+
+        lim = Math.max(l1, l2);
+        
+        if (lim > 9000)
+            return Math.min(dep - 1, (int)((Math.abs(lim - 10000)) / 100) + 1);
+        return dep - 1;
     }
 
     public float minmax(int depth, int turn, int player)
@@ -417,7 +440,7 @@ public class Pente extends MinMax {
                 }
                 else
                 {
-                    res = m.minmaxab(depth - 1, change(turn), player, Math.max(alpha, cur_alpha), beta);
+                    res = m.minmaxab(decdepth(depth, cur_alpha, cur_beta), change(turn), player, Math.max(alpha, cur_alpha), beta);
                     m.unplay(m.move, depth);
                 }
 
@@ -425,10 +448,7 @@ public class Pente extends MinMax {
                 cur_alpha = Math.max(cur_alpha, res);
 
                 if (cut && cur_alpha > beta) // beta cut
-                {
-                    if (depth != Game.max_depth - 1 || ( depth == Game.max_depth -1 && cur_alpha > beta))
                         return cur_alpha;
-                }
             }
             else
             {
@@ -438,26 +458,15 @@ public class Pente extends MinMax {
                 }
                 else
                 {
-                    res = m.minmaxab(depth - 1, change(turn), player, alpha, Math.min(beta, cur_beta));
+                    res = m.minmaxab(decdepth(depth, cur_alpha, cur_beta), change(turn), player, alpha, Math.min(beta, cur_beta));
                     m.unplay(m.move, depth);
                 }
                 values[i] = res;
                 cur_beta = Math.min(cur_beta, res);
 
                 if (cut && alpha > cur_beta) // alpha cut
-                {
-                    if (depth != Game.max_depth - 1 || (depth == Game.max_depth - 1 && alpha > cur_beta))
                         return cur_beta;
-                }
             }
-        }
-
-        if (depth == Game.max_depth)
-        {
-            System.out.println("At the end !!!!!!!!!!!!!!!!!!!!!!!!!");
-            display_map();
-            scsimul.display();
-            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
         }
 
         if (depth == Game.max_depth)
