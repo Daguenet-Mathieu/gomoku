@@ -19,6 +19,16 @@ public class Home {
     private HomePage home_page = new HomePage();
     private FileBox filebox = new FileBox(home_page);
     int boardSize = -1;
+    private Rules.GameMode _gameMode = Rules.GameMode.PLAYING;
+
+
+    public void setGameMode(Rules.GameMode gameMode){
+        _gameMode = gameMode;
+    }
+
+    public Rules.GameMode getGameMode(){
+        return _gameMode;
+    }
 
     public int get_board_size(){
         return boardSize;
@@ -372,6 +382,14 @@ public class Home {
 
     public Rules getRuleInstance(){
         return home_page.getRuleInstance();
+    }
+
+    public void setSgfMap(ArrayList<Map> map){
+        home_page.setSgfMap(map);
+    }
+
+    public void setRulesInstance(Rules r){
+        home_page.setRulesInstance(r);
     }
 
 

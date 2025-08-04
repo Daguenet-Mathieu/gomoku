@@ -213,6 +213,7 @@ public class Gomoku
         _map.clear();
         _map.add(new Map(_nb_line));
         saved.clear();
+        playingMode = _game_infos.getGameMode();
         map_index = 0;
         round = 0;
         gameInfos.setPLayTurn(round);
@@ -562,7 +563,11 @@ public class Gomoku
         map_index = 0;
         System.out.println("height == " + heigh + " width == " + width);
         _map = new ArrayList<Map>();
+        gameInfos = new GameInfos(heigh, _game_infos_size_x, game_infos);
+        playingMode = game_infos.getGameMode();
         goban = new Goban(heigh, width - _game_infos_size_x, rule.get_board_size());//nb ligne a definir plus tRD //donner 2/3 largeur
+        commentLabel.setManaged(false);
+        commentLabel.setVisible(false);
         if (game_infos.getSgfMap() != null){
             _map = game_infos.getSgfMap();
             executor2 = Executors.newSingleThreadExecutor();
@@ -573,6 +578,12 @@ public class Gomoku
         if (playingMode == Rules.GameMode.LEARNING){
             _map.remove(0);
             goban.updateFromMap(_map.get(0));//erase 0?
+            commentLabel.setManaged(true);
+            commentLabel.setVisible(true);
+            commentLabel.setText(_map.get(map_index).getComment());
+            commentLabel.setMaxWidth(Double.MAX_VALUE);
+            commentLabel.setAlignment(Pos.CENTER);
+            // updateGameDisplay(_game_infos_size_y, _width);
         }
         // if (_map.get(0).getComment() != null && _map.get(0).getComment().isEmpty() == false){
         //     commentLabel.setManaged(true);
@@ -585,18 +596,17 @@ public class Gomoku
         // }
         saved = new ArrayList<Point>();
         game_display = new Pane();
-        _end_popin.setVisible(false);
-        _end_popin.setManaged(false);
         _replay = new Button("Replay");
         _back_home = new Button("Back Home");
+        game_name = new Label(game_infos.get_rules());
+        _end_popin.setVisible(false);
+        _end_popin.setManaged(false);
         _end_popin.setLayoutX(10);
         _end_popin.setLayoutY(10);
         _back_home.setLayoutY(heigh * 0.8);
         _end_popin.setFillWidth(true);
         _end_popin.getChildren().addAll(_end_text, _replay, _back_home);
         _game_infos_size_x = width / 4;
-        gameInfos = new GameInfos(heigh, _game_infos_size_x, game_infos);
-        game_name = new Label(game_infos.get_rules());
         _game_infos_size_y = heigh;
         gameInfos.getUndoButton().setManaged(false);
         gameInfos.getUndoButton().setVisible(false);
@@ -613,7 +623,6 @@ public class Gomoku
         _game_infos_pane.getChildren().add(0, game_name);
         _game_infos_pane.getChildren().add(0, _end_popin);
         setPlayerColor();
-
             DoubleBinding fontSizeBinding = (DoubleBinding) Bindings.min(
                 _game_infos_pane.widthProperty().multiply(0.1),
                 _game_infos_pane.heightProperty().multiply(0.1)
@@ -624,15 +633,14 @@ public class Gomoku
                 fontSizeBinding
             ));
         _goban_pane.setLayoutX(_game_infos_size_x);
-        commentLabel.setManaged(false);
-        commentLabel.setVisible(false);
         // game_display.getChildren().addAll(new VBox().getChildren().addAll(commentLabel, new HBox(),getChildren().addAll(_game_infos_pane, _goban_pane)));
         VBox mainVBox = new VBox();
         HBox hbox = new HBox();
         hbox.getChildren().addAll(_game_infos_pane, _goban_pane);
         mainVBox.getChildren().addAll(commentLabel, hbox);
         game_display.getChildren().add(mainVBox);
-        createDelayedGameLoop();
+        if (playingMode == Rules.GameMode.PLAYING)
+            createDelayedGameLoop();
         if (rule.hasPass() == false){
             gameInfos.getPassButton().setVisible(false);
             gameInfos.getPassButton().setManaged(false);
@@ -907,20 +915,20 @@ public class Gomoku
     }
 
     public void updateGameDisplay(int new_y, int new_x){
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("\t\t\tlabel size " + (int)commentLabel.getHeight());
-        System.out.println("\t\t y " + new_y + " x == " + new_x);
+        // System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        // System.out.println("\t\t\tlabel size " + (int)commentLabel.getHeight());
+        // System.out.println("\t\t y " + new_y + " x == " + new_x);
         _width = new_x;
         _game_infos_size_x = new_x / 4;
         _game_infos_size_y = new_y;
-        System.out.println("\t\t\tgame info size " + _game_infos_size_x);
+        // System.out.println("\t\t\tgame info size " + _game_infos_size_x);
         gameInfos.updateGameInfo(new_y, _game_infos_size_x);
         double labelHeight = commentLabel.prefHeight(commentLabel.getMaxWidth());
         goban.updateGoban(new_y - (int)labelHeight, new_x - _game_infos_size_x);
         _goban_pane.setLayoutX(_game_infos_size_x);
         // _end_popin.setLayoutX(new_x / 2);
         // _end_popin.setLayoutY(_game_infos_size_y / 2);
-        System.out.println("\t\t\tlabel size " + (int)commentLabel.getHeight());
+        // System.out.println("\t\t\tlabel size " + (int)commentLabel.getHeight());
     }
 
     public Pane getGameDisplay(){

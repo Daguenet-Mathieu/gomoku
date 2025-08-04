@@ -74,7 +74,6 @@ public class HomePage{
     private Button whiteIaMedium = new Button("medium");
     private Button whiteIaHard = new Button("hard");
 
-
     public Button getWhiteEasyButton(){
         return whiteIaEasy;
     }
@@ -332,11 +331,6 @@ public class HomePage{
         sgfFile = true;
         rule_type.set(SGF.get_game_rule());
         rules_instance = SGF.getRuleInstance();
-        //creer une instance de rules et jouer la map, ici?
-        //  check coups invalide + capture 
-        //  end game sera check dans gomoku? + dans gomoku play l'ia si pas lecture seule?
-        //selon le bouton set le game state
-        //afficher le num tour de jeu + a qui le tour + 
     }
 
     private void deleteFile(){
@@ -362,8 +356,18 @@ public class HomePage{
         return sgfMap;
     }
 
+
+    public void setSgfMap(ArrayList<Map> map){
+        sgfMap = map;
+    }
+
     public Rules getRuleInstance(){
         return rules_instance;
     }
+
+    public void setRulesInstance(Rules r){
+        rules_instance = r;
+    }
+
 
 }

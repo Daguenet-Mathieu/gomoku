@@ -1,6 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
 RU[Japanese]SZ[9]KM[0.00]
 C[Le jeu de Go se joue sur un plateau de 19 lignes et 19 colonnes.
+Il existe aussi les tailles 13*13 et 9*9, qui sont principalements utilisees a but pedagogique ou d'illustration
 Les pions noirs et blancs, appelés "pierres", sont joués sur les intersections.]
 ;AB[de]C[Noir joue le premier coup.
 Ensuite, les deux joueurs jouent à tour de rôle.]
@@ -11,9 +12,7 @@ Lorsqu'elles sont toutes occupées, la pierre est capturée.]
 C[Sur le bord, une pierre n’a que 3 libertés.
 Dans un coin, elle n’en a que 2.]
 ;AE[aa][af]AW[dd][ce][ee][df]
-C[La pierre noire a été capturée.
-Blanc marque ainsi 1 point.
-Le suicide étant interdit, Noir a ici un coup illégal.]
+C[Le suicide étant interdit, Blanc a ici un coup illégal.]
 ;AB[dc][cd][ed]
 C[La capture étant prioritaire sur le suicide,
 Noir peut ici capturer la pierre blanche.]

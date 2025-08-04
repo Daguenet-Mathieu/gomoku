@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import javafx.geometry.Pos;
+import java.util.ArrayList;
 
 // import javafx.application.Platform;
 // import javafx.scene.text.Text;
@@ -146,16 +147,32 @@ public class App extends Application {
         });
 
         home_page.getLearnOrViewButton().setOnMouseClicked(event -> {
+            final String[] path = {"tuto/Go.sgf", "tuto/Pente.sgf", "tuto/Gomoku.sgf"};
+            final String[] names = {"Go", "Pente", "Gomoku"};
+            int i = 0;
+            for (; i < 3; i++)
+            {
+                if (names[i].equals(home_page.get_rules()))
+                    break;
+            }
+            SGF.setFile("./", path[i]);
+            if (SGF.parseFile() == false){
+                //set error message 
+                return ;
+            }
+            ArrayList<Map> sgfMap = SGF.get_game_moves();//try catch moi ca
+            home_page.setRulesInstance(SGF.getRuleInstance());
             double scenex = stage.getWidth();
             double sceney = stage.getHeight();
-            //load sgf si erreur set error msg et quitter sinon set Map + viewving//si viewing set viewing//sinon PLAYING?
             System.out.println(" goban width == " + scenex + " heigh " + sceney);
-            //recuperer les datas si invalide les mettres en valeurs et laisserl a page telle qu'elle
-            gomoku = new Gomoku((int)sceney, (int)scenex, home_page); //appeler fct qui set toutes les infos
+            // System.out.println(home_page.getRuleInstance().getGameType());
+            home_page.setGameMode(Rules.GameMode.LEARNING);//learning ou viewing
+            home_page.setSgfMap(sgfMap);
+            gomoku = new Gomoku((int)sceney, (int)scenex, home_page);
             goban_root = new Pane();
             goban = new Scene(goban_root, 800, 525);
             set_goban_event();
-            goban_root.getChildren().add(gomoku.getGameDisplay()); // Ajout du texte à home_root
+            goban_root.getChildren().add(gomoku.getGameDisplay());
             switchScene(goban);
             stage.setResizable(true);
         });
@@ -169,7 +186,7 @@ public class App extends Application {
             double sceney = stage.getHeight();
             System.out.println("hone width == " + scenex + " heigh " + sceney);
             home_root = new Pane();
-            home = new Scene(home_root, 606, 380);
+            home = new Scene(home_root, 606, 450);
             home_page = new Home();
             // home_root.setStyle("-fx-background-color:rgb(71, 157, 255);");
             // openBackground();
@@ -263,10 +280,10 @@ public class App extends Application {
         // gomoku = new Gomoku(size, size);
         root = new Pane();
         // goban_root = new Pane();
-        scene = new Scene(root, 606, 380);
+        scene = new Scene(root, 606, 450);
         // goban = new Scene(goban_root, size, size);
         // set_goban_event();
-        home = new Scene(home_root, 606, 380);
+        home = new Scene(home_root, 606, 450);
 
         openBackground();
         background.setMouseTransparent(true);

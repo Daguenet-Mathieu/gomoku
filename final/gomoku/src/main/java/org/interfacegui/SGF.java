@@ -694,6 +694,7 @@ public class SGF{
     public static boolean parseFile(){
         if ("sgf".equals(getExtension(file)) == false)
         {
+            System.out.println("lllllllllllllllllllllllllllllllllllllllllll" + file);
             errorMsg = "invalid file ext";
             return false;
         }
@@ -761,6 +762,8 @@ public class SGF{
 
     public static void setFile(String absolute_path, String filename){
         file = new File(absolute_path, filename);
+        System.out.println("abs path == " + absolute_path + " filename == " + filename);
+        System.out.println("file == " + file);
     }
 
     public static String getErrorMsg(){
