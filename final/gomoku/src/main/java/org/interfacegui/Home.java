@@ -348,6 +348,11 @@ public class Home {
     public Button getValidationButton() {
         return home_page.getValidationButton();
     }
+
+    public Button getLearnOrViewButton(){
+        return home_page.getLearnOrViewButton();
+    }
+
     public boolean checkInfoValidity(){
         if (rule == "Go" && komi < 0 || (handicap < 0 && handicap > 9))
             return false;

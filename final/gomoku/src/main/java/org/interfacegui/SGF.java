@@ -71,6 +71,7 @@ public class SGF{
 
     private static void init_rules(){
         rules = rules.toLowerCase();
+        System.out.println("init sgf rules " + rules);
         switch (rules){
             case "pente" :
                 ruleInstance = new PenteRules();
@@ -292,6 +293,7 @@ public class SGF{
 
     private  static Point getValueCoord(String val) throws ParseException{
         Point value = new Point();
+        System.out.println("val == " + val);
         if (val.length() != 2)
             throw new ParseException("invalid syntaxe " + val, 0);
         if (Character.isAlphabetic(val.charAt(0))) {
@@ -558,7 +560,7 @@ public class SGF{
             for (Point p : ((ArrayValue)node).getVal()){
                 System.out.println("x = " + p.x + " y = " + p.y);
                 if (PlayMove(p, game_moves, map, node.getValue()) == false)
-                    throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate", 0);
+                    throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate at move " + game_moves.size(), 0);
 
             }
         }
@@ -573,7 +575,9 @@ public class SGF{
             komi = 0;
         if (handicap == -1)
             handicap = 0;
-        init_rules();
+        if (ruleType == 1)
+            rules = "go";
+        init_rules();    
     }
 
     private static void executeTree(Node tree, int depth, int index) throws ParseException{
@@ -608,7 +612,7 @@ public class SGF{
                 list = list.next;
             }
             if (map != null){
-                System.out.println("jadd a map");
+                // System.out.println("jadd a map");
                 game_moves.add(map);
             }
 
@@ -768,15 +772,20 @@ public class SGF{
     }
 
     private static boolean PlayMove(Point p, ArrayList<Map> mapList, Map map,String color){
-        if (map.tryAddToMap(color, p) == false) 
-            return false;
-        if ("AE".equals(color))
-            return true;
-        if (ruleInstance.isValidMove(p, mapList) == false)
+        System.out.println("rule == " + ruleInstance.getGameType());
+        mapList.add(map);
+        if ("AE".equals(color) == false && ruleInstance.isValidMove(p, mapList) == false)
         {
+            System.out.println("erreur valid move coor == " + p + " cmd |"+color+"|" + " square : "  + map.get_map()[p.y][p.x]);
             // errorMsg 
             return false;
         }
+        System.out.println("coucou");
+        if (map.tryAddToMap(color, p) == false) 
+            return false;
+        mapList.remove(mapList.size() - 1);
+        if ("AE".equals(color))
+            return true;
         int colorVal = color.contains("B") ? 1 : 2;
         if ((ruleInstance instanceof GomokuRules) == false)
         {

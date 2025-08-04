@@ -7,6 +7,7 @@ public class GomokuRules implements Rules {
     int winner;
     Rules.GameMode gameStatus = Rules.GameMode.PLAYING;
     int boardSize = 19;
+    int nbMove = 0;
 
     @Override
     public boolean hasPass(){
@@ -16,20 +17,20 @@ public class GomokuRules implements Rules {
 
     @Override
     public boolean undo(){
+        if (nbMove > 0)
+            nbMove--;
         return true;
     }
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
-        // Utilisation de la méthode par défaut pour vérifier si la case est vide
+        map.get(map.size()-1).printMap();
+        System.out.println(map.get(map.size() - 1).get_map()[point.y][point.x]);
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1)))
         {
             return false;
         }
-        
-        // Ajouter d'autres vérifications spécifiques au jeu Gomoku, si nécessaire.
-        // Par exemple, vérifier si le coup respecte la taille du plateau ou les autres règles du Gomoku.
-        // Pour un modèle minimaliste, supposons que tout coup est valide si la case est vide.
+        nbMove++;
         return true;
     }
 
@@ -41,11 +42,16 @@ public class GomokuRules implements Rules {
             boardSize = 19;
     }
 
-
     @Override
     public boolean endGame(Map map, Point point) {
         if (check_five(map, point)){
             gameStatus = Rules.GameMode.ENDGAME;
+            winner = getColor(map, point);
+            return true;
+        }
+        if (nbMove == boardSize * boardSize)
+        {
+            winner = 0;
             return true;
         }
         return false;

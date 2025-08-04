@@ -138,7 +138,22 @@ public class App extends Application {
             //recuperer les datas si invalide les mettres en valeurs et laisserl a page telle qu'elle
             gomoku= new Gomoku((int)sceney, (int)scenex, home_page); //appeler fct qui set toutes les infos
             goban_root = new Pane();
-            goban = new Scene(goban_root, scenex, sceney);
+            goban = new Scene(goban_root, 800, 525);
+            set_goban_event();
+            goban_root.getChildren().add(gomoku.getGameDisplay()); // Ajout du texte à home_root
+            switchScene(goban);
+            stage.setResizable(true);
+        });
+
+        home_page.getLearnOrViewButton().setOnMouseClicked(event -> {
+            double scenex = stage.getWidth();
+            double sceney = stage.getHeight();
+            //load sgf si erreur set error msg et quitter sinon set Map + viewving//si viewing set viewing//sinon PLAYING?
+            System.out.println(" goban width == " + scenex + " heigh " + sceney);
+            //recuperer les datas si invalide les mettres en valeurs et laisserl a page telle qu'elle
+            gomoku = new Gomoku((int)sceney, (int)scenex, home_page); //appeler fct qui set toutes les infos
+            goban_root = new Pane();
+            goban = new Scene(goban_root, 800, 525);
             set_goban_event();
             goban_root.getChildren().add(gomoku.getGameDisplay()); // Ajout du texte à home_root
             switchScene(goban);
@@ -146,13 +161,15 @@ public class App extends Application {
         });
     }
 
+
+
     private void set_goban_event(){
         gomoku.get_home_button().setOnMouseClicked(event -> {
             double scenex = stage.getWidth();
             double sceney = stage.getHeight();
             System.out.println("hone width == " + scenex + " heigh " + sceney);
             home_root = new Pane();
-            home = new Scene(home_root, scenex, sceney);
+            home = new Scene(home_root, 606, 380);
             home_page = new Home();
             // home_root.setStyle("-fx-background-color:rgb(71, 157, 255);");
             // openBackground();
@@ -233,6 +250,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;
+        stage.sizeToScene();
         stage.setTitle("Gomoku");
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         int size = get_size((int)screenBounds.getWidth(), (int)screenBounds.getHeight());

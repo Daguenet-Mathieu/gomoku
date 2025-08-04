@@ -9,7 +9,8 @@ public interface Rules {
         DEATH_MARKING,
         COUNTING,
         ENDGAME,
-        VIEWING
+        VIEWING,
+        LEARNING
     }
 
     boolean isValidMove(Point point, ArrayList<Map> map);
@@ -35,8 +36,7 @@ public interface Rules {
     ArrayList<Point> diagonalLeftWin = new ArrayList<Point>();
     ArrayList<Point> diagonalRightWin = new ArrayList<Point>();
     void  setBoardSize(int value);
-    public boolean undo();
-
+    boolean undo();
  
     // ArrayList check_captures(Map map, Point point);
     // Méthode par défaut qui vérifie si le coup est valide (si la case est vide)
@@ -299,6 +299,10 @@ public interface Rules {
             return false;    
     }
 
+
+    default int getColor(Map map, Point point){
+        return map.get_map()[point.y][point.x];
+    }
 
     default void check_diagonal(Map map, Point point){
         check_diagonal_left(map, point);

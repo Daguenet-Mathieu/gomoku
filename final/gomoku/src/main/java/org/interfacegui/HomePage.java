@@ -235,6 +235,11 @@ public class HomePage{
     Button getValidationButton(){
         return validation;
     }
+
+    Button getLearnOrViewButton(){
+        return learnOrView;
+    }
+
     TextField getKomiButton(){
         return komi_field;
     }

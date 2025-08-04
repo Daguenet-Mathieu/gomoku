@@ -12,6 +12,7 @@ public class PenteRules implements Rules {
     public DoubleFree dbfree = new DoubleFree();
     Rules.GameMode gameStatus = Rules.GameMode.PLAYING;
     int boardSize = 19;
+    int nbMove = 0;
 
     @Override
     public void  setBoardSize(int value){
@@ -30,11 +31,13 @@ public class PenteRules implements Rules {
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
+        System.out.println("rule prnt coor == " + point);
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1))) {
             return false;
         }
         if (this.dbfree.check_double_free(point.y, point.x, ((map.size() + 1)%2)+1, map.get(map.size() - 1).get_map()) == false)
             return false;
+        nbMove++;
         return true;
     }
 
@@ -42,6 +45,8 @@ public class PenteRules implements Rules {
     @Override
     public boolean undo(){
         waitingWinner = 0;
+        if (nbMove > 0)
+            nbMove--;
         return true;
     }
 
@@ -101,6 +106,11 @@ public class PenteRules implements Rules {
                 return true;
             }
         }
+        if (nbMove == boardSize * boardSize)
+        {
+            winner = 0;
+            return true;
+        }
         return false;
     }
 
@@ -125,6 +135,8 @@ public class PenteRules implements Rules {
         Map map = maps.get(index);
         int[][] m = map.get_map();
         forbidden_moves.clear();
+        map.printMap();
+        System.out.println("color == " + color);
         for (int y = 0; y < get_board_size();y++)
         {
             for (int x = 0; x < get_board_size(); x++){
