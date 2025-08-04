@@ -226,7 +226,7 @@ public class Miniscore {
             rep_case(x + (dec2 * dx), y + (dec2 * dy), st);
     }
 
-    public void connect(int x, int y) //directly x y
+    public void connect() //directly x y
     {
         this.str = MinMax.map[x][y] == 1 ? str1 : str2;
         if (str[dir][x][y] == 0)
@@ -299,7 +299,7 @@ public class Miniscore {
 
     }
 
-    public void fill2(int x, int y)
+    public void fill2()
     {
         int st;
         int sig;
@@ -504,7 +504,7 @@ public class Miniscore {
     }
 
 
-    public void unconnect(int x, int y)
+    public void unconnect()
     {
 
         int decp;
@@ -571,7 +571,7 @@ public class Miniscore {
 
     }
 
-    public void unfill(int x, int y)
+    public void unfill()
     {
         int val = cur_turn == 1 ? 2 : 1;
         int nbp = 0;
@@ -623,14 +623,14 @@ public class Miniscore {
             dir = 0;
             dx = 1; dy = 0;
             if (x + 1 != 19 && MinMax.map[x+1][y] == cur_turn)
-                unconnect(x, y);
+                unconnect();
 
             else if (x - 1 != -1 && MinMax.map[x-1][y] == cur_turn)
             {
                 dx=-1;
-                unconnect(x, y);
+                unconnect();
             }
-            unfill(x, y);
+            unfill();
         }
 
         if ((y + 1 != 19 && is_player(MinMax.map[x][y+1])) || (y - 1 != -1 && is_player(MinMax.map[x][y-1])))
@@ -638,14 +638,14 @@ public class Miniscore {
             dir = 1;
             dx = 0; dy = 1;
             if (y + 1 != 19 && MinMax.map[x][y+1] == cur_turn)
-                unconnect(x, y);
+                unconnect();
 
             else if (y - 1 != -1 && MinMax.map[x][y-1] == cur_turn)
             {
                 dy=-1;
-                unconnect(x, y);
+                unconnect();
             }
-            unfill(x, y);
+            unfill();
         }
 
         if ((x + 1 != 19 && y + 1 != 19 && is_player(MinMax.map[x+1][y+1])) || ( x - 1 != -1 && y - 1 != -1 && is_player(MinMax.map[x-1][y-1])))
@@ -653,14 +653,14 @@ public class Miniscore {
             dir = 2;
             dx = 1; dy = 1;
             if (x + 1 != 19 && y + 1 != 19 && MinMax.map[x+1][y+1] == cur_turn)
-                unconnect(x, y);
+                unconnect();
 
             else if ( x - 1 != -1 && y - 1 != -1 && MinMax.map[x-1][y-1] == cur_turn)
             {
                 dx=-1; dy=-1;
-                unconnect(x, y);
+                unconnect();
             }
-            unfill(x, y);
+            unfill();
         }
 
         if (x + 1 != 19 && y - 1 != -1 && is_player(MinMax.map[x+1][y-1]) || (x - 1 != -1 && y + 1 != 19 && is_player(MinMax.map[x-1][y+1])))
@@ -668,15 +668,15 @@ public class Miniscore {
             dir = 3;
             dx = 1; dy = -1;
             if (x + 1 != 19 && y - 1 != -1 && MinMax.map[x+1][y-1] == cur_turn)
-                unconnect(x, y);  
+                unconnect();  
 
             else if (x - 1 != -1 && y + 1 != 19 && MinMax.map[x-1][y+1] == cur_turn)
             {
                 dx = -1; dy=1;
-                unconnect(x, y);
+                unconnect();
             }
             
-            unfill(x, y);
+            unfill();
         }
 
         for (int i = 0; i < 4 ; i++)
@@ -754,58 +754,57 @@ public class Miniscore {
         {
             dir=0;
             dx=1;dy=0;
-            connect(x, y);
+            connect();
 
         }
         else if (x - 1 != -1 && MinMax.map[x-1][y] == cur_turn)
         {
             dir=0;
             dx=-1; dy=0;
-            connect(x, y);
+            connect();
         }
 
         if (y + 1 != 19 && MinMax.map[x][y+1] == cur_turn)
         {
             dir=1;
             dx=0;dy=1;
-            connect(x, y);
+            connect();
         }
         else if (y - 1 != -1 && MinMax.map[x][y-1] == cur_turn)
         {
             dir = 1;
             dx=0;dy=-1;
-            connect(x, y);
+            connect();
         }
 
         if (x + 1 != 19 && y + 1 != 19 && MinMax.map[x+1][y+1] == cur_turn)
         {
             dir = 2;
             dx=1;dy=1;
-            connect(x, y);
+            connect();
         }
         else if (x - 1 != -1 && y - 1 != -1 && MinMax.map[x-1][y-1] == cur_turn)
         {
             dir = 2;
             dx=-1;dy=-1;
-            connect(x, y);
+            connect();
         }
 
         if (x + 1 != 19 && y - 1 != -1 && MinMax.map[x+1][y-1] == cur_turn)
         {
             dir = 3;
             dx=1;dy=-1;
-            connect(x, y);
+            connect();
         }
         else if (x - 1 != -1 && y + 1 != 19 && MinMax.map[x-1][y+1] == cur_turn)
         {
             dir = 3;
             dx=-1;dy=1;
-            connect(x, y);
+            connect();
         }
-        fill2(x, y);
+        fill2();
         update_blocker();
     }
-
 
 
     //debug function
