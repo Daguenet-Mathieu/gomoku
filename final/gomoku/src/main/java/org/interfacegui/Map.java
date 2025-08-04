@@ -15,7 +15,7 @@ public class Map{
     public ArrayList<Integer> _last_move_color = new ArrayList<Integer>();
     private int _move_time;
     private ArrayList<Point> candidatsList;
-    private ArrayList<Point> _prisonners = new ArrayList();
+    private ArrayList<Point> _prisonners = new ArrayList<Point>();
     private String _comment;
 
     public void setCandidatsList(ArrayList<Point> list) {

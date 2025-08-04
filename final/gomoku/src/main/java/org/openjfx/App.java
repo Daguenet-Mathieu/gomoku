@@ -9,13 +9,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+// import javafx.scene.layout.StackPane;
 import java.io.File;
 import org.utils.Point;
-import java.io.InputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import javafx.geometry.Pos;
+// import java.io.InputStream;
+// import java.io.FileInputStream;
+// import java.io.IOException;
+// import javafx.geometry.Pos;
 
 // import javafx.application.Platform;
 // import javafx.scene.text.Text;

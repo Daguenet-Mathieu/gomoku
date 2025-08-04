@@ -197,11 +197,11 @@ public class PenteRules implements Rules {
         prisonners_nbr[1] = nb;
     }
 
-    private boolean inMap(int y, int x){
-        if (x < 0 || x >= get_board_size() || y < 0 || y >= get_board_size())
-            return false;
-        return true;
-    }
+    // private boolean inMap(int y, int x){
+    //     if (x < 0 || x >= get_board_size() || y < 0 || y >= get_board_size())
+    //         return false;
+    //     return true;
+    // }
 
     private int getColor(Point point, int incrementX, int incrementY, Map map){
         return map.get_map()[point.y + incrementY][point.x + incrementX];

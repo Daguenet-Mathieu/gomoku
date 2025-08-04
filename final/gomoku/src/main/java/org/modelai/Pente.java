@@ -470,14 +470,6 @@ public class Pente extends MinMax {
         }
 
         if (depth == Game.max_depth)
-        {
-            System.out.println("At the end !!!!!!!!!!!!!!!!!!!!!!!!!");
-            display_map();
-            scsimul.display();
-            System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
-        }
-
-        if (depth == Game.max_depth)
             return bonus_point(turn, player, values);
 
         if (turn == player)

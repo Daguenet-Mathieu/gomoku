@@ -59,7 +59,6 @@ public class RenjuRules implements Rules {
     @Override
     public ArrayList<Point> get_forbiden_moves(ArrayList<Map> maps, int index, int color)
     {
-        Map map = maps.get(index);
         return forbidden_moves;
     }
 

@@ -1,9 +1,9 @@
 package org.interfacegui;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+// import javafx.scene.control.TextField;
 import java.util.ArrayList;
-import javafx.beans.property.StringProperty;
+// import javafx.beans.property.StringProperty;
 
 
 public class Home {
@@ -14,7 +14,7 @@ public class Home {
     private String rule = "Gomoku";
     private float komi = -1;
     private int handicap = -1;
-    private ArrayList<Map> sgf;
+    // private ArrayList<Map> sgf;
     private int level = 3;
     private HomePage home_page = new HomePage();
     private FileBox filebox = new FileBox(home_page);
@@ -28,12 +28,12 @@ public class Home {
         return level;
     }
 
-    private void changeVisibility(TextField komi, TextField handicap, boolean value){
-        komi.setVisible(value);
-        handicap.setVisible(value);
-        komi.setManaged(value);
-        handicap.setManaged(value);
-    }
+    // private void changeVisibility(TextField komi, TextField handicap, boolean value){
+    //     komi.setVisible(value);
+    //     handicap.setVisible(value);
+    //     komi.setManaged(value);
+    //     handicap.setManaged(value);
+    // }
 
 
     int getTimeIndex(int size){

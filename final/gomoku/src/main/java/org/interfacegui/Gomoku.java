@@ -1,7 +1,7 @@
 package org.interfacegui;
 import java.util.ArrayList;
 import org.modelai.Game;
-import org.modelai.MinMax;
+// import org.modelai.MinMax;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
@@ -24,7 +24,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.Parent;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
+// import javafx.scene.control.Label;
 import javafx.geometry.Pos;
 
 
@@ -55,7 +55,7 @@ public class Gomoku
     private int start_move_time;
     private int end_move_time;
     private ArrayList<Point> candidatsList;
-    private float bestMoveScore;
+    //private float bestMoveScore;
     private ArrayList<Point> hintList;
     private ArrayList<Point> currentForbiddens = new ArrayList<Point>();
     private ArrayList<Integer> whiteTimeList = new ArrayList<Integer>();
@@ -129,7 +129,7 @@ public class Gomoku
 
     void changeHintVisibility(boolean visible) {
         if (hintList == null || hintList.isEmpty()) return;
-        int val = 0;
+        //int val = 0;
         for (int i = 0; i < hintList.size(); i++) {
             Point p = hintList.get(i);
             goban.set_stone_status(visible, "#00F0FF", p, String.format("%d", (int)p.val));
@@ -185,7 +185,7 @@ public class Gomoku
     void setCandidats(ArrayList<Candidat.coord> candidats, float[] values, int index) {
         if (rule.hasIa() == false || candidats == null || values == null || game.val == null) return;
         candidatsList = new ArrayList<>();
-        bestMoveScore = game.val;
+        //bestMoveScore = game.val;
         changeCandidatVisibility(false);
         for (int i = 0; i < candidats.size(); i++){
             System.err.println("candidat[" + i + "] = " + candidats.get(i).y + " " + candidats.get(i).x);
@@ -534,7 +534,7 @@ public class Gomoku
                 if (i == 0)
                     prisonners = _map.get(_map.size() - 1).get_prisonners();
                 else
-                    prisonners = new ArrayList();
+                    prisonners = new ArrayList<Point>();
                 game.remove(coord.get(i), prisonners, true);
             }
         }
