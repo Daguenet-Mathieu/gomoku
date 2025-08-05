@@ -30,17 +30,7 @@ public class SGF{
     //     "AN", "BR", "BT", "CP", "DT", "EV", "GC", "GN", "ON", "OT",
     //     "PB", "PW", "RE", "RO", "SO", "TM", "US", "WR", "WT", "TB",
     //     "TW", "AS", "IP", "IY", "SE", "SU", "FF", "BL", "WL", "CA", "AP"
-    // };
-    // private static final Set<String> ignoreSet = new String[] {
-    //     "BM", "DO", "IT", "KO", "MN", "OB", "OW", "TE", "AB", "AW",
-    //     "AR", "CR", "DD", "DM", "FG", "GB", "GW", "HO", "LB", "LN",
-    //     "MA", "N", "PM", "SL", "SQ", "TR", "UC", "V", "VW", "ST",
-    //     "AN", "BR", "BT", "CP", "DT", "EV", "GC", "GN", "ON", "OT",
-    //     "PB", "PW", "RE", "RO", "SO", "TM", "US", "WR", "WT", "TB",
-    //     "TW", "AS", "IP", "IY", "SE", "SU", "FF"
-    // };
-    // private static final Set<String> supportedSet = Set.of("KM", "HA", "AP", "CA", "GM", "RU", "SZ", "C", "AE", "PL", "B", "W", "BL", "WL");
-
+    // };//a utiliser???
     // private static final String[] supportedSet = new String[] {"KM", "HA", "AP", "CA", "GM", "SZ", "C", "AE", "PL", "B", "W", "AB", "AW"};
     private static final String[] listCmdSet = new String[] {"AB", "AW", "AE"};
     private static final String[] rootCmdSet = new String[] {"KM", "HA", "GM", "SZ", "RU", "AP", "CA", "FF", "ST"};

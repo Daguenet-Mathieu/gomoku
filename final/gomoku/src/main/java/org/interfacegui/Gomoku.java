@@ -583,6 +583,9 @@ public class Gomoku
             commentLabel.setText(_map.get(map_index).getComment());
             commentLabel.setMaxWidth(Double.MAX_VALUE);
             commentLabel.setAlignment(Pos.CENTER);
+            commentLabel.setPrefHeight(200);
+            commentLabel.setMinHeight(200);
+            commentLabel.setMaxHeight(200);
             // updateGameDisplay(_game_infos_size_y, _width);
         }
         // if (_map.get(0).getComment() != null && _map.get(0).getComment().isEmpty() == false){

@@ -166,15 +166,13 @@ public class App extends Application {
             home_page.setSgfMap(sgfMap);
             gomoku = new Gomoku((int)sceney, (int)scenex, home_page);
             goban_root = new Pane();
-            goban = new Scene(goban_root, 800, 525);
+            goban = new Scene(goban_root, 850, 525);
             set_goban_event();
             goban_root.getChildren().add(gomoku.getGameDisplay());
             switchScene(goban);
             stage.setResizable(true);
         });
     }
-
-
 
     private void set_goban_event(){
         gomoku.get_home_button().setOnMouseClicked(event -> {
