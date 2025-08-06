@@ -39,3 +39,14 @@ ils sont considérés comme morts et retirés par le propriétaire de la zone
 avant le comptage final.]
 ;C[Pour proceder au comptage vous pouvew maintenant passer pour chaque oueur puis ensuite selectioner les pierres qui vous semblent mortes. 
 Puis passer a nouveau pour assister au comptage des points])
+
+
+//pour le pente faire une position avec 5 et 1 capturable
+
+/pourle go mettre plus tot les pos de liberte + une frame sur les chaines de pierres
+// mettre une frame atari et une capture
+//sur territoire mettre un rappel point fait pdt la capture
+//simplifier la frame de ko
+//a ala fin add une frame qui explicite la fin de partie pass pass selectionnerl a pierre norte et pass a nouveau
+
+//reglr probleme des threads

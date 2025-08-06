@@ -1,0 +1,5 @@
+(;GM[1]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
+RU[Japanese]SZ[19]KM[0.00]
+AB[dd][ee][hg][ig][ki][li][jj][jk][hn][ho][ep][gp]C[toutes ces positions creent des double free three]
+;AE[dd][ee][hg][ig][ki][li][jj][jk][hn][ho][ep][gp]AW[ll]AB[mi][lj][kk][jl][kl][im]C[cette position ne permet pas de gagner car un block est capturable
+mais si blanc ne capture pas noir sera gagnant])

@@ -239,6 +239,12 @@ public class Gomoku
             gameInfos.getPassButton().setVisible(false);
             gameInfos.getPassButton().setManaged(false);
         }
+        changeCandidatVisibility(false);
+        changeHintVisibility(false);
+        eraseForbiddens();
+        forbiddenVisibility = false;
+        toggleCandidat = false;
+        toggleHint = false;
     }
 
 
@@ -782,13 +788,15 @@ public class Gomoku
 
         });
         gameInfos.getForbiddeButton().setOnAction(event -> {
-            System.out.println("/////////////////////////////////////////////////////////////////////////////////////////////////////////////");
             if (ia_playing)
                 return ;
-            System.out.println("/////////////////////////////////////////////////////////////////////////////////////////////////////////////");
             changeCandidatVisibility(false);
             changeHintVisibility(false);
-            ArrayList<Point> points = rule.get_forbiden_moves(_map, map_index, (map_index % 2) + 1);
+            ArrayList<Point> points;
+            if (playingMode == Rules.GameMode.LEARNING)
+                points = rule.get_forbiden_moves(_map, map_index, 1);
+            else
+                points = rule.get_forbiden_moves(_map, map_index, (map_index % 2) + 1);
             forbiddenVisibility = forbiddenVisibility == false;
             toggleCandidat = false;
             toggleHint = false;

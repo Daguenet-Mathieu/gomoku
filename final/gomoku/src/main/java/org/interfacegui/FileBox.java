@@ -2,19 +2,15 @@ package org.interfacegui;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-//import javafx.scene.control.Button;
-//import java.util.ArrayList;
-// import java.util.Arrays;
 import java.io.File;
 import javafx.scene.control.ScrollPane;
-//import javafx.geometry.Orientation;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
-//simport javafx.scene.text.Text;
 import javafx.scene.Node;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import javafx.geometry.Pos;
 
 public class FileBox{
 
@@ -23,13 +19,21 @@ public class FileBox{
     private VBox openFileBox;
     private Pane dirNameBox;
     private VBox box;
+    private Button cross = new Button("Close Box");
+    private HBox crossContainer = new HBox(cross);
     private Button dir_validation;
     private HomePage homePage;
     private String absolutePath;
     private SGF sgf = new SGF();
 
+
+    public Button getCross(){
+        return cross;
+    }
+
     FileBox(HomePage h){
         homePage = h;
+        cross.setStyle("-fx-background-color: #000000; -fx-text-fill: #FF0000;");
     }
 
     private String getParent(String pathString){
@@ -137,57 +141,21 @@ public class FileBox{
             dirNameBox = new HBox();
             box = new VBox();
             dir_validation = new Button("ok");
+            // crossContainer.setAlignment(Pos.BASELINE_RIGHT);
             dirNameBox.getChildren().addAll(dirName, dir_validation);
-            openFileBox.getChildren().addAll(scrollPane, dirNameBox);
-            scrollPane.setPrefViewportHeight(100);//revoir tout ca
-            scrollPane.setLayoutX(10);//revoir tout ca
-            scrollPane.setLayoutY(10);//revoir tout ca
-            scrollPane.setMaxWidth(200);//revoir tout ca
-            // scrollPane.setMinWidth(200);//revoir tout ca
-            scrollPane.setContent(box);//revoir tout ca
+            openFileBox.getChildren().addAll(crossContainer, scrollPane, dirNameBox);
+            scrollPane.setPrefViewportHeight(100);
+            scrollPane.setLayoutX(10);
+            scrollPane.setLayoutY(10);
+            scrollPane.setMaxWidth(200);
+            scrollPane.setContent(box);
 
-            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);  // Ou .ALWAYS pour toujours afficher
-            scrollPane.setFitToWidth(true);  // Ajuste la largeur du contenu à la taille du parent
-    // scrollPane.setMaxWidth(Double.MAX_VALUE);  // Pas de largeur fixe
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+            scrollPane.setFitToWidth(true);
             scrollPane.setFitToWidth(false);
-            File sgf_dir = sgf.openSGFDir();//proteger le null //juste charger fenetre vide!?
+            File sgf_dir = sgf.openSGFDir();
             absolutePath = sgf_dir.getAbsolutePath();
             add_directory_details(sgf_dir);
-            // // box.setOnMouseClicked(event -> {
-            // //     // Récupérer le nœud sur lequel on a cliqué
-            // //     Node clickedNode = event.getPickResult().getIntersectedNode();
-
-            // //     // Remonter jusqu'au Label parent si on a cliqué sur un élément à l'intérieur
-            // //     while (clickedNode != null && !(clickedNode instanceof Pane)) {
-            // //         clickedNode = clickedNode.getParent();
-            // //     }
-
-            // //     // Si on a trouvé un Label, afficher son texte
-            // //     if (clickedNode instanceof Pane) {
-            // //         Pane clickedPane = (Pane) clickedNode;
-            // //         // System.out.println("Élément cliqué : " + clickedPane.getText());
-            // //     } else {
-            // //         System.out.println("Aucun Pane cliqué");
-            // //     }
-            // // });
-            // box.setOnMouseClicked(event -> {
-            // // Récupérer le nœud sur lequel on a cliqué
-            // Node clickedNode = event.getPickResult().getIntersectedNode();
-
-            // // Remonter l'arbre des nœuds jusqu'à ce qu'on trouve un Pane
-            // while (clickedNode != null && !(clickedNode instanceof Pane)) {
-            //     clickedNode = clickedNode.getParent();
-            // }
-
-            // // Si on a trouvé un Pane, récupérer son fichier ou répertoire
-            // if (clickedNode instanceof Pane) {
-            //     Pane clickedPane = (Pane) clickedNode;
-            //     File clickedFile = (File) clickedPane.getUserData();
-            //     System.out.println("Fichier ou répertoire cliqué : " + clickedFile.getPath());
-            // } else {
-            //     System.out.println("Aucun Pane cliqué");
-            // }
-            // });
             setOkEvent();
         return (openFileBox);
     }

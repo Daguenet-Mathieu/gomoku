@@ -104,6 +104,9 @@ public class Home {
         home_page.getLoadSgf().setOnAction(e -> {
             home_page.addFileBox(filebox.getFileBox());
         });
+        filebox.getCross().setOnAction(e -> {
+            home_page.closeFileBox();
+        });
         home_page.getBlackFiveMin().setOnAction(e -> {
             black_time = 300000;
             home_page.getBlackFiveMin().setStyle(selectedColor);

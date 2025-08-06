@@ -13,9 +13,6 @@ import javafx.scene.control.Label;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.paint.Color;
-// import javafx.geometry.Pos;
-// import javafx.scene.control.Labeled;
-
 
 public class HomePage{
     private Pane page;
@@ -32,9 +29,7 @@ public class HomePage{
     private Pane black_player;
     private Pane white_player;
     private TextField komi_field;
-    // komiFeield.setText("7.5"); // Valeur par défaut
     private TextField handicap_field;
-    // handiapfield.setText("0"); // Valeur par défaut
     private TextField white_time;
     private TextField black_time;
     private TextField white_hours = new TextField("HH");
@@ -395,6 +390,20 @@ public class HomePage{
         rule_type.set(SGF.get_game_rule());
         rules_instance = SGF.getRuleInstance();
     }
+
+    public void closeFileBox(){
+        ObservableList<Node> children = pageContainer.getChildren();
+
+        children.remove(children.size() - 1);
+        error_file.setManaged(false);
+        error_file.setVisible(false);
+        load_sgf.setManaged(true);
+        load_sgf.setVisible(true);
+        fileBox.setManaged(false);
+        fileBox.setVisible(false);
+        learnOrView.setText("learn");
+    }
+
 
     private void deleteFile(){
         load_sgf.setManaged(true);

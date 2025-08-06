@@ -1,13 +1,23 @@
 (;GM[4]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
 RU[pente]SZ[19]KM[0.00]
 
-;C[le jeu de Pente se joue sur un plateau de 19 lignes et 19 colonnes, les pions noir et blanc, appeles pierres sont jouees sur les intersections]
+;C[le jeu de Pente se joue sur un plateau de 19 lignes et 19 colonnes.
+Les pions noir et blanc, appeles pierres sont jouees sur les intersections inoccupees]
 ;B[ii]C[noir joue le 1er coup puis les 2 joueurs joueuront leurs coups tour a tour.]
-;W[ki]
+;W[ki]C[Blanc joue maintenant son coup et la partie peut continuer]
 ;AE[ki]AB[gf][hf][if][jf][kf][ij][ik][il][dm][im][om][en][nn][fo][mo][gp][lp][hq][kq]C[le but est d'aligner 5 pierres a la suite de facon horizontale digaonale ou verticale.
 Le premier joueur arrivant a cette configuration gagne la partie.]
 ;AE[gf][hf][if][jf][kf][ii][ij][ik][il][dm][im][om][en][nn][fo][mo][gp][lp][hq][kq]AW[mh][nh]AB[lh]C[Si une paire de pierre est bloquee par ses extremites, la paire est capturee.]
-;B[oh]
+;B[oh]C[ici noir a capture une paire de pierre blanche.
+Reussir a capturer 5 blocks de pierres est une autre maniere de gagner la partie.]
 ;W[gg]AE[lh][mh][nh][oh]AW[gk][gl][kp]AB[ee][ff][gm][mn][lo]C[autres exemples de positions permettant une capture]
 ;AE[gg][gk][gl][kp][ee][ff][gm][mn][lo]AW[ii][ij][ik]C[Ceci est une position appelee "free three". Si l'adversaire ne reagit pas ce la permet de gagner a coup sur en 2 coups]
-;AE[ii]AW[ji][ki]C[il est interdir de creer 2 "free three" en 1 seul coup. cette postion contient donc un coup interdit])
+;AE[ii][ij][ik]AB[dd][ee][hg][ig][ki][li][jj][jk][hn][ho][ep][gp]C[il est interdit de creer 2 "free three" en 1 seul coup.
+toutes ces positions creent des double free three et continent des coups interdit]
+;AW[ii]C[une pierre adverse peut rendre le coup a nouveau jouable.
+dans le cas ou elle empeche la creation du double free three]
+;AE[dd][ee][hg][ig][ki][li][jj][jk][hn][ho][ep][gp]AW[ll]AB[mi][lj][kk][jl][kl][im]C[cette position ne permet pas de gagner car un block est capturable
+mais si blanc ne capture pas noir sera gagnant]
+)
+
+
