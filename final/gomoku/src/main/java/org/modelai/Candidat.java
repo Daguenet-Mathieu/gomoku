@@ -234,7 +234,7 @@ public class Candidat
 
 
         if (val == 0 && (tot_case1 != 0 || tot_case2 != 0))
-            adding_can(x, y,  Math.max(tot_case1, tot_case2));
+            adding_can(x, y, Math.max(tot_case1, tot_case2));
         else if (val == 1)
             adding_can(x, y, Math.max(tot_case1 + 1, tot_case2));
         else if (val == 2)
@@ -282,9 +282,16 @@ public class Candidat
         return false;
     }
 
-    public int adding_probable_candidate(int turn)
+    public int adding_probable_candidate(int dp, int turn)
     {
         int res;
+
+        for (int k = 0 ; k < this.lst.size() ; k++)
+        {
+            if (dp == Game.max_depth)
+                System.out.printf("Adding from this one %d %d\n", this.lst.get(k).x, this.lst.get(k).y);
+        }
+
 
         for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
         {
@@ -301,8 +308,12 @@ public class Candidat
 
         Collections.sort(this.lst, Comparator.comparing(item -> 
         this.order.indexOf(item.st())));
+        if (dp == Game.max_depth && display)
+                display_candidat("before select");
         if (this.lst.size() >= Game.min_can  + 1)
             this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
+        if (dp == Game.max_depth && display)
+                display_candidat("here");
         return this.lst.size();
     }
 
@@ -400,6 +411,9 @@ public class Candidat
 
         Collections.sort(this.lst, Comparator.comparing(item -> 
         this.order.indexOf(item.st())));
+
+
+
         if (this.lst.size() >= Game.min_can + 1)
         {
             if (nb_mv >=4)
@@ -412,11 +426,6 @@ public class Candidat
 
     public int forced_candidate(ArrayList<Candidat.coord> flst)
     {
-        for (int i = 0 ; i < flst.size() ; i++)
-        {
-            System.out.printf("\n\nforced capture %d %d\n\n", flst.get(i).x, flst.get(i).y);
-            //this.lst.add(flst.get(i));
-        }
         this.lst.add(flst.get(0));
         MinMax.forced_capture.remove(0);
         return 1;
@@ -439,7 +448,7 @@ public class Candidat
             return Game.min_can;
     }
 
-    public int old_load(int depth, int turn) // only used
+    public int old_load(int depth, int turn)
     {
         int ret;
         this.turn = turn;
@@ -483,7 +492,7 @@ public class Candidat
             if (ret == 0)
                 ret = all_probable_candidate(turn);
             else
-                ret = adding_probable_candidate(turn);
+                ret = adding_probable_candidate(depth, turn);
         }
         return ret;
     }

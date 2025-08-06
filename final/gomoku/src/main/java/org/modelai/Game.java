@@ -65,7 +65,7 @@ public class Game {
             System.err.println("MEDIUM");
             max_depth = 9;
             max_can = 7;
-            min_can = 7;
+            min_can = 6;
             large_cut = false;
         }
         else if (lvl == 3)
@@ -122,7 +122,8 @@ public class Game {
                 }
             }
             nb_move --;
-            timelst.remove(timelst.size() - 1);
+            if (timelst.size() != 0)
+                timelst.remove(timelst.size() - 1);
         }
     }
 
@@ -181,10 +182,10 @@ public class Game {
         time = System.currentTimeMillis() - time;
         timelst.add((double)time / 1000);
 
-        manage_time();
-
         if (display)
             best_move_stamp();
+
+        manage_time();
     
         return new Point(m.best.y, m.best.x);
     }
@@ -192,8 +193,10 @@ public class Game {
     //display function
     private void display_all_board_info()
     {
+            System.out.println("XXX");
             MinMax.display_Map();
-            scbord.display();
+            System.out.println("XXX");
+            scbord.display(false);
             System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
     }
 
