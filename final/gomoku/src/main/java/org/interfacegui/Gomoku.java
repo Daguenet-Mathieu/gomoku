@@ -462,10 +462,6 @@ public class Gomoku
             System.out.println("partie finie!");
             int winner = rule.getWinner();
             System.out.println("Winner == " + winner);
-            if (winner == 1)
-                System.out.println("noir gagne!");
-            else
-                System.out.println("blanc gagne!");
             _end_popin.setVisible(true);
             _end_popin.setManaged(true);
             game_end = true;

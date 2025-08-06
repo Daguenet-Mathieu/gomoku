@@ -86,7 +86,7 @@ public class PenteRules implements Rules {
                 waitingWinner = 0;
         }
         if (prisonners_nbr[0] >= 10 || prisonners_nbr[1] >= 10){
-            winner = (prisonners_nbr[0] >= 10) ? 1 : 0;
+            winner = (prisonners_nbr[0] >= 10) ? 1 : 2;
             gameStatus = Rules.GameMode.ENDGAME;
             return true;
         }

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 
 public class Home {
-    private int white_time = 0;
-    private int black_time = 0;
+    private int white_time = 300000;
+    private int black_time = 300000;
     private int white_player_type = 0;
     private int black_player_type = 0;
     private String rule = "Gomoku";
@@ -104,8 +104,55 @@ public class Home {
         home_page.getLoadSgf().setOnAction(e -> {
             home_page.addFileBox(filebox.getFileBox());
         });
+        home_page.getBlackFiveMin().setOnAction(e -> {
+            black_time = 300000;
+            home_page.getBlackFiveMin().setStyle(selectedColor);
+            home_page.getBlackThreeMin().setStyle(deselectedColor);
+        });
+        home_page.getBlackThreeMin().setOnAction(e -> {
+            black_time = 600000;
+            home_page.getBlackFiveMin().setStyle(deselectedColor);
+            home_page.getBlackThreeMin().setStyle(selectedColor);
+        });
+        home_page.getWhiteFiveMin().setOnAction(e -> {
+            white_time = 300000;
+            home_page.getWhiteFiveMin().setStyle(selectedColor);
+            home_page.getWhiteThreeMin().setStyle(deselectedColor);
+        });
+        home_page.getWhiteThreeMin().setOnAction(e -> {
+            white_time = 600000;
+            home_page.getWhiteFiveMin().setStyle(deselectedColor);
+            home_page.getWhiteThreeMin().setStyle(selectedColor);
+        });
 
-
+        home_page.getBlackCustom().setOnAction(e -> {
+            home_page.getBlackCustomTime().setManaged(true);
+            home_page.getBlackCustomTime().setVisible(true);
+            home_page.getBlackButtonTime().setManaged(false);
+            home_page.getBlackButtonTime().setVisible(false);
+            home_page.getBlackThreeMin().setStyle(deselectedColor);
+            home_page.getBlackFiveMin().setStyle(deselectedColor);
+        });
+        home_page.getWhiteCustom().setOnAction(e -> {
+            home_page.getWhiteCustomTime().setManaged(true);
+            home_page.getWhiteCustomTime().setVisible(true);
+            home_page.getWhiteButtonTime().setManaged(false);
+            home_page.getWhiteButtonTime().setVisible(false);
+            home_page.getWhiteThreeMin().setStyle(deselectedColor);
+            home_page.getWhiteFiveMin().setStyle(deselectedColor);
+        });
+        home_page.getBlackBackButton().setOnAction(e -> {
+            home_page.getBlackCustomTime().setManaged(false);
+            home_page.getBlackCustomTime().setVisible(false);
+            home_page.getBlackButtonTime().setManaged(true);
+            home_page.getBlackButtonTime().setVisible(true);
+        });
+        home_page.getWhiteBackButton().setOnAction(e -> {
+            home_page.getWhiteCustomTime().setManaged(false);
+            home_page.getWhiteCustomTime().setVisible(false);
+            home_page.getWhiteButtonTime().setManaged(true);
+            home_page.getWhiteButtonTime().setVisible(true);
+        });
         home_page.getWhiteEasyButton().setStyle(selectedColor);
         home_page.getBlackEasyButton().setStyle(selectedColor);
         home_page.getBlackIaTypeButton().setOnAction(e -> {

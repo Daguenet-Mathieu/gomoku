@@ -6,7 +6,7 @@ RU[pente]SZ[19]KM[0.00]
 ;W[ki]
 ;AE[ki]AB[gf][hf][if][jf][kf][ij][ik][il][dm][im][om][en][nn][fo][mo][gp][lp][hq][kq]C[le but est d'aligner 5 pierres a la suite de facon horizontale digaonale ou verticale.
 Le premier joueur arrivant a cette configuration gagne la partie.]
-;AE[gf][hf][if][jf][kf][ii][ij][ik][il][dm][im][om][en][nn][fo][mo][gp][lp][hq][kq]AW[mh][nh]AB[lh]C[Si une paire de pierre est entouree par ses extremites, la paire est capturee.]
+;AE[gf][hf][if][jf][kf][ii][ij][ik][il][dm][im][om][en][nn][fo][mo][gp][lp][hq][kq]AW[mh][nh]AB[lh]C[Si une paire de pierre est bloquee par ses extremites, la paire est capturee.]
 ;B[oh]
 ;W[gg]AE[lh][mh][nh][oh]AW[gk][gl][kp]AB[ee][ff][gm][mn][lo]C[autres exemples de positions permettant une capture]
 ;AE[gg][gk][gl][kp][ee][ff][gm][mn][lo]AW[ii][ij][ik]C[Ceci est une position appelee "free three". Si l'adversaire ne reagit pas ce la permet de gagner a coup sur en 2 coups]

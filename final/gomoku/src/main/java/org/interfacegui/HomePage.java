@@ -44,9 +44,9 @@ public class HomePage{
     private TextField black_min = new TextField("MM");
     private TextField black_sec = new TextField("SS");
     private Button white_five_min = new Button("5 min");
-    private Button white_three_min = new Button("3 min");
+    private Button white_three_min = new Button("10 min");
     private Button black_five_min = new Button("5 min");
-    private Button black_three_min = new Button("3 min");
+    private Button black_three_min = new Button("10 min");
     private Label boardSizeLabel = new Label("board size");
     private Button nineSize = new Button("9");
     private Button thirteenSize = new Button("13");
@@ -73,6 +73,62 @@ public class HomePage{
     private Button whiteIaEasy = new Button("easy");
     private Button whiteIaMedium = new Button("medium");
     private Button whiteIaHard = new Button("hard");
+    private Button blackCustom = new Button("custom");
+    private Button blackBackToButton = new Button("back");
+    private Button whiteCustom = new Button("custom");
+    private Button whiteBackToButton = new Button("back");
+    private HBox buttonWhiteTime = new HBox();
+    private HBox whiteCustomTime = new HBox();
+    private HBox buttonBlackTime = new HBox();
+    private HBox blackCustomTime = new HBox();
+
+    public Button getWhiteThreeMin(){
+        return white_three_min; 
+    }
+
+    public Button getWhiteFiveMin(){
+        return white_five_min; 
+    }
+
+    public Button getBlackThreeMin(){
+        return black_three_min; 
+    }
+
+    public Button getBlackFiveMin(){
+        return black_five_min; 
+    }
+
+    public HBox getBlackCustomTime(){
+        return blackCustomTime;
+    }
+
+    public HBox getWhiteCustomTime(){
+        return whiteCustomTime;
+    }
+
+    public HBox getBlackButtonTime(){
+        return buttonBlackTime;
+    } 
+
+    public HBox getWhiteButtonTime(){
+        return buttonWhiteTime;
+    } 
+
+    public Button getBlackBackButton(){
+        return blackBackToButton;
+    }
+
+    public Button getWhiteBackButton(){
+        return whiteBackToButton;
+    }
+
+    public Button getBlackCustom(){
+        return blackCustom;
+    }
+
+    public Button getWhiteCustom(){
+        return whiteCustom;
+    }
 
     public Button getWhiteEasyButton(){
         return whiteIaEasy;
@@ -134,9 +190,9 @@ public class HomePage{
         renju = new Button("Renju");
         pente = new Button("Pente");
         go = new Button("Go");
+        renju.setManaged(false);
+        renju.setVisible(false);
         pageContainer = new StackPane();
-        
-        // Appliquer le style désélectionné à tous les boutons de jeu
         gomoku.setStyle(selectedColor);
         renju.setStyle(deselectedColor);
         pente.setStyle(deselectedColor);
@@ -157,8 +213,10 @@ public class HomePage{
         black_five_min.setStyle(selectedColor);
         
         black_time = new TextField("10:00");
+        buttonBlackTime.getChildren().addAll(black_five_min, black_three_min, blackCustom);
+        blackCustomTime.getChildren().addAll(black_hours, black_min, black_sec, blackBackToButton);
         VBox black_info = new VBox(5, new Text("Set Black Info:"), new HBox(5, black_human, black_ia, blackBox));
-        VBox black_time_info = new VBox(5, new HBox(5, new Text("time : "), white_five_min, white_three_min, black_hours, black_min, black_sec));
+        VBox black_time_info = new VBox(5, new HBox(5, new Text("time : "),buttonBlackTime , blackCustomTime));
         black_player.getChildren().addAll(black_info, black_time_info);
         
         // Configuration joueur blanc
@@ -171,8 +229,10 @@ public class HomePage{
         white_ia.setStyle(deselectedColor);
         
         white_time = new TextField("10:00");
+        buttonWhiteTime.getChildren().addAll(white_five_min, white_three_min, whiteCustom);
+        whiteCustomTime.getChildren().addAll(white_hours, white_min, white_sec, whiteBackToButton);
         VBox white_info = new VBox(5, new Text("Set white Info:"), new HBox(5, white_human, white_ia, whiteBox));
-        VBox white_time_info = new VBox(5, new HBox(5, new Text("time : "), black_five_min, black_three_min, white_hours, white_min, white_sec));
+        VBox white_time_info = new VBox(5, new HBox(5, new Text("time : "),buttonWhiteTime , whiteCustomTime));
         white_player.getChildren().addAll(white_info, white_time_info);
         
         komi_field = new TextField("Komi ex : 7.5");
@@ -183,8 +243,11 @@ public class HomePage{
         handicap_field.setManaged(false);
         error_file.setVisible(false);
         error_file.setManaged(false);
-
         error_file.setTextFill(Color.RED);
+        whiteCustomTime.setManaged(false);
+        whiteCustomTime.setVisible(false);
+        blackCustomTime.setManaged(false);
+        blackCustomTime.setVisible(false);
         page = new VBox(10);
         // ((VBox)page).setAlignment(Pos.CENTER);
         ((VBox) page).getChildren().addAll(
