@@ -26,8 +26,6 @@ public class Miniscore {
 
     static int [] factor = {0, 0, 2, 10, 25, 0, 0, 0, 0, 0};
     static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
-    //save victory
-    //replace x y
 
     public Miniscore ()
     {
@@ -79,6 +77,16 @@ public class Miniscore {
         display_str(1);
         display_str(2);
         display_blockers();
+        display_miniscore();
+    }
+
+    //display function
+    public void display(boolean blk)
+    {
+        display_str(1);
+        display_str(2);
+        if (blk)
+            display_blockers();
         display_miniscore();
     }
 
@@ -226,7 +234,7 @@ public class Miniscore {
             rep_case(x + (dec2 * dx), y + (dec2 * dy), st);
     }
 
-    public void connect() //directly x y
+    public void connect()
     {
         this.str = MinMax.map[x][y] == 1 ? str1 : str2;
         if (str[dir][x][y] == 0)

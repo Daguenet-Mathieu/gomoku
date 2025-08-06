@@ -13,11 +13,13 @@ public class Pente extends MinMax {
     {
         public Candidat.coord pos;
         public Candidat.coord warder;
+        public int col;
 
-        public Prison(int x, int y, int warx, int wary)
+        public Prison(int x, int y, int warx, int wary, int color)
         {
-            pos = new Candidat.coord(x, y);
-            warder = new Candidat.coord(warx, wary);
+            this.pos = new Candidat.coord(x, y);
+            this.warder = new Candidat.coord(warx, wary);
+            this.col = color;
         }
     }
 
@@ -60,7 +62,7 @@ public class Pente extends MinMax {
         map[x][y] = 0;
         scsimul.analyse_unmove(x, y, val);
         map[warx][wary]=tmp;
-        prisonlst.add(new Pente.Prison(x,y, warx, wary));
+        prisonlst.add(new Pente.Prison(x,y, warx, wary, tmp));
     }
 
     static private int is_capture(int x, int y, int dx, int dy, int p, int o, boolean pot)
@@ -260,9 +262,8 @@ public class Pente extends MinMax {
         if (prisonlst.size() >= 2)
         {
             p = prisonlst.get(prisonlst.size()-1);
-            while (p.warder.x == warx && p.warder.y == wary)
+            while (p.warder.x == warx && p.warder.y == wary && p.col == val)
             {
-
                 prisoners[o - 1]--;
                 map[p.pos.x][p.pos.y] = o;
                 scsimul.analyse_move(p.pos.x, p.pos.y, o);
@@ -467,6 +468,12 @@ public class Pente extends MinMax {
                 if (cut && alpha > cur_beta) // alpha cut
                         return cur_beta;
             }
+        }
+
+        if (depth == Game.max_depth)
+        {
+            System.out.println("in the end");
+            MinMax.display_Map();
         }
 
         if (depth == Game.max_depth)
