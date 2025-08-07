@@ -16,7 +16,7 @@ public class Candidat
 
     private static coord limax = new coord(1, 1);
     private static coord limin = new coord(18, 18);
-    static  public boolean display = false; 
+    static  public boolean display = true; 
     private int turn;
     private int seuil;
     public boolean capture_possible;
@@ -374,11 +374,13 @@ public class Candidat
             }
         }
 
-        if (Math.abs(w.x - b.x) >1 && Math.abs(w.y - b.y) > 1)
+        if (Math.abs(w.x - b.x) >=2 || Math.abs(w.y - b.y) >= 2)
         {
+            System.out.println("It is true");
             this.lst.clear();
             for (int k = 0 ; k < 3 ; k++)
                 this.lst.add(new Candidat.coord(8, 8+k, 1));
+            return 3;
         }
         return 0;
     }
@@ -468,23 +470,21 @@ public class Candidat
 
         if (ret > 2)
         {
-
-            if (depth == Game.max_depth && display)
+            if (display && depth == Game.max_depth)
                 display_candidat("Candidat before sort");
 
             Collections.sort(this.lst, Comparator.comparing(item -> 
             this.order.indexOf(item.st())));
 
-            if (depth == Game.max_depth && display)
+            if (display && depth == Game.max_depth)
                 display_candidat("Candidat after sort");
 
             if (ret >= nb_candidates(depth) + 1)
             {
                 this.lst = new ArrayList<>(this.lst.subList(0, nb_candidates(depth)));
-                if (depth == Game.max_depth && display)
+                if (display && depth == Game.max_depth)
                     display_candidat("Candidat selected");
             }
-
             return this.lst.size();
         }
         else

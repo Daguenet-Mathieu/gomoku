@@ -163,6 +163,12 @@ public class Game {
         if (display)
             System.out.printf("Call best_move turn %d player %d et nb move %d\n", turn, player, nb_move);
 
+        if (display)
+        {
+            System.out.println("before lunch");
+            MinMax.display_Map();
+        }
+
         time = System.currentTimeMillis();
         if (nb_move == 0)
             m.best = new Candidat.coord(9, 9);

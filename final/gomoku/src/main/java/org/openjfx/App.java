@@ -10,10 +10,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.File;
 import org.utils.Point;
-import java.io.InputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import javafx.geometry.Pos;
+// import java.io.InputStream;
+// import java.io.FileInputStream;
+// import java.io.IOException;
+// import javafx.geometry.Pos;
 import java.util.ArrayList;
 
 public class App extends Application {

@@ -423,6 +423,8 @@ public class Pente extends MinMax {
         if (nb_candidates == 0)
             return 0;
 
+
+
         values = new float[nb_candidates];
 
     
@@ -432,6 +434,12 @@ public class Pente extends MinMax {
         for (int i = 0 ; i < nb_candidates ; i++)
         {
             Pente m = new Pente(this.len);
+
+            if (depth == Game.max_depth)
+                {
+                    System.out.printf("pos %d\n", pos_counter);
+                    MinMax.display_Map();
+                }
 
             if (turn == player)
             {
