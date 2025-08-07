@@ -237,7 +237,7 @@ public class PenteRules implements Rules {
 
     private boolean checkNeighborhood(Point p1, Point p2, Map map, int incrY, int incrX, boolean before, int color){
         int advColor = color == 1? 2 : 1;
-        ArrayList<Map> mapList = new ArrayList();
+        ArrayList<Map> mapList = new ArrayList<Map>();
         mapList.add(map);
         if (before == false){
             if (p1.y - incrY < 0 || p1.y - incrY >= get_board_size()|| p2.y + incrY < 0 || p2.y + incrY >= get_board_size())

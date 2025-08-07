@@ -16,6 +16,7 @@ public class Test {
     int dy;
     int dir;
     boolean victory;
+    DoubleFree df = new DoubleFree();
 
     //static int [] factor = {0, 0, 2, 5, 10};
     static int [] factor = {0, 0, 2, 3, 4};

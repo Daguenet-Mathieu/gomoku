@@ -16,7 +16,7 @@ public class Candidat
 
     private static coord limax = new coord(1, 1);
     private static coord limin = new coord(18, 18);
-    static  public boolean display = true; 
+    static  public boolean display = false; 
     private int turn;
     private int seuil;
     public boolean capture_possible;
@@ -376,7 +376,6 @@ public class Candidat
 
         if (Math.abs(w.x - b.x) >=2 || Math.abs(w.y - b.y) >= 2)
         {
-            System.out.println("It is true");
             this.lst.clear();
             for (int k = 0 ; k < 3 ; k++)
                 this.lst.add(new Candidat.coord(8, 8+k, 1));
@@ -437,8 +436,8 @@ public class Candidat
     {
         if (this.seuil > Game.min_can)
         {
-            if (depth == Game.max_depth || depth == Game.max_depth - 1)
-                return Game.max_depth;
+            if (depth == Game.max_depth)
+                return Game.max_can;
             else
                 return Math.min(this.seuil, 10);
         }

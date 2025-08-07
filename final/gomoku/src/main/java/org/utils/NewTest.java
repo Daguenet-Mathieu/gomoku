@@ -194,35 +194,13 @@ public class NewTest //Main test
         // move(8, 12, 1);
         // move(8, 10, 1);
 
-        move(4, 6, 1);
-        move(5, 6, 2);
-        move(5, 11, 1);
-        move(6, 6, 2);
-        move(6, 8, 2);
-        move(6, 10, 2);
-        move(7, 6, 2);
-        move(7, 8, 1);
-        move(7, 10, 1);
-        move(8, 6, 1);
-        move(8, 8, 1);
-        move(8, 10, 1);
-        move(9, 3, 1);
-        move(9, 4, 2);
-        move(9, 5, 2);
-        move(9, 6, 2);
-        move(9, 7, 2);
-        move(9, 8, 1);
-        move(9, 9, 1);
-        move(9, 10, 1);
-        move(10, 7, 2);
-        move(10, 8, 2);
-        move(10, 10, 1);
-        move(11, 9, 2);
-        move(11, 10, 2);
-        move(11, 11, 2);
-        move(11, 12, 1);
 
-        check_db_valid(8, 5, 2);
+        move(3, 3, 1);
+        move(4, 4, 1);
+        move(6, 7, 1);
+        move(6, 8, 1);
+
+        check_db_valid(6, 6, 1);
 
         // move(8, 8, 1);
         // move(9, 7, 1);

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Game {
 
     public MinMax m;
+    public int gameMap[][];
     public Miniscore scbord =  new Miniscore();
     public int nb_move;
     public Float val;
@@ -16,7 +17,7 @@ public class Game {
     static public int max_can = 7;
     static public int min_can = 5;
     static public boolean large_cut = false;
-    public int gameMap[][];
+
 
     public Game(String rules, int board_size)
     {
@@ -25,15 +26,6 @@ public class Game {
         m = minmax_tree(rules);
         m.len = 0;
         timelst = new ArrayList<Double>();
-    }
-
-    public void printGameMap(){
-        for (int i = 0; i < gameMap.length ;i++){
-            for (int j = 0; j < gameMap.length; j++){
-                System.out.print(gameMap[i][j]);
-            }
-            System.out.println("");
-        }
     }
 
     private MinMax minmax_tree(String str)
@@ -154,10 +146,16 @@ public class Game {
 
     public void manage_time()
     {
-        if (nb_move >= 4 && return_mean_time() > 0.42)
+        if (nb_move >= 4 && return_mean_time() > 0.40)
+        {
+            Game.min_can = Math.max(Game.min_can - 1, 4);
             large_cut = true;
-        if (nb_move >= 4 && return_mean_time() < 0.32)
+        }
+        if (large_cut == true && nb_move >= 4 && return_mean_time() < 0.40)
+        {
+            Game.min_can = Math.max(Game.min_can + 1, 4);
             large_cut = false;
+        }
     }
 
     private double return_mean_time()
@@ -169,16 +167,19 @@ public class Game {
         return res / timelst.size();
     }
 
+    private void initialize_map()
+    {
+        for (int i = 0 ; i < 19 ; i++)
+            for (int j = 0 ; j < 19 ; j++)
+                    MinMax.map[i][j] = gameMap[i][j];
+    }
+
     public Point best_move(int turn, int player, boolean display)
     {
         if (display)
             System.out.printf("Call best_move turn %d player %d et nb move %d\n", turn, player, nb_move);
 
-        if (display)
-        {
-            System.out.println("before lunch");
-            MinMax.display_Map();
-        }
+        initialize_map();
 
         time = System.currentTimeMillis();
         if (nb_move == 0)
