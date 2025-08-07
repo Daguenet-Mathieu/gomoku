@@ -28,10 +28,18 @@ public class PenteRules implements Rules {
         return false;
     }
 
+    private boolean isValidMove2(Point point, ArrayList<Map> map, int color){
+        System.out.println("color == " + color + " x == " + point.x + " y == " + point.y);
+        if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1))) {
+            return false;
+        }
+        if (this.dbfree.check_double_free(point.y, point.x, color, map.get(map.size() - 1).get_map()) == false)
+            return false;
+        return true;
+    }
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
-        System.out.println("rule prnt coor == " + point);
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1))) {
             return false;
         }
@@ -210,16 +218,12 @@ public class PenteRules implements Rules {
     private boolean checkDir(Point point, Map map, int incrementX, int incrementY, final int color){
         if (point.x + incrementX < 0 || point.y + incrementY < 0 || point.x - incrementX < 0 || point.y - incrementY < 0)
             return false;
-        // System.out.println("tjs en course 1");
         if (point.x + incrementX >= get_board_size() || point.y + incrementY >= get_board_size() || point.x - incrementX >= get_board_size() || point.y - incrementY >= get_board_size())
             return false;
-        // System.out.println("tjs en course 2");
         if (color == getColor(point, incrementX, incrementY, map) && color == getColor(point, -incrementX, -incrementY, map))
             return false;
-        // System.out.println("tjs en course 3");
         if (color != getColor(point, incrementX, incrementY, map) && color != getColor(point, -incrementX, -incrementY, map))
             return false;
-        // System.out.println("tjs en course 4");
         boolean before = false;
         Point square2;
         if (color == map.get_map()[point.y + incrementY][point.x + incrementX])
@@ -228,25 +232,22 @@ public class PenteRules implements Rules {
             square2 = new Point(point.x - incrementX, point.y - incrementY);
             before = true;
         }
-        // System.out.println("case check : x1 == " + point.x + " y1 == " + point.y + " x2 == " + square2.x + " y2 == " + square2.y);
         return checkNeighborhood(point, square2, map, incrementY, incrementX, before, color);
     }
 
     private boolean checkNeighborhood(Point p1, Point p2, Map map, int incrY, int incrX, boolean before, int color){
         int advColor = color == 1? 2 : 1;
+        ArrayList<Map> mapList = new ArrayList();
+        mapList.add(map);
         if (before == false){
             if (p1.y - incrY < 0 || p1.y - incrY >= get_board_size()|| p2.y + incrY < 0 || p2.y + incrY >= get_board_size())
                 return false;
             if (p1.x - incrX < 0 || p1.x - incrX >= get_board_size()|| p2.x + incrX < 0 || p2.x + incrX >= get_board_size())
                 return false;
-            // System.out.println("j'ai trouve un before");
-            // System.out.println("je test : y == " + (p1.y - incrY) + " x == " + (p1.x - incrX) + " et y == " + (p2.y + incrY) + " et x == " + (p2.x + incrX));
-            if (map.get_map()[p1.y - incrY][p1.x - incrX] == 0 && map.get_map()[p2.y + incrY][p2.x + incrX] == advColor)
+            if (map.get_map()[p1.y - incrY][p1.x - incrX] == 0 && isValidMove2(new Point(p1.x - incrX, p1.y - incrY), mapList, advColor) && map.get_map()[p2.y + incrY][p2.x + incrX] == advColor)
                 return true;
-            // System.out.println("pas le premier test");
-            if (map.get_map()[p1.y - incrY][p1.x - incrX] == advColor && map.get_map()[p2.y + incrY][p2.x + incrX] == 0)
+            if (map.get_map()[p1.y - incrY][p1.x - incrX] == advColor && map.get_map()[p2.y + incrY][p2.x + incrX] == 0 && isValidMove2(new Point(p2.x + incrX, p2.y + incrY), mapList, advColor))
                 return true;
-            // System.out.println("pas le 2em test");
         }
         else{
             if (p2.y - incrY < 0 || p2.y - incrY >= get_board_size()|| p1.y + incrY < 0 || p1.y + incrY >= get_board_size())
@@ -254,14 +255,10 @@ public class PenteRules implements Rules {
             if (p2.x - incrX < 0 || p2.x - incrX >= get_board_size()|| p1.x + incrX < 0 || p1.x + incrX >= get_board_size())
                 return false;
 
-            // System.out.println("j'ai trouve un after");
-            // System.out.println("je test : y == " + (p2.y - incrY) + " x == " + (p2.x - incrX) + " et y == " + (p1.y + incrY) + " et x == " + (p1.x + incrX));
-            if (map.get_map()[p2.y - incrY][p2.x - incrX] == 0 && map.get_map()[p1.y + incrY][p1.x + incrX] == advColor)
+            if (map.get_map()[p2.y - incrY][p2.x - incrX] == 0 && isValidMove2(new Point(p2.x - incrX, p2.y - incrY), mapList, advColor) && map.get_map()[p1.y + incrY][p1.x + incrX] == advColor)
                 return true;
-            // System.out.println("pas le premier test");
-            if (map.get_map()[p2.y - incrY][p2.x - incrX] == advColor && map.get_map()[p1.y + incrY][p1.x + incrX] == 0)
+            if (map.get_map()[p2.y - incrY][p2.x - incrX] == advColor && map.get_map()[p1.y + incrY][p1.x + incrX] == 0 && isValidMove2(new Point(p1.x + incrX, p1.y + incrY), mapList, advColor))
                 return true;
-            // System.out.println("pas le 2em test");
         }
         return false;
     }
