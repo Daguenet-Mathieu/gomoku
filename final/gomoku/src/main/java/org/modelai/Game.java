@@ -16,13 +16,24 @@ public class Game {
     static public int max_can = 7;
     static public int min_can = 5;
     static public boolean large_cut = false;
+    public int gameMap[][];
 
     public Game(String rules, int board_size)
     {
+        gameMap = new int[board_size][board_size];
         nb_move = 0;
         m = minmax_tree(rules);
         m.len = 0;
         timelst = new ArrayList<Double>();
+    }
+
+    public void printGameMap(){
+        for (int i = 0; i < gameMap.length ;i++){
+            for (int j = 0; j < gameMap.length; j++){
+                System.out.print(gameMap[i][j]);
+            }
+            System.out.println("");
+        }
     }
 
     private MinMax minmax_tree(String str)
