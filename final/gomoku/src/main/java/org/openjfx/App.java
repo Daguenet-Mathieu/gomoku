@@ -118,7 +118,6 @@ public class App extends Application {
         title.setFitWidth(home_root.getWidth());
         title.setFitHeight(home_root.getHeight());
         title.setPreserveRatio(true);
-
     }
 
     public void set_home_event(){
@@ -131,13 +130,15 @@ public class App extends Application {
         home_page.getValidationButton().setOnMouseClicked(event -> {
             double scenex = stage.getWidth();
             double sceney = stage.getHeight();
-            System.out.println(" goban width == " + scenex + " heigh " + sceney);
-            //recuperer les datas si invalide les mettres en valeurs et laisserl a page telle qu'elle
-            gomoku= new Gomoku((int)sceney, (int)scenex, home_page); //appeler fct qui set toutes les infos
+            if (home_page.getErrorMsg() != null && home_page.getErrorMsg().isEmpty() == false){
+                home_page.displayErrorMsg();
+                return ;
+            }
+            gomoku = new Gomoku((int)sceney, (int)scenex, home_page);
             goban_root = new Pane();
             goban = new Scene(goban_root, 800, 525);
             set_goban_event();
-            goban_root.getChildren().add(gomoku.getGameDisplay()); // Ajout du texte à home_root
+            goban_root.getChildren().add(gomoku.getGameDisplay());
             switchScene(goban);
             stage.setResizable(true);
         });
@@ -153,16 +154,24 @@ public class App extends Application {
             }
             SGF.setFile("./", path[i]);
             if (SGF.parseFile() == false){
-                //set error message 
+                home_page.setErrorMsg("missing file please check app install");
+                home_page.displayErrorMsg();
                 return ;
             }
-            ArrayList<Map> sgfMap = SGF.get_game_moves();//try catch moi ca
+            ArrayList<Map> sgfMap;
+            try {
+                sgfMap = SGF.get_game_moves();
+            }
+            catch (Exception e) {
+                home_page.setErrorMsg("invalid config file please check app install");
+                home_page.displayErrorMsg();
+                return ;
+            }
             home_page.setRulesInstance(SGF.getRuleInstance());
             double scenex = stage.getWidth();
             double sceney = stage.getHeight();
             System.out.println(" goban width == " + scenex + " heigh " + sceney);
-            // System.out.println(home_page.getRuleInstance().getGameType());
-            home_page.setGameMode(Rules.GameMode.LEARNING);//learning ou viewing
+            home_page.setGameMode(Rules.GameMode.LEARNING);
             home_page.setSgfMap(sgfMap);
             gomoku = new Gomoku((int)sceney, (int)scenex, home_page);
             goban_root = new Pane();
@@ -182,41 +191,15 @@ public class App extends Application {
             home_root = new Pane();
             home = new Scene(home_root, 606, 450);
             home_page = new Home();
-            // home_root.setStyle("-fx-background-color:rgb(71, 157, 255);");
-            // openBackground();
-            // background.setMouseTransparent(true);
-            // title.setMouseTransparent(true);
-            // // home_root.getChildren().add(0, background);
-            // // home_root.getChildren().add(home_page.getHomePage());
-            // // home_root.getChildren().add(background);
-            // // ((StackPane)home_root).getChildren().add(title);
-            // // home_root.setAlignment(title, Pos.TOP_CENTER);
-            // home_root.getChildren().add(home_page.getHomePage());
-
-
             openBackground();
             background.setMouseTransparent(true);
             title.setMouseTransparent(true);
-            // home_root.getChildren().add(0, background);
-            // home_root.getChildren().add(home_page.getHomePage());
             home_root.getChildren().add(background);
             home_root.getChildren().add(title);
-            // home_root.setAlignment(title, Pos.TOP_CENTER);
-
             set_home_event();
-            // Text homeText = new Text(100, 100, "Bienvenue sur la scène Home!");
-            // homeText.setFill(Color.BLACK);
-
             home_root.getChildren().add(home_page.getHomePage()); // Ajout du texte à home_root
-
-            // set_home_event();
             switchScene(home);
             stage.setResizable(false);
-            // Text homeText2 = new Text(100, 100, "Bienvenue sur la scène Home!");
-            // homeText2.setFill(Color.BLACK);
-            // home_root.getChildren().add(homeText2); // Ajout du texte à home_root
-            // home_root.getChildren().add(home_body);
-            // home.setFill(Color.web("#FF6347"));
             home_root.getChildren().add(home_body);
             home_page.getHomePage().setTranslateY(90);
         });
@@ -228,24 +211,17 @@ public class App extends Application {
         goban.widthProperty().addListener((observable, oldValue, newValue) -> {
             double sceneWidth = goban.getWidth();
             double sceneHeight = goban.getHeight();
-            // goban_root.getChildren().add(gomoku.getGameDisplay());
-
             System.out.println("size x == " + size_x + " size y == " + size_y);
             screen.x = (int)newValue.doubleValue();
-            //int new_size = get_size(screen.x, screen.y);
             gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
-            // System.out.println("New width: " + newValue);
         });
         goban.heightProperty().addListener((observable, oldValue, newValue) -> {
             double sceneWidth = goban.getWidth();
             double sceneHeight = goban.getHeight();
             size_y = (int)goban.getHeight();
             System.out.println("size x == " + size_x + " size y == " + size_y);
-            //double newHeight = newValue.doubleValue(); // newValue est un Number, donc on le convertit en double
             screen.y = (int)newValue.doubleValue();
-            // int new_size = get_size(screen.x, screen.y);
             gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
-            // System.out.println("New height: " + newValue);
         });
     }
 
@@ -260,6 +236,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        primaryStage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
         stage = primaryStage;
         stage.sizeToScene();
         stage.setTitle("Gomoku");
@@ -269,67 +248,26 @@ public class App extends Application {
         size_x = size;
         size_y = size;
         System.out.println("size x == " + size_x + " size y == " + size_y);
-        // stage.setWidth(size);
-        // stage.setHeight(size);
-        // gomoku = new Gomoku(size, size);
         root = new Pane();
-        // goban_root = new Pane();
         scene = new Scene(root, 606, 450);
-        // goban = new Scene(goban_root, size, size);
-        // set_goban_event();
         home = new Scene(home_root, 606, 450);
-
         openBackground();
         background.setMouseTransparent(true);
         title.setMouseTransparent(true);
-        // home_root.getChildren().add(0, background);
-        // home_root.getChildren().add(home_page.getHomePage());
         home_root.getChildren().add(background);
         home_root.getChildren().add(title);
-        // home_root.setAlignment(title, Pos.TOP_CENTER);
-
         set_home_event();
         stage.setResizable(false);
-        // Text homeText = new Text(100, 100, "Bienvenue sur la scène Home!");
-        // homeText.setFill(Color.BLACK);
-
-        home_root.getChildren().add(home_page.getHomePage()); // Ajout du texte à home_root
+        home_root.getChildren().add(home_page.getHomePage());
         home_page.getHomePage().setTranslateY(90);
-
-        // home_root.getChildren().add(home_body);
-        // home.setFill(Color.web("#FF6347"));
         home_root.setStyle("-fx-background-color: #FF6347;");
-        // goban_root.getChildren().add(gomoku.getGameDisplay());
-        //set les ecouteurss sur le stage? ou stur chaques scene?
-
         root.setOnMouseClicked(e -> System.out.println("Pane cliqué !"));
-        // scene.setFill(Color.web("#FF6347"));
-        
         stage.centerOnScreen();
         stage.setScene(home);
-        // stage.setScene(home);
         stage.show();
         if (gomoku != null)
             stage.setOnCloseRequest(we -> gomoku.print_history_of_move());  
-        // System.out.println("heihgt " + goban.getHeight() + " size " + size);
     }
-
-    // public void switchScene(Scene newScene) {
-    //     stage.setScene(newScene);
-    // }
-
-    // public void switchScene(Scene newScene) {
-    //     // Conserver la taille de la fenêtre avant de changer la scène
-    //     double currentWidth = stage.getWidth();
-    //     double currentHeight = stage.getHeight();
-
-    //     // Changer la scène
-    //     stage.setScene(newScene);
-
-    //     // Redéfinir la taille de la fenêtre après avoir changé de scène
-    //     // stage.setWidth(currentWidth);
-    //     // stage.setHeight(currentHeight);
-    // }
 
     public void switchScene(Scene newScene) {
         stage.setScene(newScene);

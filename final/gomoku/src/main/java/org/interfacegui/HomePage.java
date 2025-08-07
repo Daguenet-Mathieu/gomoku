@@ -57,8 +57,8 @@ public class HomePage{
     private ArrayList<Map> sgfMap;
     private boolean sgfFile = false;
     private Label error_file = new Label();
+    private Label error_message = new Label();
     private StringProperty rule_type = new SimpleStringProperty("");
-    // private int boardSize = -1;
     private Rules rules_instance = null;
     private HBox blackBox = new HBox();
     private Button blackIaEasy = new Button("easy");
@@ -174,13 +174,9 @@ public class HomePage{
         black_hours.setPrefColumnCount(2);
         black_min.setPrefColumnCount(2);
         black_sec.setPrefColumnCount(2);
-        // Définir la couleur pour les boutons désélectionnés
-        String deselectedColor = "-fx-background-color: #ADD8E6;"; // Bleu clair pour désélectionné
-        String selectedColor = "-fx-background-color: #FF0000;"; // Rouge pour sélectionné
-
+        String deselectedColor = "-fx-background-color: #ADD8E6;";
+        String selectedColor = "-fx-background-color: #FF0000;";
         System.out.println("on passe par ici constructeur home page");
-        
-        // Création des boutons de jeu
         gomoku = new Button("Gomoku");
         renju = new Button("Renju");
         pente = new Button("Pente");
@@ -238,34 +234,22 @@ public class HomePage{
         handicap_field.setManaged(false);
         error_file.setVisible(false);
         error_file.setManaged(false);
+        error_message.setVisible(false);
+        error_message.setManaged(false);
         error_file.setTextFill(Color.RED);
+        error_message.setTextFill(Color.RED);
         whiteCustomTime.setManaged(false);
         whiteCustomTime.setVisible(false);
         blackCustomTime.setManaged(false);
         blackCustomTime.setVisible(false);
         page = new VBox(10);
-        // ((VBox)page).setAlignment(Pos.CENTER);
-        ((VBox) page).getChildren().addAll(
+        ((VBox) page).getChildren().addAll(error_message,
             error_file, fileBox, load_sgf, game_button, black_player, white_player, komi_field, boardSizeBox, handicap_field, LaunchButtons);
         pageContainer.getChildren().add(page);
         reset.setOnMouseClicked(e -> {
             deleteFile();
         });
-        // applyWhiteTextColor(pageContainer);
     }
-
-    // private void applyWhiteTextColor(Pane pane) {
-    //     for (Node node : pane.getChildren()) {
-    //         if (node instanceof Labeled) {
-    //             ((Labeled) node).setStyle("-fx-text-fill: white;");
-    //         } else if (node instanceof Text) {
-    //             ((Text) node).setFill(Color.WHITE);
-    //         } else if (node instanceof Pane) {
-    //             applyWhiteTextColor((Pane) node); // récursif
-    //         }
-    //     }
-    // }
-
 
     Pane getHomePage(){
         return pageContainer;
@@ -363,6 +347,12 @@ public class HomePage{
     public void addFileBox(VBox scrollPane){
         ((Pane) pageContainer).getChildren().add(scrollPane);
         scrollPane.toFront();
+    }
+
+    public void set_error(String msg){
+        error_message.setText(msg);
+        error_message.setVisible(true);
+        error_message.setManaged(true);
     }
 
     public void removeFileBox(){
