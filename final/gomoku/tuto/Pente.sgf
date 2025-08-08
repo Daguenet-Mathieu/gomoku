@@ -9,7 +9,8 @@ Est appele "free three" une position qui permet en un seul coup d'arriver sans b
 Si l'adversaire ne le bloque pas blanc de maniere infaillible peut gagner en 2 tours]
 ;AE[hh]AB[hg]C[Ceci est egalement considere comme une postion de "free three" menant a une victoire infaillible]
 ;AE[hi][hj]AB[dd][ee][ig][ki][li][jj][jk][hn][ho][ep][gp]C[il est interdit de jouer un coup qui formerait 2 "free three" en 1 seul coup.
-toutes ces positions creent des double "free three" et contienent des coups interdit]
+toutes ces positions creent des double "free three" et contienent des coups interdit.
+en appuyant sur le bouton "forbidden", vous pourrez voir les emplacements de ces coups interdits]
 ;AE[dd][ee][hg][ig][hn][ho][ep][gp]AW[ii]C[une pierre adverse peut rendre le coup a nouveau jouable.
 dans le cas ou elle empeche la creation du double free three]
 ;AE[ii][jj][jk]AW[ji]C[lorsque'une paire de pierres connectee est bloquee au niveau de ses extremites, cette paire est alors capturee.

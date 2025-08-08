@@ -1,7 +1,6 @@
 package org.interfacegui;
 import java.util.ArrayList;
 import org.modelai.Game;
-// import org.modelai.MinMax;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
@@ -24,7 +23,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.Parent;
 import javafx.scene.Node;
-// import javafx.scene.control.Label;
 import javafx.geometry.Pos;
 
 
@@ -551,8 +549,8 @@ public class Gomoku
         else
             _map.add(new Map(_nb_line));
         if (playingMode == Rules.GameMode.LEARNING){
-            //_map.remove(0);
-            goban.updateFromMap(_map.get(0));//erase 0?
+            _map.remove(0);
+            goban.updateFromMap(_map.get(0));
             commentLabel.setManaged(true);
             commentLabel.setVisible(true);
             commentLabel.setText(_map.get(map_index).getComment());
