@@ -119,19 +119,28 @@ public class Home {
         }
     }
 
-    void resetButtonDifficulty(String deselectedColor){
-        home_page.getWhiteEasyButton().setStyle(deselectedColor);
-        home_page.getWhiteMediumButton().setStyle(deselectedColor);
-        home_page.getWhiteHardButton().setStyle(deselectedColor);
-        home_page.getBlackEasyButton().setStyle(deselectedColor);
-        home_page.getBlackMediumButton().setStyle(deselectedColor);
-        home_page.getBlackHardButton().setStyle(deselectedColor);
+    void resetButtonDifficulty(String deselectedStyle){
+        home_page.getWhiteEasyButton().setStyle(deselectedStyle);
+        home_page.getWhiteMediumButton().setStyle(deselectedStyle);
+        home_page.getWhiteHardButton().setStyle(deselectedStyle);
+        home_page.getBlackEasyButton().setStyle(deselectedStyle);
+        home_page.getBlackMediumButton().setStyle(deselectedStyle);
+        home_page.getBlackHardButton().setStyle(deselectedStyle);
     }
 
+    void resetButtonSize(String deselectedStyle){
+        home_page.get9Button().setStyle(deselectedStyle);
+        home_page.get13Button().setStyle(deselectedStyle);
+        home_page.get19Button().setStyle(deselectedStyle);
+    }
 
     public Home() {
-        String selectedColor = "-fx-background-color: #FF0000;";
-        String deselectedColor = "-fx-background-color: #ADD8E6;";
+        String selectedColor = "-fx-text-fill: #FFFFFF;";
+        String deselectedColor = "-fx-text-fill: #000000;";
+        String selectedBackgroundColor = "-fx-background-color: #000000;";
+        String deselectedBackgroundColor = "-fx-background-color: #FFFFFF;";
+        String deselectedStyle = deselectedBackgroundColor + deselectedColor;
+        String selectedStyle = selectedBackgroundColor + selectedColor;
         home_page.getLoadSgf().setOnAction(e -> {
             home_page.addFileBox(filebox.getFileBox());
         });
@@ -140,23 +149,23 @@ public class Home {
         });
         home_page.getBlackFiveMin().setOnAction(e -> {
             black_time = 300000;
-            home_page.getBlackFiveMin().setStyle(selectedColor);
-            home_page.getBlackThreeMin().setStyle(deselectedColor);
+            home_page.getBlackFiveMin().setStyle(selectedStyle);
+            home_page.getBlackThreeMin().setStyle(deselectedStyle);
         });
         home_page.getBlackThreeMin().setOnAction(e -> {
             black_time = 600000;
-            home_page.getBlackFiveMin().setStyle(deselectedColor);
-            home_page.getBlackThreeMin().setStyle(selectedColor);
+            home_page.getBlackFiveMin().setStyle(deselectedStyle);
+            home_page.getBlackThreeMin().setStyle(selectedStyle);
         });
         home_page.getWhiteFiveMin().setOnAction(e -> {
             white_time = 300000;
-            home_page.getWhiteFiveMin().setStyle(selectedColor);
-            home_page.getWhiteThreeMin().setStyle(deselectedColor);
+            home_page.getWhiteFiveMin().setStyle(selectedStyle);
+            home_page.getWhiteThreeMin().setStyle(deselectedStyle);
         });
         home_page.getWhiteThreeMin().setOnAction(e -> {
             white_time = 600000;
-            home_page.getWhiteFiveMin().setStyle(deselectedColor);
-            home_page.getWhiteThreeMin().setStyle(selectedColor);
+            home_page.getWhiteFiveMin().setStyle(deselectedStyle);
+            home_page.getWhiteThreeMin().setStyle(selectedStyle);
         });
 
         home_page.getBlackCustom().setOnAction(e -> {
@@ -165,8 +174,8 @@ public class Home {
             home_page.getBlackCustomTime().setVisible(true);
             home_page.getBlackButtonTime().setManaged(false);
             home_page.getBlackButtonTime().setVisible(false);
-            home_page.getBlackThreeMin().setStyle(deselectedColor);
-            home_page.getBlackFiveMin().setStyle(selectedColor);
+            home_page.getBlackThreeMin().setStyle(deselectedStyle);
+            home_page.getBlackFiveMin().setStyle(selectedStyle);
         });
         home_page.getWhiteCustom().setOnAction(e -> {
             white_time = 0;
@@ -174,8 +183,8 @@ public class Home {
             home_page.getWhiteCustomTime().setVisible(true);
             home_page.getWhiteButtonTime().setManaged(false);
             home_page.getWhiteButtonTime().setVisible(false);
-            home_page.getWhiteThreeMin().setStyle(deselectedColor);
-            home_page.getWhiteFiveMin().setStyle(selectedColor);
+            home_page.getWhiteThreeMin().setStyle(deselectedStyle);
+            home_page.getWhiteFiveMin().setStyle(selectedStyle);
         });
         home_page.getBlackBackButton().setOnAction(e -> {
             black_time = 300000;
@@ -191,15 +200,15 @@ public class Home {
             home_page.getWhiteButtonTime().setManaged(true);
             home_page.getWhiteButtonTime().setVisible(true);
         });
-        home_page.getWhiteEasyButton().setStyle(selectedColor);
-        home_page.getBlackEasyButton().setStyle(selectedColor);
+        home_page.getWhiteEasyButton().setStyle(selectedStyle);
+        home_page.getBlackEasyButton().setStyle(selectedStyle);
         home_page.getBlackIaTypeButton().setOnAction(e -> {
             System.out.println("black is bot");
             black_player_type = 1;
             home_page.getBlackBox().setManaged(true);
             home_page.getBlackBox().setVisible(true);
-            home_page.getBlackIaTypeButton().setStyle(selectedColor);
-            home_page.getBlackHumanTypeButton().setStyle(deselectedColor);
+            home_page.getBlackIaTypeButton().setStyle(selectedStyle);
+            home_page.getBlackHumanTypeButton().setStyle(deselectedStyle);
         });
 
         home_page.getBlackHumanTypeButton().setOnAction(e -> {
@@ -208,8 +217,8 @@ public class Home {
             home_page.getBlackBox().setManaged(false);
             home_page.getBlackBox().setVisible(false);
 
-            home_page.getBlackHumanTypeButton().setStyle(selectedColor);
-            home_page.getBlackIaTypeButton().setStyle(deselectedColor);
+            home_page.getBlackHumanTypeButton().setStyle(selectedStyle);
+            home_page.getBlackIaTypeButton().setStyle(deselectedStyle);
         });
 
         home_page.getWhiteIaTypeButton().setOnAction(e -> {
@@ -218,8 +227,8 @@ public class Home {
             home_page.getWhiteBox().setManaged(true);
             home_page.getWhiteBox().setVisible(true);
 
-            home_page.getWhiteIaTypeButton().setStyle(selectedColor);
-            home_page.getWhiteHumanTypeButton().setStyle(deselectedColor);
+            home_page.getWhiteIaTypeButton().setStyle(selectedStyle);
+            home_page.getWhiteHumanTypeButton().setStyle(deselectedStyle);
         });
 
         home_page.getWhiteHumanTypeButton().setOnAction(e -> {
@@ -229,44 +238,44 @@ public class Home {
             home_page.getWhiteBox().setVisible(false);
 
             // Mettre à jour les couleurs
-            home_page.getWhiteHumanTypeButton().setStyle(selectedColor);
-            home_page.getWhiteIaTypeButton().setStyle(deselectedColor);
+            home_page.getWhiteHumanTypeButton().setStyle(selectedStyle);
+            home_page.getWhiteIaTypeButton().setStyle(deselectedStyle);
         });
         home_page.getWhiteEasyButton().setOnAction(e -> {
             level = 3;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackEasyButton().setStyle(selectedColor);
-            home_page.getWhiteEasyButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackEasyButton().setStyle(selectedStyle);
+            home_page.getWhiteEasyButton().setStyle(selectedStyle);
         });
         home_page.getWhiteMediumButton().setOnAction(e -> {
             level = 2;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackMediumButton().setStyle(selectedColor);
-            home_page.getWhiteMediumButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackMediumButton().setStyle(selectedStyle);
+            home_page.getWhiteMediumButton().setStyle(selectedStyle);
         });
         home_page.getWhiteHardButton().setOnAction(e -> {
             level = 1;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackHardButton().setStyle(selectedColor);
-            home_page.getWhiteHardButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackHardButton().setStyle(selectedStyle);
+            home_page.getWhiteHardButton().setStyle(selectedStyle);
         });
         home_page.getBlackEasyButton().setOnAction(e -> {
             level = 3;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackEasyButton().setStyle(selectedColor);
-            home_page.getWhiteEasyButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackEasyButton().setStyle(selectedStyle);
+            home_page.getWhiteEasyButton().setStyle(selectedStyle);
         });
         home_page.getBlackMediumButton().setOnAction(e -> {
             level = 2;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackMediumButton().setStyle(selectedColor);
-            home_page.getWhiteMediumButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackMediumButton().setStyle(selectedStyle);
+            home_page.getWhiteMediumButton().setStyle(selectedStyle);
         });
         home_page.getBlackHardButton().setOnAction(e -> {
             level = 1;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackHardButton().setStyle(selectedColor);
-            home_page.getWhiteHardButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackHardButton().setStyle(selectedStyle);
+            home_page.getWhiteHardButton().setStyle(selectedStyle);
         });
         home_page.getGomokuButton().setOnAction(e -> {
             home_page.getBoardSizeBox().setVisible(false);
@@ -276,9 +285,9 @@ public class Home {
             home_page.getWhiteIaTypeButton().setManaged(true);
             home_page.getWhiteIaTypeButton().setVisible(true);
             rule = "Gomoku";
-            home_page.getGomokuButton().setStyle(selectedColor);
-            home_page.getPenteButton().setStyle(deselectedColor);
-            home_page.getGoButton().setStyle(deselectedColor);
+            home_page.getGomokuButton().setStyle(selectedStyle);
+            home_page.getPenteButton().setStyle(deselectedStyle);
+            home_page.getGoButton().setStyle(deselectedStyle);
         });
 
         home_page.getStringRule().addListener((observable, oldValue, newValue) -> {
@@ -294,12 +303,12 @@ public class Home {
             boolean matched = false;
             while (i < rules_type.length){
                 if (rules_type[i].equals(newValue)){
-                    rules_button[i].setStyle(selectedColor);
+                    rules_button[i].setStyle(selectedStyle);
                     matched = true;
                     break;
                 }
                 else
-                    rules_button[i].setStyle(deselectedColor);
+                    rules_button[i].setStyle(deselectedStyle);
                 i++;
             }
             if (matched == false){
@@ -313,10 +322,10 @@ public class Home {
             home_page.getBoardSizeBox().setVisible(false);
             home_page.getBoardSizeBox().setManaged(false);
             rule = "Pente";
-            home_page.getPenteButton().setStyle(selectedColor);
-            home_page.getGomokuButton().setStyle(deselectedColor);
-            home_page.getRenjuButton().setStyle(deselectedColor);
-            home_page.getGoButton().setStyle(deselectedColor);
+            home_page.getPenteButton().setStyle(selectedStyle);
+            home_page.getGomokuButton().setStyle(deselectedStyle);
+            home_page.getRenjuButton().setStyle(deselectedStyle);
+            home_page.getGoButton().setStyle(deselectedStyle);
             home_page.getBlackIaTypeButton().setManaged(true);
             home_page.getBlackIaTypeButton().setVisible(true);
             home_page.getWhiteIaTypeButton().setManaged(true);
@@ -325,22 +334,28 @@ public class Home {
 
         home_page.get9Button().setOnAction(e -> {
             boardSize = 9;
+            resetButtonSize(deselectedStyle);
+            home_page.get9Button().setStyle(selectedStyle);
         });
 
         home_page.get13Button().setOnAction(e -> {
             boardSize = 13;
+            resetButtonSize(deselectedStyle);
+            home_page.get13Button().setStyle(selectedStyle);
         });
 
         home_page.get19Button().setOnAction(e -> {
             boardSize = 19;
+            resetButtonSize(deselectedStyle);
+            home_page.get19Button().setStyle(selectedStyle);
         });
         home_page.getGoButton().setOnAction(e -> {
             home_page.getBoardSizeBox().setVisible(true);
             home_page.getBoardSizeBox().setManaged(true);
             rule = "Go";
-            home_page.getGoButton().setStyle(selectedColor);
-            home_page.getGomokuButton().setStyle(deselectedColor);
-            home_page.getPenteButton().setStyle(deselectedColor);
+            home_page.getGoButton().setStyle(selectedStyle);
+            home_page.getGomokuButton().setStyle(deselectedStyle);
+            home_page.getPenteButton().setStyle(deselectedStyle);
             home_page.getBlackIaTypeButton().setManaged(false);
             home_page.getBlackIaTypeButton().setVisible(false);
             home_page.getWhiteIaTypeButton().setManaged(false);

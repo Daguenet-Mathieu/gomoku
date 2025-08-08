@@ -75,38 +75,35 @@ public class Gomoku
     int _width = 0;
 
     private void playIa(){
-        
+        boolean end = false;
         int mapSize = _map.size();
         int i = 0;
         if (rule.hasIa() == false)
             return ;
-        for (int mIndex = 1; mIndex < mapSize; mIndex++){
-            System.err.println("i 1== " + i);
+        for (int mIndex = 0; mIndex < mapSize; mIndex++){
             Map m = _map.get(mIndex);
             ArrayList<Point> points = m.get_prisonners();
             ArrayList<Point> lastMove = m.getLastMove();
             ArrayList<Integer> lastMoveColor = m.getLastMoveColor();
-            System.err.println("i 2== " + i);
             for (int j = 0; j < lastMove.size(); j++){
-                System.err.println("i 3== " + i);
                 if (lastMoveColor.get(j) != 0)
                 {
-                    System.err.println("i 4== " + i + " i % 2 == "+ i%2 + "val envoyee ; " + (i%2==0?2:1) + " color : " + lastMoveColor.get(j));
                     game.move(lastMove.get(j), lastMoveColor.get(j));
+                    if (end == false)
+                        end = rule.endGame(_map.get(mIndex), lastMove.get(j));
                 }
                 else{
                     if (m.get_map()[lastMove.get(j).y][lastMove.get(j).x] != 0)
                         game.remove(lastMove.get(j), new ArrayList<Point>(), false);
                 }
-                // player_turn++;
-
             }
             for (Point p : points) {
                     game.remove(p, m.get_prisonners(), false);
             }
-            System.err.println("i 5== " + i);
+            System.err.println("end game ? " + end);
             updatePlayerTurn();
-            game.best_move((i%2==0?2:1), (i%2==0?2:1), true);
+            if (end == false)
+                game.best_move((i%2==0?2:1), (i%2==0?2:1), true);
             setCandidats(game.m.candidat.lst, game.m.values, mIndex);
             i++;
         }
@@ -391,14 +388,12 @@ public class Gomoku
     }
 
     private void playMove(Point point){
-        System.out.println("dans print move coord : x == " + point.x + " y == " + point.y);
+        System.out.println("game stus : " + rule.getGameMode());
         if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map) || rule.getGameMode() == Rules.GameMode.ENDGAME){
             return ;
         }
-        // if ()//!PLAYING
         if (rule.getGameMode() == Rules.GameMode.DEATH_MARKING){
             ArrayList<Point> deadStones = ((GoRules)rule).getDeadStones();
-            // String color;
             Map currentMap = _map.get(_map.size() - 1);
             int color = currentMap.get_map()[point.y][point.x];
             int newColor = (color == 1 || color == 2) ? color + 2 : color - 2;
@@ -457,7 +452,6 @@ public class Gomoku
             game_end = true;
             ia_playing = false;
             gameLoop.stop();
-            System.out.println("winner == " + winner);
             if (winner == 0)
                 _end_text.setText("Draw");
             else if (winner == 1)

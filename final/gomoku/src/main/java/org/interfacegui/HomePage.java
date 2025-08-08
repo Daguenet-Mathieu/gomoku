@@ -13,6 +13,12 @@ import javafx.scene.control.Label;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.paint.Color;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Font;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.geometry.Insets;
+import javafx.scene.layout.CornerRadii;
 
 public class HomePage{
     private Pane page;
@@ -30,8 +36,6 @@ public class HomePage{
     private Pane white_player;
     private TextField komi_field;
     private TextField handicap_field;
-    private TextField white_time;
-    private TextField black_time;
     private TextField white_hours = new TextField("HH");
     private TextField white_min = new TextField("MM");
     private TextField white_sec = new TextField("SS");
@@ -161,7 +165,6 @@ public class HomePage{
         blackBox.setVisible(false);
         whiteBox.setManaged(false);
         whiteBox.setVisible(false);
-
         boardSizeBox.getChildren().addAll(boardSizeLabel, boardSizeButtonBox);
         boardSizeButtonBox.getChildren().addAll(nineSize, thirteenSize, nineteenSize);
         LaunchButtons.getChildren().addAll(validation, learnOrView);
@@ -174,9 +177,16 @@ public class HomePage{
         black_hours.setPrefColumnCount(2);
         black_min.setPrefColumnCount(2);
         black_sec.setPrefColumnCount(2);
-        String deselectedColor = "-fx-background-color: #ADD8E6;";
-        String selectedColor = "-fx-background-color: #FF0000;";
+        String selectedColor = "-fx-text-fill: #FFFFFF;";
+        String deselectedColor = "-fx-text-fill: #000000;";
+        String selectedBackgroundColor = "-fx-background-color: #000000;";
+        String deselectedBackgroundColor = "-fx-background-color: #FFFFFF;";
+        String deselectedStyle = deselectedBackgroundColor + deselectedColor;
+        String selectedStyle = selectedBackgroundColor + selectedColor;
         System.out.println("on passe par ici constructeur home page");
+        nineteenSize.setStyle(selectedStyle);
+        thirteenSize.setStyle(deselectedStyle);
+        nineSize.setStyle(deselectedStyle);
         gomoku = new Button("Gomoku");
         renju = new Button("Renju");
         pente = new Button("Pente");
@@ -184,42 +194,34 @@ public class HomePage{
         renju.setManaged(false);
         renju.setVisible(false);
         pageContainer = new StackPane();
-        gomoku.setStyle(selectedColor);
-        renju.setStyle(deselectedColor);
-        pente.setStyle(deselectedColor);
-        go.setStyle(deselectedColor);
-        
+        gomoku.setStyle(selectedStyle);
+        pente.setStyle(deselectedStyle);
+        go.setStyle(deselectedStyle);
         HBox game_button = new HBox(10, gomoku, pente, renju, go);
-        
-        // Configuration joueur noir
         white_player = new VBox(5);
         black_player = new VBox(5);
         black_human = new Button("black human");
         black_ia = new Button("black ia");
-        
-        // Appliquer le style désélectionné aux boutons du joueur noir
-        black_human.setStyle(selectedColor);
-        black_ia.setStyle(deselectedColor);
-        white_five_min.setStyle(selectedColor);
-        black_five_min.setStyle(selectedColor);
-        
-        black_time = new TextField("10:00");
+        black_human.setStyle(selectedStyle);
+        black_ia.setStyle(deselectedStyle);
+        white_five_min.setStyle(selectedStyle);
+        black_five_min.setStyle(selectedStyle);
+        Text blackTimeText = new Text("Set Black Info:");
+        blackTimeText.setFill(Color.WHITE );
+        blackTimeText.setStroke(Color.BLACK);
+        blackTimeText.setStrokeWidth(2);
+        blackTimeText.setFont(Font.font("System", FontWeight.BOLD, 25));
         buttonBlackTime.getChildren().addAll(black_five_min, black_three_min, blackCustom);
         blackCustomTime.getChildren().addAll(black_hours, black_min, black_sec, blackBackToButton);
-        VBox black_info = new VBox(5, new Text("Set Black Info:"), new HBox(5, black_human, black_ia, blackBox));
+        VBox black_info = new VBox(5, blackTimeText, new HBox(5, black_human, black_ia, blackBox));
         VBox black_time_info = new VBox(5, new HBox(5, new Text("time : "),buttonBlackTime , blackCustomTime));
         black_player.getChildren().addAll(black_info, black_time_info);
-        
-        // Configuration joueur blanc
         white_human = new Button("white human");
         white_ia = new Button("white ia");
         boardSizeBox.setVisible(false);
         boardSizeBox.setManaged(false);
-        // Appliquer le style désélectionné aux boutons du joueur blanc
-        white_human.setStyle(selectedColor);
-        white_ia.setStyle(deselectedColor);
-        
-        white_time = new TextField("10:00");
+        white_human.setStyle(selectedStyle);
+        white_ia.setStyle(deselectedStyle);
         buttonWhiteTime.getChildren().addAll(white_five_min, white_three_min, whiteCustom);
         whiteCustomTime.getChildren().addAll(white_hours, white_min, white_sec, whiteBackToButton);
         VBox white_info = new VBox(5, new Text("Set white Info:"), new HBox(5, white_human, white_ia, whiteBox));
@@ -284,15 +286,6 @@ public class HomePage{
     TextField getKomiButton(){
         return komi_field;
     }
-
-    TextField get_black_time(){
-        return black_time;
-    }
-
-    TextField get_white_time(){
-        return white_time;
-    }
-
 
     TextField getHandicap(){
         return handicap_field;
