@@ -144,8 +144,6 @@ public class PenteRules implements Rules {
         Map map = maps.get(index);
         int[][] m = map.get_map();
         forbidden_moves.clear();
-        map.printMap();
-        System.out.println("color == " + color);
         for (int y = 0; y < get_board_size();y++)
         {
             for (int x = 0; x < get_board_size(); x++){
@@ -168,10 +166,7 @@ public class PenteRules implements Rules {
         if (prisonners.size() != 0)
         {
             capture_color = map.get_map()[point.y][point.x];
-            // System.out.printf("color captured %d\n", capture_color);
-            prisonners_nbr[capture_color - 1] += prisonners.size(); //to_debug
-            // System.out.println("adding prisonner nbr == " + prisonners.size());
-            // System.out.println("prisonner nbr == " + prisonners_nbr[capture_color - 1]);
+            prisonners_nbr[capture_color - 1] += prisonners.size();
         }
 
     }
@@ -321,21 +316,18 @@ public class PenteRules implements Rules {
             if (rm == false)
                 newList.add(l);
         }
-        // System.out.println("list : " + list);
-        // System.out.println("new list : " + newList);
         return checkFiveInRow(newList);
     }
 
     @Override
     public boolean areCapturable(ArrayList<Point> points, Map map, final int color, int dir){ 
-        // System.out.println("coucou!!!!!!!!!!!!!!!!!!!!!!!!");
         ArrayList<Point> capturable = new ArrayList<Point>();
         for (Point p : points){
             if (isCapturable(p, map, color) == true){
                 capturable.add(p);
             }
         }
-        if (checkFiveAfterCapture(points, capturable, dir))//enleverl es capturablessort et check si
+        if (checkFiveAfterCapture(points, capturable, dir))
             return false;
         return true; 
     }

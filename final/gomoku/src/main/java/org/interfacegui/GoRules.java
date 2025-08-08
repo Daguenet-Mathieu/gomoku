@@ -20,16 +20,12 @@ public class GoRules implements Rules {
     int tmpWhitePrisonners = 0;
 
     public int getBlackScore(){
-        System.out.println(prisonners_nbr[0] + " " + tmpBlackPrisonners + " " + blackPrisonnerList.size());
         blackScore = prisonners_nbr[0] + tmpBlackPrisonners + blackPrisonnerList.size();
-        System.out.println("black score == " + blackScore);
         return blackScore;
     }
 
     public int getWhiteScore(){
-        System.out.println(prisonners_nbr[1] + " " + tmpWhitePrisonners + " " + whitePrisonnerList.size());
         whiteScore = prisonners_nbr[1] + tmpWhitePrisonners + whitePrisonnerList.size();
-        System.out.println("white score == " + whiteScore);
         return whiteScore;
     }
 
@@ -76,7 +72,6 @@ public class GoRules implements Rules {
         int top = -1;
         int down = -1;
         boolean err = false;
-        System.out.println("ma list == " + list);
         for (Point p : list){
             if (p.x - 1 >= 0 && p.x - 1 < get_board_size() && p.y >= 0 && p.y < get_board_size())
                left = map.get_map()[p.y][p.x - 1];
@@ -86,7 +81,6 @@ public class GoRules implements Rules {
                top = map.get_map()[p.y - 1][p.x];
             if (p.x - 1 >= 0 && p.x < get_board_size() && p.y + 1 >= 0 && p.y + 1 < get_board_size())
                down = map.get_map()[p.y + 1][p.x];
-            System.out.println("left == " + left + " right " + right + " top " + top + " down " + down + " curret color " + currentColor);
             if (left == 1 || left == 2)
             {
                 if (currentColor != -1 && currentColor != left)
@@ -117,7 +111,6 @@ public class GoRules implements Rules {
                 return ;
             }
         }
-        System.out.println("current color == " + currentColor);
         if (currentColor == 2)
             whitePrisonnerList.addAll(list);
         else if (currentColor == 1)
@@ -146,20 +139,16 @@ public class GoRules implements Rules {
         switch (gameStatus) {
             case PLAYING:
                 if (pass == false){
-                    System.out.println("Mode : en cours de jeu");
                     pass = true;
                 }
                 else{
                     gameStatus = Rules.GameMode.DEATH_MARKING;
-                    System.out.println("Mode : sélection des pierres mortes");
                 }
                 return true;
             case DEATH_MARKING:
                 gameStatus = Rules.GameMode.COUNTING;
-                System.out.println("Mode : décompte des points");
                 return true;
             case COUNTING:
-                System.out.println("Mode : partie fnie");
                 gameStatus = Rules.GameMode.ENDGAME;
                 return false;
             default:
@@ -172,16 +161,13 @@ public class GoRules implements Rules {
             switch (gameStatus) {
             case PLAYING:
                 if (pass == true){
-                    System.out.println("Mode : en cours de jeu");
                     pass = false;
                 }
                 return true;
             case DEATH_MARKING:
                 gameStatus = Rules.GameMode.PLAYING;
-                System.out.println("Mode : décompte des points");
                 return true;
             case COUNTING:
-                System.out.println("Mode : partie fnie");
                 gameStatus = Rules.GameMode.DEATH_MARKING;
                 return true;
             default:
@@ -224,8 +210,6 @@ public class GoRules implements Rules {
             return false;
         if (map.size() < 2)
             return true;
-        System.out.println(gameStatus.name());
-        System.out.println(" dans is valid move size == " + map.size());
         int squareColor = map.get(map.size() - 1).get_map()[point.y][point.x];
         boolean valid = (map.get(map.size() - 1).get_map()[point.y][point.x] == 0);
         if (gameStatus == Rules.GameMode.PLAYING && checkForbidden(point, map, map.size() - 1, ((map.size() - 1) % 2) + 1)) {
@@ -263,7 +247,6 @@ public class GoRules implements Rules {
         if (index == 0)
             return (new ArrayList<Point>());
         forbidden_moves.clear();
-        System.out.println("coucou check forbidden");
         final int advColor = color == 1 ? 2 : 1;
         for (int i = 0; i < get_board_size(); i++){
             for (int j = 0; j < get_board_size(); j++){
@@ -348,13 +331,9 @@ public class GoRules implements Rules {
         ArrayList<Point> p = new ArrayList<Point>();
         if (coord.x < 0 || coord.y < 0 || coord.x >= get_board_size() || coord.y >= get_board_size())
             return p;
-        System.out.println("color == " + color + " adv color == " + advColor + " cehcked case color == " + map.get_map()[coord.y][coord.x]);
         if (map.get_map()[coord.y][coord.x] == advColor)
             floodFill(coord, copyMap(map), advColor, p, 7);
-        System.out.println("nb prisonners == " + p.size());
-
         checkCapturedStones(p, map);
-        System.out.println("nb prisonners == " + p.size());
         return p;
     }
 

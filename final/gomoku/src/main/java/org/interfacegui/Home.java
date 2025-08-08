@@ -83,7 +83,6 @@ public class Home {
         StringBuilder hours;
         StringBuilder min;
         StringBuilder sec;
-        System.out.println("white time : " + white_time + " black time : " + black_time);
         if (black_time == 0){
             hours = new StringBuilder(home_page.get_black_hours().getText());
             min = new StringBuilder(home_page.get_black_min().getText());
@@ -203,7 +202,6 @@ public class Home {
         home_page.getWhiteEasyButton().setStyle(selectedStyle);
         home_page.getBlackEasyButton().setStyle(selectedStyle);
         home_page.getBlackIaTypeButton().setOnAction(e -> {
-            System.out.println("black is bot");
             black_player_type = 1;
             home_page.getBlackBox().setManaged(true);
             home_page.getBlackBox().setVisible(true);
@@ -212,7 +210,6 @@ public class Home {
         });
 
         home_page.getBlackHumanTypeButton().setOnAction(e -> {
-            System.out.println("black is human");
             black_player_type = 0;
             home_page.getBlackBox().setManaged(false);
             home_page.getBlackBox().setVisible(false);
@@ -222,7 +219,6 @@ public class Home {
         });
 
         home_page.getWhiteIaTypeButton().setOnAction(e -> {
-            System.out.println("white is bot");
             white_player_type = 1;
             home_page.getWhiteBox().setManaged(true);
             home_page.getWhiteBox().setVisible(true);
@@ -232,12 +228,9 @@ public class Home {
         });
 
         home_page.getWhiteHumanTypeButton().setOnAction(e -> {
-            System.out.println("white is human");
             white_player_type = 0;
             home_page.getWhiteBox().setManaged(false);
             home_page.getWhiteBox().setVisible(false);
-
-            // Mettre à jour les couleurs
             home_page.getWhiteHumanTypeButton().setStyle(selectedStyle);
             home_page.getWhiteIaTypeButton().setStyle(deselectedStyle);
         });

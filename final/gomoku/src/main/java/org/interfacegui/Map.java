@@ -19,7 +19,6 @@ public class Map{
     private String _comment;
 
     public void setCandidatsList(ArrayList<Point> list) {
-        System.out.println("candidat list dans map == " + list);
         candidatsList = list;
     }
 
@@ -29,7 +28,6 @@ public class Map{
 
     public void set_color(int color){
         player_color = color;
-        System.out.println("player color set in map == " + player_color);
     }
 
     public ArrayList<Point> getCandidatsList() {
@@ -83,12 +81,6 @@ public class Map{
     public int[][] get_map(){
         return _map;
     }
-    // public void setWhitePrisonners(int nb){
-    //     _white_prisonners += nb;
-    // }
-    // public void setBlackPrisonners(int nb){
-    //     _black_prisonners += nb;
-    // }
 
     public void addWhitePrisonners(int nb){
         _white_prisonners += nb;
@@ -115,18 +107,14 @@ public class Map{
 
     public boolean tryAddToMap(String cmd, Point coord){
         this.printMap();
-        System.out.println(this.getSize());
-        System.out.println("coor == " + coord + " cmd |"+cmd+"|");
         if (coord.y >= _map.length || coord.y >= _map.length)
             return false;
         int color = 0;
-        System.out.println("coor == " + coord + " cmd |"+cmd+"|");
         if ("B".equals(cmd) || "AB".equals(cmd))
             color = 1;
         else if ("W".equals(cmd) || "AW".equals(cmd))
             color = 2;
         else if ("AE".equals(cmd)){
-            System.out.println("coor == " + coord + " cmd |"+cmd+"|");
             _map[coord.y][coord.x] = 0;
             _last_move.add(coord);
             _last_move_color.add(0);
@@ -134,9 +122,6 @@ public class Map{
         }
         else
             return false;
-        System.out.println("coor == " + coord + " cmd |"+cmd+"|");
-        // if ((color == 0 && _map[coord.y][coord.x] == 0) || (color != 0 && _map[coord.y][coord.x] != 0))
-        //     return false;
         _map[coord.y][coord.x] = color;
         _last_move.add(coord);
         _last_move_color.add(color);

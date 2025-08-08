@@ -98,7 +98,6 @@ public class Gomoku
             for (Point p : points) {
                     game.remove(p, m.get_prisonners(), false);
             }
-            System.err.println("end game ? " + end);
             updatePlayerTurn();
             if (end == false)
                 game.best_move((i%2==0?2:1), (i%2==0?2:1), true);
@@ -122,7 +121,6 @@ public class Gomoku
 
     void changeHintVisibility(boolean visible) {
         if (hintList == null || hintList.isEmpty()) return;
-        //int val = 0;
         for (int i = 0; i < hintList.size(); i++) {
             Point p = hintList.get(i);
             goban.set_stone_status(visible, "#00F0FF", p, String.format("%d", (int)p.val));
@@ -137,10 +135,8 @@ public class Gomoku
             hintList.add(new Point(hint.get(i).y, hint.get(i).x));
             hintList.get(hintList.size() - 1).set_val(values[i]);
         }
-        System.out.println("avant sort list == " + hintList);
-        hintList.sort(Comparator.comparingDouble(Point::get_val));//.reversed());
+        hintList.sort(Comparator.comparingDouble(Point::get_val));
 
-        System.out.println("aapres sort list == " + hintList);
         int nb = -1000000000;
         int nb2 = 0;
         int val = 1;
@@ -148,10 +144,8 @@ public class Gomoku
             if (nb != -1)
                 nb2 = nb;
             nb = (int)hintList.get(i).get_val();
-            System.out.println(nb + " et " + nb2);
             if ((int)nb < (int)nb2)
                 val = hintList.size() - i;
-            System.out.println("val == " + val);
             hintList.get(i).set_val((float)val);
         }
     }
@@ -159,7 +153,6 @@ public class Gomoku
 
     void changeCandidatVisibility(boolean visible) {
         ArrayList<Point> currentCandidats = _map.get(map_index).getCandidatsList();
-        System.out.println("map inde == " + map_index + " curent candidats == " + currentCandidats);
         if (currentCandidats == null || currentCandidats.isEmpty()) return;
 
         for (int i = 0; i < currentCandidats.size(); i++) {
@@ -178,15 +171,7 @@ public class Gomoku
     void setCandidats(ArrayList<Candidat.coord> candidats, float[] values, int index) {
         if (rule.hasIa() == false || candidats == null || values == null || game.val == null) return;
         candidatsList = new ArrayList<>();
-        //bestMoveScore = game.val;
         changeCandidatVisibility(false);
-        for (int i = 0; i < candidats.size(); i++){
-            System.err.println("candidat[" + i + "] = " + candidats.get(i).y + " " + candidats.get(i).x);
-        }
-        for (int i = 0; i < values.length; i++){
-            System.err.println("values[" + i + "] = " + values[i] + " " +  values[i]);
-        }
-        System.err.println("le coup choisi == " + game.val);
         for (int i = 0; i < values.length; i++) {
             candidatsList.add(new Point(candidats.get(i).y, candidats.get(i).x));
             candidatsList.get(candidatsList.size() - 1).set_val(values[i]);
@@ -273,8 +258,6 @@ public class Gomoku
                         playMove(future.get());
                         executor.shutdown();
                         setCandidats(game.m.candidat.lst, game.m.values, map_index);
-                        showCandidats();
-                        System.err.println("\n\n\n");
                         ia_playing = false;
                     }
                 }
@@ -290,14 +273,13 @@ public class Gomoku
                         playMove(future.get());
                         executor.shutdown();
                         setCandidats(game.m.candidat.lst, game.m.values, map_index);
-                        showCandidats();
                         ia_playing = false;
                     }
                 }
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                e.printStackTrace();//a virere? mesage erreur?
                 System.exit(0);
             }
         }
@@ -381,12 +363,10 @@ public class Gomoku
             default:
                 rule = new GomokuRules();
         }
-        System.out.println("bs == " + boardSize);
         rule.setBoardSize(boardSize);
     }
 
     private void playMove(Point point){
-        System.out.println("game stus : " + rule.getGameMode());
         if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map) || rule.getGameMode() == Rules.GameMode.ENDGAME){
             return ;
         }
@@ -401,14 +381,12 @@ public class Gomoku
             goban.updateFromMap(currentMap);
             return ;
         }
-        System.out.println("map index == " + map_index );
         changeCandidatVisibility(false);
         toggleCandidat = false;
         changeHintVisibility(false);
         hintList = null;
         toggleHint = false;
         _map.get(_map.size() -1);
-        System.out.println();
         _map.add(new Map(_map.get(_map.size() - 1)));
         _map.get(_map.size() - 1).addMove(point, _map.size() % 2 + 1);
         map_index = _map.size() - 1;
@@ -457,8 +435,6 @@ public class Gomoku
             else
                 _end_text.setText("White Win");
         }
-        else
-            System.out.println("non!");
         goban.updateFromMap(_map.get(_map.size() -1));
         if (player_turn == 0){
             round++;
@@ -469,9 +445,7 @@ public class Gomoku
     }
 
     private void updatePlayerTurn(){
-        System.out.println("update player turn fct : " + player_turn);
         player_turn ^= 1;
-        System.out.println("update player turn fct : " + player_turn);
     }
 
     private void display_nb_prisonners(){
@@ -481,10 +455,8 @@ public class Gomoku
     }
 
     private void undoMove(){
-        System.out.println("map sie == " + _map.size() + " map index == " + map_index);
         if (_map.size() < 2 || map_index < _map.size() - 1)
         {
-            System.out.println("undo move aucune action");
             return ;
         }
         changeCandidatVisibility(false);
@@ -493,14 +465,6 @@ public class Gomoku
         forbiddenVisibility = false;
         toggleCandidat = false;
         toggleHint = false;
-
-        if (_map.get(_map.size() - 1).get_prisonners() != null){
-            for (Point p : _map.get(_map.size() - 1).get_prisonners()){
-                System.out.println("les prisonniers qui vont etre anules sont : ");
-                    System.out.print(p);
-                }
-                System.out.println();
-        }
         map_index -= 1;
         if (rule.hasIa() == true){
             ArrayList<Point> coord = _map.get(_map.size() - 1).getLastMove();
@@ -515,8 +479,7 @@ public class Gomoku
         }
         _map.remove(_map.size() - 1);
         goban.updateFromMap(_map.get(_map.size() - 1));
-        // if (player_turn)//CHANGER LE NB PROSONNIERS pour la bonne couleur
-        player_turn ^= 1;// le get de la regle 
+        player_turn ^= 1;
         rule.set_black_prisonners(_map.get((_map.size()-1)).getBlackPrisonners());
         rule.set_white_prisonners(_map.get((_map.size()-1)).getWhitePrisonners());
         display_nb_prisonners();
@@ -621,7 +584,6 @@ public class Gomoku
                 gameLoop.stop();
                 game_end = true;
                 ia_playing = false;
-                System.out.println("player turn == " + player_turn);
                 _winner = player_turn;
                 String res = _winner == 1? "black" : "white";
                 _end_text.setText(res + " win");
@@ -673,7 +635,6 @@ public class Gomoku
             }
         });
         gameInfos.getNextButton().setOnAction(event -> {
-            _map.get(_map.size()-1).printMap();
             if (map_index < _map.size() - 1){
                 changeCandidatVisibility(false);
                 changeHintVisibility(false);
@@ -781,7 +742,6 @@ public class Gomoku
             Map newMap = new Map(_map.get(_map.size() - 1));
             _map.add(newMap);
             map_index++;
-            System.out.println("player tur == " + player_turn);
             if (rule.getGameMode() == Rules.GameMode.COUNTING){
                 ((GoRules)rule).init_prisonners(_map.get(_map.size() - 1));
                 ArrayList<Point> tmp = ((GoRules)rule).getWhitePrisonnersList();
@@ -808,7 +768,6 @@ public class Gomoku
             int goban_size = square * (_nb_line);
             int width_allowed_margin;
             int height_allowed_margin;
-            System.out.println("size squre == " + square + " goba size == " + goban_size);
             if (margin_w < square / 2)
                 width_allowed_margin = margin_w;
             else
@@ -819,8 +778,6 @@ public class Gomoku
                 height_allowed_margin = square/2;
             double x = event.getX();
             double y = event.getY();
-            System.out.println("Pane cliqué aux coordonnées : (" + x + ", " + y + ")");
-            System.out.println("width allowed margon == " + width_allowed_margin + " height allowed margin == " + height_allowed_margin);
             x -= margin_w;
             y -= margin_h;
             if (x < 0)
@@ -830,9 +787,7 @@ public class Gomoku
             if (x > goban_size)
                 x -= width_allowed_margin;
             if (y > goban_size)
-                y -= height_allowed_margin;
-            System.out.println("apres ajustemeent marge : (" + x + ", " + y + ")");
-            
+                y -= height_allowed_margin;          
             x/= square;
             y/= square;
             x = Math.round(x);
@@ -846,13 +801,6 @@ public class Gomoku
 
     }
 
-    public void print_history_of_move ()
-    {
-        System.out.println("History of moves");
-        saved.forEach((point) -> System.out.printf("%s ", point.colormove()));
-        System.out.println("\nWindow closed\nSystem exited normally");
-    }
-
     public void updateGameDisplay(int new_y, int new_x){
         _width = new_x;
         _game_infos_size_x = new_x / 4;
@@ -861,13 +809,11 @@ public class Gomoku
         double labelHeight = commentLabel.prefHeight(commentLabel.getMaxWidth());
         if (commentLabel.isVisible() == false)
             labelHeight = 0;
-        System.out.println("prefHeight : " + labelHeight);
         goban.updateGoban(new_y - (int)labelHeight, new_x - _game_infos_size_x);
         _goban_pane.setLayoutX(_game_infos_size_x);
     }
 
     public Pane getGameDisplay(){
-        System.out.println("\t\t\tgame info size " + _game_infos_size_x);
         _goban_pane.setLayoutX(_game_infos_size_x);
         return game_display;
     }

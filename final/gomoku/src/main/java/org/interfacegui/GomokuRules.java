@@ -24,8 +24,6 @@ public class GomokuRules implements Rules {
 
     @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
-        map.get(map.size()-1).printMap();
-        System.out.println(map.get(map.size() - 1).get_map()[point.y][point.x]);
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1)))
         {
             return false;

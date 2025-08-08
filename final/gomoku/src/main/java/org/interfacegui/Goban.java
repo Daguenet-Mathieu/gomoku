@@ -23,7 +23,6 @@ public class Goban{
 
     private void init_margin_size(int heigh, int width){
         int goban_size = _square_size * (_nb_line - 1);
-        System.out.println("goban size == " + goban_size + " height : " + heigh);
         _heigh_margin_size = (heigh - goban_size) / 2;
         _width_margin_size = (width - goban_size) / 2;
     }
@@ -147,7 +146,6 @@ public class Goban{
 
     public void init_stones(){
 
-        System.out.println("_stones.length == " + _stones.length + " _stones[0].length == " + _stones[0].length);
         for (int i = 0; i < _stones.length; i++){
             for (int j = 0; j < _stones[i].length; j++){
                 _stones[i][j] = new Circle();
@@ -185,7 +183,6 @@ public class Goban{
                 _score[i][j] = r;
             }
         }
-        System.out.println("Rectangles initialisés avec positions corrigées");
     }
 
     public void remove_score(){
@@ -198,14 +195,7 @@ public class Goban{
 
 
     public void modify_score(Point coordinates, Color color) {
-        Rectangle rect = _score[coordinates.y][coordinates.x];
-        System.out.println(
-            "modify_score on Rectangle at (x=" + rect.getX() +
-            ", y=" + rect.getY() +
-            "), size (w=" + rect.getWidth() +
-            ", h=" + rect.getHeight() + ")"
-        );
-        
+        Rectangle rect = _score[coordinates.y][coordinates.x];     
         rect.setVisible(true);
         rect.setFill(color);
         rect.toFront();

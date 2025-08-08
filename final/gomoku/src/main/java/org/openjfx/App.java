@@ -203,8 +203,6 @@ public class App extends Application {
         stage.centerOnScreen();
         stage.setScene(home);
         stage.show();
-        if (gomoku != null)
-            stage.setOnCloseRequest(we -> gomoku.print_history_of_move());  
     }
 
     public void switchScene(Scene newScene) {

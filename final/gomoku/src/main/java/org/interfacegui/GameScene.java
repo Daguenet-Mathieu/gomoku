@@ -14,7 +14,6 @@ public class GameScene{
     public void remove_stones(ArrayList<Point> stones){};
     public void addStones(int x, int y, Color color){};
     public void updateScene(int new_size){
-        System.out.println("nouvelle size == " + new_size);
     };
     public Pane getScene()
     {

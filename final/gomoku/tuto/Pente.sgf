@@ -10,12 +10,13 @@ Si l'adversaire ne le bloque pas blanc de maniere infaillible peut gagner en 2 t
 ;AE[hh]AB[hg]C[Ceci est egalement considere comme une postion de "free three" menant a une victoire infaillible]
 ;AE[hi][hj]AB[dd][ee][ig][ki][li][jj][jk][hn][ho][ep][gp]C[il est interdit de jouer un coup qui formerait 2 "free three" en 1 seul coup.
 toutes ces positions creent des double "free three" et contienent des coups interdit.
-en appuyant sur le bouton "forbidden", vous pourrez voir les emplacements de ces coups interdits]
+en appuyant sur le bouton "forbiddens", vous pourrez voir les emplacements de ces coups interdits]
 ;AE[dd][ee][hg][ig][hn][ho][ep][gp]AW[ii]C[une pierre adverse peut rendre le coup a nouveau jouable.
 dans le cas ou elle empeche la creation du double free three]
 ;AE[ii][jj][jk]AW[ji]C[lorsque'une paire de pierres connectee est bloquee au niveau de ses extremites, cette paire est alors capturee.
 dasn cet exemple la paire noire est en danger]
-;AW[mi]C[ici noir a capture une paire de pierre blanche.
+;AW[mi]C[ici blanc a capture une paire de pierre noire.
+On peut voir son nombre de prisonnier sur la gauche.
 Reussir a capturer 5 paires de pierres est une autre maniere de gagner la partie]
 ;AE[ji][ki][li][mi]AW[dd][od][en]AB[ee][ne][ff][mf][el][em]C[voici d'autres exemples de position ou une paire est capturable]
 ;AE[dd][od][ee][ne][ff][mf][el][em][en]AW[ll]AB[mi][lj][kk][jl][kl][im]C[cette position de 5 pierres connectes, ne gagne pas immediatement car une des pierre qui la compose est capturable
