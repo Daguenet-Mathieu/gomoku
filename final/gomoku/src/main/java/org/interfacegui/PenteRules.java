@@ -29,7 +29,6 @@ public class PenteRules implements Rules {
     }
 
     private boolean isValidMove2(Point point, ArrayList<Map> map, int color){
-        System.out.println("color == " + color + " x == " + point.x + " y == " + point.y);
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1))) {
             return false;
         }

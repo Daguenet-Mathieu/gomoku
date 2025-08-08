@@ -54,7 +54,7 @@ public class HomePage{
     private HBox boardSizeButtonBox = new HBox(10);
     private Label fileName = new Label("");
     private HBox fileBox = new HBox(10);
-    private Text reset = new Text("reset");
+    private Label reset = new Label("reset");
     private Button validation = new Button("Start");
     private Button learnOrView = new Button("Learn");
     private HBox LaunchButtons = new HBox();
@@ -183,7 +183,8 @@ public class HomePage{
         String deselectedBackgroundColor = "-fx-background-color: #FFFFFF;";
         String deselectedStyle = deselectedBackgroundColor + deselectedColor;
         String selectedStyle = selectedBackgroundColor + selectedColor;
-        System.out.println("on passe par ici constructeur home page");
+        reset.setStyle(selectedColor);
+        fileName.setStyle(selectedColor);
         nineteenSize.setStyle(selectedStyle);
         thirteenSize.setStyle(deselectedStyle);
         nineSize.setStyle(deselectedStyle);
@@ -207,10 +208,17 @@ public class HomePage{
         white_five_min.setStyle(selectedStyle);
         black_five_min.setStyle(selectedStyle);
         Text blackTimeText = new Text("Set Black Info:");
+        Text whiteTimeText = new Text("Set White Info:");
+        Text blackTimeText2 = new Text("time :");
+        Text whiteTimeText2 = new Text("time :");
         blackTimeText.setFill(Color.WHITE );
         blackTimeText.setStroke(Color.BLACK);
         blackTimeText.setStrokeWidth(2);
+        whiteTimeText.setFill(Color.WHITE );
+        whiteTimeText.setStroke(Color.BLACK);
+        whiteTimeText.setStrokeWidth(2);
         blackTimeText.setFont(Font.font("System", FontWeight.BOLD, 25));
+        whiteTimeText.setFont(Font.font("System", FontWeight.BOLD, 25));
         buttonBlackTime.getChildren().addAll(black_five_min, black_three_min, blackCustom);
         blackCustomTime.getChildren().addAll(black_hours, black_min, black_sec, blackBackToButton);
         VBox black_info = new VBox(5, blackTimeText, new HBox(5, black_human, black_ia, blackBox));
@@ -224,7 +232,7 @@ public class HomePage{
         white_ia.setStyle(deselectedStyle);
         buttonWhiteTime.getChildren().addAll(white_five_min, white_three_min, whiteCustom);
         whiteCustomTime.getChildren().addAll(white_hours, white_min, white_sec, whiteBackToButton);
-        VBox white_info = new VBox(5, new Text("Set white Info:"), new HBox(5, white_human, white_ia, whiteBox));
+        VBox white_info = new VBox(5, whiteTimeText, new HBox(5, white_human, white_ia, whiteBox));
         VBox white_time_info = new VBox(5, new HBox(5, new Text("time : "),buttonWhiteTime , whiteCustomTime));
         white_player.getChildren().addAll(white_info, white_time_info);
         
@@ -423,6 +431,4 @@ public class HomePage{
     public void setRulesInstance(Rules r){
         rules_instance = r;
     }
-
-
 }

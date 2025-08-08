@@ -10,10 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.File;
 import org.utils.Point;
-// import java.io.InputStream;
-// import java.io.FileInputStream;
-// import java.io.IOException;
-// import javafx.geometry.Pos;
 import java.util.ArrayList;
 
 public class App extends Application {
@@ -32,85 +28,35 @@ public class App extends Application {
     private ImageView background; 
     private ImageView title;
     
-    //class settings pour connaitre les preference du joueur couleur des pierres goban etc et donner au gomoku
-    //choix temps dans le home en meme temps que le choix des regles et des joueurs
-
-
-    // private void openBackground(){
-    //     String path1 = new File("./img/background.jpg").getAbsolutePath();
-    //     String path2 = new File("./img/title.webp").getAbsolutePath();
-    //     Image img = new Image(path1.toURI().toString(), false);
-    //     img.exceptionProperty().addListener((obs, oldEx, newEx) -> {
-    //     System.out.println("Image width: " + img.getWidth() + ", height: " + img.getHeight());
-    //         if (newEx != null) {
-    //             newEx.printStackTrace();
-    //             System.err.println("Erreur chargement image : " + newEx.getMessage());
-    //         }
-    //     });
-    //     background = new ImageView(img);
-    //     // background = new ImageView(new Image("file:" + path1));
-    //     title = new ImageView(new Image("file:" + path2));//trycatch
-    // }
-
-    // private void openBackground(){
-    //     System.out.println("open img background !");
-    //     System.out.println("Répertoire courant: " + System.getProperty("user.dir"));
-    //     File file1 = new File("./img/background.jpg");
-    //     File file2 = new File("./img/title.webp");
-
-    //     Image img = new Image(file1.toURI().toString(), false);
-    //     img.exceptionProperty().addListener((obs, oldEx, newEx) -> {
-    //         if (newEx != null) {
-    //             newEx.printStackTrace();
-    //             System.err.println("Erreur chargement image : " + newEx.getMessage());
-    //         }
-    //     });
-    //     System.out.println("Image width: " + img.getWidth() + ", height: " + img.getHeight());
-
-    //     background = new ImageView(img);
-    //     title = new ImageView(new Image(file2.toURI().toString()));
-
-    // }
-
     private void openBackground(){
         System.out.println("open img background !");
         System.out.println("Répertoire courant: " + System.getProperty("user.dir"));
 
         File file1 = new File("./img/background.png");
         File file2 = new File("./img/title.png");
-
-        // Chargement synchrone de background.jpg
         Image img1 = new Image(file1.toURI().toString(), false);
         img1.exceptionProperty().addListener((obs, oldEx, newEx) -> {
             if (newEx != null) {
                 System.err.println("Erreur background.jpg : " + newEx.getMessage());
-                newEx.printStackTrace();
+                System.exit(1);
             }
         });
-
         if (img1.getWidth() <= 0 || img1.getHeight() <= 0) {
-            System.err.println("Erreur : background.jpg non décodé");
-        } else {
-            System.out.println("✔ background.jpg OK : " + img1.getWidth() + "x" + img1.getHeight());
+            System.err.println("Erreur : background.png non décodé");
+            System.exit(1);
         }
-
         background = new ImageView(img1);
-
-        // Chargement synchrone de title.webp
         Image img2 = new Image(file2.toURI().toString(), false);
         img2.exceptionProperty().addListener((obs, oldEx, newEx) -> {
             if (newEx != null) {
                 System.err.println("Erreur title.png : " + newEx.getMessage());
-                newEx.printStackTrace();
+                System.exit(1);
             }
         });
-
         if (img2.getWidth() <= 0 || img2.getHeight() <= 0) {
             System.err.println("Erreur : title.pgn non décodé");
-        } else {
-            System.out.println("✔ title.png OK : " + img2.getWidth() + "x" + img2.getHeight());
+            System.exit(1);
         }
-
         title = new ImageView(img2);
         background.setFitWidth(home_root.getWidth());
         background.setFitHeight(home_root.getHeight());
@@ -122,10 +68,8 @@ public class App extends Application {
 
     public void set_home_event(){
         home.widthProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("redimensionnement de home ! largeur = " + newValue.doubleValue());
         });
         home.heightProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("redimensionnement de home ! hauteur = " + newValue.doubleValue());
         });
         home_page.getValidationButton().setOnMouseClicked(event -> {
             double scenex = stage.getWidth();
@@ -170,7 +114,6 @@ public class App extends Application {
             home_page.setRulesInstance(SGF.getRuleInstance());
             double scenex = stage.getWidth();
             double sceney = stage.getHeight();
-            System.out.println(" goban width == " + scenex + " heigh " + sceney);
             home_page.setGameMode(Rules.GameMode.LEARNING);
             home_page.setSgfMap(sgfMap);
             gomoku = new Gomoku((int)sceney, (int)scenex, home_page);
@@ -187,9 +130,8 @@ public class App extends Application {
         gomoku.get_home_button().setOnMouseClicked(event -> {
             double scenex = stage.getWidth();
             double sceney = stage.getHeight();
-            System.out.println("hone width == " + scenex + " heigh " + sceney);
             home_root = new Pane();
-            home = new Scene(home_root, 606, 450);
+            home = new Scene(home_root, 962, 550);
             home_page = new Home();
             openBackground();
             background.setMouseTransparent(true);
@@ -197,11 +139,11 @@ public class App extends Application {
             home_root.getChildren().add(background);
             home_root.getChildren().add(title);
             set_home_event();
-            home_root.getChildren().add(home_page.getHomePage()); // Ajout du texte à home_root
+            home_root.getChildren().add(home_page.getHomePage());
             switchScene(home);
             stage.setResizable(false);
             home_root.getChildren().add(home_body);
-            home_page.getHomePage().setTranslateY(90);
+            home_page.getHomePage().setTranslateY(160);
         });
 
         gomoku.get_replay_button().setOnMouseClicked(event -> {
@@ -211,7 +153,6 @@ public class App extends Application {
         goban.widthProperty().addListener((observable, oldValue, newValue) -> {
             double sceneWidth = goban.getWidth();
             double sceneHeight = goban.getHeight();
-            System.out.println("size x == " + size_x + " size y == " + size_y);
             screen.x = (int)newValue.doubleValue();
             gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
         });
@@ -219,7 +160,6 @@ public class App extends Application {
             double sceneWidth = goban.getWidth();
             double sceneHeight = goban.getHeight();
             size_y = (int)goban.getHeight();
-            System.out.println("size x == " + size_x + " size y == " + size_y);
             screen.y = (int)newValue.doubleValue();
             gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
         });
@@ -230,7 +170,6 @@ public class App extends Application {
         int size = Math.min(width, heigh);
         screen.x = width;
         screen.y = heigh;
-        System.out.println("width : " + width + " height : " + heigh + " size : " + size);
         return ((int)size);
     }
 
@@ -247,10 +186,9 @@ public class App extends Application {
         size /= 4;
         size_x = size;
         size_y = size;
-        System.out.println("size x == " + size_x + " size y == " + size_y);
         root = new Pane();
-        scene = new Scene(root, 606, 450);
-        home = new Scene(home_root, 606, 450);
+        scene = new Scene(root, 962, 550);
+        home = new Scene(home_root, 962, 550);
         openBackground();
         background.setMouseTransparent(true);
         title.setMouseTransparent(true);
@@ -259,7 +197,7 @@ public class App extends Application {
         set_home_event();
         stage.setResizable(false);
         home_root.getChildren().add(home_page.getHomePage());
-        home_page.getHomePage().setTranslateY(90);
+        home_page.getHomePage().setTranslateY(160);
         home_root.setStyle("-fx-background-color: #FF6347;");
         root.setOnMouseClicked(e -> System.out.println("Pane cliqué !"));
         stage.centerOnScreen();
