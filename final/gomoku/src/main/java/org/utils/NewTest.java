@@ -87,6 +87,7 @@ public class NewTest //Main test
             else
                 nb_0 -=1;
 
+
             dep = 1;
             cur_x = x - (dep * dir[i][0]);
             cur_y = y - (dep * dir[i][1]);
@@ -197,8 +198,22 @@ public class NewTest //Main test
 
         move(3, 3, 1);
         move(4, 4, 1);
-        move(6, 7, 1);
-        move(6, 8, 1);
+        move(6, 5, 1);
+        move(6, 4, 1);
+
+        move(6, 3, 1);
+
+        //move(9, 9, 1);
+
+
+        // move(8, 10, 1);
+        //move(8, 11, 1);
+
+        //move(10, 9, 1);
+        // move(13, 7, 1);
+        // move(14, 7, 1);
+        // move(15, 6, 1);
+        // move(15, 4, 1);
 
         check_db_valid(6, 6, 1);
 
