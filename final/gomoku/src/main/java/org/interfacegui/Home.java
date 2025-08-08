@@ -1,10 +1,7 @@
 package org.interfacegui;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
-// import javafx.scene.control.TextField;
 import java.util.ArrayList;
-// import javafx.beans.property.StringProperty;
-
 
 public class Home {
     private int white_time = 300000;
@@ -14,13 +11,12 @@ public class Home {
     private String rule = "Gomoku";
     private float komi = -1;
     private int handicap = -1;
-    // private ArrayList<Map> sgf;
     private int level = 3;
     private HomePage home_page = new HomePage();
     private FileBox filebox = new FileBox(home_page);
     int boardSize = -1;
     private Rules.GameMode _gameMode = Rules.GameMode.PLAYING;
-
+    private String errorMsg;
 
     public void setGameMode(Rules.GameMode gameMode){
         _gameMode = gameMode;
@@ -38,14 +34,6 @@ public class Home {
         return level;
     }
 
-    // private void changeVisibility(TextField komi, TextField handicap, boolean value){
-    //     komi.setVisible(value);
-    //     handicap.setVisible(value);
-    //     komi.setManaged(value);
-    //     handicap.setManaged(value);
-    // }
-
-
     int getTimeIndex(int size){
         if (size == 3)
             return 0;
@@ -57,50 +45,102 @@ public class Home {
             return -1;
     }
 
+    private void checkTimeVal(StringBuilder hours, StringBuilder min, StringBuilder sec){
+        if ("HH".equals(hours.toString())){
+            hours.setLength(0);
+            hours.append("0");
+        }
+        if ("MM".equals(min.toString()))
+        {
+            min.setLength(0);
+            min.append("0");
+        }
+        if ("SS".equals(sec.toString()))
+        {
+            sec.setLength(0);
+            sec.append("0");
+        }
+            
+    }
+
+    public void displayErrorMsg(){
+        home_page.set_error(errorMsg);
+        errorMsg = "";
+    }
+
+    public void setErrorMsg(String msg){
+        if (errorMsg != null && errorMsg.isEmpty() == false)
+            errorMsg = errorMsg + "\n" + msg;
+        else
+            errorMsg = msg;
+    }
+
+    public String getErrorMsg(){
+        return errorMsg;
+    }
+
     private void getTimes(){
-        
-        String hours = home_page.get_black_hours().getText();
-        String min = home_page.get_black_min().getText();
-        String sec = home_page.get_black_sec().getText();
-        try {
-            black_time = Integer.parseInt(hours) * 3600000 + 
-                    Integer.parseInt(min) * 60000 + 
-                    Integer.parseInt(sec) * 1000;
-        }
-        catch (NumberFormatException e){
-            System.out.println("erreur parsing black time mettre message d'erreur et ne pas valider");
-        }
-        hours = home_page.get_white_hours().getText();
-        min = home_page.get_white_min().getText();
-        sec = home_page.get_white_sec().getText();
+        StringBuilder hours;
+        StringBuilder min;
+        StringBuilder sec;
+        System.out.println("white time : " + white_time + " black time : " + black_time);
+        if (black_time == 0){
+            hours = new StringBuilder(home_page.get_black_hours().getText());
+            min = new StringBuilder(home_page.get_black_min().getText());
+            sec = new StringBuilder(home_page.get_black_sec().getText());
+            checkTimeVal(hours, min, sec);
+            try {
+                black_time = Integer.parseInt(hours.toString()) * 3600000 + 
+                        Integer.parseInt(min.toString()) * 60000 + 
+                        Integer.parseInt(sec.toString()) * 1000;
+            }
+            catch (NumberFormatException e){
+                setErrorMsg("invalid black time.");
+            }
+            if (black_time == 0)
+                setErrorMsg("invalid black time.");
 
-        try {
-            white_time = Integer.parseInt(hours) * 3600000 + 
-                    Integer.parseInt(min) * 60000 + 
-                    Integer.parseInt(sec) * 1000;
         }
-        catch (NumberFormatException e){
-            System.out.println("erreur parsing white time mettre message d'erreur et ne pas valider");
+        if (white_time == 0){
+            hours = new StringBuilder(home_page.get_white_hours().getText());
+            min = new StringBuilder(home_page.get_white_min().getText());
+            sec = new StringBuilder(home_page.get_white_sec().getText());
+            checkTimeVal(hours, min, sec);
+            try {
+                white_time = Integer.parseInt(hours.toString()) * 3600000 + 
+                        Integer.parseInt(min.toString()) * 60000 + 
+                        Integer.parseInt(sec.toString()) * 1000;
+            }
+            catch (NumberFormatException e){
+                setErrorMsg("invalid black time.");
+            }
+            if (white_time == 0)
+                setErrorMsg("invalid white time.");
         }
-        if (black_time == 0)
-            black_time = 10 * 60 * 1000;
-        if (white_time == 0)
-            white_time = 10 * 60 * 1000;
     }
 
-    void resetButtonDifficulty(String deselectedColor){
-        home_page.getWhiteEasyButton().setStyle(deselectedColor);
-        home_page.getWhiteMediumButton().setStyle(deselectedColor);
-        home_page.getWhiteHardButton().setStyle(deselectedColor);
-        home_page.getBlackEasyButton().setStyle(deselectedColor);
-        home_page.getBlackMediumButton().setStyle(deselectedColor);
-        home_page.getBlackHardButton().setStyle(deselectedColor);
+    void resetButtonDifficulty(String deselectedStyle){
+        home_page.getWhiteEasyButton().setStyle(deselectedStyle);
+        home_page.getWhiteMediumButton().setStyle(deselectedStyle);
+        home_page.getWhiteHardButton().setStyle(deselectedStyle);
+        home_page.getBlackEasyButton().setStyle(deselectedStyle);
+        home_page.getBlackMediumButton().setStyle(deselectedStyle);
+        home_page.getBlackHardButton().setStyle(deselectedStyle);
     }
 
+    void resetButtonSize(String deselectedStyle){
+        home_page.get9Button().setStyle(deselectedStyle);
+        home_page.get13Button().setStyle(deselectedStyle);
+        home_page.get19Button().setStyle(deselectedStyle);
+    }
 
     public Home() {
-        String selectedColor = "-fx-background-color: #FF0000;";
-        String deselectedColor = "-fx-background-color: #ADD8E6;";
+        String selectedColor = "-fx-text-fill: #FFFFFF;";
+        String deselectedColor = "-fx-text-fill: #000000;";
+        String selectedBackgroundColor = "-fx-background-color: #000000;";
+        String deselectedBackgroundColor = "-fx-background-color: #FFFFFF;";
+        String deselectedStyle = deselectedBackgroundColor + deselectedColor;
+        String selectedStyle = selectedBackgroundColor + selectedColor;
         home_page.getLoadSgf().setOnAction(e -> {
             home_page.addFileBox(filebox.getFileBox());
         });
@@ -109,62 +149,66 @@ public class Home {
         });
         home_page.getBlackFiveMin().setOnAction(e -> {
             black_time = 300000;
-            home_page.getBlackFiveMin().setStyle(selectedColor);
-            home_page.getBlackThreeMin().setStyle(deselectedColor);
+            home_page.getBlackFiveMin().setStyle(selectedStyle);
+            home_page.getBlackThreeMin().setStyle(deselectedStyle);
         });
         home_page.getBlackThreeMin().setOnAction(e -> {
             black_time = 600000;
-            home_page.getBlackFiveMin().setStyle(deselectedColor);
-            home_page.getBlackThreeMin().setStyle(selectedColor);
+            home_page.getBlackFiveMin().setStyle(deselectedStyle);
+            home_page.getBlackThreeMin().setStyle(selectedStyle);
         });
         home_page.getWhiteFiveMin().setOnAction(e -> {
             white_time = 300000;
-            home_page.getWhiteFiveMin().setStyle(selectedColor);
-            home_page.getWhiteThreeMin().setStyle(deselectedColor);
+            home_page.getWhiteFiveMin().setStyle(selectedStyle);
+            home_page.getWhiteThreeMin().setStyle(deselectedStyle);
         });
         home_page.getWhiteThreeMin().setOnAction(e -> {
             white_time = 600000;
-            home_page.getWhiteFiveMin().setStyle(deselectedColor);
-            home_page.getWhiteThreeMin().setStyle(selectedColor);
+            home_page.getWhiteFiveMin().setStyle(deselectedStyle);
+            home_page.getWhiteThreeMin().setStyle(selectedStyle);
         });
 
         home_page.getBlackCustom().setOnAction(e -> {
+            black_time = 0;
             home_page.getBlackCustomTime().setManaged(true);
             home_page.getBlackCustomTime().setVisible(true);
             home_page.getBlackButtonTime().setManaged(false);
             home_page.getBlackButtonTime().setVisible(false);
-            home_page.getBlackThreeMin().setStyle(deselectedColor);
-            home_page.getBlackFiveMin().setStyle(deselectedColor);
+            home_page.getBlackThreeMin().setStyle(deselectedStyle);
+            home_page.getBlackFiveMin().setStyle(selectedStyle);
         });
         home_page.getWhiteCustom().setOnAction(e -> {
+            white_time = 0;
             home_page.getWhiteCustomTime().setManaged(true);
             home_page.getWhiteCustomTime().setVisible(true);
             home_page.getWhiteButtonTime().setManaged(false);
             home_page.getWhiteButtonTime().setVisible(false);
-            home_page.getWhiteThreeMin().setStyle(deselectedColor);
-            home_page.getWhiteFiveMin().setStyle(deselectedColor);
+            home_page.getWhiteThreeMin().setStyle(deselectedStyle);
+            home_page.getWhiteFiveMin().setStyle(selectedStyle);
         });
         home_page.getBlackBackButton().setOnAction(e -> {
+            black_time = 300000;
             home_page.getBlackCustomTime().setManaged(false);
             home_page.getBlackCustomTime().setVisible(false);
             home_page.getBlackButtonTime().setManaged(true);
             home_page.getBlackButtonTime().setVisible(true);
         });
         home_page.getWhiteBackButton().setOnAction(e -> {
+            white_time = 300000;
             home_page.getWhiteCustomTime().setManaged(false);
             home_page.getWhiteCustomTime().setVisible(false);
             home_page.getWhiteButtonTime().setManaged(true);
             home_page.getWhiteButtonTime().setVisible(true);
         });
-        home_page.getWhiteEasyButton().setStyle(selectedColor);
-        home_page.getBlackEasyButton().setStyle(selectedColor);
+        home_page.getWhiteEasyButton().setStyle(selectedStyle);
+        home_page.getBlackEasyButton().setStyle(selectedStyle);
         home_page.getBlackIaTypeButton().setOnAction(e -> {
             System.out.println("black is bot");
             black_player_type = 1;
             home_page.getBlackBox().setManaged(true);
             home_page.getBlackBox().setVisible(true);
-            home_page.getBlackIaTypeButton().setStyle(selectedColor);
-            home_page.getBlackHumanTypeButton().setStyle(deselectedColor);
+            home_page.getBlackIaTypeButton().setStyle(selectedStyle);
+            home_page.getBlackHumanTypeButton().setStyle(deselectedStyle);
         });
 
         home_page.getBlackHumanTypeButton().setOnAction(e -> {
@@ -173,8 +217,8 @@ public class Home {
             home_page.getBlackBox().setManaged(false);
             home_page.getBlackBox().setVisible(false);
 
-            home_page.getBlackHumanTypeButton().setStyle(selectedColor);
-            home_page.getBlackIaTypeButton().setStyle(deselectedColor);
+            home_page.getBlackHumanTypeButton().setStyle(selectedStyle);
+            home_page.getBlackIaTypeButton().setStyle(deselectedStyle);
         });
 
         home_page.getWhiteIaTypeButton().setOnAction(e -> {
@@ -183,8 +227,8 @@ public class Home {
             home_page.getWhiteBox().setManaged(true);
             home_page.getWhiteBox().setVisible(true);
 
-            home_page.getWhiteIaTypeButton().setStyle(selectedColor);
-            home_page.getWhiteHumanTypeButton().setStyle(deselectedColor);
+            home_page.getWhiteIaTypeButton().setStyle(selectedStyle);
+            home_page.getWhiteHumanTypeButton().setStyle(deselectedStyle);
         });
 
         home_page.getWhiteHumanTypeButton().setOnAction(e -> {
@@ -194,189 +238,132 @@ public class Home {
             home_page.getWhiteBox().setVisible(false);
 
             // Mettre à jour les couleurs
-            home_page.getWhiteHumanTypeButton().setStyle(selectedColor);
-            home_page.getWhiteIaTypeButton().setStyle(deselectedColor);
+            home_page.getWhiteHumanTypeButton().setStyle(selectedStyle);
+            home_page.getWhiteIaTypeButton().setStyle(deselectedStyle);
         });
         home_page.getWhiteEasyButton().setOnAction(e -> {
             level = 3;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackEasyButton().setStyle(selectedColor);
-            home_page.getWhiteEasyButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackEasyButton().setStyle(selectedStyle);
+            home_page.getWhiteEasyButton().setStyle(selectedStyle);
         });
         home_page.getWhiteMediumButton().setOnAction(e -> {
             level = 2;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackMediumButton().setStyle(selectedColor);
-            home_page.getWhiteMediumButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackMediumButton().setStyle(selectedStyle);
+            home_page.getWhiteMediumButton().setStyle(selectedStyle);
         });
         home_page.getWhiteHardButton().setOnAction(e -> {
             level = 1;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackHardButton().setStyle(selectedColor);
-            home_page.getWhiteHardButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackHardButton().setStyle(selectedStyle);
+            home_page.getWhiteHardButton().setStyle(selectedStyle);
         });
         home_page.getBlackEasyButton().setOnAction(e -> {
             level = 3;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackEasyButton().setStyle(selectedColor);
-            home_page.getWhiteEasyButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackEasyButton().setStyle(selectedStyle);
+            home_page.getWhiteEasyButton().setStyle(selectedStyle);
         });
         home_page.getBlackMediumButton().setOnAction(e -> {
             level = 2;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackMediumButton().setStyle(selectedColor);
-            home_page.getWhiteMediumButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackMediumButton().setStyle(selectedStyle);
+            home_page.getWhiteMediumButton().setStyle(selectedStyle);
         });
         home_page.getBlackHardButton().setOnAction(e -> {
             level = 1;
-            resetButtonDifficulty(deselectedColor);
-            home_page.getBlackHardButton().setStyle(selectedColor);
-            home_page.getWhiteHardButton().setStyle(selectedColor);
+            resetButtonDifficulty(deselectedStyle);
+            home_page.getBlackHardButton().setStyle(selectedStyle);
+            home_page.getWhiteHardButton().setStyle(selectedStyle);
         });
-        // Groupe 3: Règles du jeu
         home_page.getGomokuButton().setOnAction(e -> {
-            System.out.println("gomoku");
-            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
             home_page.getBoardSizeBox().setVisible(false);
             home_page.getBoardSizeBox().setManaged(false);
+            home_page.getBlackIaTypeButton().setManaged(true);
+            home_page.getBlackIaTypeButton().setVisible(true);
+            home_page.getWhiteIaTypeButton().setManaged(true);
+            home_page.getWhiteIaTypeButton().setVisible(true);
             rule = "Gomoku";
-            
-            // Mettre à jour les couleurs
-            home_page.getGomokuButton().setStyle(selectedColor);
-            home_page.getPenteButton().setStyle(deselectedColor);
-            home_page.getRenjuButton().setStyle(deselectedColor);
-            home_page.getGoButton().setStyle(deselectedColor);
+            home_page.getGomokuButton().setStyle(selectedStyle);
+            home_page.getPenteButton().setStyle(deselectedStyle);
+            home_page.getGoButton().setStyle(deselectedStyle);
         });
 
         home_page.getStringRule().addListener((observable, oldValue, newValue) -> {
             boardSize = SGF.getSize();
-            String[] rules_type = new String[] {"gomoku", "pente", "renju", "go"};
+            String[] rules_type = new String[] {"gomoku", "pente", "go"};
             Button[] rules_button = new Button[] {
                 home_page.getGomokuButton(),
                 home_page.getPenteButton(),
-                home_page.getRenjuButton(),
                 home_page.getGoButton()
             };
             newValue = newValue.toLowerCase();
             int i = 0;
             boolean matched = false;
             while (i < rules_type.length){
-                System.out.println("newValue == " + newValue + " tested rules " + rules_type[i]);
                 if (rules_type[i].equals(newValue)){
-                    rules_button[i].setStyle(selectedColor);
+                    rules_button[i].setStyle(selectedStyle);
                     matched = true;
                     break;
                 }
                 else
-                    rules_button[i].setStyle(deselectedColor);
+                    rules_button[i].setStyle(deselectedStyle);
                 i++;
             }
-            System.out.println("i == " + i + "matchd == " + matched);
             if (matched == false){
-                System.out.println("default rules reset sur string event");
                 rule = "Gomoku";
                 return ;
             }
-            System.out.println("new rules set sur string event");
-            // System.out.println("gomoku");
-            // if ("go".equals(rules_type[i])){
-            //     changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), true);
-            // }
-            // else{
-            //     changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
-            // }
             rule = rules_type[i];
         });
 
         home_page.getPenteButton().setOnAction(e -> {
-            System.out.println("Pente");
-            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
             home_page.getBoardSizeBox().setVisible(false);
             home_page.getBoardSizeBox().setManaged(false);
             rule = "Pente";
-            
-            // Mettre à jour les couleurs
-            home_page.getPenteButton().setStyle(selectedColor);
-            home_page.getGomokuButton().setStyle(deselectedColor);
-            home_page.getRenjuButton().setStyle(deselectedColor);
-            home_page.getGoButton().setStyle(deselectedColor);
+            home_page.getPenteButton().setStyle(selectedStyle);
+            home_page.getGomokuButton().setStyle(deselectedStyle);
+            home_page.getRenjuButton().setStyle(deselectedStyle);
+            home_page.getGoButton().setStyle(deselectedStyle);
+            home_page.getBlackIaTypeButton().setManaged(true);
+            home_page.getBlackIaTypeButton().setVisible(true);
+            home_page.getWhiteIaTypeButton().setManaged(true);
+            home_page.getWhiteIaTypeButton().setVisible(true);
         });
 
         home_page.get9Button().setOnAction(e -> {
-            System.out.println("9");
             boardSize = 9;
-            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+            resetButtonSize(deselectedStyle);
+            home_page.get9Button().setStyle(selectedStyle);
         });
 
         home_page.get13Button().setOnAction(e -> {
-            System.out.println("13");
             boardSize = 13;
-            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+            resetButtonSize(deselectedStyle);
+            home_page.get13Button().setStyle(selectedStyle);
         });
 
         home_page.get19Button().setOnAction(e -> {
-            System.out.println("19");
             boardSize = 19;
-            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
+            resetButtonSize(deselectedStyle);
+            home_page.get19Button().setStyle(selectedStyle);
         });
-        // Vous avez un doublon pour Pente que j'ai supprimé
-
-        home_page.getRenjuButton().setOnAction(e -> {
-            System.out.println("Renju");
-            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), false);
-            home_page.getBoardSizeBox().setVisible(false);
-            home_page.getBoardSizeBox().setManaged(false);
-
-            rule = "Renju";
-            
-            // Mettre à jour les couleurs
-            home_page.getRenjuButton().setStyle(selectedColor);
-            home_page.getGomokuButton().setStyle(deselectedColor);
-            home_page.getPenteButton().setStyle(deselectedColor);
-            home_page.getGoButton().setStyle(deselectedColor);
-        });
-
         home_page.getGoButton().setOnAction(e -> {
-            System.out.println("Go");
-            // changeVisibility(home_page.getKomiButton(), home_page.getHandicap(), true);
             home_page.getBoardSizeBox().setVisible(true);
             home_page.getBoardSizeBox().setManaged(true);
             rule = "Go";
-            
-            // Mettre à jour les couleurs
-            home_page.getGoButton().setStyle(selectedColor);
-            home_page.getGomokuButton().setStyle(deselectedColor);
-            home_page.getPenteButton().setStyle(deselectedColor);
-            home_page.getRenjuButton().setStyle(deselectedColor);
+            home_page.getGoButton().setStyle(selectedStyle);
+            home_page.getGomokuButton().setStyle(deselectedStyle);
+            home_page.getPenteButton().setStyle(deselectedStyle);
+            home_page.getBlackIaTypeButton().setManaged(false);
+            home_page.getBlackIaTypeButton().setVisible(false);
+            home_page.getWhiteIaTypeButton().setManaged(false);
+            home_page.getWhiteIaTypeButton().setVisible(false);
         });
+
         home_page.getValidationButton().setOnAction(e -> {
-            System.out.println("Validation clicked");
-            if (home_page.getKomiButton().isVisible()) {
-                try {
-                    komi = Float.parseFloat(home_page.getKomiButton().getText());
-                    System.out.println("Komi: " + komi);
-                } 
-                catch (NumberFormatException ex) {
-                    System.out.println("Invalid Komi value");
-                    komi = -1;
-                }
-            }
-            
-            if (home_page.getHandicap().isVisible()) {
-                try {
-                    handicap = Integer.parseInt(home_page.getHandicap().getText());
-                    if (handicap < 0 || handicap > 9) {
-                        throw new NumberFormatException("Handicap out of range");
-                    }
-                    System.out.println("Handicap: " + handicap);
-                } 
-                catch (NumberFormatException ex) {
-                    System.out.println("Invalid Handicap value");
-                    handicap = -1;
-                }
-            }
             getTimes();
-            System.out.println("black time == " + black_time + " white time ==  " + white_time);
         });
 
     }
@@ -441,7 +428,4 @@ public class Home {
     public void setRulesInstance(Rules r){
         home_page.setRulesInstance(r);
     }
-
-
-
 }

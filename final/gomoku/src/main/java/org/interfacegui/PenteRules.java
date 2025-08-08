@@ -110,6 +110,7 @@ public class PenteRules implements Rules {
                 waitingWinner = color;
             if (waitingWinner == 0)
             {
+                gameStatus = Rules.GameMode.ENDGAME;
                 this.winner = color;
                 return true;
             }
@@ -117,6 +118,7 @@ public class PenteRules implements Rules {
         if (nbMove == boardSize * boardSize)
         {
             winner = 0;
+            gameStatus = Rules.GameMode.ENDGAME;
             return true;
         }
         return false;

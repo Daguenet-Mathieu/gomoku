@@ -23,6 +23,7 @@ public class Goban{
 
     private void init_margin_size(int heigh, int width){
         int goban_size = _square_size * (_nb_line - 1);
+        System.out.println("goban size == " + goban_size + " height : " + heigh);
         _heigh_margin_size = (heigh - goban_size) / 2;
         _width_margin_size = (width - goban_size) / 2;
     }

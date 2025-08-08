@@ -542,5 +542,4 @@ public class GoRules implements Rules {
     public boolean hasIa(){
         return false;
     }
-
 }
