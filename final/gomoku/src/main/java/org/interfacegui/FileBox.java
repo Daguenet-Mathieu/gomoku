@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.Node;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import javafx.geometry.Pos;
+// import javafx.geometry.Pos;
 
 public class FileBox{
 

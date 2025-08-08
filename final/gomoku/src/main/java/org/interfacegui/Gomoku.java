@@ -560,7 +560,7 @@ public class Gomoku
         else
             _map.add(new Map(_nb_line));
         if (playingMode == Rules.GameMode.LEARNING){
-            _map.remove(0);
+            //_map.remove(0);
             goban.updateFromMap(_map.get(0));//erase 0?
             commentLabel.setManaged(true);
             commentLabel.setVisible(true);

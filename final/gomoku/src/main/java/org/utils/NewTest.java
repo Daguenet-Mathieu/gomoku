@@ -200,6 +200,16 @@ public class NewTest //Main test
         move(6, 7, 1);
         move(6, 8, 1);
 
+
+        // move(8, 10, 1);
+        // move(8, 11, 1);
+        //move(9, 9, 1);
+        //move(10, 9, 1);
+        // move(13, 7, 1);
+        // move(14, 7, 1);
+        // move(15, 6, 1);
+        // move(15, 4, 1);
+
         check_db_valid(6, 6, 1);
 
         // move(8, 8, 1);

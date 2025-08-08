@@ -50,7 +50,6 @@ public class Game {
             System.out.println("ruleset " + rules);
             return new MinMax();
         }
-
     }
 
     public void tree_config(int lvl)
