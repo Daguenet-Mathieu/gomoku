@@ -168,9 +168,16 @@ public class Game {
 
     private void initialize_map()
     {
+        System.out.println("Ininialize map");
         for (int i = 0 ; i < 19 ; i++)
+        {
             for (int j = 0 ; j < 19 ; j++)
+            {
                     MinMax.map[i][j] = gameMap[i][j];
+                    System.out.printf("%2d", gameMap[i][j]);
+            }
+            System.out.println();
+        }
     }
 
     public Point best_move(int turn, int player, boolean display)
