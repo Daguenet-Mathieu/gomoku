@@ -478,6 +478,11 @@ public class Gomoku
             }
         }
         _map.remove(_map.size() - 1);
+        for (int i = 0; i < rule.get_board_size(); i++){
+            for (int j = 0; j < rule.get_board_size(); j++){
+                game.gameMap[i][j] = _map.get(_map.size() - 1).get_map()[i][j];
+            }
+        }
         goban.updateFromMap(_map.get(_map.size() - 1));
         player_turn ^= 1;
         rule.set_black_prisonners(_map.get((_map.size()-1)).getBlackPrisonners());

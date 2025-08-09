@@ -2,9 +2,7 @@
 RU[Japanese]SZ[9]KM[0.00]
 C[Le jeu de Go se joue sur un plateau de 19 lignes et 19 colonnes.
 Il existe aussi les tailles 13*13 et 9*9, qui sont principalements utilisees a but pedagogique ou d'illustration
-Les pions noirs et blancs, appelés "pierres", sont joués sur les intersections.]
-;AB[de]C[Noir joue le premier coup.
-Ensuite, les deux joueurs jouent à tour de rôle.]
+Il se joue avec des pions noir et blanc, appeles pierres que l'on place sur les intersections inoccupees.]
 ;AE[de]AW[fa][eb][gb][fc][fe][he][bf][gf][eg][fh]AB[cc][ge][cf][fg]
 C[Une pierre a 4 libertés.
 Lorsqu'elles sont toutes occupées, la pierre est capturée.]
