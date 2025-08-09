@@ -1,0 +1,23 @@
+(;GM[1]FF[4]CA[UTF-8]AP[CGoban:3]ST[2]
+RU[Japanese]SZ[9]KM[0.00]
+C[le jeu de Go se joue sur un plateau de 19 lignes et 19 colonnes.
+
+Il existe aussi les tailles 13*13 et 9*9, qui sont principalements utilisees a but pedagogique ou d'illustration
+
+Il se joue avec des pions noir et blanc, appeles pierres que l'on place sur les intersections inoccupees.]
+;B[]
+;AB[de]C[noir joue le 1er coup puis les 2 joueurs joueuront leurs coups tour a tour.]
+;C[une pierre a 4 libertes
+]
+;AB[dd][fe][ge][he][df]C[si plusieurs pierres sont au contact en horizontal ou en vertical   et leur libertes sont partagees pour former une chaine ou un groupe de pierres.]
+;AE[df]AW[cd][ed][gd][de][fe][ie][gf][hf]C[quand un groupe de pierres n'as plus qu'une liberte, il est dans une situation appellee "atari" et est sous la menace d'une capture si il perd sa dernere liberte]
+;AE[dd][ge][he]AW[dc][hd]C[noir n'ayant pas reagit, Blanc les a captures.
+Les  groupes ont onc ete enleves du plateau et devienennt des prisoniers de blanc qui lui rapporteront 1 point chcun en fin de partie.]
+;AE[dc][cd][gd][hd][ie][gf][hf]AW[ef]C[le suicide est un coup interdit, noir a donc un coup interdit dasn cette position, vous pourrez le visualiser en appuyant sur le bouton forbiddens.]
+;AB[ec][dd][fd]C[la capture etant prioritaire sur le suicide, noir a ici la possibilite de capturer la pierre blanche.]
+;AE[ed]AB[ee]C[cette position se nomme le ko il s'agit d'une position qui peut se derouler a l'infini.
+pour eviter cela une regle interdit de reproduire un position qui s'est deja produite.
+ici blanc a donc interdition de reprendre la pierre noire et doit jouer alleurs.
+noir aura alors le choix entre connecter et terminer le ko ou jouer ailleurs et laisser a blanc la possibilitees de reprendre a son tour.]
+;AE[ec][dd][fd][de][ee][fe][ef]AW[gd][hd][id][ge][gf][gg][gh][gi]C[on a vu que l'on pouvait faire des points en capturant une pierre, une autre maniere est d'envercles des intersections libres.
+chaque intersection encercelees devient la propriete du joueur et est appelee sont territoire, elles lui permettent chacune de faire 1 point. ])
