@@ -138,6 +138,7 @@ public class GoRules implements Rules {
     public boolean pass(){
         switch (gameStatus) {
             case PLAYING:
+            case LEARNING:
                 if (pass == false){
                     pass = true;
                 }
@@ -243,6 +244,12 @@ public class GoRules implements Rules {
     }
 
     @Override
+    public void setGameMode(Rules.GameMode newStatus){
+        gameStatus = newStatus;
+    }
+
+
+    @Override
     public ArrayList<Point> get_forbiden_moves(ArrayList<Map> map, int index, int color){
         if (index == 0)
             return (new ArrayList<Point>());
@@ -250,8 +257,7 @@ public class GoRules implements Rules {
         final int advColor = color == 1 ? 2 : 1;
         for (int i = 0; i < get_board_size(); i++){
             for (int j = 0; j < get_board_size(); j++){
-                Map tmp = new Map(map.get(map.size() - 1));
-
+                Map tmp = new Map(map.get(index));
                 if (map.get(index).get_map()[i][j] == 0 && checkForbidden(new Point(j, i), map, index, color) == false)
                     forbidden_moves.add(new Point(j, i));
                 else if (map.get(index).get_map()[i][j] == 0 && checkSuicide(tmp, new Point(j, i), color, advColor))
@@ -300,7 +306,6 @@ public class GoRules implements Rules {
 
         removeDuplicates(list);
         for (Point l : list){
-            System.out.println(l + " is capturable ? " + isCapturable(l, map));
             if (isCapturable(l, map) == false)
             {
                 list.clear();

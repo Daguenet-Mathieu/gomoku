@@ -22,6 +22,11 @@ public class PenteRules implements Rules {
             boardSize = 19;
     }
 
+    @Override
+    public void setGameMode(Rules.GameMode newStatus){
+        gameStatus = newStatus;
+    }
+
 
     @Override
     public boolean hasPass(){

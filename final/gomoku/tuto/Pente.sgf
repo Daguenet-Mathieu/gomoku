@@ -1,23 +1,24 @@
 (;GM[4]RU[Pente]FF[4]CA[UTF-8]AP[Gomoku:1]ST[2]SZ[19]
-C[le jeu de Pente se joue sur un plateau de 19 lignes et 19 colonnes.
-Il se joue avec des pions noir et blanc, appeles pierres que l'on place sur les intersections inoccupees]
-;B[ii]C[noir joue le 1er coup puis les 2 joueurs joueuront leurs coups tour a tour.]
-;AB[ff][gf][hf][if][jf][ij][ik][il][dm][im][nm][en][mn][fo][lo][gp][kp][hq][jq]C[le but est d'aligner 5 pierres a la suite de facon horizontale digaonale ou verticale.
-Le premier joueur arrivant a cette configuration gagne la partie.]
-;AE[ff][gf][hf][if][jf][ii][ij][ik][il][dm][im][nm][en][mn][fo][lo][gp][kp][hq][jq]AB[hh][hi][hj]C[Ceci est une position appelee "free three".
-Est appele "free three" une position qui permet en un seul coup d'arriver sans bloquage de l'adveraire d'arriver a un free four
-Si l'adversaire ne le bloque pas blanc de maniere infaillible peut gagner en 2 tours]
-;AE[hh]AB[hg]C[Ceci est egalement considere comme une postion de "free three" menant a une victoire infaillible]
-;AE[hi][hj]AB[dd][ee][ig][ki][li][jj][jk][hn][ho][ep][gp]C[il est interdit de jouer un coup qui formerait 2 "free three" en 1 seul coup.
-toutes ces positions creent des double "free three" et contienent des coups interdit.
-en appuyant sur le bouton "forbiddens", vous pourrez voir les emplacements de ces coups interdits]
-;AE[dd][ee][hg][ig][hn][ho][ep][gp]AW[ii]C[une pierre adverse peut rendre le coup a nouveau jouable.
-dans le cas ou elle empeche la creation du double free three]
-;AE[ii][jj][jk]AW[ji]C[lorsque'une paire de pierres connectee est bloquee au niveau de ses extremites, cette paire est alors capturee.
-dasn cet exemple la paire noire est en danger]
-;AW[mi]C[ici blanc a capture une paire de pierre noire.
-On peut voir son nombre de prisonnier sur la gauche.
-Reussir a capturer 5 paires de pierres est une autre maniere de gagner la partie]
-;AE[ji][ki][li][mi]AW[dd][od][en]AB[ee][ne][ff][mf][el][em]C[voici d'autres exemples de position ou une paire est capturable]
-;AE[dd][od][ee][ne][ff][mf][el][em][en]AW[ll]AB[mi][lj][kk][jl][kl][im]C[cette position de 5 pierres connectes, ne gagne pas immediatement car une des pierre qui la compose est capturable
-blanc doit absolument capturer cettes paire de pierre afin d'empecher noir de gagner])
+C[Le jeu de Pente se joue sur un plateau de 19 lignes et 19 colonnes.
+Il se joue avec des pions noirs et blancs, appelés pierres que l'on place sur les intersections inoccupées.]
+;B[ii]C[Noir joue le 1er coup, puis les 2 joueurs joueront leurs coups tour à tour.]
+;AB[ff][gf][hf][if][jf][ij][ik][il][dm][im][nm][en][mn][fo][lo][gp][kp][hq][jq]C[Le but est d'aligner 5 pierres à la suite, de façon horizontale, diagonale ou verticale.
+Le premier joueur arrivant à cette configuration gagne la partie.]
+;AE[ff][gf][hf][if][jf][ii][ij][ik][il][dm][im][nm][en][mn][fo][lo][gp][kp][hq][jq]AB[hh][hi][hj]C[Ceci est une position appelée "free three".
+On appelle "free three" une position qui permet, en un seul coup, d’arriver sans blocage de l’adversaire à un "free four".
+Si l’adversaire ne le bloque pas, Blanc peut de manière infaillible gagner en 2 tours.]
+;AE[hh]AB[hg]C[Ceci est également considéré comme une position de "free three" menant à une victoire infaillible.]
+;AE[hi][hj]AB[dd][ee][ig][ki][li][jj][jk][hn][ho][ep][gp]C[Il est interdit de jouer un coup qui formerait 2 "free three" en un seul coup.
+Toutes ces positions créent des doubles "free three" et contiennent des coups interdits.
+En appuyant sur le bouton "forbiddens", vous pourrez voir les emplacements de ces coups interdits.]
+;AE[dd][ee][hg][ig][hn][ho][ep][gp]AW[ii]C[Une pierre adverse peut rendre le coup à nouveau jouable,
+dans le cas où elle empêche la création du double free three.]
+;AE[ii][jj][jk]AW[ji]C[Lorsqu'une paire de pierres connectées est bloquée au niveau de ses extrémités, cette paire est alors capturée.
+Dans cet exemple, la paire noire est en danger.]
+;AW[mi]C[Ici, Blanc a capturé une paire de pierres noires.
+On peut voir son nombre de prisonniers sur la gauche.
+Réussir à capturer 5 paires de pierres est une autre manière de gagner la partie.]
+;AE[ji][ki][li][mi]AW[dd][od][en]AB[ee][ne][ff][mf][el][em]C[Voici d'autres exemples de positions où une paire est capturable.]
+;AE[dd][od][ee][ne][ff][mf][el][em][en]AW[ll]AB[mi][lj][kk][jl][kl][im]C[Cette position de 5 pierres connectées ne gagne pas immédiatement car une des pierres qui la compose est capturable.
+Blanc doit absolument capturer cette paire de pierres afin d’empêcher Noir de gagner.]
+)

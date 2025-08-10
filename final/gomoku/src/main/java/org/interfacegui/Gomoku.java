@@ -188,6 +188,8 @@ public class Gomoku
     }
 
     public void reset_gomoku(){
+        gameInfos.getResultsBox().setVisible(true);
+        gameInfos.getResultsBox().setManaged(true);
         _map.clear();
         _map.add(new Map(_nb_line));
         saved.clear();
@@ -206,8 +208,10 @@ public class Gomoku
         player_turn = 0;
         current_decrement = 0;
         game_end = false;
-        game = new Game(_game_infos.get_rules(), rule.get_board_size());
-        game.reset_minmax();
+        if (rule.hasIa()){
+            game = new Game(_game_infos.get_rules(), rule.get_board_size());
+            game.reset_minmax();
+        }
         _winner = 0;
         gameInfos.set_black_prisonners("0");
         gameInfos.set_white_prisonners("0");
@@ -367,7 +371,7 @@ public class Gomoku
     }
 
     private void playMove(Point point){
-        if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map) || rule.getGameMode() == Rules.GameMode.ENDGAME){
+        if (map_index < (_map.size() - 1) || !rule.isValidMove(point, _map)){
             return ;
         }
         if (rule.getGameMode() == Rules.GameMode.DEATH_MARKING){
@@ -379,6 +383,9 @@ public class Gomoku
                 currentMap.get_map()[p.y][p.x] = newColor;
             }
             goban.updateFromMap(currentMap);
+            return ;
+        }
+        if (rule.getGameMode() != Rules.GameMode.PLAYING){
             return ;
         }
         changeCandidatVisibility(false);
@@ -490,6 +497,11 @@ public class Gomoku
         display_nb_prisonners();
     }
 
+
+    public Button getBackHomeButton(){
+        return gameInfos.getBackHomeButton();
+    }
+
     public Gomoku(int heigh, int width, Home game_infos){
         _game_infos = game_infos;
         _width = width;
@@ -498,12 +510,14 @@ public class Gomoku
         else
             init_rules(_game_infos.get_rules(), _game_infos.get_board_size());
         _nb_line = rule.get_board_size();
-        game = new Game(game_infos.get_rules(), rule.get_board_size());
-        game.tree_config(game_infos.getLevel());
-        map_index = 0;
-        _map = new ArrayList<Map>();
         gameInfos = new GameInfos(heigh, _game_infos_size_x, game_infos);
         playingMode = game_infos.getGameMode();
+        if (playingMode == Rules.GameMode.PLAYING){
+            game = new Game(game_infos.get_rules(), rule.get_board_size());
+            game.tree_config(game_infos.getLevel());
+        }
+        map_index = 0;
+        _map = new ArrayList<Map>();
         goban = new Goban(heigh, width - _game_infos_size_x, rule.get_board_size());
         commentLabel.setManaged(false);
         commentLabel.setVisible(false);
@@ -517,6 +531,27 @@ public class Gomoku
         else
             _map.add(new Map(_nb_line));
         if (playingMode == Rules.GameMode.LEARNING){
+            gameInfos.getBackHomeButton().setVisible(true);
+            gameInfos.getBackHomeButton().setManaged(true);
+            gameInfos.get_last_move_time().setVisible(false);
+            gameInfos.get_last_move_time().setManaged(false);
+            gameInfos.get_average_black_time().setManaged(false);
+            gameInfos.get_average_black_time().setVisible(false);
+            gameInfos.get_average_white_time().setManaged(false);
+            gameInfos.get_average_white_time().setVisible(false);
+            gameInfos.getCandidatsButton().setVisible(false);
+            gameInfos.getCandidatsButton().setManaged(false);
+            gameInfos.getHintButton().setVisible(false);
+            gameInfos.getHintButton().setManaged(false);
+
+            gameInfos.getResignButton().setManaged(false);
+            gameInfos.getResignButton().setVisible(false);
+            gameInfos.getExportButton().setManaged(false);
+            gameInfos.getExportButton().setVisible(false);
+            gameInfos.get_black_time_label().setManaged(false);
+            gameInfos.get_black_time_label().setVisible(false);
+            gameInfos.get_white_time_label().setManaged(false);
+            gameInfos.get_white_time_label().setVisible(false);
             _map.remove(0);
             goban.updateFromMap(_map.get(0));
             commentLabel.setManaged(true);
@@ -527,6 +562,7 @@ public class Gomoku
             commentLabel.setPrefHeight(200);
             commentLabel.setMinHeight(200);
             commentLabel.setMaxHeight(200);
+            rule.setGameMode(Rules.GameMode.LEARNING);
         }
         saved = new ArrayList<Point>();
         game_display = new Pane();
@@ -726,7 +762,9 @@ public class Gomoku
         gameInfos.getPassButton().setOnAction(event -> {
             GoRules r = (GoRules)rule;
             String res;
-            if (r.getGameMode() == Rules.GameMode.ENDGAME){
+            if (r.pass())
+                updatePlayerTurn();
+            if (r.getGameMode() == Rules.GameMode.ENDGAME && gameLoop != null){
                 int blackScore = r.getBlackScore();
                 int whiteScore = r.getWhiteScore();
                 if (whiteScore > blackScore)
@@ -742,8 +780,6 @@ public class Gomoku
                 _end_popin.setManaged(true);
                 return ;
             }
-            if (r.pass())
-                updatePlayerTurn();
             Map newMap = new Map(_map.get(_map.size() - 1));
             _map.add(newMap);
             map_index++;

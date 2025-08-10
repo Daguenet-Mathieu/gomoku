@@ -30,6 +30,11 @@ public class RenjuRules implements Rules {
     }
 
     @Override
+    public void setGameMode(Rules.GameMode newStatus){
+        gameStatus = newStatus;
+    }
+
+    @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
         // Utilisation de la méthode par défaut pour vérifier si la case est vide
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1))) {

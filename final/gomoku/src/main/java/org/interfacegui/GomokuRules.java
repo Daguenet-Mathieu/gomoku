@@ -23,6 +23,11 @@ public class GomokuRules implements Rules {
     }
 
     @Override
+    public void setGameMode(Rules.GameMode newStatus){
+        gameStatus = newStatus;
+    }
+
+    @Override
     public boolean isValidMove(Point point, ArrayList<Map> map) {
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1)))
         {

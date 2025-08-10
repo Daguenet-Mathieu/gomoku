@@ -400,9 +400,8 @@ public class SGF{
     private static void    setCommand(Map map, Union node) throws ParseException{
         if (node instanceof CoordValue)
         {
-            System.out.println("y == " + ((CoordValue)node).getVal().y + " x == " + ((CoordValue)node).getVal().x);
             if (PlayMove(((CoordValue)node).getVal(), game_moves, map, node.getValue()) == false)
-                throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate", 0);
+                throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate : + " + ((CoordValue)node).getVal() + " invalid coordinate", 0);
         }
         else if (node instanceof StringValue){
             map.setComment(((StringValue)node).getVal());
@@ -410,8 +409,7 @@ public class SGF{
         else if (node instanceof ArrayValue){
             for (Point p : ((ArrayValue)node).getVal()){
                 if (PlayMove(p, game_moves, map, node.getValue()) == false)
-                    throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate at move " + game_moves.size(), 0);
-
+                    throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate : + " + p + " at move " + game_moves.size(), 0);
             }
         }
     }
@@ -560,6 +558,7 @@ public class SGF{
         }
         catch (ParseException e){
             errorMsg = e.getMessage();
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -600,6 +599,7 @@ public class SGF{
         {
             return false;
         }
+
         if (map.tryAddToMap(color, p) == false) 
             return false;
         mapList.remove(mapList.size() - 1);
@@ -616,7 +616,6 @@ public class SGF{
                 map.addWhitePrisonners(points.size());
             map.set_prisonners(points);
         }
-
         return true;
     }
 

@@ -29,9 +29,6 @@ public class App extends Application {
     private ImageView title;
     
     private void openBackground(){
-        System.out.println("open img background !");
-        System.out.println("Répertoire courant: " + System.getProperty("user.dir"));
-
         File file1 = new File("./img/background.png");
         File file2 = new File("./img/title.png");
         Image img1 = new Image(file1.toURI().toString(), false);
@@ -118,7 +115,7 @@ public class App extends Application {
             home_page.setSgfMap(sgfMap);
             gomoku = new Gomoku((int)sceney, (int)scenex, home_page);
             goban_root = new Pane();
-            goban = new Scene(goban_root, 850, 525);
+            goban = new Scene(goban_root, 1050, 650);
             set_goban_event();
             goban_root.getChildren().add(gomoku.getGameDisplay());
             switchScene(goban);
@@ -126,8 +123,7 @@ public class App extends Application {
         });
     }
 
-    private void set_goban_event(){
-        gomoku.get_home_button().setOnMouseClicked(event -> {
+    private void setNewHome(){
             double scenex = stage.getWidth();
             double sceney = stage.getHeight();
             home_root = new Pane();
@@ -144,6 +140,14 @@ public class App extends Application {
             stage.setResizable(false);
             home_root.getChildren().add(home_body);
             home_page.getHomePage().setTranslateY(160);
+    }
+
+    private void set_goban_event(){
+        gomoku.getBackHomeButton().setOnMouseClicked(event -> {
+            setNewHome();
+        });
+        gomoku.get_home_button().setOnMouseClicked(event -> {
+            setNewHome();
         });
 
         gomoku.get_replay_button().setOnMouseClicked(event -> {
@@ -199,7 +203,6 @@ public class App extends Application {
         home_root.getChildren().add(home_page.getHomePage());
         home_page.getHomePage().setTranslateY(160);
         home_root.setStyle("-fx-background-color: #FF6347;");
-        root.setOnMouseClicked(e -> System.out.println("Pane cliqué !"));
         stage.centerOnScreen();
         stage.setScene(home);
         stage.show();

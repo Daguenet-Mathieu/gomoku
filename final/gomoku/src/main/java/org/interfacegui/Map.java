@@ -106,7 +106,6 @@ public class Map{
     }
 
     public boolean tryAddToMap(String cmd, Point coord){
-        this.printMap();
         if (coord.y >= _map.length || coord.y >= _map.length)
             return false;
         int color = 0;

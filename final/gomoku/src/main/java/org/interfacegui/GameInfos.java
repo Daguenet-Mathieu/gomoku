@@ -23,7 +23,6 @@ public class GameInfos{
         private String _white_prisonners;
         private Label _black_label_prisonners = new Label();
         private Label _white_label_prisonners = new Label();
-
         private int white_time = 600000;
         private int black_time = 600000;
         private Label white_time_label;
@@ -45,6 +44,8 @@ public class GameInfos{
         private Label playTurn = new Label("Round : 0");
         private Label playerTurn =  new Label("Black turn");
         private VBox _results = new VBox();
+        private Button backHomeButton = new Button("back Home");
+
         public void setWhiteResults(String res){
             _whiteResults.setText(res);
         }
@@ -88,6 +89,14 @@ public class GameInfos{
         public void sub_black_time(int time){
             black_time -= time;
             black_time_label.setText(formatTime(black_time));
+        }
+
+        public Label get_black_time_label(){
+            return black_time_label;
+        }
+
+        public Label get_white_time_label(){
+            return white_time_label;
         }
 
         public int get_black_time(){
@@ -138,6 +147,18 @@ public class GameInfos{
             _average_black_label.setText("black avr : " + formatTime(val));
         }
 
+        public Label get_last_move_time(){
+            return _last_move_label;
+        }
+
+        public Label get_average_white_time(){
+            return _average_white_label;
+        }
+
+        public Label get_average_black_time(){
+            return _average_black_label;
+        }
+
 
         public void set_white_prisonners(String str){
             _white_label_prisonners.setText("prisonners : " + str);
@@ -146,6 +167,10 @@ public class GameInfos{
 
         public void set_black_prisonners(String str){
             _black_label_prisonners.setText("prisonners : " + str);
+        }
+
+        public Button getBackHomeButton(){
+            return backHomeButton;
         }
 
         private void addText() {
@@ -179,8 +204,6 @@ public class GameInfos{
                 fontSizeBinding
             ));
 
-            // _game_infos.getChildren().add(_white);
-
             _black_prisonners = "prisonners: 0";
             _white_prisonners = "prisonners: 0";
             _black_label_prisonners.setText(_black_prisonners);
@@ -196,11 +219,6 @@ public class GameInfos{
             ));
             white_time_label = new Label(formatTime(white_time));
             black_time_label = new Label(formatTime(black_time));
-            // _game_infos.getChildren().add(_white_label_prisonners);
-            // _game_infos.getChildren().add(white_time_label);
-            // _game_infos.getChildren().add(_black);
-            // _game_infos.getChildren().add(_black_label_prisonners);
-            // _game_infos.getChildren().add(black_time_label);
             white_time_label.setLayoutX(_size_x/2);
                         _black.fontProperty().bind(Bindings.createObjectBinding(
                 () -> new Font("Arial", fontSizeBinding.get()),
@@ -227,11 +245,14 @@ public class GameInfos{
         }
 
         public GameInfos(int y, int x, Home infos){
+            _game_infos = new VBox();
+            backHomeButton.setManaged(false);
+            backHomeButton.setVisible(false);
+            _game_infos.getChildren().add(backHomeButton);
             black_time = infos.get_black_time();
             white_time = infos.get_white_time();
             _size_x = x;
             _size_y = y;
-            _game_infos = new VBox();
             _game_infos.setPrefSize(x, y);
             _game_infos.setBackground(new Background(new BackgroundFill(Color.web("#ADBAC0"), null, null)));
             _game_infos.getChildren().addAll(playTurn);

@@ -258,6 +258,8 @@ public class HomePage{
         pageContainer.getChildren().add(page);
         reset.setOnMouseClicked(e -> {
             deleteFile();
+            learnOrView.setManaged(true);
+            learnOrView.setVisible(true);
         });
     }
 
@@ -380,6 +382,8 @@ public class HomePage{
         sgfFile = true;
         rule_type.set(SGF.get_game_rule());
         rules_instance = SGF.getRuleInstance();
+        learnOrView.setManaged(false);
+        learnOrView.setVisible(false);
     }
 
     public void closeFileBox(){
@@ -404,7 +408,7 @@ public class HomePage{
         fileBox.setVisible(false);
         learnOrView.setText("learn");
         sgfFile = false;
-        rule_type.set("");
+        rule_type.set("gomoku");
     }
 
     public StringProperty getStringRule(){

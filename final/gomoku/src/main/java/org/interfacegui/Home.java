@@ -298,7 +298,6 @@ public class Home {
                 if (rules_type[i].equals(newValue)){
                     rules_button[i].setStyle(selectedStyle);
                     matched = true;
-                    break;
                 }
                 else
                     rules_button[i].setStyle(deselectedStyle);
@@ -306,6 +305,7 @@ public class Home {
             }
             if (matched == false){
                 rule = "Gomoku";
+                rules_button[0].setStyle(deselectedStyle);
                 return ;
             }
             rule = rules_type[i];

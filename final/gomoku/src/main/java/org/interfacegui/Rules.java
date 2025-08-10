@@ -30,6 +30,7 @@ public interface Rules {
     boolean hasPass();
     int get_board_size();
     GameMode getGameMode();
+    void setGameMode(Rules.GameMode n);
     ArrayList<Point> verticalWin = new ArrayList<Point>();
     ArrayList<Point> horizontalWin = new ArrayList<Point>();
     ArrayList<Point> diagonalLeftWin = new ArrayList<Point>();
