@@ -289,7 +289,7 @@ public class Candidat
         for (int k = 0 ; k < this.lst.size() ; k++)
         {
             if (dp == Game.max_depth)
-                System.out.printf("Adding from this one %d %d\n", this.lst.get(k).x, this.lst.get(k).y);
+                this.lst.get(k).st = 5;
         }
 
 
@@ -311,7 +311,7 @@ public class Candidat
         if (dp == Game.max_depth && display)
                 display_candidat("before select");
         if (this.lst.size() >= Game.min_can  + 1)
-            this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
+            this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can + 1));
         if (dp == Game.max_depth && display)
                 display_candidat("here");
         return this.lst.size();
@@ -417,10 +417,10 @@ public class Candidat
 
         if (this.lst.size() >= Game.min_can + 1)
         {
-            if (nb_mv >=4)
-                this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
-            else
-                this.lst = new ArrayList<>(this.lst.subList(0, Game.max_can - 1));
+            // if (nb_mv >=4)
+            //     this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
+            // else
+                this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can + 1));
         }
         return this.lst.size();
     }
@@ -437,13 +437,13 @@ public class Candidat
         if (this.seuil > Game.min_can)
         {
             if (depth == Game.max_depth)
-                return Game.max_can;
+                return Math.min(this.seuil, Game.max_can + 1);
             else
                 return Math.min(this.seuil, 10);
         }
         if (depth == Game.max_depth)
             return Game.max_can;
-        else if (depth == Game.max_depth - 1)
+        else if (depth == Game.max_depth - 1 || depth == Game.max_depth - 2)
             return Game.min_can + 1;
         else
             return Game.min_can;
@@ -493,6 +493,8 @@ public class Candidat
             else
                 ret = adding_probable_candidate(depth, turn);
         }
+        if (depth == Game.max_depth)
+            display_candidat("at the end of candidats");
         return ret;
     }
 

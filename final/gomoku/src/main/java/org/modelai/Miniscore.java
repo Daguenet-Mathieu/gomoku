@@ -420,7 +420,7 @@ public class Miniscore {
                     create_blocker(i, 1);   
                 }
             }
-            else if (Game.large_cut == false && !(x > 4 && x < 14 && y < 4 && y < 14))
+            else if (Game.fast_search == 0 && !(x > 4 && x < 14 && y < 4 && y < 14))
                 create_blocker(i, 1);
 
             if (in_goban(x - 5 * ddir[i][0], y - 5 * ddir[i][1]))
@@ -430,7 +430,7 @@ public class Miniscore {
                     create_blocker(i, -1);   
                 }
             }
-            else if (Game.large_cut == false && !(x > 4 && x < 14 && y < 4 && y < 14))
+            else if (Game.fast_search == 0 && !(x > 4 && x < 14 && y < 4 && y < 14))
                 create_blocker(i, -1);
         }
     }
@@ -475,7 +475,7 @@ public class Miniscore {
                 this.blocklist.remove(i);
                 i--;
             }
-            if (i != -1 && Game.large_cut == true && b.bl2[0] == -1)
+            if (i != -1 && Game.fast_search == 0 && b.bl2[0] == -1)
                 this.blocklist.remove(i);
         }
     }

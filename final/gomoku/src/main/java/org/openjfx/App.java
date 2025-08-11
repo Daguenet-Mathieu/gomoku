@@ -1,7 +1,5 @@
 package org.openjfx;
 import org.interfacegui.*;
-import javafx.stage.Screen;
-import javafx.geometry.Rectangle2D;
 import javafx.application.Application;
 import javafx.scene.layout.Pane;
 import javafx.scene.Scene;
@@ -18,8 +16,6 @@ public class App extends Application {
     private Pane root;
     public Scene scene;
     private Point screen = new Point();
-    private int size_y;
-    private int size_x;
     Pane goban_root;
     private Scene goban, home;
     private Pane home_body = new Pane();
@@ -124,8 +120,6 @@ public class App extends Application {
     }
 
     private void setNewHome(){
-            double scenex = stage.getWidth();
-            double sceney = stage.getHeight();
             home_root = new Pane();
             home = new Scene(home_root, 962, 550);
             home_page = new Home();
@@ -163,18 +157,9 @@ public class App extends Application {
         goban.heightProperty().addListener((observable, oldValue, newValue) -> {
             double sceneWidth = goban.getWidth();
             double sceneHeight = goban.getHeight();
-            size_y = (int)goban.getHeight();
             screen.y = (int)newValue.doubleValue();
             gomoku.updateGameDisplay((int)sceneHeight, (int)sceneWidth);
         });
-    }
-
-    private int get_size(int width, int heigh)
-    {
-        int size = Math.min(width, heigh);
-        screen.x = width;
-        screen.y = heigh;
-        return ((int)size);
     }
 
     @Override
@@ -185,11 +170,6 @@ public class App extends Application {
         stage = primaryStage;
         stage.sizeToScene();
         stage.setTitle("Gomoku");
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        int size = get_size((int)screenBounds.getWidth(), (int)screenBounds.getHeight());
-        size /= 4;
-        size_x = size;
-        size_y = size;
         root = new Pane();
         scene = new Scene(root, 962, 550);
         home = new Scene(home_root, 962, 550);

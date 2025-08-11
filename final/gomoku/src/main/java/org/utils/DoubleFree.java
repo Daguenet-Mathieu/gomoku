@@ -62,6 +62,9 @@ public class DoubleFree
     
         final int sep = val == 1 ? 2 : 1;
 
+        if (map[x][y] != 0)
+            return true;
+
         for (int i = 0 ; i < 4 ; i++)
         {
             nb_0 = 0;
@@ -94,7 +97,6 @@ public class DoubleFree
                     continue;
             }
 
-            //System.out.printf("cur_x cur_y %d %d\n", cur_x, cur_y);
             if (in_goban( cur_x - dir[i][0], cur_y - dir[i][1]) && in_goban(cur_x - 2 * dir[i][0], cur_y - 2 * dir[i][1]) &&
                  map[cur_x - 2 * dir[i][0]][cur_y - 2 * dir[i][1]] == 0 && map[cur_x - dir[i][0]][cur_y - dir[i][1]] == 0)
                 nb_0 = 0;
@@ -103,7 +105,6 @@ public class DoubleFree
                 cut = 1;
                 nb_0 -=1;
             }
-            //System.out.printf("nb_0 %d\n", nb_0);
             dep = 1;
             cur_x = x - (dep * dir[i][0]);
             cur_y = y - (dep * dir[i][1]);
@@ -131,13 +132,10 @@ public class DoubleFree
             if (in_goban( cur_x + dir[i][0], cur_y + dir[i][1]) && in_goban(cur_x + 2 * dir[i][0], cur_y + 2 * dir[i][1]) &&
                  (map[cur_x + 2 * dir[i][0]][cur_y + 2 * dir[i][1]] != 0 || map[cur_x + dir[i][0]][cur_y + dir[i][1]] != 0))
                 cut = 1;
-
-            //System.out.printf("cut %d", cut);
             if (nb_val == 2)
                 nb_free++;
             else if (nb_val == 3 && cut == 1)
                 nb_free++;
-            //System.out.printf("Direction %d %d %d\n", i, nb_val, nb_0);
             if (nb_free >= 2)
                 return false;
         }

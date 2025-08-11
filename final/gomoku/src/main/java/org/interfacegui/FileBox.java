@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.Node;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-// import javafx.geometry.Pos;
 
 public class FileBox{
 
@@ -24,7 +23,7 @@ public class FileBox{
     private Button dir_validation;
     private HomePage homePage;
     private String absolutePath;
-    private SGF sgf = new SGF();
+    //private SGF sgf = new SGF();
 
 
     public Button getCross(){
@@ -128,7 +127,7 @@ public class FileBox{
             scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
             scrollPane.setFitToWidth(true);
             scrollPane.setFitToWidth(false);
-            File sgf_dir = sgf.openSGFDir();
+            File sgf_dir = org.interfacegui.SGF.openSGFDir();
             absolutePath = sgf_dir.getAbsolutePath();
             add_directory_details(sgf_dir);
             setOkEvent();

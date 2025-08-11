@@ -425,7 +425,6 @@ public class Pente extends MinMax {
 
         values = new float[nb_candidates];
 
-    
         cur_alpha = Float.NEGATIVE_INFINITY;
         cur_beta = Float.POSITIVE_INFINITY;
 
@@ -437,6 +436,7 @@ public class Pente extends MinMax {
                 if (m.play(candidat.lst.get(i), turn))
                 {
                     res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), false) + supeval(player, len, turn);
+                    pos_counter++;
                 }
                 else
                 {
@@ -448,13 +448,17 @@ public class Pente extends MinMax {
                 cur_alpha = Math.max(cur_alpha, res);
 
                 if (cut && cur_alpha > beta) // beta cut
-                        return cur_alpha;
+                {
+                    pos_counter++;
+                    return cur_alpha;
+                }
             }
             else
             {
                 if (m.play(candidat.lst.get(i),turn))
                 {
                     res = value_victory_smarter(player, turn, len, forced_capture.size(), false) + supeval(player, len, turn);
+                    pos_counter++;
                 }
                 else
                 {
@@ -465,7 +469,10 @@ public class Pente extends MinMax {
                 cur_beta = Math.min(cur_beta, res);
 
                 if (cut && alpha > cur_beta) // alpha cut
-                        return cur_beta;
+                {
+                    pos_counter++;
+                    return cur_beta;
+                }
             }
         }
 

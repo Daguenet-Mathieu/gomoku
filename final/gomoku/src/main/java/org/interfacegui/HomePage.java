@@ -15,10 +15,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Font;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.geometry.Insets;
-import javafx.scene.layout.CornerRadii;
 
 public class HomePage{
     private Pane page;
@@ -209,8 +205,6 @@ public class HomePage{
         black_five_min.setStyle(selectedStyle);
         Text blackTimeText = new Text("Set Black Info:");
         Text whiteTimeText = new Text("Set White Info:");
-        Text blackTimeText2 = new Text("time :");
-        Text whiteTimeText2 = new Text("time :");
         blackTimeText.setFill(Color.WHITE );
         blackTimeText.setStroke(Color.BLACK);
         blackTimeText.setStrokeWidth(2);

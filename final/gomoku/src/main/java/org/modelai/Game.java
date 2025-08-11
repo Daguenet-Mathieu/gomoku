@@ -12,11 +12,12 @@ public class Game {
     public Float val;
     public long time;
     public String rules;
-    public ArrayList<Double> timelst;
+    public ArrayList<Double> timelstb;
+    public ArrayList<Double> timelstw;
     static public int max_depth = 10;
     static public int max_can = 7;
     static public int min_can = 5;
-    static public boolean large_cut = false;
+    static public int fast_search = 0;
 
 
     public Game(String rules, int board_size)
@@ -25,7 +26,8 @@ public class Game {
         nb_move = 0;
         m = minmax_tree(rules);
         m.len = 0;
-        timelst = new ArrayList<Double>();
+        timelstb = new ArrayList<Double>();
+        timelstw = new ArrayList<Double>();
     }
 
     private MinMax minmax_tree(String str)
@@ -57,30 +59,30 @@ public class Game {
         if (lvl == 1)
         {
             max_depth = 10;
-            max_can = 7;
+            max_can = 9;
             min_can = 5;
-            large_cut = false;
+            fast_search = 0;
         }
         else if (lvl == 2)
         {
             max_depth = 9;
             max_can = 7;
             min_can = 6;
-            large_cut = false;
+            fast_search = 0;
         }
         else if (lvl == 3)
         {
             max_depth = 4;
             max_can = 8;
             min_can = 8;
-            large_cut = false;
+            fast_search = 0;
         }
         else if (lvl == 4)
         {
             max_depth = 9;
             max_can = 8;
             min_can = 7;
-            large_cut = false;
+            fast_search = 0;
         }
     }  
 
@@ -120,8 +122,11 @@ public class Game {
                 }
             }
             nb_move --;
-            if (timelst.size() != 0)
-                timelst.remove(timelst.size() - 1);
+
+            if (val == 1 && timelstb.size() != 0)
+                    timelstb.remove(timelstb.size() - 1);
+            else if (val == 2 && timelstw.size() != 0)
+                    timelstw.remove(timelstb.size() - 1);
         }
     }
 
@@ -135,45 +140,52 @@ public class Game {
         MinMax.after_capwinsim = true;
         MinMax.forced_capture.clear();
         MinMax.capwin.clear();
-        Game.large_cut = false;
+        Game.fast_search = 0;
         scbord.reset_str();
     }
 
-    public void manage_time()
+    public void manage_time(int player)
     {
-        if (nb_move >= 4 && return_mean_time() > 0.40)
+        if (nb_move >= 4 && return_mean_time(player) > 0.40)
         {
             Game.min_can = Math.max(Game.min_can - 1, 4);
-            large_cut = true;
+            if (Game.max_can == 9)
+                Game.max_can = 8;
+            fast_search++;
         }
-        if (large_cut == true && nb_move >= 4 && return_mean_time() < 0.40)
+        if (fast_search != 0 && nb_move >= 4 && return_mean_time(player) < 0.40)
         {
-            Game.min_can = Math.max(Game.min_can + 1, 4);
-            large_cut = false;
+            Game.min_can = Math.min(Game.min_can + 1, Game.max_can);
+            if (Game.max_can == 8)
+                Game.max_can = 9;
+            fast_search--;
         }
     }
 
-    private double return_mean_time()
+    private double return_mean_time(int player)
     {
         double res = 0;
 
-        for (int i = 0; i < timelst.size() ; i++)
-            res += timelst.get(i);
-        return res / timelst.size();
+        if (player == 1)
+        {
+            for (int i = 0; i < timelstb.size() ; i++)
+                res += timelstb.get(i);
+            return res / timelstb.size();
+        }
+        else if (player == 2)
+        {
+            for (int i = 0; i < timelstw.size() ; i++)
+                res += timelstw.get(i);
+            return res / timelstw.size();
+        }
+        return 0;
     }
 
     private void initialize_map()
     {
-        System.out.println("Ininialize map");
         for (int i = 0 ; i < 19 ; i++)
-        {
             for (int j = 0 ; j < 19 ; j++)
-            {
-                    MinMax.map[i][j] = gameMap[i][j];
-                    System.out.printf("%2d", gameMap[i][j]);
-            }
-            System.out.println();
-        }
+                MinMax.map[i][j] = gameMap[i][j];
     }
 
     public Point best_move(int turn, int player, boolean display)
@@ -200,12 +212,15 @@ public class Game {
             display_all_board_info();
 
         time = System.currentTimeMillis() - time;
-        timelst.add((double)time / 1000);
+        if (player == 1)
+            timelstb.add((double)time / 1000);
+        else
+            timelstw.add((double)time / 1000);
 
         if (display)
-            best_move_stamp();
+            best_move_stamp(player);
 
-        manage_time();
+        manage_time(player);
     
         return new Point(m.best.y, m.best.x);
     }
@@ -213,16 +228,14 @@ public class Game {
     //display function
     private void display_all_board_info()
     {
-            System.out.println("XXX");
             MinMax.display_Map();
-            System.out.println("XXX");
             scbord.display(false);
             System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
     }
 
     //display function
-    private void best_move_stamp()
+    private void best_move_stamp(int  player)
     {
-        System.out.printf("IA move %d (Turn %d) at %d %d played in %f seconds (%d pos, %d depth) mean : %f\n", nb_move + 1,(nb_move + 1) / 2 + 1, m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter, max_depth, return_mean_time());
+        System.out.printf("IA move %d (Turn %d) at %d %d played in %f seconds (%d pos, %d depth, %d speed) mean : %f\n", nb_move + 1,(nb_move + 1) / 2 + 1, m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter, max_depth, fast_search, return_mean_time(player));
     }
 }
