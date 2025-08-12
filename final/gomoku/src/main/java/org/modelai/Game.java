@@ -33,6 +33,7 @@ public class Game {
     private MinMax minmax_tree(String str)
     {
         str = Character.toUpperCase(str.charAt(0)) + str.substring(1);
+        System.out.println("minmax trree rule == " + str);
         if ("Gomoku".equals(str))
         {
             this.rules = "Gomoku";
@@ -126,7 +127,7 @@ public class Game {
             if (val == 1 && timelstb.size() != 0)
                     timelstb.remove(timelstb.size() - 1);
             else if (val == 2 && timelstw.size() != 0)
-                    timelstw.remove(timelstb.size() - 1);
+                    timelstw.remove(timelstw.size() - 1);
         }
     }
 

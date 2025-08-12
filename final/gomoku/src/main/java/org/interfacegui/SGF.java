@@ -84,6 +84,7 @@ public class SGF{
                 fileContent += ";";
                 for (int j = 0; j < lastMove.size(); j++){
                     if (m.getLastMove() != null){
+                        System.out.println("color == " + move[lastMoveColor.get(j)]);
                         fileContent += move[lastMoveColor.get(j)];
                         fileContent += "[" + alpha.charAt(lastMove.get(j).x) + "" + alpha.charAt(lastMove.get(j).y)  + "]";
                         if (m.get_prisonners() != null && m.get_prisonners().size() > 0)
@@ -125,7 +126,6 @@ public class SGF{
             writer.close();
         }
         catch(Exception e){
-            e.printStackTrace();
         }
     }
 
@@ -401,7 +401,7 @@ public class SGF{
         if (node instanceof CoordValue)
         {
             if (PlayMove(((CoordValue)node).getVal(), game_moves, map, node.getValue()) == false)
-                throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate : + " + ((CoordValue)node).getVal() + " invalid coordinate", 0);
+                throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate : " + ((CoordValue)node).getVal() + " invalid coordinate", 0);
         }
         else if (node instanceof StringValue){
             map.setComment(((StringValue)node).getVal());
@@ -409,7 +409,7 @@ public class SGF{
         else if (node instanceof ArrayValue){
             for (Point p : ((ArrayValue)node).getVal()){
                 if (PlayMove(p, game_moves, map, node.getValue()) == false)
-                    throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate : + " + p + " at move " + game_moves.size(), 0);
+                    throw new ParseException("error, unexpected " + node.getValue() + " invalid coordinate : " + p + " at move " + game_moves.size(), 0);
             }
         }
     }
@@ -595,17 +595,17 @@ public class SGF{
 
     private static boolean PlayMove(Point p, ArrayList<Map> mapList, Map map,String color){
         mapList.add(map);
+        int colorVal = color.contains("B") ? 1 : 2;
         if ("AE".equals(color) == false && ruleInstance.isValidMove(p, mapList) == false)
         {
-            return false;
+            map.addMove(p, colorVal);
+            return true;
         }
-
         if (map.tryAddToMap(color, p) == false) 
             return false;
         mapList.remove(mapList.size() - 1);
         if ("AE".equals(color))
             return true;
-        int colorVal = color.contains("B") ? 1 : 2;
         if ((ruleInstance instanceof GomokuRules) == false)
         {
             ArrayList<Point> points = ruleInstance.GetCapturedStones(p, map);

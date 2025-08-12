@@ -14,6 +14,7 @@ public class Goban{
     private Circle _stones[][];
     private Rectangle _score[][];
     private ArrayList<Circle> _hoshis;
+    private ArrayList<Point> _hoshisCoord = new ArrayList<Point>();
     private ArrayList<Line> _lines;
     private int _size;
     private int _nb_line; 
@@ -26,11 +27,64 @@ public class Goban{
         _heigh_margin_size = (heigh - goban_size) / 2;
         _width_margin_size = (width - goban_size) / 2;
     }
+
     private void init_square_size(){
         _square_size = _size / _nb_line;
     }
 
-    private void init_hoshi(){}
+    private void updateHoshi() {
+        for (int i = 0; i < _hoshisCoord.size(); i++){
+            Circle hoshi = _hoshis.get(i);
+            hoshi.setRadius(_square_size / 5);
+            hoshi.setCenterX((_square_size * _hoshisCoord.get(i).x) + _width_margin_size);
+            hoshi.setCenterY((_square_size * _hoshisCoord.get(i).y) + _heigh_margin_size);
+            hoshi.setStroke(Color.TRANSPARENT);
+            hoshi.setFill(Color.BLACK); 
+            hoshi.setStrokeWidth(1);
+        }
+    }
+
+    private void createHoshiToList() {
+        for (Point p : _hoshisCoord){
+            System.out.println("hoshi cooridinate : x == " + p.x + " y == " + p.y + " with magin == " + _width_margin_size + " heght margin == " + _heigh_margin_size);
+            Circle hoshi = new Circle();
+            hoshi.setRadius(_square_size / 7);
+            hoshi.setCenterX((_square_size * p.x) + _width_margin_size);
+            hoshi.setCenterY((_square_size * p.y) + _heigh_margin_size);
+            hoshi.setStroke(Color.TRANSPARENT);
+            hoshi.setFill(Color.BLACK); 
+            hoshi.setStrokeWidth(1);
+            _hoshis.add(hoshi);
+        }
+        System.out.println("\n\n\n");
+    }
+
+    private void init_hoshi() {
+        boolean tengen = true;
+        boolean corner = false;
+        boolean line = false;
+        if (_nb_line >= 13)
+            corner = true;
+        if (_nb_line == 19)
+            line = true;
+        int tengenCoord = _nb_line/2;
+        int cornerCoord = 4;
+        _hoshisCoord.add(new Point(tengenCoord, tengenCoord));
+        if (corner == true){
+            _hoshisCoord.add(new Point(3, 3));
+            _hoshisCoord.add(new Point(3, _nb_line - 4));
+            _hoshisCoord.add(new Point(_nb_line - 4, 3));
+            _hoshisCoord.add(new Point(_nb_line - 4, _nb_line - 4));
+        }
+        if (line == true){
+            _hoshisCoord.add(new Point(3, tengenCoord));
+            _hoshisCoord.add(new Point(tengenCoord, 3));
+            _hoshisCoord.add(new Point(_nb_line-4, tengenCoord));
+            _hoshisCoord.add(new Point(tengenCoord, _nb_line-4));
+        }
+        createHoshiToList();
+    }
+
 
     private void init_lines(){
         for (int i = 0; i < _nb_line; i++)
@@ -114,6 +168,7 @@ public class Goban{
         update_lines();
         stones_responsivity();
         score_responsivity();
+        updateHoshi();
     }
 
     private void stones_responsivity(){
@@ -179,7 +234,6 @@ public class Goban{
                 r.setFill(Color.BLUE);
                 r.setStrokeWidth(1);
                 r.setVisible(false);
-
                 _score[i][j] = r;
             }
         }
@@ -233,8 +287,6 @@ public class Goban{
                 _goban.getChildren().add(_score[i][j]);
             }
         }
-
-        
     }
 
     public void set_stone_status(boolean visible, String color, Point coord, String text) {

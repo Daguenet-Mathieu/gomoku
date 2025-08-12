@@ -83,6 +83,7 @@ public class Home {
         StringBuilder hours;
         StringBuilder min;
         StringBuilder sec;
+        System.out.println("back time : " + black_time + " white time : " + white_time);
         if (black_time == 0){
             hours = new StringBuilder(home_page.get_black_hours().getText());
             min = new StringBuilder(home_page.get_black_min().getText());
@@ -92,12 +93,12 @@ public class Home {
                 black_time = Integer.parseInt(hours.toString()) * 3600000 + 
                         Integer.parseInt(min.toString()) * 60000 + 
                         Integer.parseInt(sec.toString()) * 1000;
+                if (black_time == 0)
+                    setErrorMsg("invalid black time.");
             }
             catch (NumberFormatException e){
                 setErrorMsg("invalid black time.");
             }
-            if (black_time == 0)
-                setErrorMsg("invalid black time.");
 
         }
         if (white_time == 0){
@@ -109,12 +110,12 @@ public class Home {
                 white_time = Integer.parseInt(hours.toString()) * 3600000 + 
                         Integer.parseInt(min.toString()) * 60000 + 
                         Integer.parseInt(sec.toString()) * 1000;
+                if (white_time == 0)
+                    setErrorMsg("invalid white time.");
             }
             catch (NumberFormatException e){
-                setErrorMsg("invalid black time.");
-            }
-            if (white_time == 0)
                 setErrorMsg("invalid white time.");
+            }
         }
     }
 
@@ -271,6 +272,8 @@ public class Home {
             home_page.getWhiteHardButton().setStyle(selectedStyle);
         });
         home_page.getGomokuButton().setOnAction(e -> {
+            if (home_page.is_sgf() == true)
+                return;
             home_page.getBoardSizeBox().setVisible(false);
             home_page.getBoardSizeBox().setManaged(false);
             home_page.getBlackIaTypeButton().setManaged(true);
@@ -293,25 +296,25 @@ public class Home {
             };
             newValue = newValue.toLowerCase();
             int i = 0;
-            boolean matched = false;
+            rule = null;
             while (i < rules_type.length){
                 if (rules_type[i].equals(newValue)){
                     rules_button[i].setStyle(selectedStyle);
-                    matched = true;
+                    rule = rules_type[i];
                 }
                 else
                     rules_button[i].setStyle(deselectedStyle);
                 i++;
             }
-            if (matched == false){
-                rule = "Gomoku";
-                rules_button[0].setStyle(deselectedStyle);
-                return ;
+            if (rule == null){
+                rule = "gomoku";
+                rules_button[0].setStyle(selectedStyle);
             }
-            rule = rules_type[i];
         });
 
         home_page.getPenteButton().setOnAction(e -> {
+            if (home_page.is_sgf() == true)
+                return;
             home_page.getBoardSizeBox().setVisible(false);
             home_page.getBoardSizeBox().setManaged(false);
             rule = "Pente";
@@ -343,6 +346,8 @@ public class Home {
             home_page.get19Button().setStyle(selectedStyle);
         });
         home_page.getGoButton().setOnAction(e -> {
+            if (home_page.is_sgf() == true)
+                return;
             home_page.getBoardSizeBox().setVisible(true);
             home_page.getBoardSizeBox().setManaged(true);
             rule = "Go";

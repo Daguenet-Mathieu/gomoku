@@ -47,8 +47,9 @@ public class PenteRules implements Rules {
         if (!checkEmptySqure(point.x, point.y, map.get(map.size() - 1))) {
             return false;
         }
-        if (this.dbfree.check_double_free(point.y, point.x, ((map.size() + 1)%2)+1, map.get(map.size() - 1).get_map()) == false)
+        if (this.dbfree.check_double_free(point.y, point.x, ((map.size() + 1)%2)+1, map.get(map.size() - 1).get_map()) == false){
             return false;
+        }
         nbMove++;
         return true;
     }
@@ -152,7 +153,6 @@ public class PenteRules implements Rules {
         for (int y = 0; y < get_board_size();y++)
         {
             for (int x = 0; x < get_board_size(); x++){
-                if (y == 10 && x == 8)
                 if (m[y][x] != 0)
                     continue ;
                 boolean res = this.dbfree.check_double_free(y, x, color, m);
@@ -165,7 +165,8 @@ public class PenteRules implements Rules {
     }
 
     @Override
-    public void check_capture(Point point, Map map){
+    public void check_capture(Point point, Map map)
+    {
         int capture_color;
         prisonners = GetCapturedStones(point, map);
         if (prisonners.size() != 0)
@@ -173,7 +174,6 @@ public class PenteRules implements Rules {
             capture_color = map.get_map()[point.y][point.x];
             prisonners_nbr[capture_color - 1] += prisonners.size();
         }
-
     }
 
     @Override

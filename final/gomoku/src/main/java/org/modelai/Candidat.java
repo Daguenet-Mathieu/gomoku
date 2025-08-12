@@ -438,7 +438,8 @@ public class Candidat
             {
                 if (limax.x - limin.x > 10 || limax.y - limin.y > 10)
                     this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
-                this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can + 1));
+                else
+                    this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can + 1));
             }
         }
         return this.lst.size();

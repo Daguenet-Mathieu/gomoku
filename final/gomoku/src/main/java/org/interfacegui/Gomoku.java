@@ -66,29 +66,63 @@ public class Gomoku
     private ExecutorService executor = null;
     private Future<Point> future = null;
     private ExecutorService executor2 = null;
-    private Future<?> future2 = null;
+    private Future<Boolean> future2 = null;
     private boolean forbiddenVisibility = false;
     private Label commentLabel = new Label();    
     private Rules.GameMode playingMode = Rules.GameMode.PLAYING;
     int _width = 0;
 
-    private void playIa(){
+    private void setEndGame(){
+        System.out.println("coucou");
+        int winner = rule.getWinner();
+        _end_popin.setVisible(true);
+        _end_popin.setManaged(true);
+        game_end = true;
+        ia_playing = false;
+        gameLoop.stop();
+        if (winner == 0)
+            _end_text.setText("Draw");
+        else if (winner == 1)
+            _end_text.setText("Black Win");
+        else
+            _end_text.setText("White Win");
+
+    }
+
+    void updateGameMap(int index){
+        for (int i = 0; i < rule.get_board_size(); i++){
+            for (int j = 0; j < rule.get_board_size(); j++){
+                game.gameMap[i][j] = _map.get(index).get_map()[i][j];
+            }
+        }
+    }
+
+    private Boolean playIa(){
         boolean end = false;
         int mapSize = _map.size();
         int i = 0;
         if (rule.hasIa() == false)
-            return ;
+            return false;
+        System.out.println("_map.size() " + _map.size());
         for (int mIndex = 0; mIndex < mapSize; mIndex++){
             Map m = _map.get(mIndex);
             ArrayList<Point> points = m.get_prisonners();
             ArrayList<Point> lastMove = m.getLastMove();
             ArrayList<Integer> lastMoveColor = m.getLastMoveColor();
+            System.out.println("nb move " + lastMove.size());
+            if (mIndex % 2  == 0)
+                rule.set_black_prisonners(points.size());
+            else
+                rule.set_black_prisonners(points.size());
             for (int j = 0; j < lastMove.size(); j++){
                 if (lastMoveColor.get(j) != 0)
                 {
+                    updateGameMap(mIndex);
                     game.move(lastMove.get(j), lastMoveColor.get(j));
                     if (end == false)
                         end = rule.endGame(_map.get(mIndex), lastMove.get(j));
+                    if (end == true)
+                        return true;
                 }
                 else{
                     if (m.get_map()[lastMove.get(j).y][lastMove.get(j).x] != 0)
@@ -99,11 +133,12 @@ public class Gomoku
                     game.remove(p, m.get_prisonners(), false);
             }
             updatePlayerTurn();
-            if (end == false)
-                game.best_move((i%2==0?2:1), (i%2==0?2:1), true);
+            game.best_move((i%2==0?2:1), (i%2==0?2:1), true);
+            System.out.println("candidat? " + game.m.candidat.lst);
             setCandidats(game.m.candidat.lst, game.m.values, mIndex);
             i++;
         }
+        return false;
     }
 
     private void eraseForbiddens(){
@@ -287,8 +322,16 @@ public class Gomoku
                 System.exit(0);
             }
         }
-        if (future2 != null&& future2.isDone()){
+        if (future2 != null && future2.isDone()) {
             executor2.shutdown();
+            try {
+                System.out.println("furture2 rs == " + future2.get());
+                if (future2.get() == true) {
+                    setEndGame();
+                }
+            }
+            catch (Exception e) {
+                }
             future2 = null;
         }
         if (player_turn != current_decrement){
@@ -513,8 +556,12 @@ public class Gomoku
         gameInfos = new GameInfos(heigh, _game_infos_size_x, game_infos);
         playingMode = game_infos.getGameMode();
         if (playingMode == Rules.GameMode.PLAYING){
+            System.out.println("init game rule : " + game_infos.get_rules());
             game = new Game(game_infos.get_rules(), rule.get_board_size());
-            game.tree_config(game_infos.getLevel());
+            if (game_infos.get_black_player_type() == 0 && game_infos.get_black_player_type() == 0)
+                game.tree_config(4);
+            else
+                game.tree_config(game_infos.getLevel());
         }
         map_index = 0;
         _map = new ArrayList<Map>();
@@ -525,7 +572,7 @@ public class Gomoku
             _map = game_infos.getSgfMap();
             if (playingMode == Rules.GameMode.PLAYING){
                 executor2 = Executors.newSingleThreadExecutor();
-                future2 = executor2.submit(() -> {playIa();});
+                future2 = executor2.submit(() -> playIa());
             }
         }
         else
