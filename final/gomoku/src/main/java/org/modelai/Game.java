@@ -156,8 +156,6 @@ public class Game {
         if (fast_search != 0 && nb_move >= 4 && return_mean_time(player) < 0.40)
         {
             Game.min_can = Math.min(Game.min_can + 1, Game.max_can);
-            if (Game.max_can == 8)
-                Game.max_can = 9;
             fast_search--;
         }
     }

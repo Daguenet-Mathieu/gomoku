@@ -10,7 +10,7 @@ public class Candidat
 {
     public ArrayList<Candidat.coord> lst =  new ArrayList<Candidat.coord>();
     static public DoubleFree doubleFreethree = new DoubleFree();
-    private List<Double> order = Arrays.asList(6.0, 5.0, 4.0, 4.7, 3.7, 3.5, 3.4, 3.0, 2.5, 2.4, 2.0, 1.0, 0.0);
+    private List<Double> order = Arrays.asList(6.0, 5.0, 4.0, 4.8, 4.7, 3.8, 3.7, 3.5, 3.4, 3.0, 2.8, 2.5, 2.4, 2.0, 1.0, 0.0);
     private static int [][] ddir = {{1, 0}, {0, 1}, {1, 1}, {-1, 1}};
     private static int [][][] opencan = {{{0, -1}, {1, -1}, {1, 0}}, {{-1, 0}, {-1, -1}, {0, -1}}, {{-1, 0}, {-1, 1}, {0, 1}}, {{0, 1}, {1, 1}, {1, 0}}};
 
@@ -167,7 +167,7 @@ public class Candidat
         this.lst.add(new Candidat.coord(x,y, val));
     }
 
-    private void load_case(int x, int y)
+    private void load_case(int x, int y, int depth)
     {
         double tot_case1 = 0;
         double tot_case2 = 0;
@@ -185,7 +185,12 @@ public class Candidat
                             else if (turn == 2)
                                 tot_case1 = Math.max(tot_case1, 2.5);
                             else
-                                tot_case1= Math.max(tot_case1, 2.4);
+                                {
+                                    // if (depth == Game.max_depth || depth == Game.max_depth - 1)
+                                    //     tot_case1= Math.max(tot_case1, 2.8);
+                                    // else
+                                        tot_case1= Math.max(tot_case1, 2.4);
+                                }
                         }
             }
 
@@ -200,7 +205,12 @@ public class Candidat
                         else if (turn == 1)
                             tot_case2 = Math.max(tot_case2, 2.5);
                         else
-                            tot_case2= Math.max(tot_case2, 2.4);
+                            {
+                                // if (depth == Game.max_depth || depth == Game.max_depth - 1)
+                                //     tot_case2= Math.max(tot_case2, 2.8);
+                                // else
+                                    tot_case2= Math.max(tot_case2, 2.4);
+                            }
                     }
             }
 
@@ -242,7 +252,7 @@ public class Candidat
         return;
     }
 
-    public int interesting_candidate(int [][] map)
+    public int interesting_candidate(int depth)
     {
         this.seuil = 0;
         for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
@@ -250,7 +260,7 @@ public class Candidat
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
             {
                 if (MinMax.map[i][j] == 0)
-                    load_case(i, j);
+                    load_case(i, j, depth);
             }
         }
         return this.lst.size();
@@ -343,8 +353,12 @@ public class Candidat
                         num = numcan(i, j);
                         this.lst.clear();
 
-                        for (int k = 0 ; k < 3 ; k++)
-                            this.lst.add(new Candidat.coord(i+opencan[num][k][0], j+opencan[num][k][1], 1));
+                        if (i > j)
+                            this.lst.add(new Candidat.coord(i+opencan[num][0][0], j+opencan[num][0][1], 1));
+                        else
+                            this.lst.add(new Candidat.coord(i+opencan[num][2][0], j+opencan[num][2][1], 1));
+
+                        this.lst.add(new Candidat.coord(i+opencan[num][1][0], j+opencan[num][1][1], 1));
                         return this.lst.size();
                     }
                 }
@@ -400,15 +414,11 @@ public class Candidat
             }
         }
 
-        if (nb_mv == 1)
-        {
-            if (one_move_candidate() != 0);
-                return 3;
-        }
+            if (nb_mv == 1 && one_move_candidate() != 0)
+                return this.lst.size();
 
-        if (nb_mv == 2)
-            if (two_move_candidate() != 0)
-                return 3;
+            if (nb_mv == 2 && two_move_candidate() != 0)
+                return this.lst.size();
 
         Collections.sort(this.lst, Comparator.comparing(item -> 
         this.order.indexOf(item.st())));
@@ -417,10 +427,19 @@ public class Candidat
 
         if (this.lst.size() >= Game.min_can + 1)
         {
-            // if (nb_mv >=4)
-            //     this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
-            // else
+            if (nb_mv >=3)
+            {
+                if (limax.x - limin.x > 10 || limax.y - limin.y > 10)
+                    this.lst = new ArrayList<>(this.lst.subList(0, 3));
+                else
+                    this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
+            }
+            else
+            {
+                if (limax.x - limin.x > 10 || limax.y - limin.y > 10)
+                    this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
                 this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can + 1));
+            }
         }
         return this.lst.size();
     }
@@ -437,7 +456,7 @@ public class Candidat
         if (this.seuil > Game.min_can)
         {
             if (depth == Game.max_depth)
-                return Math.min(this.seuil, Game.max_can + 1);
+                return Math.min(this.seuil, Game.max_can +1);
             else
                 return Math.min(this.seuil, 10);
         }
@@ -465,7 +484,7 @@ public class Candidat
                 return forced_candidate(MinMax.forced_capture);
         }
 
-        ret = interesting_candidate(MinMax.map);
+        ret = interesting_candidate(depth);
 
         if (ret > 2)
         {
