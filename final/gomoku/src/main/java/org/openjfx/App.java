@@ -138,6 +138,7 @@ public class App extends Application {
 
     private void set_goban_event(){
         gomoku.getBackHomeButton().setOnMouseClicked(event -> {
+            gomoku.killIa();
             setNewHome();
         });
         gomoku.get_home_button().setOnMouseClicked(event -> {

@@ -1,9 +1,7 @@
 (;GM[1]FF[4]CA[UTF-8]AP[Gomoku:1]ST[2]
 RU[Japanese]SZ[9]KM[0.00]
 C[Le jeu de Go se joue sur un plateau de 19 lignes et 19 colonnes.
-
 Il existe aussi des tailles 13×13 et 9×9, principalement utilisées à but pédagogique ou d'illustration.
-
 Il se joue avec des pions noirs et blancs, appelés "pierres", que l'on place sur les intersections inoccupées.]
 ;AB[de]C[Noir joue le premier coup, puis les deux joueurs jouent à tour de rôle.]
 ;C[Une pierre a 4 libertés.]

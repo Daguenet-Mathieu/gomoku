@@ -296,12 +296,14 @@ public class Gomoku
                     else if (future.isDone()){
                         playMove(future.get());
                         executor.shutdown();
+                        executor = null;
                         setCandidats(game.m.candidat.lst, game.m.values, map_index);
                         ia_playing = false;
                     }
                 }
                 else if (player_turn == 1 && _game_infos.get_white_player_type() == 1){
-                    if (ia_playing == false){
+                    if (ia_playing == false)
+                    {
                         executor = Executors.newSingleThreadExecutor();
                         future = executor.submit(() -> {
                             return game.best_move(player_turn+1, player_turn+1, true);
@@ -311,6 +313,7 @@ public class Gomoku
                     else if (future.isDone()){
                         playMove(future.get());
                         executor.shutdown();
+                        executor = null;
                         setCandidats(game.m.candidat.lst, game.m.values, map_index);
                         ia_playing = false;
                     }
@@ -319,6 +322,7 @@ public class Gomoku
             catch (Exception e)
             {
                 System.err.println("error launching IA think : " + e.getMessage());
+                e.printStackTrace();
                 System.exit(0);
             }
         }
@@ -332,7 +336,8 @@ public class Gomoku
             }
             catch (Exception e) {
                 System.err.println("error launching IA think : " + e.getMessage());
-                    System.exit(0);
+                e.printStackTrace();
+                System.exit(0);
             }
             future2 = null;
         }
@@ -413,6 +418,13 @@ public class Gomoku
                 rule = new GomokuRules();
         }
         rule.setBoardSize(boardSize);
+    }
+
+    public void killIa(){
+        if (gameLoop != null)
+            gameLoop.stop();
+        if (executor != null)
+            executor.shutdown();
     }
 
     private void playMove(Point point){
@@ -560,7 +572,8 @@ public class Gomoku
         if (playingMode == Rules.GameMode.PLAYING){
             System.out.println("init game rule : " + game_infos.get_rules());
             game = new Game(game_infos.get_rules(), rule.get_board_size());
-            if (game_infos.get_black_player_type() == 0 && game_infos.get_black_player_type() == 0)
+            game.reset_minmax();
+            if (game_infos.get_black_player_type() == 0 && game_infos.get_white_player_type() == 0)
                 game.tree_config(4);
             else
                 game.tree_config(game_infos.getLevel());
@@ -592,7 +605,6 @@ public class Gomoku
             gameInfos.getCandidatsButton().setManaged(false);
             gameInfos.getHintButton().setVisible(false);
             gameInfos.getHintButton().setManaged(false);
-
             gameInfos.getResignButton().setManaged(false);
             gameInfos.getResignButton().setVisible(false);
             gameInfos.getExportButton().setManaged(false);
@@ -608,9 +620,9 @@ public class Gomoku
             commentLabel.setText(_map.get(map_index).getComment());
             commentLabel.setMaxWidth(Double.MAX_VALUE);
             commentLabel.setAlignment(Pos.CENTER);
-            commentLabel.setPrefHeight(200);
-            commentLabel.setMinHeight(200);
-            commentLabel.setMaxHeight(200);
+            commentLabel.setPrefHeight(120);
+            commentLabel.setMinHeight(120);
+            commentLabel.setMaxHeight(120);
             rule.setGameMode(Rules.GameMode.LEARNING);
         }
         saved = new ArrayList<Point>();
@@ -630,6 +642,8 @@ public class Gomoku
         gameInfos.getUndoButton().setManaged(false);
         gameInfos.getUndoButton().setVisible(false);
         if (_game_infos.get_black_player_type() == 1 && _game_infos.get_white_player_type() == 1){
+            gameInfos.getBackHomeButton().setVisible(true);
+            gameInfos.getBackHomeButton().setManaged(true);
             gameInfos.getUndoButton().setManaged(false);
             gameInfos.getUndoButton().setVisible(false);
             gameInfos.getHintButton().setManaged(false);

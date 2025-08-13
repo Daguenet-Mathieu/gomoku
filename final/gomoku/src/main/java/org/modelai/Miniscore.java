@@ -20,7 +20,7 @@ public class Miniscore {
     int [] capt;
     int [] bpoint;
 
-    boolean victory;
+    boolean victory = false;
 
     ArrayList<Blocker> blocklist = new ArrayList<Blocker>();
 
@@ -30,8 +30,8 @@ public class Miniscore {
     public Miniscore ()
     {
         this.sc = new Score();
-        this.str1 = new int[8][19][19];
-        this.str2 = new int[8][19][19];
+        this.str1 = new int[4][19][19];
+        this.str2 = new int[4][19][19];
         this.victory = false;
         this.capt = new int[2];
         this.bpoint = new int[2];

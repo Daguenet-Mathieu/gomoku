@@ -24,7 +24,10 @@ public class Game {
     {
         gameMap = new int[board_size][board_size];
         nb_move = 0;
+        System.out.println("rules : " + rules);
+        System.out.println("avant");
         m = minmax_tree(rules);
+        System.out.println("apres");
         m.len = 0;
         timelstb = new ArrayList<Double>();
         timelstw = new ArrayList<Double>();
@@ -33,7 +36,7 @@ public class Game {
     private MinMax minmax_tree(String str)
     {
         str = Character.toUpperCase(str.charAt(0)) + str.substring(1);
-        System.out.println("minmax trree rule == " + str);
+        System.out.println("minmax tree : " + str);
         if ("Gomoku".equals(str))
         {
             this.rules = "Gomoku";
@@ -55,8 +58,14 @@ public class Game {
         }
     }
 
+    public void printconf()
+    {
+        System.out.printf("%d %d %d %d", max_depth, max_can, min_can, fast_search);
+    }
+
     public void tree_config(int lvl)
     {
+        System.out.println("trreconfig lvl == " + lvl);
         if (lvl == 1)
         {
             max_depth = 10;
@@ -133,6 +142,7 @@ public class Game {
 
     public void reset_minmax()
     {
+        System.out.println("resset avant");   
         for (int i = 0 ; i < 19 ; i++)
             for (int j = 0 ; j < 19 ; j++)
                 MinMax.map[i][j] = 0;
@@ -192,7 +202,10 @@ public class Game {
         if (display)
             System.out.printf("Call best_move turn %d player %d et nb move %d\n", turn, player, nb_move);
 
-        initialize_map();
+        initialize_map();     
+        System.out.println("avant");   
+        if (display)
+            display_all_board_info();
 
         time = System.currentTimeMillis();
         if (nb_move == 0)
@@ -206,7 +219,7 @@ public class Game {
             else
                 val = m.minmax(max_depth, turn, player);
         }
-
+        System.out.println("apres");   
         if (display)
             display_all_board_info();
 
@@ -219,7 +232,7 @@ public class Game {
         if (display)
             best_move_stamp(player);
 
-        manage_time(player);
+        // manage_time(player);
     
         return new Point(m.best.y, m.best.x);
     }
@@ -228,7 +241,7 @@ public class Game {
     private void display_all_board_info()
     {
             MinMax.display_Map();
-            scbord.display(false);
+            scbord.display(true);
             System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
     }
 
@@ -236,5 +249,6 @@ public class Game {
     private void best_move_stamp(int  player)
     {
         System.out.printf("IA move %d (Turn %d) at %d %d played in %f seconds (%d pos, %d depth, %d speed) mean : %f\n", nb_move + 1,(nb_move + 1) / 2 + 1, m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter, max_depth, fast_search, return_mean_time(player));
+        printconf();
     }
 }

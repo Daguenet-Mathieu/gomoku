@@ -292,7 +292,7 @@ public class Candidat
         return false;
     }
 
-    public int adding_probable_candidate(int dp, int turn)
+    public int adding_probable_candidate(int dp, int turn, int ret)
     {
         int res;
 
@@ -319,11 +319,17 @@ public class Candidat
         Collections.sort(this.lst, Comparator.comparing(item -> 
         this.order.indexOf(item.st())));
         if (dp == Game.max_depth && display)
-                display_candidat("before select");
+                display_candidat("before Select");
         if (this.lst.size() >= Game.min_can  + 1)
-            this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can + 1));
+        {
+            if (ret == 3)
+                this.lst = new ArrayList<>(this.lst.subList(0, 4));
+            else     
+                this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can + 1));
+        }
+
         if (dp == Game.max_depth && display)
-                display_candidat("here");
+                display_candidat("Candidat Selected");
         return this.lst.size();
     }
 
@@ -398,10 +404,11 @@ public class Candidat
         return 0;
     }
 
-    public int all_probable_candidate(int turn)
+    public int all_probable_candidate(int turn, int depth)
     {
         int res;
         int nb_mv = 0;
+
         for (int i = limin.x - 1 ; i <= limax.x + 1 ; i++)
         {
            for (int j = limin.y - 1 ; j <= limax.y + 1 ; j++)
@@ -427,10 +434,13 @@ public class Candidat
 
         if (this.lst.size() >= Game.min_can + 1)
         {
-            if (nb_mv >=3)
+            if (nb_mv >=5)
             {
-                if (limax.x - limin.x > 10 || limax.y - limin.y > 10)
+                if (limax.x - limin.x > 10 || limax.y - limin.y > 10){
+                    if (depth == Game.max_depth)
+                        System.out.println("dans le if");   
                     this.lst = new ArrayList<>(this.lst.subList(0, 3));
+                }
                 else
                     this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
             }
@@ -509,9 +519,9 @@ public class Candidat
         else
         {
             if (ret == 0)
-                ret = all_probable_candidate(turn);
+                ret = all_probable_candidate(turn, depth);
             else
-                ret = adding_probable_candidate(depth, turn);
+                ret = adding_probable_candidate(depth, turn, ret);
         }
         if (depth == Game.max_depth)
             display_candidat("at the end of candidats");
