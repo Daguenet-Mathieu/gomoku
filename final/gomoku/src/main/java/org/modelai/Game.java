@@ -147,7 +147,7 @@ public class Game {
 
     public void manage_time(int player)
     {
-        if (nb_move >= 4 && return_mean_time(player) > 0.40)
+        if (nb_move >= 8 && return_mean_time(player) > 0.40)
         {
             Game.min_can = Math.max(Game.min_can - 1, 4);
             if (Game.max_can == 9)
