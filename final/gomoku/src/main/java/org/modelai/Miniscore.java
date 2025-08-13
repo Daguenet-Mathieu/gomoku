@@ -137,6 +137,10 @@ public class Miniscore {
         }
         this.victory=false;
         this.blocklist.clear();
+        this.bpoint[0] = 0;
+        this.bpoint[1] = 0;
+        this.capt[0] = 0;
+        this.capt[1] = 0;
         this.sc.reset();
     }
 

@@ -33,6 +33,7 @@ public class Pente extends MinMax {
         prisonlst = new ArrayList<Pente.Prison>();
         pos_counter = 0;
         nbmove = 0;
+        candidat.reload_lim();
     }
 
     public Pente (int len)
@@ -380,7 +381,6 @@ public class Pente extends MinMax {
             return (prisoners[0] - prisoners[1]) * 8;
     }
 
-
     public int potentialpnt(int player)
     {
        int sup = 0;
@@ -433,6 +433,7 @@ public class Pente extends MinMax {
             Pente m = new Pente(this.len);
             if (turn == player)
             {
+                //System.out.printf(" p %d %d ", candidat.lst.get(i).x, candidat.lst.get(i).y);
                 if (m.play(candidat.lst.get(i), turn))
                 {
                     res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), false) + supeval(player, len, turn);
@@ -440,8 +441,10 @@ public class Pente extends MinMax {
                 }
                 else
                 {
+
                     res = m.minmaxab(decdepth(depth, cur_alpha, cur_beta), change(turn), player, Math.max(alpha, cur_alpha), beta);
                     m.unplay(m.move, depth);
+                    //System.out.printf(" u %d %d ", candidat.lst.get(i).x, candidat.lst.get(i).y);
                 }
 
                 values[i] = res;
@@ -455,6 +458,7 @@ public class Pente extends MinMax {
             }
             else
             {
+                //System.out.printf(" p %d %d ", candidat.lst.get(i).x, candidat.lst.get(i).y);
                 if (m.play(candidat.lst.get(i),turn))
                 {
                     res = value_victory_smarter(player, turn, len, forced_capture.size(), false) + supeval(player, len, turn);
@@ -464,7 +468,9 @@ public class Pente extends MinMax {
                 {
                     res = m.minmaxab(decdepth(depth, cur_alpha, cur_beta), change(turn), player, alpha, Math.min(beta, cur_beta));
                     m.unplay(m.move, depth);
+                    //System.out.printf(" p %d %d ", candidat.lst.get(i).x, candidat.lst.get(i).y);
                 }
+                
                 values[i] = res;
                 cur_beta = Math.min(cur_beta, res);
 

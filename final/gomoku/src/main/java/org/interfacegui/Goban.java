@@ -59,7 +59,6 @@ public class Goban{
     }
 
     private void init_hoshi() {
-        boolean tengen = true;
         boolean corner = false;
         boolean line = false;
         if (_nb_line >= 13)
@@ -67,7 +66,6 @@ public class Goban{
         if (_nb_line == 19)
             line = true;
         int tengenCoord = _nb_line/2;
-        int cornerCoord = 4;
         _hoshisCoord.add(new Point(tengenCoord, tengenCoord));
         if (corner == true){
             _hoshisCoord.add(new Point(3, 3));
@@ -156,7 +154,6 @@ public class Goban{
 
             }
         }
-
     }
 
     public void updateGoban(int new_y, int new_x){
