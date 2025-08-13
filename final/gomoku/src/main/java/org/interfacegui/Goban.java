@@ -35,7 +35,7 @@ public class Goban{
     private void updateHoshi() {
         for (int i = 0; i < _hoshisCoord.size(); i++){
             Circle hoshi = _hoshis.get(i);
-            hoshi.setRadius(_square_size / 5);
+            hoshi.setRadius(_square_size / 7);
             hoshi.setCenterX((_square_size * _hoshisCoord.get(i).x) + _width_margin_size);
             hoshi.setCenterY((_square_size * _hoshisCoord.get(i).y) + _heigh_margin_size);
             hoshi.setStroke(Color.TRANSPARENT);
@@ -46,7 +46,6 @@ public class Goban{
 
     private void createHoshiToList() {
         for (Point p : _hoshisCoord){
-            System.out.println("hoshi cooridinate : x == " + p.x + " y == " + p.y + " with magin == " + _width_margin_size + " heght margin == " + _heigh_margin_size);
             Circle hoshi = new Circle();
             hoshi.setRadius(_square_size / 7);
             hoshi.setCenterX((_square_size * p.x) + _width_margin_size);

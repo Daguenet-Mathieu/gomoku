@@ -318,7 +318,7 @@ public class Gomoku
             }
             catch (Exception e)
             {
-                e.printStackTrace();//a virere? mesage erreur?
+                System.err.println("error launching IA think : " + e.getMessage());
                 System.exit(0);
             }
         }
@@ -331,7 +331,9 @@ public class Gomoku
                 }
             }
             catch (Exception e) {
-                }
+                System.err.println("error launching IA think : " + e.getMessage());
+                    System.exit(0);
+            }
             future2 = null;
         }
         if (player_turn != current_decrement){

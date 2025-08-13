@@ -487,7 +487,7 @@ public class Candidat
 
         ret = interesting_candidate(depth);
 
-        if (ret > 2)
+        if (ret > 3)
         {
             if (display && depth == Game.max_depth)
                 display_candidat("Candidat before sort");

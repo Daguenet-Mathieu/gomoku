@@ -134,8 +134,8 @@ public class DoubleFree
                 cut = 1;
             if (nb_val == 2)
                 nb_free++;
-            else if (nb_val == 3 && cut == 1)
-                nb_free++;
+            // else if (nb_val == 3 && cut == 1)
+            //     nb_free++;
             if (nb_free >= 2)
                 return false;
         }

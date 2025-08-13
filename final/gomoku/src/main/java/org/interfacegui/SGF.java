@@ -66,8 +66,7 @@ public class SGF{
             return directory;
         }
         catch(Exception e){
-            e.printStackTrace();
-            System.exit(1);
+            System.err.println("error oppening SGFDIR, can't export sgf : " + e.getMessage());
         }
         return null;
 
@@ -558,7 +557,6 @@ public class SGF{
         }
         catch (ParseException e){
             errorMsg = e.getMessage();
-            e.printStackTrace();
             return false;
         }
         return true;
