@@ -236,7 +236,7 @@ public class Candidat
 
         if (val == 0 && tot_case1 == 0 && tot_case2 == 0) 
             return;
-        if (capture_possible && doubleFreethree.check_double_free(x, y, turn, MinMax.map) == false) //change place ?
+        if (capture_possible && doubleFreethree.check_double_free(x, y, turn, MinMax.map) == false)
             return;
 
 
@@ -356,12 +356,17 @@ public class Candidat
                         num = numcan(i, j);
                         this.lst.clear();
 
-                        if (i > j)
-                            this.lst.add(new Candidat.coord(i+opencan[num][0][0], j+opencan[num][0][1], 1));
+                        if (i == 9 && j == 9)
+                            this.lst.add(new Candidat.coord(8, 9));
                         else
-                            this.lst.add(new Candidat.coord(i+opencan[num][2][0], j+opencan[num][2][1], 1));
+                        {
+                            if (i > j)
+                                this.lst.add(new Candidat.coord(i+opencan[num][0][0], j+opencan[num][0][1], 1));
+                            else
+                                this.lst.add(new Candidat.coord(i+opencan[num][2][0], j+opencan[num][2][1], 1));
 
-                        this.lst.add(new Candidat.coord(i+opencan[num][1][0], j+opencan[num][1][1], 1));
+                            this.lst.add(new Candidat.coord(i+opencan[num][1][0], j+opencan[num][1][1], 1));
+                        }
                         return this.lst.size();
                     }
                 }
@@ -431,7 +436,7 @@ public class Candidat
 
         if (this.lst.size() >= Game.min_can + 1)
         {
-            if (nb_mv >=5)
+            if (nb_mv >=3)
             {
                 if (limax.x - limin.x > 14 || limax.y - limin.y > 14)
                     this.lst = new ArrayList<>(this.lst.subList(0, 3));
@@ -491,7 +496,7 @@ public class Candidat
 
         ret = interesting_candidate(depth);
 
-        if (ret > 3)
+        if (ret > 2)
         {
             if (display && depth == Game.max_depth)
                 display_candidat("Candidat before sort");

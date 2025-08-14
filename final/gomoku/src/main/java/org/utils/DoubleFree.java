@@ -58,6 +58,89 @@ public class DoubleFree
         int cur_x;
         int cur_y;
         int nb_free = 0;
+    
+        final int sep = val == 1 ? 2 : 1;
+
+        if (map[x][y] != 0)
+            return true;
+
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            nb_0 = 0;
+            dep = 1;
+            nb_val = 0;
+
+            if (check_win(x, y, val, i, map))
+                return true;
+
+            cur_x = x + dep * dir[i][0];
+            cur_y = y + dep * dir[i][1];
+            while(in_goban(cur_x, cur_y) && nb_0 != 2 && map[cur_x][cur_y] != sep)
+            {
+                if (map[cur_x][cur_y] == 0)
+                    nb_0++;
+                if (map[cur_x][cur_y] == val)
+                    nb_val++;
+
+                dep++;
+                cur_x = x + dep * dir[i][0];
+                cur_y = y + dep * dir[i][1];
+            }
+
+            if (in_goban(cur_x, cur_y) && map[cur_x][cur_y] == sep)
+            {
+                if (!in_goban(cur_x -dir[i][0], cur_y - dir[i][1]) || map[cur_x - dir[i][0]][cur_y - dir[i][1]] !=0)
+                    continue;
+                if (cur_x-dir[i][0] == x && cur_y - dir[i][1] == y)
+                    continue;
+            }
+
+            if (in_goban( cur_x - dir[i][0], cur_y - dir[i][1]) && in_goban(cur_x - 2 * dir[i][0], cur_y - 2 * dir[i][1]) &&
+                 map[cur_x - 2 * dir[i][0]][cur_y - 2 * dir[i][1]] == 0 && map[cur_x - dir[i][0]][cur_y - dir[i][1]] == 0)
+                nb_0 = 0;
+            else
+                nb_0 -=1;
+            dep = 1;
+            cur_x = x - (dep * dir[i][0]);
+            cur_y = y - (dep * dir[i][1]);
+
+            while( in_goban(cur_x, cur_y) && nb_0 != 2 && map[cur_x][cur_y] != sep)
+            {
+                if (map[cur_x][cur_y] == 0)
+                    nb_0++;
+                if (map[cur_x][cur_y] == val)
+                    nb_val++;
+                dep++;
+                cur_x = x - (dep * dir[i][0]);
+                cur_y = y - (dep * dir[i][1]);
+            }
+
+            if (in_goban(cur_x, cur_y) && map[cur_x][cur_y] == sep)
+            {
+                if (!in_goban( + dir[i][0], cur_y + dir[i][1]) ||
+                map[cur_x + dir[i][0]][cur_y + dir[i][1]] !=0)
+                    continue;
+                if (cur_x + dir[i][0] == x && cur_y + dir[i][1] == y)
+                    continue;
+            }
+
+            if (nb_val == 2)
+                nb_free++;
+            
+            if (nb_free >= 2)
+                return false;
+        }
+        return true;
+    }
+
+    public boolean check_double_free_strict(int x, int y, int val, int[][] map)
+    {
+        int nb_0;
+        int dep;
+        int nb_val;
+        int cur_x;
+        int cur_y;
+        int nb_free = 0;
         int cut;
     
         final int sep = val == 1 ? 2 : 1;
@@ -134,8 +217,8 @@ public class DoubleFree
                 cut = 1;
             if (nb_val == 2)
                 nb_free++;
-            // else if (nb_val == 3 && cut == 1)
-            //     nb_free++;
+            else if (nb_val == 3 && cut == 1)
+                nb_free++;
             if (nb_free >= 2)
                 return false;
         }

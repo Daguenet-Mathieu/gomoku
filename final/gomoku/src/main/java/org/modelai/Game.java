@@ -56,7 +56,7 @@ public class Game {
         if (lvl == 1)
         {
             max_depth = 10;
-            max_can = 9;
+            max_can = 8;
             min_can = 5;
             fast_search = 0;
         }
@@ -143,14 +143,18 @@ public class Game {
 
     public void manage_time(int player)
     {
-        if (nb_move >= 8 && return_mean_time(player) > 0.40)
+        if (nb_move >= 2 && return_mean_time(player) > 0.39)
         {
-            Game.min_can = Math.max(Game.min_can - 1, 4);
+            if (Game.min_can > 4)
+            {
+                fast_search++;
+                Game.min_can = Game.min_can -1;
+            }
+
             if (Game.max_can == 9)
                 Game.max_can = 8;
-            fast_search++;
         }
-        if (fast_search != 0 && nb_move >= 4 && return_mean_time(player) < 0.40)
+        if (fast_search > 0 && nb_move >= 2 && return_mean_time(player) < 0.38)
         {
             Game.min_can = Math.min(Game.min_can + 1, Game.max_can);
             fast_search--;

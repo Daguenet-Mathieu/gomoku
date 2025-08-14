@@ -433,7 +433,6 @@ public class Pente extends MinMax {
             Pente m = new Pente(this.len);
             if (turn == player)
             {
-                //System.out.printf(" p %d %d ", candidat.lst.get(i).x, candidat.lst.get(i).y);
                 if (m.play(candidat.lst.get(i), turn))
                 {
                     res = value_victory_smarter(player, turn, len, m.nb_forced_capture(), false) + supeval(player, len, turn);
@@ -444,7 +443,6 @@ public class Pente extends MinMax {
 
                     res = m.minmaxab(decdepth(depth, cur_alpha, cur_beta), change(turn), player, Math.max(alpha, cur_alpha), beta);
                     m.unplay(m.move, depth);
-                    //System.out.printf(" u %d %d ", candidat.lst.get(i).x, candidat.lst.get(i).y);
                 }
 
                 values[i] = res;
@@ -458,7 +456,6 @@ public class Pente extends MinMax {
             }
             else
             {
-                //System.out.printf(" p %d %d ", candidat.lst.get(i).x, candidat.lst.get(i).y);
                 if (m.play(candidat.lst.get(i),turn))
                 {
                     res = value_victory_smarter(player, turn, len, forced_capture.size(), false) + supeval(player, len, turn);
@@ -468,7 +465,6 @@ public class Pente extends MinMax {
                 {
                     res = m.minmaxab(decdepth(depth, cur_alpha, cur_beta), change(turn), player, alpha, Math.min(beta, cur_beta));
                     m.unplay(m.move, depth);
-                    //System.out.printf(" p %d %d ", candidat.lst.get(i).x, candidat.lst.get(i).y);
                 }
                 
                 values[i] = res;
@@ -536,6 +532,11 @@ public class Pente extends MinMax {
                         max2 = max + bonus;
                         best = c;
                     }
+                    else if (max2 == max + bonus && closer(best, c))
+                    {
+                        max2 = max + bonus;
+                        best = c;
+                    }
                 }
                 else
                 {
@@ -544,10 +545,28 @@ public class Pente extends MinMax {
                         max2 = max + bonus;
                         best = c;
                     }
+                    else if (max2 == max + bonus && closer(best, c))
+                    {
+                        max2 = max + bonus;
+                        best = c;
+                    }
                 }
             }
         }
         return max2;
+    }
+
+    private boolean closer(Candidat.coord a, Candidat.coord b)
+    {
+        int d1;
+        int d2;
+
+        d1 = Math.abs(a.x - 9) + Math.abs(a.y - 9);
+        d2 = Math.abs(b.x - 9) + Math.abs(b.y - 9);
+
+        if (d1*d1 > d2*d2)
+            return true;
+        return false;
     }
 
     private float adding_bonus_point(int x, int y, int turn, int player)
