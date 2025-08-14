@@ -83,7 +83,6 @@ public class SGF{
                 fileContent += ";";
                 for (int j = 0; j < lastMove.size(); j++){
                     if (m.getLastMove() != null){
-                        System.out.println("color == " + move[lastMoveColor.get(j)]);
                         fileContent += move[lastMoveColor.get(j)];
                         fileContent += "[" + alpha.charAt(lastMove.get(j).x) + "" + alpha.charAt(lastMove.get(j).y)  + "]";
                         if (m.get_prisonners() != null && m.get_prisonners().size() > 0)
