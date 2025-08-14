@@ -33,6 +33,7 @@ public class Pente extends MinMax {
         prisonlst = new ArrayList<Pente.Prison>();
         pos_counter = 0;
         nbmove = 0;
+        candidat.reload_lim();
     }
 
     public Pente (int len)
@@ -380,7 +381,6 @@ public class Pente extends MinMax {
             return (prisoners[0] - prisoners[1]) * 8;
     }
 
-
     public int potentialpnt(int player)
     {
        int sup = 0;
@@ -440,6 +440,7 @@ public class Pente extends MinMax {
                 }
                 else
                 {
+
                     res = m.minmaxab(decdepth(depth, cur_alpha, cur_beta), change(turn), player, Math.max(alpha, cur_alpha), beta);
                     m.unplay(m.move, depth);
                 }
@@ -465,6 +466,7 @@ public class Pente extends MinMax {
                     res = m.minmaxab(decdepth(depth, cur_alpha, cur_beta), change(turn), player, alpha, Math.min(beta, cur_beta));
                     m.unplay(m.move, depth);
                 }
+                
                 values[i] = res;
                 cur_beta = Math.min(cur_beta, res);
 
@@ -530,6 +532,11 @@ public class Pente extends MinMax {
                         max2 = max + bonus;
                         best = c;
                     }
+                    else if (max2 == max + bonus && closer(best, c))
+                    {
+                        max2 = max + bonus;
+                        best = c;
+                    }
                 }
                 else
                 {
@@ -538,10 +545,28 @@ public class Pente extends MinMax {
                         max2 = max + bonus;
                         best = c;
                     }
+                    else if (max2 == max + bonus && closer(best, c))
+                    {
+                        max2 = max + bonus;
+                        best = c;
+                    }
                 }
             }
         }
         return max2;
+    }
+
+    private boolean closer(Candidat.coord a, Candidat.coord b)
+    {
+        int d1;
+        int d2;
+
+        d1 = Math.abs(a.x - 9) + Math.abs(a.y - 9);
+        d2 = Math.abs(b.x - 9) + Math.abs(b.y - 9);
+
+        if (d1*d1 > d2*d2)
+            return true;
+        return false;
     }
 
     private float adding_bonus_point(int x, int y, int turn, int player)

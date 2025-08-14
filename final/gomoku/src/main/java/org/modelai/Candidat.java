@@ -147,6 +147,12 @@ public class Candidat
         return false;
     }
 
+    public void reload_lim()
+    {
+        limax = new coord(1, 1);
+        limin = new coord(18, 18);
+    }
+
     private void load_lim(int [][] map)
     {
         for (int i = 0 ; i < 19 ; i++)
@@ -185,12 +191,8 @@ public class Candidat
                             else if (turn == 2)
                                 tot_case1 = Math.max(tot_case1, 2.5);
                             else
-                                {
-                                    // if (depth == Game.max_depth || depth == Game.max_depth - 1)
-                                    //     tot_case1= Math.max(tot_case1, 2.8);
-                                    // else
-                                        tot_case1= Math.max(tot_case1, 2.4);
-                                }
+                                tot_case1= Math.max(tot_case1, 2.4);
+
                         }
             }
 
@@ -205,12 +207,7 @@ public class Candidat
                         else if (turn == 1)
                             tot_case2 = Math.max(tot_case2, 2.5);
                         else
-                            {
-                                // if (depth == Game.max_depth || depth == Game.max_depth - 1)
-                                //     tot_case2= Math.max(tot_case2, 2.8);
-                                // else
-                                    tot_case2= Math.max(tot_case2, 2.4);
-                            }
+                            tot_case2= Math.max(tot_case2, 2.4);
                     }
             }
 
@@ -239,7 +236,7 @@ public class Candidat
 
         if (val == 0 && tot_case1 == 0 && tot_case2 == 0) 
             return;
-        if (capture_possible && doubleFreethree.check_double_free(x, y, turn, MinMax.map) == false) //change place ?
+        if (capture_possible && doubleFreethree.check_double_free(x, y, turn, MinMax.map) == false)
             return;
 
 
@@ -359,12 +356,17 @@ public class Candidat
                         num = numcan(i, j);
                         this.lst.clear();
 
-                        if (i > j)
-                            this.lst.add(new Candidat.coord(i+opencan[num][0][0], j+opencan[num][0][1], 1));
+                        if (i == 9 && j == 9)
+                            this.lst.add(new Candidat.coord(8, 9));
                         else
-                            this.lst.add(new Candidat.coord(i+opencan[num][2][0], j+opencan[num][2][1], 1));
+                        {
+                            if (i > j)
+                                this.lst.add(new Candidat.coord(i+opencan[num][0][0], j+opencan[num][0][1], 1));
+                            else
+                                this.lst.add(new Candidat.coord(i+opencan[num][2][0], j+opencan[num][2][1], 1));
 
-                        this.lst.add(new Candidat.coord(i+opencan[num][1][0], j+opencan[num][1][1], 1));
+                            this.lst.add(new Candidat.coord(i+opencan[num][1][0], j+opencan[num][1][1], 1));
+                        }
                         return this.lst.size();
                     }
                 }
@@ -434,19 +436,16 @@ public class Candidat
 
         if (this.lst.size() >= Game.min_can + 1)
         {
-            if (nb_mv >=5)
+            if (nb_mv >=3)
             {
-                if (limax.x - limin.x > 10 || limax.y - limin.y > 10){
-                    if (depth == Game.max_depth)
-                        System.out.println("dans le if");   
+                if (limax.x - limin.x > 14 || limax.y - limin.y > 14)
                     this.lst = new ArrayList<>(this.lst.subList(0, 3));
-                }
                 else
                     this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
             }
             else
             {
-                if (limax.x - limin.x > 10 || limax.y - limin.y > 10)
+                if (limax.x - limin.x > 14 || limax.y - limin.y > 14)
                     this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can));
                 else
                     this.lst = new ArrayList<>(this.lst.subList(0, Game.min_can + 1));
@@ -497,7 +496,7 @@ public class Candidat
 
         ret = interesting_candidate(depth);
 
-        if (ret > 3)
+        if (ret > 2)
         {
             if (display && depth == Game.max_depth)
                 display_candidat("Candidat before sort");
@@ -523,8 +522,6 @@ public class Candidat
             else
                 ret = adding_probable_candidate(depth, turn, ret);
         }
-        if (depth == Game.max_depth)
-            display_candidat("at the end of candidats");
         return ret;
     }
 

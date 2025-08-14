@@ -37,26 +37,18 @@ public class Game {
         {
             this.rules = "Gomoku";
             max_depth=10;
-            System.out.println("ruleset " + rules);
             return new Moku();
         }
         else if ("Pente".equals(str))
         {
             this.rules = "Pente";
-            System.out.println("ruleset " + rules);
             return new Pente();
         }
         else
         {
             this.rules = "None";
-            System.out.println("ruleset " + rules);
             return new MinMax();
         }
-    }
-
-    public void printconf()
-    {
-        System.out.printf("%d %d %d %d", max_depth, max_can, min_can, fast_search);
     }
 
     public void tree_config(int lvl)
@@ -64,7 +56,7 @@ public class Game {
         if (lvl == 1)
         {
             max_depth = 10;
-            max_can = 9;
+            max_can = 8;
             min_can = 5;
             fast_search = 0;
         }
@@ -77,7 +69,7 @@ public class Game {
         }
         else if (lvl == 3)
         {
-            max_depth = 4;
+            max_depth = 5;
             max_can = 8;
             min_can = 8;
             fast_search = 0;
@@ -151,14 +143,18 @@ public class Game {
 
     public void manage_time(int player)
     {
-        if (nb_move >= 8 && return_mean_time(player) > 0.40)
+        if (nb_move >= 2 && return_mean_time(player) > 0.39)
         {
-            Game.min_can = Math.max(Game.min_can - 1, 4);
+            if (Game.min_can > 4)
+            {
+                fast_search++;
+                Game.min_can = Game.min_can -1;
+            }
+
             if (Game.max_can == 9)
                 Game.max_can = 8;
-            fast_search++;
         }
-        if (fast_search != 0 && nb_move >= 4 && return_mean_time(player) < 0.40)
+        if (fast_search > 0 && nb_move >= 2 && return_mean_time(player) < 0.38)
         {
             Game.min_can = Math.min(Game.min_can + 1, Game.max_can);
             fast_search--;
@@ -195,6 +191,9 @@ public class Game {
     {
         if (display)
             System.out.printf("Call best_move turn %d player %d et nb move %d\n", turn, player, nb_move);
+        
+        if (nb_move == 0)
+                reset_minmax();
 
         initialize_map();     
         if (display)
@@ -224,7 +223,7 @@ public class Game {
         if (display)
             best_move_stamp(player);
 
-        // manage_time(player);
+        manage_time(player);
     
         return new Point(m.best.y, m.best.x);
     }
@@ -233,14 +232,14 @@ public class Game {
     private void display_all_board_info()
     {
             MinMax.display_Map();
-            scbord.display(true);
+            scbord.display(false);
             System.out.printf("prisoners[0] : %d, prisoners[1] : %d\n", Pente.prisoners[0], Pente.prisoners[1]);
+            System.out.println();
     }
 
     //display function
     private void best_move_stamp(int  player)
     {
         System.out.printf("IA move %d (Turn %d) at %d %d played in %f seconds (%d pos, %d depth, %d speed) mean : %f\n", nb_move + 1,(nb_move + 1) / 2 + 1, m.best.y, m.best.x,(double)time / 1000, MinMax.pos_counter, max_depth, fast_search, return_mean_time(player));
-        printconf();
     }
 }

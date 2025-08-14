@@ -73,6 +73,7 @@ public class MinMax
         this.len = m.len + 1;
         this.move = new Candidat.coord(-1, -1);
         this.candidat = new Candidat(false);
+        candidat.reload_lim();
     }
 
     public float eval(int player, int len, int turn)
