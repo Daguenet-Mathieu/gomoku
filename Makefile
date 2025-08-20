@@ -1,26 +1,21 @@
-NAME = main
-
-SRCS = main.java
-
-CLASSES = $(SRCS:.java=.class)
-
-CC = javac
-JAVA = java
-FLAGS = --module-path $(PATH_TO_FX) --add-modules javafx.controls,javafx.fxml
-
-$(CLASSES): $(SRCS)
-	$(CC) $(FLAGS) $(SRCS)
-
-all: $(CLASSES)
-
-run: $(CLASSES)
-	$(JAVA) $(FLAGS) $(NAME)
+NAME = gomoku.jar
+all: build move exec
 
 clean:
-	rm -f *.class
+	mvn clean
 
 fclean: clean
+	rm -Rf $(NAME)
+
+build:
+	mvn package -Dmaven.test.skip=true
+
+move:
+	cp target/gomoku-1.0.0-jar-with-dependencies.jar $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re run
+exec:
+	java -jar gomoku.jar
+
+.PHONY: all clean fclean build move re exec
